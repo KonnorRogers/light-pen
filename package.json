@@ -1,0 +1,61 @@
+{
+  "name": "lightweight-codepen",
+  "version": "1.0.0",
+  "description": "A variety of simple components that match an aria-role",
+  "main": "./exports/lightweight-codepen.js",
+  "module": "./exports/lightweight-codepen.js",
+  "types": "./exports/lightweight-codepen.d.ts",
+  "exports": {
+    ".": "./exports/index.js",
+    "./package.json": "./package.json",
+    "./exports/*.js": "./exports/*.js",
+    "./exports/*": "./exports/*",
+    "./types/*": "./types/*.d.ts"
+  },
+  "type": "module",
+  "files": [
+    "exports",
+    "internal",
+    "types",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "web-dev-server --watch",
+    "build": "rimraf -g \"./exports/**/*.d.ts\" && tsc",
+    "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
+    "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",
+    "deploy:major": "npm run build && npm version major && npm publish && git push --follow-tags",
+    "test": "web-test-runner"
+  },
+  "keywords": [
+    "web-components",
+    "aria"
+  ],
+  "license": "MIT",
+  "repository": "git@github.com:KonnorRogers/lightweight-codepen.git",
+  "bugs": {
+    "url": "https://github.com/KonnorRogers/lightweight-codepen/issues"
+  },
+  "homepage": "https://github.com/KonnorRogers/lightweight-codepen",
+  "author": "KonnorRogers <konnor5456@gmail.com>",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@open-wc/testing-helpers": "^2.3.0",
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "@web/dev-server": "^0.3.1",
+    "@web/dev-server-esbuild": "^0.4.1",
+    "@web/dev-server-rollup": "^0.5.2",
+    "@web/test-runner": "^0.17.1",
+    "@web/test-runner-playwright": "^0.10.1",
+    "lightweight-codepen": "link:.",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "highlight.js": "^11.8.0",
+    "lit": "^2.8.0"
+  }
+}
