@@ -34,7 +34,7 @@ devDependencies:
   '@web/test-runner-playwright':
     specifier: ^0.10.1
     version: 0.10.1
-  lightweight-codepen:
+  light-pen:
     specifier: link:.
     version: 'link:'
   rimraf:
