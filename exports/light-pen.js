@@ -1,6 +1,6 @@
 // @ts-check
 import { LitElement, html } from "lit"
-import { styles, theme } from "./lightweight-codepen.styles.js"
+import { styles, theme } from "./light-pen.styles.js"
 import { when } from "lit/directives/when.js";
 
 import HighlightJS from 'highlight.js/lib/core';
@@ -8,6 +8,7 @@ import JavaScript from 'highlight.js/lib/languages/javascript';
 import HTML from 'highlight.js/lib/languages/xml';
 import CSS from 'highlight.js/lib/languages/css';
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { ref } from "lit/directives/ref.js";
 
 
 // Then register the languages you need
@@ -20,7 +21,7 @@ HighlightJS.registerLanguage('css', CSS);
  */
 
 
-export default class LightweightCodepen extends LitElement {
+export default class LightPen extends LitElement {
   // Static
 
   static styles = [theme, styles]
@@ -35,8 +36,11 @@ export default class LightweightCodepen extends LitElement {
     languages: { state: true, type: Array },
     openLanguages: { type: Array, reflect: true },
     console: { reflect: true },
-    debounce: { state: true },
-    iframeUrl: { state: true }
+    iframeUrl: { state: true },
+    resizePosition: { state: true },
+    cssCode: { state: true },
+    htmlCode: { state: true },
+    jsCode: { state: true }
   }
 
   // Overrides
@@ -46,6 +50,17 @@ export default class LightweightCodepen extends LitElement {
    */
   constructor() {
     super()
+
+
+    /**
+     * @type {ResizeObserver}
+     */
+    this.resizeObserver = new ResizeObserver(entries => this.handleResize(entries));
+
+    /**
+     * @type {number}
+     */
+    this.resizePosition = 50
 
     /**
      * @type {Array<SupportedLanguages>}
@@ -73,13 +88,24 @@ export default class LightweightCodepen extends LitElement {
     this.consoleText = ""
 
     /**
-     * @type {ReturnType<typeof setTimeout> | null}
+     * @type {string}
      */
-    this.debounce = null
-
     this.htmlReset = ""
+
+    /**
+     * @type {string}
+     */
     this.cssReset = ""
+
+    /**
+     * @type {string}
+     */
     this.jsReset = ""
+
+    /**
+     * @type {number}
+     */
+    this.cachedWidth = 0
 
     this.removeAttribute('hidden')
   }
@@ -89,7 +115,9 @@ export default class LightweightCodepen extends LitElement {
    */
   connectedCallback () {
     super.connectedCallback()
+    this.updateComplete.then(() => this.resizeObserver.observe(this));
 
+    this.updateCachedWidth()
     setTimeout(() => {
       /**
        * Grab reset values so we can reset the inputs
@@ -98,6 +126,21 @@ export default class LightweightCodepen extends LitElement {
       this.cssReset = this.cssTextArea?.value || ""
       this.jsReset = this.jsTextArea?.value || ""
     })
+  }
+
+  updateCachedWidth () {
+    const { width } = this.getBoundingClientRect()
+    this.cachedWidth = width
+  }
+
+  /**
+   * @param {ResizeObserverEntry[]} entries
+   */
+  handleResize (entries) {
+    const { width } = entries[0].contentRect;
+
+    // Resize when a primary panel is set
+    this.cachedWidth = width
   }
 
   /** Getters / Setters */
@@ -110,35 +153,14 @@ export default class LightweightCodepen extends LitElement {
   }
 
   /**
-   * @return {undefined | null | HTMLInputElement}
-   */
-  get htmlTextArea () {
-    return this.shadowRoot?.querySelector("[part~='textarea-html']")
-  }
-
-  /**
-   * @return {undefined | null | HTMLInputElement}
-   */
-  get cssTextArea () {
-    return this.shadowRoot?.querySelector("[part~='textarea-css']")
-  }
-
-  /**
-   * @return {undefined | null | HTMLInputElement}
-   */
-  get jsTextArea () {
-    return this.shadowRoot?.querySelector("[part~='textarea-js']")
-  }
-
-  /**
    * Override this to use a highlighter of your choice.
    * @param {{code: string, language: SupportedLanguages}} options
    */
   highlightCode ({ code, language }) {
     const highlightJsLanguage = /** @type {typeof LightweightCodepen} */ (this.constructor).languageMap[language]
 
-    // code = this.escapeCharacters(code)
-    // code = this.injectNewLine(code)
+    code = this.escapeCharacters(code)
+    code = this.injectNewLine(code)
 
     return HighlightJS.highlight(code, {language: highlightJsLanguage}).value
   }
@@ -174,7 +196,6 @@ export default class LightweightCodepen extends LitElement {
 
     if (this.iframeElem.contentWindow == null) return;
 
-    this.updateCode()
 
     let page = `
       <!doctype html><html>
@@ -199,14 +220,83 @@ export default class LightweightCodepen extends LitElement {
   }
 
   inputHandler () {
-    if (this.debounce != null) {
-      clearTimeout(this.debounce)
-    }
-
     this.updateCode()
-
-    this.debounce = setTimeout(() => this.updateIframeContent(), 300)
   }
+
+  /**
+   * @param {import("lit").PropertyValues} changedProperties
+   */
+  willUpdate (changedProperties) {
+    if (this.languages.some((str) => changedProperties.has(str + "Code"))) {
+      if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
+      this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
+    }
+    super.willUpdate(changedProperties)
+  }
+
+
+  /**
+   * @param {HTMLTextAreaElement} textarea
+   */
+  htmlTextAreaChanged (textarea) {
+    this.htmlTextArea = textarea
+  }
+
+  /**
+   * @param {HTMLTextAreaElement} textarea
+   */
+  cssTextAreaChanged (textarea) {
+    this.cssTextArea = textarea
+  }
+
+  /**
+   * @param {HTMLTextAreaElement} textarea
+   */
+  jsTextAreaChanged (textarea) {
+    this.jsTextArea = textarea
+  }
+
+  /**
+   * @param {KeyboardEvent} event
+   */
+  handleResizerKeydown (event) {
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+      let newPosition = this.resizePosition;
+      const incr = (event.shiftKey ? 10 : 1) * (1);
+
+      event.preventDefault();
+
+      if (event.key === 'ArrowLeft') {
+        newPosition -= incr;
+      }
+
+      if (event.key === 'ArrowRight') {
+        newPosition += incr;
+      }
+
+      if (event.key === 'Home') {
+        newPosition = 100;
+      }
+
+      if (event.key === 'End') {
+        newPosition = 0;
+      }
+
+      this.resizePosition = clamp(newPosition, 0, 100);
+      this.updateResizePosition()
+    }
+  }
+
+  updateResizePosition () {
+    const startWidth = this.resizePosition
+
+    if (startWidth != null) {
+      const endWidth = 100 - startWidth
+      this.style.setProperty("--start-panel-width", `${startWidth}%`)
+      this.style.setProperty("--end-panel-width", `${endWidth}%`)
+    }
+  }
+
 
   /**
    * Lovely helper to scoop up our html, css, and js code
@@ -232,9 +322,6 @@ export default class LightweightCodepen extends LitElement {
       this.jsCode = this.jsReset
       this.jsTextArea.value = this.jsReset
     }
-
-    this.requestUpdate()
-    this.updateIframeContent()
   }
 
   /**
@@ -292,6 +379,40 @@ export default class LightweightCodepen extends LitElement {
   //   )
   // }
 
+  /**
+   * @param {Event} e
+   */
+  handleTemplate (e) {
+    /**
+     * @type {HTMLSlotElement}
+     */
+    // @ts-expect-error
+    const slot = e.target
+
+    const slotName = slot.getAttribute("name")
+    if (slotName == null) return
+
+    if (!this.languages.includes(/** @type {SupportedLanguages} */ (slotName))) {
+      return
+    }
+
+    const codeType = /** @type {SupportedLanguages} */ (slotName)
+
+    const templates = /** @type {HTMLTemplateElement[]} */(/** @type {unknown} */
+      (slot.assignedElements({flatten: true}).filter((el) => /** */ el instanceof HTMLTemplateElement))
+    )
+
+    const code = dedent(this.escapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
+
+    this[`${codeType}Code`] = code
+
+    const textArea = this[`${codeType}TextArea`]
+
+    if (textArea && code) {
+      textArea.value = code
+    }
+  }
+
   // Rendering
   renderConsole () {
     return html`<div part="sandbox-console-log"></div>`
@@ -302,6 +423,13 @@ export default class LightweightCodepen extends LitElement {
    */
   render () {
 		return html`
+      <!-- Where users can declaratively provide templates -->
+      <div style="display: none;">
+        <slot name="html" @slotchange=${this.handleTemplate}></slot>
+        <slot name="css" @slotchange=${this.handleTemplate}></slot>
+        <slot name="js" @slotchange=${this.handleTemplate}></slot>
+      </div>
+
       <div part="base">
 			  <div part="sandbox">
 				  <div part="sandbox-header">
@@ -325,14 +453,26 @@ export default class LightweightCodepen extends LitElement {
             ${this.renderCode('css')}
             ${this.renderCode('js')}
 					</div>
+
+          <button
+            id="panel-resizer"
+            part="panel-resizer"
+            role="separator"
+            aria-valuenow=${this.resizePosition}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            @keydown=${this.handleResizerKeydown}
+            @pointerdown=${this.handleDrag}
+            @touchstart=${this.handleDrag}
+          >
+            <span class="visually-hidden">Resize Panel. Pull to left or right to resize.</span>
+          </button>
+
 					<div part="sandbox-iframe-wrapper">
 						<iframe
               part="sandbox-iframe"
               frameborder="0"
-              scrolling="no"
-              ?hidden=${this.result === "console"}
              ></iframe>
-						${/* this.result === "console" ? s : */''}
 					</div>
 				</div>
 
@@ -350,6 +490,46 @@ export default class LightweightCodepen extends LitElement {
 			</div>
 		</div>`
 	}
+
+  /**
+   * @param {PointerEvent} event
+   */
+	handleDrag (event) {
+    // Prevent text selection when dragging
+    if (event.cancelable) {
+      event.preventDefault();
+    }
+
+
+    if (this.iframeElem) {
+      // We need to disable pointerevents on the iframe to listen for mousemove over the top of it.
+      this.iframeElem.style.pointerEvents = "none"
+    }
+
+    drag(this, {
+      onMove: (x, _y) => {
+        let newPositionInPixels = x;
+
+        this.resizePosition = clamp(this.pixelsToPercentage(newPositionInPixels), 0, 100);
+        this.updateResizePosition()
+      },
+      onStop: () => {
+        if (this.iframeElem) {
+        // Re-enable pointerevents so you can use tab keys etc.
+          this.iframeElem.style.pointerEvents = "auto"
+        }
+      },
+      initialEvent: event
+    });
+  }
+
+  /**
+   * @param {number} pixels
+   * @return {number}
+   */
+  pixelsToPercentage (pixels) {
+    return (pixels / this.cachedWidth) * 100
+  }
 
   /**
    * @param {SupportedLanguages} language
@@ -382,12 +562,23 @@ export default class LightweightCodepen extends LitElement {
           >${code}</code></pre>
           <!-- IMPORTANT! There must be no white-space above. -->
 					<textarea
+            ${
+              // @ts-expect-error
+              ref(this[`${language}TextAreaChanged`])
+            }
             id="textarea-${language}"
             data-code-lang=${language}
             part="textarea textarea-${language}"
             spellcheck="false"
             autocorrect="off"
-            autocapitalize="off" translate="no" @keydown=${this.keydownHandler} @input=${this.inputHandler} @input=${this.syncScroll} @scroll=${this.syncScroll}></textarea>
+            autocapitalize="off"
+            translate="no"
+            @keydown=${this.keydownHandler}
+            @input=${this.inputHandler}
+            @input=${this.syncScroll}
+            @scroll=${this.syncScroll}
+            value=${this[`${language}Code`]}
+          ></textarea>
 				</div>
 			</details>
 		`
@@ -414,5 +605,103 @@ export default class LightweightCodepen extends LitElement {
     pre.scrollTop = textarea.scrollTop;
     pre.scrollLeft = textarea.scrollLeft;
   }
+}
 
+/**
+ * @param {number} min
+ * @param {number} curr
+ * @param {number} max
+ */
+function clamp (min, curr, max) {
+  return Math.min(Math.max(curr, min), max)
+}
+
+/**
+ * @typedef {object} DragOptions
+ * @property {(x: number, y: number) => void} onMove - Callback that runs as dragging occurs.
+ * @property {() => void} onStop - Callback that runs when dragging stops.
+ * @property {PointerEvent} initialEvent - When an initial event is passed, the first drag will be triggered immediately using the coordinates therein. This is useful when the drag is initiated by a mousedown/touchstart event but you want the initial "click" to activate a drag (e.g. resizePositioning a handle initially at the click target).
+ */
+
+/**
+ * @param {HTMLElement} container
+ * @param {Partial<DragOptions>} [options]
+
+ */
+function drag(container, options) {
+  /**
+   * @param {PointerEvent} pointerEvent
+   */
+  function move(pointerEvent) {
+    const dims = container.getBoundingClientRect();
+    const defaultView = container.ownerDocument.defaultView;
+    const offsetX = dims.left + (defaultView?.pageXOffset || 0);
+    const offsetY = dims.top + (defaultView?.pageYOffset || 0);
+    const x = pointerEvent.pageX - offsetX;
+    const y = pointerEvent.pageY - offsetY;
+
+    if (options?.onMove) {
+      options.onMove(x, y);
+    }
+  }
+
+  function stop() {
+    document.removeEventListener('pointermove', move);
+    document.removeEventListener('pointerup', stop);
+
+    if (options?.onStop) {
+      options.onStop();
+    }
+  }
+
+  document.addEventListener('pointermove', move, { passive: true });
+  document.addEventListener('pointerup', stop);
+
+  // If an initial event is set, trigger the first drag immediately
+  if (options?.initialEvent instanceof PointerEvent) {
+    move(options.initialEvent);
+  }
+}
+
+/**
+ * @param {TemplateStringsArray|string} templateStrings
+ * @param {any[]} values
+ */
+function dedent (templateStrings, ...values) {
+	let matches = [];
+	let strings = typeof templateStrings === 'string' ? [ templateStrings ] : templateStrings.slice();
+
+	// 1. Remove trailing whitespace.
+	strings[strings.length - 1] = strings[strings.length - 1].replace(/\r?\n([\t ]*)$/, '');
+
+	// 2. Find all line breaks to determine the highest common indentation level.
+	for (let i = 0; i < strings.length; i++) {
+		let match;
+
+		if (match = strings[i].match(/\n[\t ]+/g)) {
+			matches.push(...match);
+		}
+	}
+
+	// 3. Remove the common indentation from all strings.
+	if (matches.length) {
+		let size = Math.min(...matches.map(value => value.length - 1));
+		let pattern = new RegExp(`\n[\t ]{${size}}`, 'g');
+
+		for (let i = 0; i < strings.length; i++) {
+			strings[i] = strings[i].replace(pattern, '\n');
+		}
+	}
+
+	// 4. Remove leading whitespace.
+	strings[0] = strings[0].replace(/^\r?\n/, '');
+
+	// 5. Perform interpolation.
+	let string = strings[0];
+
+	for (let i = 0; i < values.length; i++) {
+		string += values[i] + strings[i + 1];
+	}
+
+	return string;
 }

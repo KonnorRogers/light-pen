@@ -1,10 +1,10 @@
 {
-  "name": "lightweight-codepen",
+  "name": "light-pen",
   "version": "1.0.0",
   "description": "A variety of simple components that match an aria-role",
-  "main": "./exports/lightweight-codepen.js",
-  "module": "./exports/lightweight-codepen.js",
-  "types": "./exports/lightweight-codepen.d.ts",
+  "main": "./exports/light-pen.js",
+  "module": "./exports/light-pen.js",
+  "types": "./exports/light-pen.d.ts",
   "exports": {
     ".": "./exports/index.js",
     "./package.json": "./package.json",
@@ -33,11 +33,11 @@
     "aria"
   ],
   "license": "MIT",
-  "repository": "git@github.com:KonnorRogers/lightweight-codepen.git",
+  "repository": "git@github.com:KonnorRogers/light-pen.git",
   "bugs": {
-    "url": "https://github.com/KonnorRogers/lightweight-codepen/issues"
+    "url": "https://github.com/KonnorRogers/light-pen/issues"
   },
-  "homepage": "https://github.com/KonnorRogers/lightweight-codepen",
+  "homepage": "https://github.com/KonnorRogers/light-pen",
   "author": "KonnorRogers <konnor5456@gmail.com>",
   "publishConfig": {
     "access": "public"
@@ -50,7 +50,7 @@
     "@web/dev-server-rollup": "^0.5.2",
     "@web/test-runner": "^0.17.1",
     "@web/test-runner-playwright": "^0.10.1",
-    "lightweight-codepen": "link:.",
+    "light-pen": "link:.",
     "rimraf": "^5.0.1",
     "typescript": "^5.2.2"
   },

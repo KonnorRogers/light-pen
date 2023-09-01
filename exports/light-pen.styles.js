@@ -61,7 +61,7 @@ export const styles = css`
   color: transparent;
   background-color: transparent;
   caret-color: black;
-  resize: both;
+  resize: none;
   z-index: 1;
 }
 
@@ -81,12 +81,10 @@ export const styles = css`
   white-space: pre;
   tab-size: 2;
   position: relative;
-  max-width: 75vw;
-  max-height: 75vh;
+}
 
-  /* Anything below this and for some reason pre / textarea get mismatching heights / widths. We could use js. */
-  min-width: 200px;
-  min-height: 200px;
+[part~="details"]:not(:first-child) {
+  margin-top: 4px;
 }
 
 [part~="pre"],
@@ -186,14 +184,25 @@ export const styles = css`
   overflow-y: auto;
 }
 
+[part~="panel-resizer"] {
+  background-color: transparent;
+  appearance: none;
+  margin: 0;
+  -webkit-appearance: none;
+  height: 100%;
+  width: 4px;
+  border: none;
+  cursor: col-resize;
+  background-color: #b2b2b2;
+}
+
 [part~="sandbox-content"] {
   display:grid;
-  grid-template-columns: minmax(0,auto) minmax(0, 1fr);
+  grid-template-columns: minmax(0,var(--start-panel-width, 1fr)) minmax(0, auto) minmax(0, var(--end-panel-width, 1fr));
   grid-template-rows: minmax(0, 1fr);
 }
 
 [part~="sandbox-iframe-wrapper"] {
-  border-left:1px solid #b2b2b2;
 }
 
 [part~="sandbox-console-result"] {

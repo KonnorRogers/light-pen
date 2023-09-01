@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="module">
-      import LightweightCodepen from "./exports/lightweight-codepen.js";
+      import LightPen from "./exports/light-pen.js";
 
-      window.customElements.define("lightweight-codepen", LightweightCodepen)
+      window.customElements.define("light-pen", LightPen)
     </script>
 
     <style>
@@ -20,6 +20,24 @@
     </style>
   </head>
   <body>
-    <lightweight-codepen style="padding: 8px; height: 100%;"></lightweight-codepen>
+    <light-pen style="padding: 8px; height: 100%;">
+      <template slot="html">
+        <script>console.log("hi")</script>
+        <script src="/index.js"></script>
+        <div style="color: red;">
+          <div>Hi there friends</div>
+        </div>
+
+        <p>
+          Sup dude
+        </p>
+      </template>
+
+      <template slot="css">
+        p {
+          color: green;
+        }
+      </template>
+    </light-pen>
   </body>
 </html>
