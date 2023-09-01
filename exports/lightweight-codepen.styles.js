@@ -37,22 +37,32 @@ export const styles = css`
 }
 
 [part~="summary"] {
-  font-size:.8125em;
-  font-weight:bold
+  font-size: .8125rem;
+  font-weight: bold;
+  padding: 0.4rem 0.6rem;
+}
+
+[part~="summary"]:focus {
+  outline: 2px solid blue;
 }
 
 [part~="sandbox-editor"] {
   display:grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   column-gap: 0;
   row-gap: 0;
+  position: relative;
+  padding-top: 3px;
 }
 
 [part~="textarea"] {
-  background-color: transparent;
+  position: relative;
   color: transparent;
+  background-color: transparent;
   caret-color: black;
+  resize: both;
+  z-index: 1;
 }
 
 [part~="pre"],
@@ -64,18 +74,25 @@ export const styles = css`
   padding: 0;
 	display: block;
 	line-height: 1.5;
-	margin: 0 0 1.5625em;
-	overflow: auto;
-	white-space: pre-wrap;
 	word-break: break-all;
   padding: 8px;
   border: none;
+  overflow: auto;
+  white-space: pre;
+  tab-size: 2;
+  position: relative;
+  max-width: 75vw;
+  max-height: 75vh;
+
+  /* Anything below this and for some reason pre / textarea get mismatching heights / widths. We could use js. */
+  min-width: 200px;
+  min-height: 200px;
 }
 
 [part~="pre"],
 [part~="code"] {
-	background-color: #f7f7f7;
 	color: #272727;
+	background-color: #f7f7f7;
 }
 
 [part~="base"] {
@@ -94,7 +111,7 @@ export const styles = css`
 [part~="code"],
 [part~="textarea"] {
 	font-family: Menlo, Monaco, "Courier New", monospace;
-	font-size: 0.875em;
+	font-size: 0.875rem;
 }
 
 [part~="sandbox-iframe"] {
@@ -164,19 +181,15 @@ export const styles = css`
   padding: 0.5em;
 }
 
+[part~="sandbox-code"] {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
 [part~="sandbox-content"] {
   display:grid;
-  grid-template-columns:repeat(2, 1fr);
+  grid-template-columns: minmax(0,auto) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
-}
-
-[part~="sandbox-code"] {
-  grid-area:1/1/2/2
-}
-
-[part~="sandbox-iframe-wrapper"],
-[part~="sandbox-console-result"] {
-  grid-area:1/2/2/3
 }
 
 [part~="sandbox-iframe-wrapper"] {

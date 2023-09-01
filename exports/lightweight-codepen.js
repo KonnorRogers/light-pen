@@ -55,7 +55,7 @@ export default class LightweightCodepen extends LitElement {
     /**
      * @type {Array<SupportedLanguages>}
      */
-    this.languages = []
+    this.languages = ["html", "css", "js"]
 
     /**
      * @type {"console" | "iframe"}
@@ -82,9 +82,6 @@ export default class LightweightCodepen extends LitElement {
     this.jsReset = ""
 
     this.removeAttribute('hidden')
-
-    this.addEventListener('input', this.inputHandler)
-    this.addEventListener('keydown', this.keydownHandler)
   }
 
   /**
@@ -94,6 +91,9 @@ export default class LightweightCodepen extends LitElement {
     super.connectedCallback()
 
     setTimeout(() => {
+      /**
+       * Grab reset values so we can reset the inputs
+       */
       this.htmlReset = this.htmlTextArea?.value || ""
       this.cssReset = this.cssTextArea?.value || ""
       this.jsReset = this.jsTextArea?.value || ""
@@ -137,7 +137,31 @@ export default class LightweightCodepen extends LitElement {
   highlightCode ({ code, language }) {
     const highlightJsLanguage = /** @type {typeof LightweightCodepen} */ (this.constructor).languageMap[language]
 
+    // code = this.escapeCharacters(code)
+    // code = this.injectNewLine(code)
+
     return HighlightJS.highlight(code, {language: highlightJsLanguage}).value
+  }
+
+  /**
+   * @param {string} text
+   */
+  escapeCharacters (text) {
+    // Update code
+    return text.replace(new RegExp("&", "g"), "&").replace(new RegExp("<", "g"), "<"); /* Global RegExp */
+  }
+
+  /**
+   * Highlighters strip newlines. But you can see new lines in <textarea>, this fixes that.
+   * @param {string} text
+   */
+  injectNewLine (text) {
+    // Handle final newlines (see article)
+    if(text[text.length-1] == "\n") { // If the last character is a newline character
+      text += "\n"; // Add a placeholder space character to the final line
+    }
+
+    return text
   }
 
   updateIframeContent () {
@@ -150,9 +174,7 @@ export default class LightweightCodepen extends LitElement {
 
     if (this.iframeElem.contentWindow == null) return;
 
-    this.cssCode = this.cssTextArea?.value
-    this.htmlCode = this.htmlTextArea?.value
-    this.jsCode = this.jsTextArea?.value
+    this.updateCode()
 
     let page = `
       <!doctype html><html>
@@ -181,14 +203,21 @@ export default class LightweightCodepen extends LitElement {
       clearTimeout(this.debounce)
     }
 
-    this.cssCode = this.cssTextArea?.value
-    this.htmlCode = this.htmlTextArea?.value
-    this.jsCode = this.jsTextArea?.value
+    this.updateCode()
 
     this.debounce = setTimeout(() => this.updateIframeContent(), 300)
   }
 
-  fallbackToResetValues () {
+  /**
+   * Lovely helper to scoop up our html, css, and js code
+   */
+  updateCode () {
+    this.cssCode = this.cssTextArea?.value
+    this.htmlCode = this.htmlTextArea?.value
+    this.jsCode = this.jsTextArea?.value
+  }
+
+  resetValues () {
     if (this.htmlTextArea) {
       this.htmlCode = this.htmlReset
       this.htmlTextArea.value = this.htmlReset
@@ -205,6 +234,7 @@ export default class LightweightCodepen extends LitElement {
     }
 
     this.requestUpdate()
+    this.updateIframeContent()
   }
 
   /**
@@ -219,11 +249,7 @@ export default class LightweightCodepen extends LitElement {
 
     const key = evt.key
 
-    if (
-      target.matches('textarea') &&
-      this.contains(target) &&
-      ["Tab", "Escape"].includes(key)
-    ) {
+    if (["Tab", "Escape"].includes(key)) {
       evt.preventDefault()
 
       if ('Tab' === evt.key) {
@@ -234,8 +260,7 @@ export default class LightweightCodepen extends LitElement {
         let e = target.closest('details');
         if (!e) return;
 
-        // @ts-expect-error
-        e.firstElementChild.focus()
+        e.querySelector("summary")?.focus()
       }
     }
   }
@@ -287,7 +312,7 @@ export default class LightweightCodepen extends LitElement {
             </slot>
 
 					  <span part="sandbox-controls">
-						  <button part="sandbox-controls-button sandbox-reset" @click=${this.fallbackToResetValues}>
+						  <button part="sandbox-controls-button sandbox-reset" @click=${this.resetValues}>
                 Reset
               </button>
 
@@ -316,7 +341,7 @@ export default class LightweightCodepen extends LitElement {
             this.console === "enabled",
             () => html`
               <details class="sandbox-console" ?open=${console}>
-                <summary>Console</summary>
+                <summary part="summary summary-console" tabindex="0">Console</summary>
                 ${this.consoleText}
               </details>
             `
@@ -332,7 +357,10 @@ export default class LightweightCodepen extends LitElement {
   renderCode (language) {
     let fullLanguage = language.toUpperCase()
 
-    const code = this[`${language}Code`]
+    let code = this[`${language}Code`]
+
+    // @ts-expect-error
+    code = code ? unsafeHTML(this.highlightCode({ code, language })) : ""
     const open = this.openLanguages.includes(language)
 
 		return html`
@@ -343,11 +371,48 @@ export default class LightweightCodepen extends LitElement {
 				<label for="sandbox-${language}" class="visually-hidden">${fullLanguage} code</label>
 				<div class="sandbox-editor" part="sandbox-editor">
           <!-- This is where the fancy syntax highlighting comes in -->
-					<pre aria-hidden="true" part="pre pre-${language}"><code part="code code-${language}" class="language-${language}">${code ? unsafeHTML(this.highlightCode({ code, language })) : ""}</code></pre>
-					<textarea part="textarea textarea-${language}" spellcheck="false" autocorrect="off" autocapitalize="off" translate="no"></textarea>
+					<pre
+            id="pre-${language}"
+            data-code-lang=${language}
+            aria-hidden="true"
+            part="pre pre-${language}"
+          ><code
+              part="code code-${language}"
+              class="language-${language}"
+          >${code}</code></pre>
+          <!-- IMPORTANT! There must be no white-space above. -->
+					<textarea
+            id="textarea-${language}"
+            data-code-lang=${language}
+            part="textarea textarea-${language}"
+            spellcheck="false"
+            autocorrect="off"
+            autocapitalize="off" translate="no" @keydown=${this.keydownHandler} @input=${this.inputHandler} @input=${this.syncScroll} @scroll=${this.syncScroll}></textarea>
 				</div>
 			</details>
 		`
+  }
+
+  /**
+   * @param {Event} e
+   */
+  syncScroll (e) {
+    /**
+     * @type {null | HTMLTextAreaElement}
+     */
+    // @ts-expect-error
+    const textarea = e.target
+
+    if (textarea == null) return
+
+    const lang = textarea.dataset.codeLang
+
+    const pre = this.shadowRoot?.querySelector(`#pre-${lang}`)
+
+    if (pre == null) return
+
+    pre.scrollTop = textarea.scrollTop;
+    pre.scrollLeft = textarea.scrollLeft;
   }
 
 }
