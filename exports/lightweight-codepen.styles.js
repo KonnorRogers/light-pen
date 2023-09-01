@@ -4,11 +4,6 @@ export const styles = css`
   box-sizing: border-box;
 }
 
-iframe {
-width: 100%;
-height: 100%;
-}
-
 .visually-hidden:not(:focus):not(:active) {
   position: absolute;
   overflow: hidden;
@@ -23,18 +18,30 @@ height: 100%;
   display: none !important;
 }
 
-.sandbox{
-  background-color: #e5e5e5;
-  color:#272727;
-  margin-bottom:1.5625em
+:host {
+  display: block;
+  box-sizing: border-box;
 }
 
-.sandbox summary {
+[part~="sandbox-iframe"] {
+  width: 100%;
+  height: 100%;
+}
+
+[part~="sandbox"] {
+  background-color: #e5e5e5;
+  color:#272727;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, auto) minmax(0, 1fr);
+}
+
+[part~="summary"] {
   font-size:.8125em;
   font-weight:bold
 }
 
-.sandbox-editor{
+[part~="sandbox-editor"] {
   display:grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
@@ -42,23 +49,19 @@ height: 100%;
   row-gap: 0;
 }
 
-pre,
-textarea {
-  grid-area:1/1/2/2;
-  margin-bottom:0;
-  min-height:15em;
-  margin: 0;
-  padding: 0;
-}
-
-textarea {
+[part~="textarea"] {
   background-color: transparent;
   color: transparent;
   caret-color: black;
 }
 
-pre,
-textarea {
+[part~="pre"],
+[part~="textarea"] {
+  grid-area:1/1/2/2;
+  margin-bottom:0;
+  min-height:15em;
+  margin: 0;
+  padding: 0;
 	display: block;
 	line-height: 1.5;
 	margin: 0 0 1.5625em;
@@ -69,74 +72,82 @@ textarea {
   border: none;
 }
 
-pre,
-code {
+[part~="pre"],
+[part~="code"] {
 	background-color: #f7f7f7;
 	color: #272727;
 }
 
-pre code {
+[part~="base"] {
 	word-wrap: break-word;
 	color: inherit;
 	font-size: 1em;
 }
 
-pre,
-code,
-textarea {
+
+[part~="sandbox"],
+[part~="base"] {
+  height: 100%;
+}
+
+[part~="pre"],
+[part~="code"],
+[part~="textarea"] {
 	font-family: Menlo, Monaco, "Courier New", monospace;
 	font-size: 0.875em;
 }
 
-pre code {
-}
-
-.sandbox-iframe{
+[part~="sandbox-iframe"] {
   aspect-ratio:auto;
   background-color: #fff;
   margin-bottom: 0;
 }
 
-.sandbox,
-pre,
-code,
-.sandbox-iframe {
+[part~="base"],
+[part~="pre"],
+[part~="code"],
+[part~="sandbox-iframe"] {
   border-radius:.25em;
 }
 
-.sandbox-header,.sandbox-console,.sandbox-console-result{
+[part~='sandbox-header'],
+[part~="sandbox-console"],
+[part~="sandbox-console-result"] {
   background-color:#343d4d;
   color:#fff
 }
 
-.sandbox-header,
-.sandbox-console {
+[part~="sandbox-header"]
+[part~="sandbox-console"] {
   padding-top:.125em;
   padding-bottom:.125em
 }
 
-.sandbox-header{
-  display:flex;
-  justify-content:space-between;
+[part~="sandbox-header"] {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: space-between;
   border-top-left-radius:.25em;
   border-top-right-radius:.25em;
   font-size:.8125em;
 }
 
-.sandbox-controls .btn {
+[part~='sandbox-controls'] button {
   margin-bottom: 0;
 }
 
-.sandbox-console {
+[part~="sandbox-console"] {
   border-bottom-left-radius:.25em;
   border-bottom-right-radius:.25em
 }
 
-.sandbox-console-log{
+[part~="sandbox-console-log"] {
   font-family: Menlo,Monaco,"Courier New",monospace;
   font-size:.875em;
   min-height:1.2em;
 }
+
 .log-warn {
   color:#f9d767
 }
@@ -145,32 +156,34 @@ code,
   color:#f9c8c8
 }
 
-.sandbox-header,
-.sandbox-code,
-.sandbox-result,
-.sandbox-console,
-.sandbox-console-result {
-  padding:.5em
+[part~="sandbox-header"],
+[part~="sandbox-code"],
+[part~="sandbox-iframe-wrapper"],
+[part~="sandbox-console"],
+[part~="sandbox-console-result"] {
+  padding: 0.5em;
 }
 
-.sandbox-content{
+[part~="sandbox-content"] {
   display:grid;
-  grid-template-columns:repeat(2, 1fr)
+  grid-template-columns:repeat(2, 1fr);
+  grid-template-rows: minmax(0, 1fr);
 }
 
-.sandbox-code{
+[part~="sandbox-code"] {
   grid-area:1/1/2/2
 }
 
-.sandbox-result,.sandbox-console-result{
+[part~="sandbox-iframe-wrapper"],
+[part~="sandbox-console-result"] {
   grid-area:1/2/2/3
 }
 
-.sandbox-result {
-  border-left:1px solid #b2b2b2
+[part~="sandbox-iframe-wrapper"] {
+  border-left:1px solid #b2b2b2;
 }
 
-.sandbox-console-result {
+[part~="sandbox-console-result"] {
   border-top:1px solid #1f252f;
   border-bottom-left-radius:0;
 }

@@ -9,8 +9,17 @@
 
       window.customElements.define("lightweight-codepen", LightweightCodepen)
     </script>
+
+    <style>
+      html, body {
+        height: 100%;
+        min-height: 100%;
+        width: 100%;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
-    <lightweight-codepen></lightweight-codepen>
+    <lightweight-codepen style="padding: 8px; height: 100%;"></lightweight-codepen>
   </body>
 </html>

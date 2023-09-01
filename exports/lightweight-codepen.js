@@ -21,9 +21,11 @@ HighlightJS.registerLanguage('css', CSS);
 
 
 export default class LightweightCodepen extends LitElement {
+  // Static
+
   static styles = [theme, styles]
 
-  static grammarMap = {
+  static languageMap = {
     html: "xml",
     css: "css",
     js: "javascript"
@@ -37,42 +39,105 @@ export default class LightweightCodepen extends LitElement {
     iframeUrl: { state: true }
   }
 
+  // Overrides
+
+  /**
+   * @override
+   */
+  constructor() {
+    super()
+
+    /**
+     * @type {Array<SupportedLanguages>}
+     */
+    this.openLanguages = []
+
+    /**
+     * @type {Array<SupportedLanguages>}
+     */
+    this.languages = []
+
+    /**
+     * @type {"console" | "iframe"}
+     */
+    this.result = this.getAttribute('result') === "console" ? 'console' : 'iframe',
+
+    /**
+     * @type {"enabled" | "disabled"}
+     */
+    this.console = "disabled"
+
+    /**
+     * @type {string}
+     */
+    this.consoleText = ""
+
+    /**
+     * @type {ReturnType<typeof setTimeout> | null}
+     */
+    this.debounce = null
+
+    this.htmlReset = ""
+    this.cssReset = ""
+    this.jsReset = ""
+
+    this.removeAttribute('hidden')
+
+    this.addEventListener('input', this.inputHandler)
+    this.addEventListener('keydown', this.keydownHandler)
+  }
+
+  /**
+   * @override
+   */
+  connectedCallback () {
+    super.connectedCallback()
+
+    setTimeout(() => {
+      this.htmlReset = this.htmlTextArea?.value || ""
+      this.cssReset = this.cssTextArea?.value || ""
+      this.jsReset = this.jsTextArea?.value || ""
+    })
+  }
+
+  /** Getters / Setters */
+
+  /**
+   * @returns {null | undefined | HTMLIFrameElement}
+   */
   get iframeElem () {
     return this.shadowRoot?.querySelector("iframe")
   }
 
   /**
-   * @param {SupportedLanguages} language
+   * @return {undefined | null | HTMLInputElement}
    */
-  renderCode (language) {
-    let fullLanguage = language.toUpperCase()
+  get htmlTextArea () {
+    return this.shadowRoot?.querySelector("[part~='textarea-html']")
+  }
 
-    const code = this[`${language}Code`]
-    const grammar = /** @type {typeof LightweightCodepen} */ (this.constructor).grammarMap[language]
+  /**
+   * @return {undefined | null | HTMLInputElement}
+   */
+  get cssTextArea () {
+    return this.shadowRoot?.querySelector("[part~='textarea-css']")
+  }
 
-    const open = this.openLanguages.includes(language)
-
-		return html`
-      <details ?open=${open} part="details details-${language}">
-				<summary part="summary summary-${language}">
-          ${fullLanguage}
-        </summary>
-				<label for="sandbox-${language}" class="visually-hidden">${fullLanguage} code</label>
-				<div class="sandbox-editor" part="editor">
-          <!-- This is where the fancy syntax highlighting comes in -->
-					<pre class="sandbox-mirror" aria-hidden="true" part="pre pre-${language}"><code part="code code-${language}" id="sandbox-${language}-mirror" class="language-${language}">${code ? unsafeHTML(this.highlightCode({ code, grammar })) : ""}</code></pre>
-					<textarea part="textarea textarea-${language}" spellcheck="false" autocorrect="off" autocapitalize="off" translate="no" class="sandbox-text" id="sandbox-${language}"></textarea>
-				</div>
-			</details>
-		`
+  /**
+   * @return {undefined | null | HTMLInputElement}
+   */
+  get jsTextArea () {
+    return this.shadowRoot?.querySelector("[part~='textarea-js']")
   }
 
   /**
    * Override this to use a highlighter of your choice.
-   * @param {{code: string, grammar: string}} options
+   * @param {{code: string, language: SupportedLanguages}} options
    */
-  highlightCode ({ code, grammar }) {
-    return HighlightJS.highlight(code, {language: grammar}).value
+  highlightCode ({ code, language }) {
+    const highlightJsLanguage = /** @type {typeof LightweightCodepen} */ (this.constructor).languageMap[language]
+
+    return HighlightJS.highlight(code, {language: highlightJsLanguage}).value
   }
 
   updateIframeContent () {
@@ -89,7 +154,7 @@ export default class LightweightCodepen extends LitElement {
     this.htmlCode = this.htmlTextArea?.value
     this.jsCode = this.jsTextArea?.value
 
-    let page = [`
+    let page = `
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}<\/style>
@@ -101,12 +166,14 @@ export default class LightweightCodepen extends LitElement {
           <\/script>
         </body>
       </html>
-    `];
+    `
 
-    const blob = new Blob(page,{type:"text/html"});
-    let blobUrl = URL.createObjectURL(blob);
-    this.shadowRoot?.querySelector("iframe")?.setAttribute("src", blobUrl)
-    setTimeout(URL.revokeObjectURL, 5000, blobUrl);
+    const iframe = this.shadowRoot?.querySelector("iframe")
+    if (iframe && iframe.contentWindow) {
+	    iframe.contentWindow.document.open();
+	    iframe.contentWindow.document.writeln(page);
+	    iframe.contentWindow.document.close();
+	  }
   }
 
   inputHandler () {
@@ -153,7 +220,7 @@ export default class LightweightCodepen extends LitElement {
     const key = evt.key
 
     if (
-      target.matches('.sandbox-text') &&
+      target.matches('textarea') &&
       this.contains(target) &&
       ["Tab", "Escape"].includes(key)
     ) {
@@ -171,27 +238,6 @@ export default class LightweightCodepen extends LitElement {
         e.firstElementChild.focus()
       }
     }
-  }
-
-  /**
-   * @return {undefined | null | HTMLInputElement}
-   */
-  get htmlTextArea () {
-    return this.shadowRoot?.querySelector("#sandbox-html")
-  }
-
-  /**
-   * @return {undefined | null | HTMLInputElement}
-   */
-  get cssTextArea () {
-    return this.shadowRoot?.querySelector("#sandbox-css")
-  }
-
-  /**
-   * @return {undefined | null | HTMLInputElement}
-   */
-  get jsTextArea () {
-    return this.shadowRoot?.querySelector("#sandbox-js")
   }
 
   // setupIframeLogging() {
@@ -221,30 +267,42 @@ export default class LightweightCodepen extends LitElement {
   //   )
   // }
 
+  // Rendering
   renderConsole () {
-    return html`<div class="sandbox-console-log"></div>`
+    return html`<div part="sandbox-console-log"></div>`
   }
 
+  /**
+   * @override
+   */
   render () {
 		return html`
-      <div class="full-width">
-			  <div class="sandbox container container-large">
-				  <div class="sandbox-header">
-					  <strong class="sandbox-label">Code Sandbox</strong>
-					  <span class="sandbox-controls">
-						  <button @click=${this.fallbackToResetValues}>Reset</button>
-						  ${when(this.console === "enabled", () => html`<button class="btn btn-muted btn-small" data-click="clear">Clear Console</button>`)}
-					</span>
+      <div part="base">
+			  <div part="sandbox">
+				  <div part="sandbox-header">
+            <slot name="title">
+					    <strong>
+                Code Editor
+              </strong>
+            </slot>
+
+					  <span part="sandbox-controls">
+						  <button part="sandbox-controls-button sandbox-reset" @click=${this.fallbackToResetValues}>
+                Reset
+              </button>
+
+						  ${when(this.console === "enabled", () => html`<button @click={}>Clear Console</button>`)}
+					  </span>
 				</div>
-				<div class="sandbox-content">
-					<div class="sandbox-code">
+				<div part="sandbox-content">
+					<div part="sandbox-code">
             ${this.renderCode('html')}
             ${this.renderCode('css')}
             ${this.renderCode('js')}
 					</div>
-					<div class="${ 'iframe' === this.result ? 'sandbox-result' : 'sandbox-console-result' }">
+					<div part="sandbox-iframe-wrapper">
 						<iframe
-              class="sandbox-iframe"
+              part="sandbox-iframe"
               frameborder="0"
               scrolling="no"
               ?hidden=${this.result === "console"}
@@ -264,61 +322,32 @@ export default class LightweightCodepen extends LitElement {
             `
         )}
         -->
-
 			</div>
 		</div>`
 	}
 
-  constructor() {
-    super()
+  /**
+   * @param {SupportedLanguages} language
+   */
+  renderCode (language) {
+    let fullLanguage = language.toUpperCase()
 
-    /**
-     * @type {Array<SupportedLanguages>}
-     */
-    this.openLanguages = []
+    const code = this[`${language}Code`]
+    const open = this.openLanguages.includes(language)
 
-    /**
-     * @type {Array<SupportedLanguages>}
-     */
-    this.languages = []
-
-    /**
-     * @type {"console" | "iframe"}
-     */
-    this.result = this.getAttribute('result') === "console" ? 'console' : 'iframe',
-
-    /**
-     * @type {"enabled" | "disabled"}
-     */
-    this.console = "disabled"
-
-    /**
-     * @type {string}
-     */
-    this.consoleText = ""
-
-    /**
-     * @type {ReturnType<typeof setTimeout> | null}
-     */
-    this.debounce = null
-
-    this.htmlReset = ""
-    this.cssReset = ""
-    this.jsReset = ""
-
-    this.removeAttribute('hidden')
-
-    this.addEventListener('input', this.inputHandler)
-    this.addEventListener('keydown', this.keydownHandler)
+		return html`
+      <details ?open=${open} part="details details-${language}">
+				<summary part="summary summary-${language}">
+          ${fullLanguage}
+        </summary>
+				<label for="sandbox-${language}" class="visually-hidden">${fullLanguage} code</label>
+				<div class="sandbox-editor" part="sandbox-editor">
+          <!-- This is where the fancy syntax highlighting comes in -->
+					<pre aria-hidden="true" part="pre pre-${language}"><code part="code code-${language}" class="language-${language}">${code ? unsafeHTML(this.highlightCode({ code, language })) : ""}</code></pre>
+					<textarea part="textarea textarea-${language}" spellcheck="false" autocorrect="off" autocapitalize="off" translate="no"></textarea>
+				</div>
+			</details>
+		`
   }
 
-  connectedCallback () {
-    super.connectedCallback()
-
-    setTimeout(() => {
-      this.htmlReset = this.htmlTextArea?.value || ""
-      this.cssReset = this.cssTextArea?.value || ""
-      this.jsReset = this.jsTextArea?.value || ""
-    })
-  }
 }
