@@ -19,6 +19,7 @@ HighlightJS.registerLanguage('css', CSS);
 
 /**
  * @typedef {"html" | "css" | "js"} SupportedLanguages
+ * @typedef {HTMLTextAreaElement | HTMLScriptElement | HTMLTemplateElement} SafeTemplateElements
  */
 
 
@@ -437,9 +438,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     const codeType = /** @type {SupportedLanguages} */ (slotName)
 
-    const templates = /** @type {HTMLTemplateElement[]} */(/** @type {unknown} */
-      (slot.assignedElements({flatten: true}).filter((el) => /** */ el instanceof HTMLTemplateElement))
-    )
+    const templates = slot.assignedElements({flatten: true})
 
     const code = dedent(this.escapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
 
