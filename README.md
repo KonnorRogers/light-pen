@@ -35,7 +35,7 @@ That's it!
 
 ```html
 <light-pen>
-  <template slot="html">
+  <script type="text/plain" slot="html">
     <div style="color: red;">
       <div>Hi there friends</div>
     </div>
@@ -43,17 +43,17 @@ That's it!
     <p>
       Sup dude
     </p>
-  </template>
+  </script type="text/plain">
 
-  <template slot="css">
+  <script type="text/plain" slot="css">
     p {
       color: green;
     }
-  </template>
+  </script type="text/plain">
 
-  <template slot="js">
+  <script type="text/plain" slot="js">
     console.log("Hi")
-  </template>
+  </script type="text/plain">
 </light-pen>
 ```
 
