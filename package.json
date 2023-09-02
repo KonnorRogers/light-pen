@@ -2,9 +2,9 @@
   "name": "light-pen",
   "version": "0.0.0",
   "description": "A variety of simple components that match an aria-role",
-  "main": "./exports/light-pen.js",
-  "module": "./exports/light-pen.js",
-  "types": "./exports/light-pen.d.ts",
+  "main": "./exports/index.js",
+  "module": "./exports/index.js",
+  "types": "./exports/index.d.ts",
   "exports": {
     ".": "./exports/index.js",
     "./package.json": "./package.json",
@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "start": "web-dev-server --watch",
-    "build": "rimraf -g \"./exports/**/*.d.ts\" && tsc",
+    "build": "rimraf -g \"./exports/**/*.d.ts\" && tsc && custom-elements-manifest analyze --litelement",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
     "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",
     "deploy:major": "npm run build && npm version major && npm publish && git push --follow-tags",
@@ -50,12 +50,15 @@
     "@web/dev-server-rollup": "^0.5.2",
     "@web/test-runner": "^0.17.1",
     "@web/test-runner-playwright": "^0.10.1",
+    "custom-elements-manifest": "^2.0.0",
     "light-pen": "link:.",
     "rimraf": "^5.0.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
     "highlight.js": "^11.8.0",
-    "lit": "^2.8.0"
-  }
+    "lit": "^2.8.0",
+    "web-component-define": "^2.0.10"
+  },
+  "customElements": "custom-elements.json"
 }

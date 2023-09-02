@@ -11,6 +11,9 @@ dependencies:
   lit:
     specifier: ^2.8.0
     version: 2.8.0
+  web-component-define:
+    specifier: ^2.0.10
+    version: 2.0.10
 
 devDependencies:
   '@open-wc/testing-helpers':
@@ -34,6 +37,9 @@ devDependencies:
   '@web/test-runner-playwright':
     specifier: ^0.10.1
     version: 0.10.1
+  custom-elements-manifest:
+    specifier: ^2.0.0
+    version: 2.0.0
   light-pen:
     specifier: link:.
     version: 'link:'
@@ -337,7 +343,6 @@ packages:
 
   /@open-wc/dedupe-mixin@1.4.0:
     resolution: {integrity: sha512-Sj7gKl1TLcDbF7B6KUhtvr+1UCxdhMbNY5KxdU5IfMFWqL8oy1ZeAcCANjoB1TL0AJTcPmcCFsCbHf8X2jGDUA==}
-    dev: true
 
   /@open-wc/scoped-elements@2.2.0:
     resolution: {integrity: sha512-Qe+vWsuVHFzUkdChwlmJGuQf9cA3I+QOsSHULV/6qf6wsqLM2/32svNRH+rbBIMwiPEwzZprZlkvkqQRucYnVA==}
@@ -1225,6 +1230,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+    dev: true
+
+  /custom-elements-manifest@2.0.0:
+    resolution: {integrity: sha512-1MmhBRszwnNYqn56nkMeHXn/Zlh998+6Yal3wedbXI7NzKPG02GDgjspdN1NiuDtt2yb5n94JvFwPOF7Prnocg==}
     dev: true
 
   /data-uri-to-buffer@5.0.1:
@@ -2787,6 +2796,13 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /web-component-define@2.0.10:
+    resolution: {integrity: sha512-gwkjTFdG8eE8fxI4+RZUCQRy06SSSkCyLpQ1YSCsA+z8ZLlnmqLX/3B3WD2ZraVRtyje3hLXS8bxL8CK1/bZYQ==}
+    dependencies:
+      '@lit/reactive-element': 1.6.3
+      '@open-wc/dedupe-mixin': 1.4.0
+    dev: false
 
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
