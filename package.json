@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "start": "web-dev-server --watch",
-    "build": "rimraf -g \"./exports/**/*.d.ts\" && tsc && custom-elements-manifest analyze --litelement",
+    "build": "rimraf -g \"./{exports,internal}/**/*.d.ts\" && tsc && custom-elements-manifest analyze --litelement",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
     "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",
     "deploy:major": "npm run build && npm version major && npm publish && git push --follow-tags",
@@ -43,6 +43,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.8.4",
     "@open-wc/testing-helpers": "^2.3.0",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@web/dev-server": "^0.3.1",
