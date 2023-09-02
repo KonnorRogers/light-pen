@@ -65,12 +65,21 @@ That's it!
 </light-pen>
 ```
 
+### Opening languages by default
+
+`<light-pen>` Takes a string of comma separated languages to open on initial render.
+
+```
+<light-pen open-languages="html,css,js">
+</light-pen>
+```
+
 More to come for more docs coming on how to change things!
 
 ## Roadmap
 
 - [ ] - Implement an extendable `LightPenBase` which includes a pluggable syntax highlighter and theme.
-- [ ] - Implement `<textarea>` rendering hooks to add CodeMirror for more robuster setups.
+- [ ] - Implement `<textarea>` rendering hooks to add CodeMirror for more robuste setups.
 - [ ] - Add vertical resizing of `<textarea>`
 - [ ] - More documentation around customization.
 - [ ] - Add a console logger

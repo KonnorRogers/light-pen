@@ -44,7 +44,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
   }
 
   static properties = {
-    openLanguages: { type: Array, reflect: true },
+    openLanguages: { reflect: true, attribute: "open-languages" },
     resizePosition: { attribute: "resize-position", reflect: true, type: Number },
     console: { reflect: true },
     languages: { state: true, type: Array },
@@ -86,10 +86,11 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     /**
      * Languages to have open on initial render
+     * Comma separated list of elements to open on initial render "html,css,js" to open all.
      * @reflect
-     * @type {Array<SupportedLanguages>}
+     * @type {string}
      */
-    this.openLanguages = []
+    this.openLanguages = ""
 
     /**
      * @type {Array<SupportedLanguages>}
@@ -578,7 +579,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     // @ts-expect-error
     code = code ? unsafeHTML(this.highlightCode({ code, language })) : ""
-    const open = this.openLanguages.includes(language)
+    const open = this.openLanguages.split(",").includes(language)
 
 		return html`
       <details ?open=${open} part="details details-${language}">
