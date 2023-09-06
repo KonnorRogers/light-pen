@@ -51,9 +51,11 @@ export default class LightPen extends DefineableMixin(LitElement) {
     languages: { state: true, type: Array },
     cssCode: { state: true },
     htmlCode: { state: true },
-    jsCode: { state: true }
+    jsCode: { state: true },
+    htmlResizeObserver: { state: true },
+    jsResizeObserver: { state: true },
+    cssResizeObserver: { state: true }
   }
-
   // Overrides
 
   /**
@@ -69,14 +71,9 @@ export default class LightPen extends DefineableMixin(LitElement) {
      */
     this.resizeObserver = new ResizeObserver(entries => this.handleResize(entries));
 
-    /**
-     *
-     */
-    // this.textAreasResizeObservers = {
-    //   html: new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    //   js: new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    //   css: new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    // }
+    this.htmlResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+    this.jsResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+    this.cssResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
 
     /**
      * @attr
@@ -162,6 +159,17 @@ export default class LightPen extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @param {ResizeObserverEntry[]} entries
+   */
+  handleTextAreaResize (entries) {
+    const { target } = entries[0]
+    const { top, bottom } = entries[0].contentRect;
+
+    // @ts-expect-error
+    target.parentElement?.querySelector("pre").style.setProperty("--textarea-height", `${top + bottom}px`)
+  }
+
+  /**
    * Sets an initial width so we dont need to keep computing getBoundingClientRect
    */
   updateCachedWidth () {
@@ -195,7 +203,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
   highlightCode ({ code, language }) {
     const highlightJsLanguage = /** @type {typeof LightPen} */ (this.constructor).languageMap[language]
 
-    code = this.escapeCharacters(code)
+    code = this.unescapeCharacters(code)
     code = this.injectNewLine(code)
 
     return HighlightJS.highlight(code, {language: highlightJsLanguage}).value
@@ -204,9 +212,9 @@ export default class LightPen extends DefineableMixin(LitElement) {
   /**
    * @param {string} text
    */
-  escapeCharacters (text) {
+  unescapeCharacters (text) {
     // Update code
-    return text.replace(new RegExp("&", "g"), "&").replace(new RegExp("<", "g"), "<"); /* Global RegExp */
+    return text.replaceAll("&gt;", ">").replaceAll("&lt;", "<"); /* Global RegExp */
   }
 
   /**
@@ -275,12 +283,21 @@ export default class LightPen extends DefineableMixin(LitElement) {
     super.willUpdate(changedProperties)
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback()
+
+    this.htmlTextArea && this.htmlResizeObserver.unobserve(this.htmlTextArea)
+    this.cssTextArea && this.cssResizeObserver.unobserve(this.cssTextArea)
+    this.jsTextArea && this.jsResizeObserver.unobserve(this.jsTextArea)
+  }
+
 
   /**
    * @param {HTMLTextAreaElement} textarea
    */
   htmlTextAreaChanged (textarea) {
     this.htmlTextArea = textarea
+    this.htmlResizeObserver.observe(textarea)
   }
 
   /**
@@ -288,6 +305,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   cssTextAreaChanged (textarea) {
     this.cssTextArea = textarea
+    this.cssResizeObserver.observe(textarea)
   }
 
   /**
@@ -295,6 +313,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   jsTextAreaChanged (textarea) {
     this.jsTextArea = textarea
+    this.jsResizeObserver.observe(textarea)
   }
 
   /**
@@ -440,7 +459,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     const templates = slot.assignedElements({flatten: true})
 
-    const code = dedent(this.escapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
+    const code = dedent(this.unescapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
 
     this[`${codeType}Code`] = code
 
