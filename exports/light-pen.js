@@ -72,11 +72,11 @@ export default class LightPen extends DefineableMixin(LitElement) {
     /**
      *
      */
-    // this.textAreasResizeObservers = {
-    //   html: new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    //   js: new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    //   css: new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    // }
+    this.textAreasResizeObservers = {
+      html: new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+      js: new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+      css: new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+    }
 
     /**
      * @attr
@@ -162,6 +162,17 @@ export default class LightPen extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @param {ResizeObserverEntry[]} entries
+   */
+  handleTextAreaResize (entries) {
+    const { target } = entries[0]
+    const { top, bottom } = entries[0].contentRect;
+
+    // @ts-expect-error
+    target.parentElement?.querySelector("pre").style.setProperty("--textarea-height", `${top + bottom}px`)
+  }
+
+  /**
    * Sets an initial width so we dont need to keep computing getBoundingClientRect
    */
   updateCachedWidth () {
@@ -195,7 +206,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
   highlightCode ({ code, language }) {
     const highlightJsLanguage = /** @type {typeof LightPen} */ (this.constructor).languageMap[language]
 
-    code = this.escapeCharacters(code)
+    code = this.unescapeCharacters(code)
     code = this.injectNewLine(code)
 
     return HighlightJS.highlight(code, {language: highlightJsLanguage}).value
@@ -204,9 +215,9 @@ export default class LightPen extends DefineableMixin(LitElement) {
   /**
    * @param {string} text
    */
-  escapeCharacters (text) {
+  unescapeCharacters (text) {
     // Update code
-    return text.replace(new RegExp("&", "g"), "&").replace(new RegExp("<", "g"), "<"); /* Global RegExp */
+    return text.replaceAll("&gt;", ">").replaceAll("&lt;", "<"); /* Global RegExp */
   }
 
   /**
@@ -281,6 +292,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   htmlTextAreaChanged (textarea) {
     this.htmlTextArea = textarea
+    this.textAreasResizeObservers.html.observe(textarea)
   }
 
   /**
@@ -288,6 +300,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   cssTextAreaChanged (textarea) {
     this.cssTextArea = textarea
+    this.textAreasResizeObservers.css.observe(textarea)
   }
 
   /**
@@ -295,6 +308,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   jsTextAreaChanged (textarea) {
     this.jsTextArea = textarea
+    this.textAreasResizeObservers.js.observe(textarea)
   }
 
   /**
@@ -440,7 +454,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     const templates = slot.assignedElements({flatten: true})
 
-    const code = dedent(this.escapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
+    const code = dedent(this.unescapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
 
     this[`${codeType}Code`] = code
 

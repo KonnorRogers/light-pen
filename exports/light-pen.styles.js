@@ -61,8 +61,12 @@ export const styles = css`
   color: transparent;
   background-color: transparent;
   caret-color: black;
-  resize: none;
+  resize: vertical;
   z-index: 1;
+}
+
+[part~="pre"] {
+  height: var(--textarea-height, 33%);
 }
 
 [part~="pre"],
@@ -182,6 +186,9 @@ export const styles = css`
 [part~="sandbox-code"] {
   max-height: 100%;
   overflow-y: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
 }
 
 [part~="panel-resizer"] {
