@@ -167,6 +167,9 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     // @ts-expect-error
     target.parentElement?.querySelector("pre").style.setProperty("--textarea-height", `${top + bottom}px`)
+
+    // One day we'll allow the textarea to resize the width.
+    // target.parentElement?.querySelector("pre").style.setProperty("--textarea-width", `${left + right}px`)
   }
 
   /**
@@ -214,7 +217,8 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   unescapeCharacters (text) {
     // Update code
-    return text.replaceAll("&gt;", ">").replaceAll("&lt;", "<"); /* Global RegExp */
+    // return text.replaceAll("&gt;", ">").replaceAll("&lt;", "<"); /* Global RegExp */
+    return text.replaceAll("&lt;/script>", "</script>")
   }
 
   /**
