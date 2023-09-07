@@ -5,6 +5,20 @@ on:
     branches:
       - main # deploy main. If your branch is `master`, you'll have to replace that throughout this file.
   pull_request: # This will publish a site preview on every pull request, and also run the build command to test if the site is broken.
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -13,6 +27,8 @@ jobs:
       matrix:
         node-version: [18]
     env:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
       PR_PATH: pull/${{github.event.number}}
     steps:
       - name: Comment on PR
@@ -51,21 +67,21 @@ jobs:
       - name: Build website
         run: pnpm run build:site
 
-      - name: Deploy if this is the `main` branch
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy with gh-pages
         if: github.ref == 'refs/heads/main'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          # cname: ${{ env.DOMAIN }} # TODO you need to set this if you're using a custom domain. Otherwise you can remove it.
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          gh-pages -d ./_site -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Deploy to PR preview
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy preview with gh-pages
         if: github.ref != 'refs/heads/main'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          destination_dir: ${{ env.PR_PATH }} # TODO you need to set this if you're using a custom domain. Otherwise you can remove it.
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          gh-pages -d ./_site --dest "${{ env.PR_PATH }}" -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update comment
         uses: hasura/comment-progress@v2.2.0
