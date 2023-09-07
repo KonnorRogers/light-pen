@@ -43,17 +43,17 @@ That's it!
     <p>
       Sup dude
     </p>
-  </script type="text/plain">
+  </script>
 
   <script type="text/plain" slot="css">
     p {
       color: green;
     }
-  </script type="text/plain">
+  </script>
 
   <script type="text/plain" slot="js">
     console.log("Hi")
-  </script type="text/plain">
+  </script>
 </light-pen>
 ```
 
