@@ -54,6 +54,7 @@ export const styles = css`
   row-gap: 0;
   position: relative;
   padding-top: 3px;
+  max-height: var(--textarea-height, 33vh);
 }
 
 [part~="textarea"] {
@@ -66,7 +67,8 @@ export const styles = css`
 }
 
 [part~="pre"] {
-  height: var(--textarea-height, 33%);
+  height: var(--textarea-height, auto);
+  width: var(--textarea-width, auto);
 }
 
 [part~="pre"],
@@ -78,13 +80,19 @@ export const styles = css`
   padding: 0;
 	display: block;
 	line-height: 1.5;
-	word-break: break-all;
   padding: 8px;
   border: none;
   overflow: auto;
-  white-space: pre;
-  tab-size: 2;
   position: relative;
+
+  /* this creates line-wrapping. */
+	word-break: break-word;
+  white-space: pre-wrap;
+
+  /* No wrapping */
+	/* word-break: break-all; */
+  /* white-space: pre; */
+  tab-size: 2;
 }
 
 [part~="details"]:not(:first-child) {

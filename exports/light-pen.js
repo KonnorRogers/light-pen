@@ -69,11 +69,11 @@ export default class LightPen extends DefineableMixin(LitElement) {
      * @prop
      * @type {ResizeObserver}
      */
-    this.resizeObserver = new ResizeObserver(entries => this.handleResize(entries));
+    this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
 
-    this.htmlResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    this.jsResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    this.cssResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+    this.htmlResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
+    this.jsResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
+    this.cssResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
 
     /**
      * @attr
@@ -145,17 +145,19 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   connectedCallback () {
     super.connectedCallback()
-    this.updateComplete.then(() => this.resizeObserver.observe(this));
 
     this.updateCachedWidth()
-    setTimeout(() => {
+
+    this.updateComplete.then(() => {
+      this.resizeObserver.observe(this)
+
       /**
        * Grab reset values so we can reset the inputs
        */
       this.htmlReset = this.htmlTextArea?.value || ""
       this.cssReset = this.cssTextArea?.value || ""
       this.jsReset = this.jsTextArea?.value || ""
-    })
+    });
   }
 
   /**
@@ -163,20 +165,23 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   handleTextAreaResize (entries) {
     const { target } = entries[0]
-    const { top, bottom } = entries[0].contentRect;
+    const { left, right, top, bottom } = entries[0].contentRect;
+    const width = left + right
+    const height = top + bottom
 
     // @ts-expect-error
-    target.parentElement?.querySelector("pre").style.setProperty("--textarea-height", `${top + bottom}px`)
+    target.parentElement.style.setProperty("--textarea-height", `${height}px`)
 
     // One day we'll allow the textarea to resize the width.
-    // target.parentElement?.querySelector("pre").style.setProperty("--textarea-width", `${left + right}px`)
+    // target.parentElement.style.setProperty("--textarea-width", `${width}px`)
   }
 
   /**
    * Sets an initial width so we dont need to keep computing getBoundingClientRect
    */
   updateCachedWidth () {
-    const { width } = this.getBoundingClientRect()
+    const { left, right } = this.getBoundingClientRect()
+    const width = left + right
     this.cachedWidth = width
   }
 
@@ -184,8 +189,9 @@ export default class LightPen extends DefineableMixin(LitElement) {
    * @param {ResizeObserverEntry[]} entries
    */
   handleResize (entries) {
-    const { width } = entries[0].contentRect;
+    const { left, right } = entries[0].contentRect;
 
+    const width = left + right
     // Resize when a primary panel is set
     this.cachedWidth = width
   }
@@ -290,16 +296,16 @@ export default class LightPen extends DefineableMixin(LitElement) {
   disconnectedCallback() {
     super.disconnectedCallback()
 
-    this.htmlTextArea && this.htmlResizeObserver.unobserve(this.htmlTextArea)
-    this.cssTextArea && this.cssResizeObserver.unobserve(this.cssTextArea)
-    this.jsTextArea && this.jsResizeObserver.unobserve(this.jsTextArea)
+    this.htmlTextArea && this.htmlResizeObserver.disconnect()
+    this.cssTextArea && this.cssResizeObserver.disconnect()
+    this.jsTextArea && this.jsResizeObserver.disconnect()
   }
-
 
   /**
    * @param {HTMLTextAreaElement} textarea
    */
   htmlTextAreaChanged (textarea) {
+    if (!textarea) return
     this.htmlTextArea = textarea
     this.htmlResizeObserver.observe(textarea)
   }
@@ -308,6 +314,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    * @param {HTMLTextAreaElement} textarea
    */
   cssTextAreaChanged (textarea) {
+    if (!textarea) return
     this.cssTextArea = textarea
     this.cssResizeObserver.observe(textarea)
   }
@@ -316,6 +323,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    * @param {HTMLTextAreaElement} textarea
    */
   jsTextAreaChanged (textarea) {
+    if (!textarea) return
     this.jsTextArea = textarea
     this.jsResizeObserver.observe(textarea)
   }
