@@ -27,8 +27,6 @@ jobs:
       matrix:
         node-version: [18]
     env:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
       PR_PATH: pull/${{github.event.number}}
     steps:
       - name: Comment on PR
