@@ -9,6 +9,7 @@ import HTML from 'highlight.js/lib/languages/xml';
 import CSS from 'highlight.js/lib/languages/css';
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
+import { DefineableMixin } from "web-component-define";
 
 
 // Then register the languages you need
@@ -18,11 +19,22 @@ HighlightJS.registerLanguage('css', CSS);
 
 /**
  * @typedef {"html" | "css" | "js"} SupportedLanguages
+ * @typedef {HTMLTextAreaElement | HTMLScriptElement | HTMLTemplateElement} SafeTemplateElements
  */
 
 
-export default class LightPen extends LitElement {
+/**
+ * @customElement
+ * @tagName lit-pen
+ * @slot html - HTML to insert
+ * @slot css - CSS to insert
+ * @slot js - JavaScript to insert
+ * @slot title - The title to appear at the top of the editor
+ *
+ */
+export default class LightPen extends DefineableMixin(LitElement) {
   // Static
+  static baseName = "light-pen"
 
   static styles = [theme, styles]
 
@@ -33,16 +45,17 @@ export default class LightPen extends LitElement {
   }
 
   static properties = {
-    languages: { state: true, type: Array },
-    openLanguages: { type: Array, reflect: true },
+    openLanguages: { reflect: true, attribute: "open-languages" },
+    resizePosition: { attribute: "resize-position", reflect: true, type: Number },
     console: { reflect: true },
-    iframeUrl: { state: true },
-    resizePosition: { state: true },
+    languages: { state: true, type: Array },
     cssCode: { state: true },
     htmlCode: { state: true },
-    jsCode: { state: true }
+    jsCode: { state: true },
+    htmlResizeObserver: { state: true },
+    jsResizeObserver: { state: true },
+    cssResizeObserver: { state: true }
   }
-
   // Overrides
 
   /**
@@ -53,19 +66,29 @@ export default class LightPen extends LitElement {
 
 
     /**
+     * @prop
      * @type {ResizeObserver}
      */
     this.resizeObserver = new ResizeObserver(entries => this.handleResize(entries));
 
+    this.htmlResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+    this.jsResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+    this.cssResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+
     /**
+     * @attr
+     * @reflect
      * @type {number}
      */
     this.resizePosition = 50
 
     /**
-     * @type {Array<SupportedLanguages>}
+     * Languages to have open on initial render
+     * Comma separated list of elements to open on initial render "html,css,js" to open all.
+     * @reflect
+     * @type {string}
      */
-    this.openLanguages = []
+    this.openLanguages = ""
 
     /**
      * @type {Array<SupportedLanguages>}
@@ -73,41 +96,48 @@ export default class LightPen extends LitElement {
     this.languages = ["html", "css", "js"]
 
     /**
+     * @reflect
      * @type {"console" | "iframe"}
      */
     this.result = this.getAttribute('result') === "console" ? 'console' : 'iframe',
 
     /**
+     * @property
      * @type {"enabled" | "disabled"}
      */
     this.console = "disabled"
 
     /**
+     * @property
      * @type {string}
      */
     this.consoleText = ""
 
     /**
+     * @property
      * @type {string}
      */
     this.htmlReset = ""
 
     /**
+     * @property
      * @type {string}
      */
     this.cssReset = ""
 
     /**
+     * @property
      * @type {string}
      */
     this.jsReset = ""
 
     /**
+     * @property
      * @type {number}
      */
     this.cachedWidth = 0
 
-    this.removeAttribute('hidden')
+
   }
 
   /**
@@ -128,6 +158,23 @@ export default class LightPen extends LitElement {
     })
   }
 
+  /**
+   * @param {ResizeObserverEntry[]} entries
+   */
+  handleTextAreaResize (entries) {
+    const { target } = entries[0]
+    const { top, bottom } = entries[0].contentRect;
+
+    // @ts-expect-error
+    target.parentElement?.querySelector("pre").style.setProperty("--textarea-height", `${top + bottom}px`)
+
+    // One day we'll allow the textarea to resize the width.
+    // target.parentElement?.querySelector("pre").style.setProperty("--textarea-width", `${left + right}px`)
+  }
+
+  /**
+   * Sets an initial width so we dont need to keep computing getBoundingClientRect
+   */
   updateCachedWidth () {
     const { width } = this.getBoundingClientRect()
     this.cachedWidth = width
@@ -157,9 +204,9 @@ export default class LightPen extends LitElement {
    * @param {{code: string, language: SupportedLanguages}} options
    */
   highlightCode ({ code, language }) {
-    const highlightJsLanguage = /** @type {typeof LightweightCodepen} */ (this.constructor).languageMap[language]
+    const highlightJsLanguage = /** @type {typeof LightPen} */ (this.constructor).languageMap[language]
 
-    code = this.escapeCharacters(code)
+    code = this.unescapeCharacters(code)
     code = this.injectNewLine(code)
 
     return HighlightJS.highlight(code, {language: highlightJsLanguage}).value
@@ -168,9 +215,10 @@ export default class LightPen extends LitElement {
   /**
    * @param {string} text
    */
-  escapeCharacters (text) {
+  unescapeCharacters (text) {
     // Update code
-    return text.replace(new RegExp("&", "g"), "&").replace(new RegExp("<", "g"), "<"); /* Global RegExp */
+    // return text.replaceAll("&gt;", ">").replaceAll("&lt;", "<"); /* Global RegExp */
+    return text.replaceAll("&lt;/script>", "</script>")
   }
 
   /**
@@ -231,7 +279,20 @@ export default class LightPen extends LitElement {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
     }
+
+    if (changedProperties.has("resizePosition")) {
+      this.updateResizePosition()
+    }
+
     super.willUpdate(changedProperties)
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback()
+
+    this.htmlTextArea && this.htmlResizeObserver.unobserve(this.htmlTextArea)
+    this.cssTextArea && this.cssResizeObserver.unobserve(this.cssTextArea)
+    this.jsTextArea && this.jsResizeObserver.unobserve(this.jsTextArea)
   }
 
 
@@ -240,6 +301,7 @@ export default class LightPen extends LitElement {
    */
   htmlTextAreaChanged (textarea) {
     this.htmlTextArea = textarea
+    this.htmlResizeObserver.observe(textarea)
   }
 
   /**
@@ -247,6 +309,7 @@ export default class LightPen extends LitElement {
    */
   cssTextAreaChanged (textarea) {
     this.cssTextArea = textarea
+    this.cssResizeObserver.observe(textarea)
   }
 
   /**
@@ -254,6 +317,7 @@ export default class LightPen extends LitElement {
    */
   jsTextAreaChanged (textarea) {
     this.jsTextArea = textarea
+    this.jsResizeObserver.observe(textarea)
   }
 
   /**
@@ -283,12 +347,11 @@ export default class LightPen extends LitElement {
       }
 
       this.resizePosition = clamp(newPosition, 0, 100);
-      this.updateResizePosition()
     }
   }
 
-  updateResizePosition () {
-    const startWidth = this.resizePosition
+  updateResizePosition (resizePosition = this.resizePosition) {
+    const startWidth = resizePosition
 
     if (startWidth != null) {
       const endWidth = 100 - startWidth
@@ -398,11 +461,9 @@ export default class LightPen extends LitElement {
 
     const codeType = /** @type {SupportedLanguages} */ (slotName)
 
-    const templates = /** @type {HTMLTemplateElement[]} */(/** @type {unknown} */
-      (slot.assignedElements({flatten: true}).filter((el) => /** */ el instanceof HTMLTemplateElement))
-    )
+    const templates = slot.assignedElements({flatten: true})
 
-    const code = dedent(this.escapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
+    const code = dedent(this.unescapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
 
     this[`${codeType}Code`] = code
 
@@ -449,9 +510,9 @@ export default class LightPen extends LitElement {
 				</div>
 				<div part="sandbox-content">
 					<div part="sandbox-code">
-            ${this.renderCode('html')}
-            ${this.renderCode('css')}
-            ${this.renderCode('js')}
+            ${this.renderDetails('html')}
+            ${this.renderDetails('css')}
+            ${this.renderDetails('js')}
 					</div>
 
           <button
@@ -500,7 +561,6 @@ export default class LightPen extends LitElement {
       event.preventDefault();
     }
 
-
     if (this.iframeElem) {
       // We need to disable pointerevents on the iframe to listen for mousemove over the top of it.
       this.iframeElem.style.pointerEvents = "none"
@@ -534,14 +594,14 @@ export default class LightPen extends LitElement {
   /**
    * @param {SupportedLanguages} language
    */
-  renderCode (language) {
+  renderDetails (language) {
     let fullLanguage = language.toUpperCase()
 
     let code = this[`${language}Code`]
 
     // @ts-expect-error
     code = code ? unsafeHTML(this.highlightCode({ code, language })) : ""
-    const open = this.openLanguages.includes(language)
+    const open = this.openLanguages.split(",").includes(language)
 
 		return html`
       <details ?open=${open} part="details details-${language}">
@@ -585,6 +645,7 @@ export default class LightPen extends LitElement {
   }
 
   /**
+   * @internal
    * @param {Event} e
    */
   syncScroll (e) {

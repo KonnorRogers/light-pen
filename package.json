@@ -1,10 +1,10 @@
 {
   "name": "light-pen",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "A variety of simple components that match an aria-role",
-  "main": "./exports/light-pen.js",
-  "module": "./exports/light-pen.js",
-  "types": "./exports/light-pen.d.ts",
+  "main": "./exports/index.js",
+  "module": "./exports/index.js",
+  "types": "./exports/index.d.ts",
   "exports": {
     ".": "./exports/index.js",
     "./package.json": "./package.json",
@@ -22,7 +22,9 @@
   ],
   "scripts": {
     "start": "web-dev-server --watch",
-    "build": "rimraf -g \"./exports/**/*.d.ts\" && tsc",
+    "start:site": "rollup -wc",
+    "build:site": "rollup -c",
+    "build": "rimraf -g \"./{exports,internal}/**/*.d.ts\" && tsc && custom-elements-manifest analyze --litelement",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
     "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",
     "deploy:major": "npm run build && npm version major && npm publish && git push --follow-tags",
@@ -43,19 +45,27 @@
     "access": "public"
   },
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.8.4",
     "@open-wc/testing-helpers": "^2.3.0",
     "@rollup/plugin-commonjs": "^25.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.1",
     "@web/dev-server": "^0.3.1",
     "@web/dev-server-esbuild": "^0.4.1",
     "@web/dev-server-rollup": "^0.5.2",
+    "@web/rollup-plugin-html": "^2.0.1",
     "@web/test-runner": "^0.17.1",
     "@web/test-runner-playwright": "^0.10.1",
+    "custom-elements-manifest": "^2.0.0",
+    "gh-pages": "^6.0.0",
     "light-pen": "link:.",
     "rimraf": "^5.0.1",
+    "rollup": "^3.29.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
     "highlight.js": "^11.8.0",
-    "lit": "^2.8.0"
-  }
+    "lit": "^2.8.0",
+    "web-component-define": "^2.0.10"
+  },
+  "customElements": "custom-elements.json"
 }

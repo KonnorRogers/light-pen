@@ -61,8 +61,12 @@ export const styles = css`
   color: transparent;
   background-color: transparent;
   caret-color: black;
-  resize: none;
   z-index: 1;
+  resize: vertical;
+}
+
+[part~="pre"] {
+  height: var(--textarea-height, 33%);
 }
 
 [part~="pre"],
@@ -191,9 +195,15 @@ export const styles = css`
   -webkit-appearance: none;
   height: 100%;
   width: 4px;
-  border: none;
+  padding: 4px;
+  border: 2px solid #b2b2b2;
   cursor: col-resize;
   background-color: #b2b2b2;
+}
+
+[part~="panel-resizer"]:focus {
+  outline: transparent;
+  border-color: royalblue;
 }
 
 [part~="sandbox-content"] {

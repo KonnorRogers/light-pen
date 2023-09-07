@@ -131,3 +131,4 @@ dist
 
 exports/**/*.d.ts
 internal/**/*.d.ts
+/custom-elements.json
