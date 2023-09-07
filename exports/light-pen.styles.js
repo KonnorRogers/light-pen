@@ -61,8 +61,8 @@ export const styles = css`
   color: transparent;
   background-color: transparent;
   caret-color: black;
-  resize: vertical;
   z-index: 1;
+  resize: vertical;
 }
 
 [part~="pre"] {
@@ -186,9 +186,6 @@ export const styles = css`
 [part~="sandbox-code"] {
   max-height: 100%;
   overflow-y: auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: start;
 }
 
 [part~="panel-resizer"] {
