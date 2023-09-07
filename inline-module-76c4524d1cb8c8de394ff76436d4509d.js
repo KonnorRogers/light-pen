@@ -79,6 +79,7 @@ const styles = i$2`
   row-gap: 0;
   position: relative;
   padding-top: 3px;
+  max-height: var(--textarea-height, 33vh);
 }
 
 [part~="textarea"] {
@@ -91,7 +92,8 @@ const styles = i$2`
 }
 
 [part~="pre"] {
-  height: var(--textarea-height, 33%);
+  height: var(--textarea-height, auto);
+  width: var(--textarea-width, auto);
 }
 
 [part~="pre"],
@@ -103,13 +105,19 @@ const styles = i$2`
   padding: 0;
 	display: block;
 	line-height: 1.5;
-	word-break: break-all;
   padding: 8px;
   border: none;
   overflow: auto;
-  white-space: pre;
-  tab-size: 2;
   position: relative;
+
+  /* this creates line-wrapping. */
+	word-break: break-word;
+  white-space: pre-wrap;
+
+  /* No wrapping */
+	/* word-break: break-all; */
+  /* white-space: pre; */
+  tab-size: 2;
 }
 
 [part~="details"]:not(:first-child) {
@@ -4850,11 +4858,11 @@ class LightPen extends DefineableMixin(s$1) {
      * @prop
      * @type {ResizeObserver}
      */
-    this.resizeObserver = new ResizeObserver(entries => this.handleResize(entries));
+    this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
 
-    this.htmlResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    this.jsResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
-    this.cssResizeObserver = new ResizeObserver(entries => this.handleTextAreaResize(entries)),
+    this.htmlResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries));
+    this.jsResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries));
+    this.cssResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries));
 
     /**
      * @attr
@@ -4926,10 +4934,12 @@ class LightPen extends DefineableMixin(s$1) {
    */
   connectedCallback () {
     super.connectedCallback();
-    this.updateComplete.then(() => this.resizeObserver.observe(this));
 
     this.updateCachedWidth();
-    setTimeout(() => {
+
+    this.updateComplete.then(() => {
+      this.resizeObserver.observe(this);
+
       /**
        * Grab reset values so we can reset the inputs
        */
@@ -4944,20 +4954,22 @@ class LightPen extends DefineableMixin(s$1) {
    */
   handleTextAreaResize (entries) {
     const { target } = entries[0];
-    const { top, bottom } = entries[0].contentRect;
+    const { left, right, top, bottom } = entries[0].contentRect;
+    const height = top + bottom;
 
     // @ts-expect-error
-    target.parentElement?.querySelector("pre").style.setProperty("--textarea-height", `${top + bottom}px`);
+    target.parentElement.style.setProperty("--textarea-height", `${height}px`);
 
     // One day we'll allow the textarea to resize the width.
-    // target.parentElement?.querySelector("pre").style.setProperty("--textarea-width", `${left + right}px`)
+    // target.parentElement.style.setProperty("--textarea-width", `${width}px`)
   }
 
   /**
    * Sets an initial width so we dont need to keep computing getBoundingClientRect
    */
   updateCachedWidth () {
-    const { width } = this.getBoundingClientRect();
+    const { left, right } = this.getBoundingClientRect();
+    const width = left + right;
     this.cachedWidth = width;
   }
 
@@ -4965,8 +4977,9 @@ class LightPen extends DefineableMixin(s$1) {
    * @param {ResizeObserverEntry[]} entries
    */
   handleResize (entries) {
-    const { width } = entries[0].contentRect;
+    const { left, right } = entries[0].contentRect;
 
+    const width = left + right;
     // Resize when a primary panel is set
     this.cachedWidth = width;
   }
@@ -5071,16 +5084,16 @@ class LightPen extends DefineableMixin(s$1) {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.htmlTextArea && this.htmlResizeObserver.unobserve(this.htmlTextArea);
-    this.cssTextArea && this.cssResizeObserver.unobserve(this.cssTextArea);
-    this.jsTextArea && this.jsResizeObserver.unobserve(this.jsTextArea);
+    this.htmlTextArea && this.htmlResizeObserver.disconnect();
+    this.cssTextArea && this.cssResizeObserver.disconnect();
+    this.jsTextArea && this.jsResizeObserver.disconnect();
   }
-
 
   /**
    * @param {HTMLTextAreaElement} textarea
    */
   htmlTextAreaChanged (textarea) {
+    if (!textarea) return
     this.htmlTextArea = textarea;
     this.htmlResizeObserver.observe(textarea);
   }
@@ -5089,6 +5102,7 @@ class LightPen extends DefineableMixin(s$1) {
    * @param {HTMLTextAreaElement} textarea
    */
   cssTextAreaChanged (textarea) {
+    if (!textarea) return
     this.cssTextArea = textarea;
     this.cssResizeObserver.observe(textarea);
   }
@@ -5097,6 +5111,7 @@ class LightPen extends DefineableMixin(s$1) {
    * @param {HTMLTextAreaElement} textarea
    */
   jsTextAreaChanged (textarea) {
+    if (!textarea) return
     this.jsTextArea = textarea;
     this.jsResizeObserver.observe(textarea);
   }
