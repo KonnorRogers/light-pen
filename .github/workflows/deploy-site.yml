@@ -1,0 +1,105 @@
+name: Deploy Site
+on:
+  push:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Deploy with gh-pages
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npm run deploy:site -- -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+name: github pages
+
+on:
+  push:
+    branches:
+      - main # deploy main. If your branch is `master`, you'll have to replace that throughout this file.
+  pull_request: # This will publish a site preview on every pull request, and also run the build command to test if the site is broken.
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
+    env:
+      PR_PATH: pull/${{github.event.number}}
+    steps:
+      - name: Comment on PR
+        uses: hasura/comment-progress@v2.2.0
+        if: github.ref != 'refs/heads/main'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: deploy-preview
+          message: "Starting deployment of preview ⏳..."
+
+      - name: Set domain
+        # If you're using the default github pages url, use this instead:
+        run: echo "DOMAIN=${{ github.actor }}.github.io" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Set production base URL
+        run: echo "BASE_URL=https://${{ env.DOMAIN }}/${{ github.event.repository.name }}/" >> $GITHUB_ENV
+
+      - name: Set base URL for preview if PR
+        if: github.ref != 'refs/heads/main'
+        run: echo "BASE_URL=https://${{ env.DOMAIN }}/${{ github.event.repository.name }}/${{ env.PR_PATH}}/" >> $GITHUB_ENV
+
+      - name: Build website
+        run: pnpm run build:site
+
+      - name: Deploy if this is the `main` branch
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          # cname: ${{ env.DOMAIN }} # TODO you need to set this if you're using a custom domain. Otherwise you can remove it.
+
+      - name: Deploy to PR preview
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref != 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          destination_dir: ${{ env.PR_PATH }} # TODO you need to set this if you're using a custom domain. Otherwise you can remove it.
+
+      - name: Update comment
+        uses: hasura/comment-progress@v2.2.0
+        if: github.ref != 'refs/heads/main'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: deploy-preview
+          message: "A preview of ${{ github.event.after }} is uploaded and can be seen here:\n\n ✨ ${{ env.BASE_URL }} ✨\n\nChanges may take a few minutes to propagate. Since this is a preview of production, content with `draft: true` will not be rendered. The source is here: https://github.com/${{ github.repository }}/tree/gh-pages/${{ env.PR_PATH }}/"
