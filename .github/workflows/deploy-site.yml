@@ -53,6 +53,11 @@ jobs:
       - name: Build website
         run: pnpm run build:site
 
+      - name: Set username + email
+        run: |
+          git config --global user.email "support+actions@github.com"
+          git config --global user.name "github-actions-bot"
+
       - name: Deploy with gh-pages
         if: github.ref == 'refs/heads/main'
         run: |
