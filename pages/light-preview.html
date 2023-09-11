@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="module">
+      import LightPreview from "../exports/light-preview.js";
+
+      LightPreview.define()
+    </script>
+
+    <style>
+      html, body {
+        height: 100%;
+        min-height: 100%;
+        width: 100%;
+        margin: 0;
+      }
+
+      light-preview {
+        margin: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <light-preview>
+        <script type="text/plain" slot="code">
+          <style>
+            light-preview::part(iframe) {
+              height: 50px;
+            }
+          </style>
+
+          <light-preview>
+            <script type="text/plain" slot="code">
+              How's this for meta? A &lt;light-preview&gt; inside of a &lt;light-preview&gt;
+            &lt;/script>
+          </light-preview>
+
+          <script type="module">
+            import LightPreview from "/exports/light-preview.js";
+            LightPreview.define()
+          &lt;/script>
+        </script>
+      </light-preview>
+
+      <section>
+        <h2>Typical Usage</h2>
+
+        <light-preview>
+          <script type="text/plain" slot="code">
+            <style>
+              light-preview::part(iframe) {
+                height: 50px;
+              }
+            </style>
+
+            <light-preview>
+              <script type="text/plain" slot="code">
+                <button>Displaying a super cool button</button>
+              &lt;/script>
+            </light-preview>
+
+            <script type="module">
+              import LightPreview from "/exports/light-preview.js";
+              LightPreview.define()
+            &lt;/script>
+          </script>
+        </light-preview>
+      </section>
+
+      <section>
+
+        <h2>Loading inline</h2>
+
+        <light-preview>
+          <script type="text/plain" slot="code">
+            <light-preview inline-preview>
+              <script type="text/plain" slot="code">
+                <style>
+                  button.button {
+                    border-color: gray;
+                  }
+                </style>
+
+                <button class="button">Displaying a super cool button not inside an iframe</button>
+
+                <br>
+                <p>
+                  Notice how the button has the same styling as the toggle! That's because its not scoped into an iFrame!
+                </p>
+              &lt;/script>
+            </light-preview>
+
+            <script type="module">
+              import LightPreview from "/exports/light-preview.js";
+              LightPreview.define()
+            &lt;/script>
+          </script>
+        </light-preview>
+
+
+      </section>
+
+      <section>
+
+        <h2>Additional buttons</h2>
+
+        <light-preview>
+          <script type="text/plain" slot="code">
+            <light-preview>
+              <script type="text/plain" slot="code">
+                <p>Showing off more buttons</p>
+              &lt;/script>
+
+              <button slot="actions">HTML</button>
+              <button slot="actions">Codepen</button>
+            </light-preview>
+
+            <script type="module">
+              import LightPreview from "/exports/light-preview.js";
+              LightPreview.define()
+            &lt;/script>
+          </script>
+
+          <button slot="actions">HTML</button>
+          <button slot="actions">Codepen</button>
+        </light-preview>
+
+
+      </section>
+    </div>
+  </body>
+</html>

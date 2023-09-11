@@ -7,17 +7,21 @@ import commonjs from "@rollup/plugin-commonjs"
  */
 export default [
   {
-    input: 'index.html',
     output: { dir: '_site' },
     plugins: [
       html({
+        input: [
+          'index.html',
+          './pages/**/*.html'
+        ]
+
       }),
       nodeResolve(),
       commonjs(),
     ],
   },
   {
-    input: "./exports/light-pen.js",
+    input: ["./exports/light-pen.js", "./exports/light-preview.js"],
     output: { dir: '_site/exports' },
     plugins: [
       nodeResolve(),

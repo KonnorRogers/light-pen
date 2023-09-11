@@ -10,7 +10,12 @@ import CSS from 'highlight.js/lib/languages/css';
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
 import { DefineableMixin } from "web-component-define";
+import { baseStyles } from "./base-styles.js";
 
+import { clamp } from '../internal/clamp.js'
+import { dedent } from "../internal/dedent.js";
+import { drag } from "../internal/drag.js";
+import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
 
 // Then register the languages you need
 HighlightJS.registerLanguage('javascript', JavaScript);
@@ -36,7 +41,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
   // Static
   static baseName = "light-pen"
 
-  static styles = [theme, styles]
+  static styles = [baseStyles, theme, styles]
 
   static languageMap = {
     html: "xml",
@@ -48,6 +53,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
     openLanguages: { reflect: true, attribute: "open-languages" },
     resizePosition: { attribute: "resize-position", reflect: true, type: Number },
     console: { reflect: true },
+    sandboxSettings: { reflect: true, attribute: "sandbox-settings"},
     languages: { state: true, type: Array },
     cssCode: { state: true },
     htmlCode: { state: true },
@@ -63,7 +69,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   constructor() {
     super()
-
 
     /**
      * @prop
@@ -137,6 +142,11 @@ export default class LightPen extends DefineableMixin(LitElement) {
      */
     this.cachedWidth = 0
 
+    /**
+     * @property
+     * @type {string}
+     */
+    this.sandboxSettings = ""
 
   }
 
@@ -165,8 +175,11 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   handleTextAreaResize (entries) {
     const { target } = entries[0]
-    const { left, right, top, bottom } = entries[0].contentRect;
-    const width = left + right
+    const {
+      // left, right,
+      top, bottom
+    } = entries[0].contentRect;
+    // const width = left + right
     const height = top + bottom
 
     // @ts-expect-error
@@ -223,7 +236,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   unescapeCharacters (text) {
     // Update code
-    // return text.replaceAll("&gt;", ">").replaceAll("&lt;", "<"); /* Global RegExp */
     return text.replaceAll("&lt;/script>", "</script>")
   }
 
@@ -255,21 +267,35 @@ export default class LightPen extends DefineableMixin(LitElement) {
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}<\/style>
+          <base href="${document.baseURI}">
         </head>
         <body>
           ${this.htmlCode}
           <script type="module">
             ${this.jsCode}
-          <\/script>
+          </script>
         </body>
       </html>
     `
 
     const iframe = this.shadowRoot?.querySelector("iframe")
-    if (iframe && iframe.contentWindow) {
-	    iframe.contentWindow.document.open();
-	    iframe.contentWindow.document.writeln(page);
-	    iframe.contentWindow.document.close();
+    if (iframe) {
+      const prevBlobUrl = this.blobUrl
+
+      const blob = new Blob([page], { type: "text/html" })
+      const blobUrl = URL.createObjectURL(blob)
+
+      this.blobUrl = blobUrl
+
+      if (iframe) {
+	      iframe.src = blobUrl
+	    }
+
+      if (prevBlobUrl) {
+        setTimeout(() => {
+          URL.revokeObjectURL(prevBlobUrl)
+        }, 300)
+      }
 	  }
   }
 
@@ -534,11 +560,13 @@ export default class LightPen extends DefineableMixin(LitElement) {
             @pointerdown=${this.handleDrag}
             @touchstart=${this.handleDrag}
           >
+            <slot name="panel-resize"></slot>
             <span class="visually-hidden">Resize Panel. Pull to left or right to resize.</span>
           </button>
 
 					<div part="sandbox-iframe-wrapper">
 						<iframe
+              sandbox=${this.sandboxSettings || defaultSandboxSettings}
               part="sandbox-iframe"
               frameborder="0"
              ></iframe>
@@ -627,7 +655,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
           ><code
               part="code code-${language}"
               class="language-${language}"
-          >${code}</code></pre>
+            >${code}</code></pre>
           <!-- IMPORTANT! There must be no white-space above. -->
 					<textarea
             ${
@@ -674,103 +702,4 @@ export default class LightPen extends DefineableMixin(LitElement) {
     pre.scrollTop = textarea.scrollTop;
     pre.scrollLeft = textarea.scrollLeft;
   }
-}
-
-/**
- * @param {number} min
- * @param {number} curr
- * @param {number} max
- */
-function clamp (min, curr, max) {
-  return Math.min(Math.max(curr, min), max)
-}
-
-/**
- * @typedef {object} DragOptions
- * @property {(x: number, y: number) => void} onMove - Callback that runs as dragging occurs.
- * @property {() => void} onStop - Callback that runs when dragging stops.
- * @property {PointerEvent} initialEvent - When an initial event is passed, the first drag will be triggered immediately using the coordinates therein. This is useful when the drag is initiated by a mousedown/touchstart event but you want the initial "click" to activate a drag (e.g. resizePositioning a handle initially at the click target).
- */
-
-/**
- * @param {HTMLElement} container
- * @param {Partial<DragOptions>} [options]
-
- */
-function drag(container, options) {
-  /**
-   * @param {PointerEvent} pointerEvent
-   */
-  function move(pointerEvent) {
-    const dims = container.getBoundingClientRect();
-    const defaultView = container.ownerDocument.defaultView;
-    const offsetX = dims.left + (defaultView?.pageXOffset || 0);
-    const offsetY = dims.top + (defaultView?.pageYOffset || 0);
-    const x = pointerEvent.pageX - offsetX;
-    const y = pointerEvent.pageY - offsetY;
-
-    if (options?.onMove) {
-      options.onMove(x, y);
-    }
-  }
-
-  function stop() {
-    document.removeEventListener('pointermove', move);
-    document.removeEventListener('pointerup', stop);
-
-    if (options?.onStop) {
-      options.onStop();
-    }
-  }
-
-  document.addEventListener('pointermove', move, { passive: true });
-  document.addEventListener('pointerup', stop);
-
-  // If an initial event is set, trigger the first drag immediately
-  if (options?.initialEvent instanceof PointerEvent) {
-    move(options.initialEvent);
-  }
-}
-
-/**
- * @param {TemplateStringsArray|string} templateStrings
- * @param {any[]} values
- */
-function dedent (templateStrings, ...values) {
-	let matches = [];
-	let strings = typeof templateStrings === 'string' ? [ templateStrings ] : templateStrings.slice();
-
-	// 1. Remove trailing whitespace.
-	strings[strings.length - 1] = strings[strings.length - 1].replace(/\r?\n([\t ]*)$/, '');
-
-	// 2. Find all line breaks to determine the highest common indentation level.
-	for (let i = 0; i < strings.length; i++) {
-		let match;
-
-		if (match = strings[i].match(/\n[\t ]+/g)) {
-			matches.push(...match);
-		}
-	}
-
-	// 3. Remove the common indentation from all strings.
-	if (matches.length) {
-		let size = Math.min(...matches.map(value => value.length - 1));
-		let pattern = new RegExp(`\n[\t ]{${size}}`, 'g');
-
-		for (let i = 0; i < strings.length; i++) {
-			strings[i] = strings[i].replace(pattern, '\n');
-		}
-	}
-
-	// 4. Remove leading whitespace.
-	strings[0] = strings[0].replace(/^\r?\n/, '');
-
-	// 5. Perform interpolation.
-	let string = strings[0];
-
-	for (let i = 0; i < values.length; i++) {
-		string += values[i] + strings[i + 1];
-	}
-
-	return string;
 }

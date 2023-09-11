@@ -1,28 +1,5 @@
 import { css } from "lit"
 export const styles = css`
-*, *:after, *:before {
-  box-sizing: border-box;
-}
-
-.visually-hidden:not(:focus):not(:active) {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  width: 1px;
-  height: 1px;
-  white-space: nowrap;
-}
-
-[hidden] {
-  display: none !important;
-}
-
-:host {
-  display: block;
-  box-sizing: border-box;
-}
-
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
