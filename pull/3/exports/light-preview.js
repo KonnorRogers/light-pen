@@ -45,6 +45,11 @@ iframe {
   margin: 0;
 }
 
+[part~="pre"],
+[part~="code"] {
+  line-height: 1.6;
+}
+
 [part~="end-panel"] {
   background-color: rgba(0,0,0,0.025);
 }
