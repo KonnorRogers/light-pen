@@ -1,4 +1,3 @@
-import { esbuildPlugin } from "@web/dev-server";
 import rollupCommonjs from '@rollup/plugin-commonjs';
 import { fromRollup } from '@web/dev-server-rollup';
 
