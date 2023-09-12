@@ -136,7 +136,7 @@ export default class LightPreview extends DefineableMixin(LitElement) {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (["iframeCode", "code"].some((str) => changedProperties.has(str))) {
+    if (["iframeCode", "code", "baseURL"].some((str) => changedProperties.has(str))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
     }
