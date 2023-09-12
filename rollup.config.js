@@ -27,7 +27,7 @@ export default [
         input: [
           './pages/**/*.html',
         ],
-        transformHtml: [html => html.replace('%BASE_URL%', process.env.BASE_URL)],
+        transformHtml: [html => html.replaceAll('%BASE_URL%', process.env.BASE_URL)],
 
       }),
       nodeResolve(),
