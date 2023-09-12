@@ -31,7 +31,7 @@
       <section>
         <h2>Typical Usage</h2>
 
-        <light-preview>
+        <light-preview base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
           <script slot="iframe-code" type="text/plain">
             <button>Displaying a super cool button</button>
           </script>
@@ -42,7 +42,7 @@
               }
             </style>
 
-            <light-preview>
+            <light-preview base-url="%BASE_URL%">
               <script type="text/plain" slot="code">
                 <button>Displaying a super cool button</button>
               &lt;/script>
@@ -60,7 +60,7 @@
       <section>
         <h2>Nesting a light-pen inside of a light-pen</h2>
 
-        <light-preview>
+        <light-preview base-url="%BASE_URL%">
           <script type="text/plain" slot="code">
             <style>
               light-preview::part(iframe) {
@@ -68,7 +68,7 @@
               }
             </style>
 
-            <light-preview>
+            <light-preview base-url="%BASE_URL%">
               <script type="text/plain" slot="code">
                 <button>Displaying a super cool button</button>
               &lt;/script>
@@ -87,9 +87,9 @@
 
         <h2>Loading inline</h2>
 
-        <light-preview>
+        <light-preview base-url="%BASE_URL%">
           <script type="text/plain" slot="code">
-            <light-preview inline-preview>
+            <light-preview inline-preview base-url="%BASE_URL%">
               <script type="text/plain" slot="code">
                 <style>
                   button.button {
@@ -153,7 +153,7 @@
           }
         </style>
 
-        <light-preview id="additional-buttons">
+        <light-preview id="additional-buttons" base-url="%BASE_URL%">
           <script type="text/plain" slot="code">
             <style>
               #additional-buttons button {
@@ -186,7 +186,7 @@
               }
             </style>
 
-            <light-preview id="additional-buttons">
+            <light-preview id="additional-buttons" base-url="%BASE_URL%">
               <script type="text/plain" slot="code">
                 <style>
                   #additional-buttons button {
