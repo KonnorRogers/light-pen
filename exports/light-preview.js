@@ -155,7 +155,7 @@ export default class LightPreview extends DefineableMixin(LitElement) {
     inlinePreview: { type: Boolean, attribute: "inline-preview" },
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
     open: { reflect: true, type: Boolean },
-    baseURI: { reflect: true },
+    baseURL: { reflect: true },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
 
     // State
