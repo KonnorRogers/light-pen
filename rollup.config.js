@@ -12,7 +12,20 @@ export default [
       html({
         input: [
           'index.html',
-          './pages/**/*.html'
+        ]
+
+      }),
+      nodeResolve(),
+      commonjs(),
+    ],
+  },
+
+  {
+    output: { dir: '_site/pages' },
+    plugins: [
+      html({
+        input: [
+          './pages/**/*.html',
         ]
 
       }),
