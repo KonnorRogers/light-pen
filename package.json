@@ -22,8 +22,8 @@
   ],
   "scripts": {
     "start": "web-dev-server --watch",
-    "start:site": "rollup -wc",
-    "build:site": "rollup -c",
+    "start:site": "rimraf ./_site && rollup -wc",
+    "build:site": "rimraf ./_site && rollup -c",
     "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
     "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
