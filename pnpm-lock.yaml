@@ -58,6 +58,9 @@ devDependencies:
   rollup:
     specifier: ^3.29.0
     version: 3.29.0
+  rollup-plugin-serve:
+    specifier: ^2.0.2
+    version: 2.0.2
   typescript:
     specifier: ^5.2.2
     version: 5.2.2
@@ -2190,6 +2193,12 @@ packages:
       mime-db: 1.52.0
     dev: true
 
+  /mime@3.0.0:
+    resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    dev: true
+
   /mimic-fn@2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
@@ -2341,6 +2350,11 @@ packages:
       define-lazy-prop: 2.0.0
       is-docker: 2.2.1
       is-wsl: 2.2.0
+    dev: true
+
+  /opener@1.5.2:
+    resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
+    hasBin: true
     dev: true
 
   /p-limit@2.3.0:
@@ -2639,6 +2653,13 @@ packages:
     hasBin: true
     dependencies:
       glob: 10.3.4
+    dev: true
+
+  /rollup-plugin-serve@2.0.2:
+    resolution: {integrity: sha512-ALqyTbPhlf7FZ5RzlbDvMYvbKuCHWginJkTo6dMsbgji/a78IbsXox+pC83HENdkTRz8OXrTj+aShp3+3ratpg==}
+    dependencies:
+      mime: 3.0.0
+      opener: 1.5.2
     dev: true
 
   /rollup@3.29.0:

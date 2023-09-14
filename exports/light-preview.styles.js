@@ -9,7 +9,7 @@ export const previewStyles = css`
   max-width: 100%;
 }
 
-[part=~"base"][part=~"base--dragging"] {
+:host([resizing]) [part=~"base"] {
   cursor: col-resize;
 }
 

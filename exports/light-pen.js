@@ -1,7 +1,9 @@
 // @ts-check
 import { LitElement, html } from "lit"
-import { styles, theme } from "./light-pen.styles.js"
+import { styles } from "./light-pen.styles.js"
 import { when } from "lit/directives/when.js";
+
+import { theme } from './default-theme.styles.js'
 
 import HighlightJS from 'highlight.js/lib/core';
 import JavaScript from 'highlight.js/lib/languages/javascript';
@@ -30,7 +32,7 @@ HighlightJS.registerLanguage('css', CSS);
 
 /**
  * @customElement
- * @tagName lit-pen
+ * @tagname light-pen
  * @slot html - HTML to insert
  * @slot css - CSS to insert
  * @slot js - JavaScript to insert

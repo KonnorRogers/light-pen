@@ -60,6 +60,7 @@
     "light-pen": "link:.",
     "rimraf": "^5.0.1",
     "rollup": "^3.29.0",
+    "rollup-plugin-serve": "^2.0.2",
     "typescript": "^5.2.2"
   },
   "dependencies": {
