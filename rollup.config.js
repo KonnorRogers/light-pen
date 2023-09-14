@@ -35,7 +35,7 @@ export default [
       }),
       nodeResolve(),
       commonjs(),
-      serveBundle()
+      ...[(process.argv.includes("-w") ? serveBundle() : null)]
     ],
   },
   {
