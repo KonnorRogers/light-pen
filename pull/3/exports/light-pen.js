@@ -1,4 +1,211 @@
-import { i, t, e as e$1, A, H as HighlightJS, j as javascript, x as xml, c as css, D as DefineableMixin, b as baseStyles, a as theme, s as styles, d as clamp, f as dedent, g as x, n as n$2, h as defaultSandboxSettings, k as drag, o as o$1, l as s$1 } from './default-sandbox-settings-d8f2a10a.js';
+import { i, a as i$1, t, e as e$1, A, H as HighlightJS, j as javascript, x as xml, c as css, D as DefineableMixin, b as baseStyles, d as theme, f as clamp, g as dedent, h as x, n as n$2, k as defaultSandboxSettings, l as drag, o as o$1, s as s$1 } from './default-sandbox-settings-a44f74fe.js';
+
+const styles = i`
+[part~="sandbox-iframe"] {
+  width: 100%;
+  height: 100%;
+}
+
+[part~="sandbox"] {
+  background-color: #e5e5e5;
+  color:#272727;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, auto) minmax(0, 1fr);
+}
+
+[part~="summary"] {
+  font-size: .8125rem;
+  font-weight: bold;
+  padding: 0.4rem 0.6rem;
+}
+
+[part~="summary"]:focus {
+  outline: 2px solid blue;
+}
+
+[part~="sandbox-editor"] {
+  display:grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  column-gap: 0;
+  row-gap: 0;
+  position: relative;
+  padding-top: 3px;
+  max-height: var(--textarea-height, 33vh);
+}
+
+[part~="textarea"] {
+  position: relative;
+  color: transparent;
+  background-color: transparent;
+  caret-color: black;
+  z-index: 1;
+  resize: vertical;
+}
+
+[part~="pre"] {
+  height: var(--textarea-height, auto);
+  width: var(--textarea-width, auto);
+}
+
+[part~="pre"],
+[part~="textarea"] {
+  grid-area:1/1/2/2;
+  margin-bottom:0;
+  min-height:15em;
+  margin: 0;
+  padding: 0;
+	display: block;
+	line-height: 1.5;
+  padding: 8px;
+  border: none;
+  overflow: auto;
+  position: relative;
+
+  /* this creates line-wrapping. */
+	word-break: break-word;
+  white-space: pre-wrap;
+
+  /* No wrapping */
+	/* word-break: break-all; */
+  /* white-space: pre; */
+  tab-size: 2;
+}
+
+[part~="details"]:not(:first-child) {
+  margin-top: 4px;
+}
+
+[part~="pre"],
+[part~="code"] {
+	color: #272727;
+	background-color: #f7f7f7;
+}
+
+[part~="base"] {
+	word-wrap: break-word;
+	color: inherit;
+	font-size: 1em;
+}
+
+
+[part~="sandbox"],
+[part~="base"] {
+  height: 100%;
+}
+
+[part~="pre"],
+[part~="code"],
+[part~="textarea"] {
+	font-family: Menlo, Monaco, "Courier New", monospace;
+	font-size: 0.875rem;
+}
+
+[part~="sandbox-iframe"] {
+  aspect-ratio:auto;
+  background-color: #fff;
+  margin-bottom: 0;
+}
+
+[part~="base"],
+[part~="pre"],
+[part~="code"],
+[part~="sandbox-iframe"] {
+  border-radius:.25em;
+}
+
+[part~='sandbox-header'],
+[part~="sandbox-console"],
+[part~="sandbox-console-result"] {
+  background-color:#343d4d;
+  color:#fff
+}
+
+[part~="sandbox-header"]
+[part~="sandbox-console"] {
+  padding-top:.125em;
+  padding-bottom:.125em
+}
+
+[part~="sandbox-header"] {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: space-between;
+  border-top-left-radius:.25em;
+  border-top-right-radius:.25em;
+  font-size:.8125em;
+}
+
+[part~='sandbox-controls'] button {
+  margin-bottom: 0;
+}
+
+[part~="sandbox-console"] {
+  border-bottom-left-radius:.25em;
+  border-bottom-right-radius:.25em
+}
+
+[part~="sandbox-console-log"] {
+  font-family: Menlo,Monaco,"Courier New",monospace;
+  font-size:.875em;
+  min-height:1.2em;
+}
+
+.log-warn {
+  color:#f9d767
+}
+
+.log-error {
+  color:#f9c8c8
+}
+
+[part~="sandbox-header"],
+[part~="sandbox-code"],
+[part~="sandbox-iframe-wrapper"],
+[part~="sandbox-console"],
+[part~="sandbox-console-result"] {
+  padding: 0.5em;
+}
+
+[part~="sandbox-code"] {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+[part~="panel-resizer"] {
+  background-color: transparent;
+  appearance: none;
+  margin: 0;
+  -webkit-appearance: none;
+  height: 100%;
+  width: 4px;
+  padding: 4px;
+  border: 2px solid #b2b2b2;
+  cursor: col-resize;
+  background-color: #b2b2b2;
+}
+
+[part~="panel-resizer"]:focus {
+  outline: transparent;
+  border-color: royalblue;
+}
+
+[part~="sandbox-content"] {
+  display:grid;
+  grid-template-columns: minmax(0,var(--start-panel-width, 1fr)) minmax(0, auto) minmax(0, var(--end-panel-width, 1fr));
+  grid-template-rows: minmax(0, 1fr);
+}
+
+[part~="sandbox-iframe-wrapper"] {
+}
+
+[part~="sandbox-console-result"] {
+  border-top:1px solid #1f252f;
+  border-bottom-left-radius:0;
+}
+`;
 
 /**
  * @license
@@ -10,7 +217,7 @@ import { i, t, e as e$1, A, H as HighlightJS, j as javascript, x as xml, c as cs
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */const s=(i,t)=>{var e,o;const r=i._$AN;if(void 0===r)return !1;for(const i of r)null===(o=(e=i)._$AO)||void 0===o||o.call(e,t,!1),s(i,t);return !0},o=i=>{let t,e;do{if(void 0===(t=i._$AM))break;e=t._$AN,e.delete(i),i=t;}while(0===(null==e?void 0:e.size))},r=i=>{for(let t;t=i._$AM;i=t){let e=t._$AN;if(void 0===e)t._$AN=e=new Set;else if(e.has(i))break;e.add(i),l(t);}};function n$1(i){void 0!==this._$AN?(o(this),this._$AM=i,r(this)):this._$AM=i;}function h$1(i,t=!1,e=0){const r=this._$AH,n=this._$AN;if(void 0!==n&&0!==n.size)if(t)if(Array.isArray(r))for(let i=e;i<r.length;i++)s(r[i],!1),o(r[i]);else null!=r&&(s(r,!1),o(r));else s(this,i);}const l=i=>{var t$1,s,o,r;i.type==t.CHILD&&(null!==(t$1=(o=i)._$AP)&&void 0!==t$1||(o._$AP=h$1),null!==(s=(r=i)._$AQ)&&void 0!==s||(r._$AQ=n$1));};class c extends i{constructor(){super(...arguments),this._$AN=void 0;}_$AT(i,t,e){super._$AT(i,t,e),r(this),this.isConnected=i._$AU;}_$AO(i,t=!0){var e,r;i!==this.isConnected&&(this.isConnected=i,i?null===(e=this.reconnected)||void 0===e||e.call(this):null===(r=this.disconnected)||void 0===r||r.call(this)),t&&(s(this,i),o(this));}setValue(t){if(e(this._$Ct))this._$Ct._$AI(t,this);else {const i=[...this._$Ct._$AH];i[this._$Ci]=t,this._$Ct._$AI(i,this,0);}}disconnected(){}reconnected(){}}
+ */const s=(i,t)=>{var e,o;const r=i._$AN;if(void 0===r)return !1;for(const i of r)null===(o=(e=i)._$AO)||void 0===o||o.call(e,t,!1),s(i,t);return !0},o=i=>{let t,e;do{if(void 0===(t=i._$AM))break;e=t._$AN,e.delete(i),i=t;}while(0===(null==e?void 0:e.size))},r=i=>{for(let t;t=i._$AM;i=t){let e=t._$AN;if(void 0===e)t._$AN=e=new Set;else if(e.has(i))break;e.add(i),l(t);}};function n$1(i){void 0!==this._$AN?(o(this),this._$AM=i,r(this)):this._$AM=i;}function h$1(i,t=!1,e=0){const r=this._$AH,n=this._$AN;if(void 0!==n&&0!==n.size)if(t)if(Array.isArray(r))for(let i=e;i<r.length;i++)s(r[i],!1),o(r[i]);else null!=r&&(s(r,!1),o(r));else s(this,i);}const l=i=>{var t$1,s,o,r;i.type==t.CHILD&&(null!==(t$1=(o=i)._$AP)&&void 0!==t$1||(o._$AP=h$1),null!==(s=(r=i)._$AQ)&&void 0!==s||(r._$AQ=n$1));};class c extends i$1{constructor(){super(...arguments),this._$AN=void 0;}_$AT(i,t,e){super._$AT(i,t,e),r(this),this.isConnected=i._$AU;}_$AO(i,t=!0){var e,r;i!==this.isConnected&&(this.isConnected=i,i?null===(e=this.reconnected)||void 0===e||e.call(this):null===(r=this.disconnected)||void 0===r||r.call(this)),t&&(s(this,i),o(this));}setValue(t){if(e(this._$Ct))this._$Ct._$AI(t,this);else {const i=[...this._$Ct._$AH];i[this._$Ci]=t,this._$Ct._$AI(i,this,0);}}disconnected(){}reconnected(){}}
 
 const h=new WeakMap,n=e$1(class extends c{render(t){return A}update(t,[s]){var e;const o=s!==this.G;return o&&void 0!==this.G&&this.ot(void 0),(o||this.rt!==this.lt)&&(this.G=s,this.dt=null===(e=t.options)||void 0===e?void 0:e.host,this.ot(this.lt=t.element)),A}ot(i){var t;if("function"==typeof this.G){const s=null!==(t=this.dt)&&void 0!==t?t:globalThis;let e=h.get(s);void 0===e&&(e=new WeakMap,h.set(s,e)),void 0!==e.get(this.G)&&this.G.call(this.dt,void 0),e.set(this.G,i),void 0!==i&&this.G.call(this.dt,i);}else this.G.value=i;}get rt(){var i,t,s;return "function"==typeof this.G?null===(t=h.get(null!==(i=this.dt)&&void 0!==i?i:globalThis))||void 0===t?void 0:t.get(this.G):null===(s=this.G)||void 0===s?void 0:s.value}disconnected(){this.rt===this.lt&&this.ot(void 0);}reconnected(){this.ot(this.lt);}});
 
@@ -29,7 +236,7 @@ HighlightJS.registerLanguage('css', css);
 
 /**
  * @customElement
- * @tagName lit-pen
+ * @tagname light-pen
  * @slot html - HTML to insert
  * @slot css - CSS to insert
  * @slot js - JavaScript to insert

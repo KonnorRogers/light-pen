@@ -1,4 +1,4 @@
-import { m as i, H as HighlightJS, x as xml, c as css, j as javascript, D as DefineableMixin, b as baseStyles, p as buttonStyles, a as theme, f as dedent, g as x, n, k as drag, d as clamp, l as s, h as defaultSandboxSettings, o } from './default-sandbox-settings-d8f2a10a.js';
+import { i, D as DefineableMixin, b as baseStyles, m as buttonStyles, k as defaultSandboxSettings, h as x, n, l as drag, f as clamp, s, o, H as HighlightJS, x as xml, c as css, j as javascript, d as theme, g as dedent } from './default-sandbox-settings-a44f74fe.js';
 
 const previewStyles = i`
 :host {
@@ -9,7 +9,7 @@ const previewStyles = i`
   max-width: 100%;
 }
 
-[part=~"base"][part=~"base--dragging"] {
+:host([resizing]) [part=~"base"] {
   cursor: col-resize;
 }
 
@@ -106,54 +106,266 @@ function stringMap (obj, spacer = " ") {
   return strings.join(spacer)
 }
 
-// Then register the languages you need
-HighlightJS.registerLanguage('html', xml);
-HighlightJS.registerLanguage('css', css);
-HighlightJS.registerLanguage('javascript', javascript);
+// @ts-check
+/**
+ * @template {(...args: any[]) => any} T
+ * @param {T} callback
+ * @param {number} wait
+ */
+function debounce (callback, wait = 0) {
+  /**
+   * @type {number | null}
+   */
+  let timeoutId = null;
+
+  /**
+   * @param {any[]} args
+   */
+  return (...args) => {
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+
+    timeoutId = window.setTimeout(() => {
+      callback.apply(null, args);
+    }, wait);
+  };
+}
+
+// @ts-check
 
 const sourceCodeFallback = "Show source code";
 
 /**
- * LightSample is a very lightweight code block editor designed to load your code sample
- *   inside of an iFrame for encapsulated viewing
+ * LightPreviewBase is not meant to be used directly, rather its the base implementation of
+ *   previewing. It comes without a highlight theme or a highlighter. Go to LightPreview for how to
+ *   implement your own theme and highlighter.
+ * @tagname light-preview
+ * @customElement
+ *
+ * @csspart base - The base wrapping element
+ * @csspart preview - The wrapper around the iframe / div preview showing your code being run in the browser.
+ * @csspart start-panel - The iframe or preview-div
+ * @csspart preview-div - used for inline previews
+ * @csspart iframe - used for iframe based previews (default)
+ * @csspart panel-resizer - The button that resizes the panel
+ * @csspart end-panel - The white space when dragging the resizer
+ * @csspart source-details - The details element that shows the source code
+ * @csspart code-wrapper - The div that wraps the <pre> + <code> elements containing your highlighted code
+ * @csspart pre - The <pre> element wrapping the source code
+ * @csspart code - The <code>  element wrapping the source code
+ * @csspart actions - The buttons at the bottom of the code previewer
+ * @csspart source-code-toggle - The button to show the source code
+ * @csspart source-code-toggle-icon - The caret icon in the source code toggle
+ *
+ * @slot resize-icon - The icon to display in the resizer button. Override this to provide your own icon.
+ * @slot summary - What to display in source code expander
+ * @slot source-code-toggle-icon - Slot in your own icon to override the default caret.
+ * @slot actions - Slot in buttons / links to allow for additional actions in the bottom bar.
+ * @slot preview-code - If you want to run code that is slightly different from the source code you want to display, slot it into "preview-code"
+ * @slot code - Used to display both source code and to power your preview in the iframe. If you slot in "preview-code", then it will only be used to show / highlight your source code.
  */
-class LightPreview extends DefineableMixin(s) {
+class LightPreviewBase extends DefineableMixin(s) {
   static baseName = "light-preview"
 
   static styles = [
     baseStyles,
     buttonStyles,
-    theme,
     previewStyles
   ]
 
+  static properties = {
+    summary: {},
+    sandboxSettings: { reflect: true, attribute: "sandbox-settings" },
+    highlightLanguage: { reflect: true, attribute: "highlight-language" },
+    inlinePreview: { type: Boolean, attribute: "inline-preview" },
+    disableHighlight: { type: Boolean, attribute: "disable-highlight" },
+    open: { reflect: true, type: Boolean },
+    baseURL: { reflect: true, attribute: "base-url" },
+    resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
+    resizing: { reflect: true, type: Boolean },
+
+    // State
+    code: { state: true },
+    previewCode: { state: true },
+  }
+
+  constructor () {
+    super();
+
+    /**
+     * The sandbox settings to provide to the <iframe>
+     */
+    this.sandboxSettings = defaultSandboxSettings;
+
+    /**
+     * The text to provide in the <details> toggle button
+     */
+    this.summary = sourceCodeFallback;
+
+    /**
+     * The language to highlight for.
+     */
+    this.highlightLanguage = "html";
+
+    /**
+     * Set to true to not use an <iframe> for previewing
+     */
+    this.inlinePreview = false;
+
+    /**
+     * When the resizer is being dragged, this will be true.
+     */
+    this.resizing = false;
+
+    /**
+     * If disabled, its on you to provide `<pre><code></code></pre>`
+     */
+    this.disableHighlight = false;
+
+    /**
+     * We will take the code, wrap it in `<pre><code></code></pre>` and run it through
+     * Highlight.js.
+     * If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
+     */
+    this.code = "";
+
+    /**
+     * The baseURL
+     */
+    this.baseURL = "";
+
+    /**
+     * If `disableHighlight` is true, then you must pass in an element into `previewCode` to be able to get
+     *   the code to run in the previewer.
+     */
+    this.previewCode = "";
+
+    /**
+     * Whether or not the source code is being shown
+     */
+    this.open = false;
+
+    /**
+     * The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
+     */
+    this.resizePosition = 100;
+
+    /**
+     * @internal
+     */
+    this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
+
+    /**
+     * @internal
+     * @type {MutationObserverInit}
+     */
+    this.__mutationObserverConfig = {childList: true, subtree: true, characterData: true };
+
+    /**
+     * @internal
+     */
+    this.previewCodeDebounce = debounce(() => this.handleMutation("preview-code"), 20);
+
+    /**
+     * @internal
+     */
+    this.codeDebounce = debounce(() => this.handleMutation("code"), 20);
+  }
+
   /**
-   * @param {Event} e
+   * Reinstalls the mutation on slotted preview-code
+   */
+  resetIframeCodeMutationObserver () {
+    if (this.previewCodeMutationObserver) {
+      this.previewCodeMutationObserver.disconnect();
+    }
+    this.previewCodeMutationObserver = new MutationObserver((..._args) => this.previewCodeDebounce());
+
+    const targets = this.findSlot("preview-code")?.assignedElements({ flatten: true }) || [];
+
+    for (const target of targets) {
+      this.previewCodeMutationObserver.observe(target, this.__mutationObserverConfig);
+    }
+  }
+
+  /**
+   * Reinstalls the mutation observer on slotted code
+   */
+  resetCodeMutationObserver () {
+    if (this.codeMutationObserver) {
+      this.codeMutationObserver.disconnect();
+    }
+    this.codeMutationObserver = new MutationObserver((..._args) => this.codeDebounce());
+
+    const targets = this.findSlot("code")?.assignedElements({ flatten: true }) || [];
+
+    for (const target of targets) {
+      this.codeMutationObserver.observe(target, this.__mutationObserverConfig);
+    }
+  }
+
+
+  /**
+   * @param {"preview-code" | "code"} variable
+   */
+  handleMutation (variable) {
+    if (variable === "preview-code") {
+      this.handleTemplate({ target: this.findSlot("preview-code") });
+      return
+    }
+
+    if (variable === "code") {
+      this.handleTemplate({ target: this.findSlot("code") });
+      return
+    }
+  }
+
+  /**
+   * @param {string} name
+   * @returns {HTMLSlotElement | null | undefined}
+   */
+  findSlot(name) {
+    return this.shadowRoot?.querySelector(`slot[name='${name}']`)
+  }
+
+  /**
+   * @param {Event | { target?: undefined | null | HTMLSlotElement }} e
    */
   handleTemplate (e) {
     /**
-     * @type {HTMLSlotElement}
+     * @type {HTMLSlotElement | null | undefined}
      */
     // @ts-expect-error
     const slot = e.target;
 
+    if (slot == null) return
+
     const name = slot.getAttribute("name");
 
-    if (["iframe-code", "code"].includes(name || "") === false) return
+    if (["preview-code", "code"].includes(name || "") === false) return
+
+    let shouldReset = "type" in e && e.type === "slotchange";
 
     const templates = slot.assignedElements({flatten: true});
 
     const code = templates.map((template) => template.innerHTML).join("\n");
 
-    if (name === "iframe-code") {
-      this.iframeCode = code;
+    if (name === "preview-code") {
+      if (shouldReset) this.resetIframeCodeMutationObserver();
+      this.previewCode = code;
       return
     }
 
     if (name === "code") {
+      if (shouldReset) this.resetCodeMutationObserver();
       this.code = code;
       return
     }
+  }
+
+  unescapePreviewCode () {
+    return this.unescapeCharacters(this.previewCode || this.code)
   }
 
   updateIframeContent () {
@@ -172,7 +384,7 @@ class LightPreview extends DefineableMixin(s) {
 
     if (iframe?.contentWindow == null) return;
 
-    const code = this.unescapeCharacters(this.iframeCode || this.code);
+    const code = this.unescapePreviewCode();
 
     let page = [`
       <!doctype html>
@@ -225,7 +437,7 @@ class LightPreview extends DefineableMixin(s) {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (["iframeCode", "code", "baseURL"].some((str) => changedProperties.has(str))) {
+    if (["previewCode", "code", "baseURL"].some((str) => changedProperties.has(str))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce);
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300);
     }
@@ -235,78 +447,6 @@ class LightPreview extends DefineableMixin(s) {
     }
 
     super.willUpdate(changedProperties);
-  }
-  static properties = {
-    summary: {},
-    sandboxSettings: { reflect: true, attribute: "sandbox-settings" },
-    codeLanguage: { reflect: true, attribute: "code-language" },
-    highlightLanguage: { reflect: true, attribute: "highlight-language" },
-    inlinePreview: { type: Boolean, attribute: "inline-preview" },
-    disableHighlight: { type: Boolean, attribute: "disable-highlight" },
-    open: { reflect: true, type: Boolean },
-    baseURL: { reflect: true, attribute: "base-url" },
-    resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
-
-    // State
-    code: { state: true },
-    iframeCode: { state: true },
-
-  }
-
-  constructor () {
-    super();
-
-    this.sandboxSettings = "";
-
-    this.summary = sourceCodeFallback;
-    this.codeLanguage = "html";
-    this.highlightLanguage = "html";
-    this.inlinePreview = false;
-
-    this.resizing = false;
-
-    /**
-     * If disabled, its on you to provide `<pre><code></code></pre>`
-     */
-    this.disableHighlight = false;
-
-    /**
-     * We will take the code, wrap it in `<pre><code></code></pre>` and run it through
-     * Highlight.js.
-     * If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
-     */
-    this.code = "";
-
-    /**
-     * The baseURL
-     */
-    this.baseURL = "";
-
-    /**
-     * If `disableHighlight` is true, then you must pass in an element into `iframeCode` to be able to get
-     *   the code to run in the previewer.
-     */
-    this.iframeCode = "";
-
-    /**
-     * @property
-     * @type {boolean}
-     */
-    this.open = false;
-
-    /**
-     * The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
-     * @property
-     * @type {number}
-     */
-    this.resizePosition = 100;
-
-    /**
-     * @prop
-     * @type {ResizeObserver}
-     */
-    this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
-
   }
 
   /**
@@ -336,25 +476,31 @@ class LightPreview extends DefineableMixin(s) {
 
     this.updateComplete.then(() => {
       this.resizeObserver.observe(this);
+
+      this.resetIframeCodeMutationObserver();
+      this.resetCodeMutationObserver();
     });
   }
 
-  highlight (code = this.code) {
-    return HighlightJS.highlight(dedent(this.unescapeCharacters(code)), {language: this.highlightLanguage || this.codeLanguage}).value
-  }
+  /**
+   * @public
+   * Override this function to use your own highlighter
 
+   */
+  highlight (code = this.code) {
+    return code
+  }
   render () {
-    const language = this.highlightLanguage || this.codeLanguage;
+    const language = this.highlightLanguage;
     return x`
       <div part=${stringMap({
           "base": true,
-          "base--dragging": this.resizing,
         })}>
         <div part="preview">
           ${n(this.inlinePreview,
-              () => x`<div part="preview-div"><slot name="preview">${o(this.code)}</slot></div>`,
+              () => x`<div part="start-panel preview-div">${o(this.unescapePreviewCode())}</div>`,
               () => x`
-                <iframe part="iframe" frameborder="0" sandbox=${this.sandboxSettings || defaultSandboxSettings}></iframe>
+                <iframe part="start-panel iframe" frameborder="0" sandbox=${this.sandboxSettings || defaultSandboxSettings}></iframe>
               `
            )}
           <button
@@ -379,7 +525,8 @@ class LightPreview extends DefineableMixin(s) {
           <div part="end-panel"></div>
         </div>
 
-        <details ?open=${this.open} part="source-details" aria-labelledby="summary">
+
+        <details id="details" ?open=${this.open} part="source-details" aria-labelledby="summary">
           <summary style="display: none;"></summary>
           <div part="code-wrapper">
             ${n(this.highlight,
@@ -402,10 +549,10 @@ class LightPreview extends DefineableMixin(s) {
         </details>
 
         <div part="actions">
-          <button part="source-code-toggle" aria-expanded=${this.open} @click=${() => this.open = !this.open} type="button">
+          <button part="source-code-toggle" aria-expanded=${this.open} aria-controls="details" @click=${() => this.open = !this.open} type="button">
             <slot name="summary">${this.summary || sourceCodeFallback}</slot>
-            <slot name="source-code-toggle__icon">
-              <svg viewBox="0 0 24 24" height="24" width="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <slot name="source-code-toggle-icon">
+              <svg part="source-code-toggle-icon" viewBox="0 0 24 24" height="24" width="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
             </slot>
@@ -416,11 +563,9 @@ class LightPreview extends DefineableMixin(s) {
       </div>
 
       <div hidden>
-        <slot name="iframe-code" @slotchange=${this.handleTemplate}></slot>
+        <slot name="preview-code" @slotchange=${this.handleTemplate}></slot>
         <slot name="code" @slotchange=${this.handleTemplate}></slot>
       </div>
-
-      <span class="visually-hidden">Preview source code</span>
     `
   }
 
@@ -524,6 +669,29 @@ class LightPreview extends DefineableMixin(s) {
   }
 
 
+}
+
+// @ts-check
+
+HighlightJS.registerLanguage('html', xml);
+HighlightJS.registerLanguage('css', css);
+HighlightJS.registerLanguage('javascript', javascript);
+
+/**
+ * LightPreview is a very lightweight code previewer designed to load your code sample
+ *   inside of an iFrame for encapsulated viewing. `<light-preview>` uses HighlightJS as it's
+ *   default highlighter, but has a base class intended for extending.
+ * @extends {LightPreviewBase}
+ */
+class LightPreview extends LightPreviewBase {
+  static styles = LightPreviewBase.styles.concat([theme])
+
+  /**
+   * @override
+   */
+  highlight (code = this.code) {
+    return HighlightJS.highlight(dedent(this.unescapeCharacters(code)), {language: this.highlightLanguage || this.codeLanguage}).value
+  }
 }
 
 export { LightPreview as default };
