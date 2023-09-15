@@ -40,8 +40,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - name: Install NPM packages
-        run: pnpm install
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            docs/pnpm-lock.yaml
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          rubygems: latest
+          bundler-cache: true
+
+      - name: Setup
+        run: pnpm run setup
 
       - name: Set production base URL
         run: echo "BASE_URL=https://${{ env.DOMAIN }}/${{ github.event.repository.name }}/" >> $GITHUB_ENV
@@ -51,7 +61,9 @@ jobs:
         run: echo "BASE_URL=https://${{ env.DOMAIN }}/${{ github.event.repository.name }}/${{ env.PR_PATH}}/" >> $GITHUB_ENV
 
       - name: Build website
-        run: pnpm run build:site
+        run: |
+          pnpm run setup
+          pnpm run build:docs
 
       - name: Set username + email
         run: |
@@ -62,7 +74,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          pnpm exec gh-pages -d ./_site -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+          pnpm exec gh-pages -d ./docs/output -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -70,7 +82,7 @@ jobs:
         if: github.ref != 'refs/heads/main'
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          pnpm exec gh-pages -d ./_site --dest "${{ env.PR_PATH }}" -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+          pnpm exec gh-pages -d ./docs/output --dest "${{ env.PR_PATH }}" -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

@@ -23,6 +23,7 @@
   "scripts": {
     "start": "web-dev-server --watch",
     "start:site": "rimraf ./_site && rollup -wc",
+    "setup": "pnpm install && cd docs && pnpm install && bundle install",
     "build:site": "rimraf ./_site && rollup -c",
     "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
     "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
