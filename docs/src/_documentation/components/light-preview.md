@@ -8,7 +8,7 @@ description: |
 
 ## Typical Usage
 
-<light-preview base-url="<%= site.base_url %>">
+<light-preview base-url="<%= site.config.base_url %>">
   <script slot="iframe-code" type="text/plain">
     <button>Displaying a super cool button</button>
   </script>
@@ -19,7 +19,7 @@ description: |
       }
     </style>
 
-    <light-preview base-url="%BASE_URL%">
+    <light-preview base-url="<%= site.config.base_url %>">
       <script type="text/plain" slot="code">
         <button>Displaying a super cool button</button>
       &lt;/script>
@@ -35,7 +35,7 @@ description: |
 
 ## Nesting a light-pen inside of a light-pen
 
-<light-preview base-url="%BASE_URL%">
+<light-preview base-url="<%= site.config.base_url %>">
   <script type="text/plain" slot="code">
     <style>
       light-preview::part(iframe) {
@@ -43,7 +43,7 @@ description: |
       }
     </style>
 
-    <light-preview base-url="%BASE_URL%">
+    <light-preview base-url="<%= site.config.base_url %>">
       <script type="text/plain" slot="code">
         <button>Displaying a super cool button</button>
       &lt;/script>
@@ -60,9 +60,9 @@ description: |
 
 ## Loading inline
 
-<light-preview base-url="%BASE_URL%">
+<light-preview base-url="<%= site.config.base_url %>">
   <script type="text/plain" slot="code">
-    <light-preview inline-preview base-url="%BASE_URL%">
+    <light-preview inline-preview base-url="<%= site.config.base_url %>">
       <script type="text/plain" slot="code">
         <style>
           button.button {
@@ -122,7 +122,7 @@ description: |
   }
 </style>
 
-<light-preview id="additional-buttons" base-url="%BASE_URL%">
+<light-preview id="additional-buttons" base-url="<%= site.config.base_url %>">
   <script type="text/plain" slot="code">
     <style>
       #additional-buttons button {
@@ -155,7 +155,7 @@ description: |
       }
     </style>
 
-    <light-preview id="additional-buttons" base-url="%BASE_URL%">
+    <light-preview id="additional-buttons" base-url=""<%= site.config.base_url %>"">
       <script type="text/plain" slot="code">
         <style>
           #additional-buttons button {

@@ -4,10 +4,9 @@ destination: output
 
 development:
   url: "localhost:4000"
-production:
-  url: "https://konnorrogers.github.io"
-  base_path: "/light-pen"
-
+# production:
+#   url: "https://konnorrogers.github.io"
+#   base_path: "/light-pen"
 
 template_engine: erb
 permalink: pretty
