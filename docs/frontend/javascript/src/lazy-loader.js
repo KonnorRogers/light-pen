@@ -3,6 +3,16 @@ import LazyLoader from "web-component-lazy-loader";
 export default function lazyLoader() {
   return new LazyLoader({
     components: {
+      "light-pen": {
+        register () {
+          import("light-pen/exports/light-pen-register.js")
+        }
+      },
+      "light-preview": {
+        register () {
+          import("light-pen/exports/light-preview-register.js")
+        }
+      },
       "clipboard-copy": {
         register() {
           import("@github/clipboard-copy-element");

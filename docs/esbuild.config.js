@@ -1,23 +1,15 @@
 const build = require("./config/esbuild.defaults.js")
 
+const AssetMapper = require("asset-mapper-esbuild").default
 // Update this if you need to configure a destination folder other than `output`
 const outputFolder = "output"
 
 // You can customize this as you wish, perhaps to add new esbuild plugins.
 //
 // ```
-// const path = require("path")
-// const esbuildCopy = require('esbuild-plugin-copy').default
+const path = require("path")
+const esbuildCopy = require('esbuild-plugin-copy').default
 // const esbuildOptions = {
-//   plugins: [
-//     esbuildCopy({
-//       assets: {
-//         from: [path.resolve(__dirname, 'node_modules/somepackage/files/*')],
-//         to: [path.resolve(__dirname, 'output/_bridgetown/somepackage/files')],
-//       },
-//       verbose: false
-//     }),
-//   ]
 // }
 // ```
 //
@@ -26,14 +18,36 @@ const outputFolder = "output"
 // ```
 // const esbuildOptions = { publicPath: "/my_subfolder/_bridgetown/static" }
 // ```
+
 const esbuildOptions = {
   target: "es2020",
-  entryPoints: [
-    "frontend/javascript/index.js",
-    "frontend/javascript/defer.js",
-  ],
+  entryPoints: {
+    "javascript/index": "frontend/javascript/index.js",
+    "javascript/defer": "frontend/javascript/defer.js",
+    "light-pen/exports/light-pen": "../exports/light-pen.js",
+    "light-pen/exports/light-preview": "../exports/light-preview.js",
+    "light-pen/exports/light-preview-register": "../exports/light-preview-register.js",
+  },
+  define: {
+    "process.env.BASE_PATH": `"${process.env.BASE_PATH}"`
+  },
+  publicPath: process.env.BASE_PATH + "/_bridgetown/static",
   splitting: true,
-  format: "esm"
+  format: "esm",
+  plugins: [
+    esbuildCopy({
+      assets: {
+        from: [path.resolve(__dirname, 'node_modules/@shoelace-style/shoelace/dist/assets/icons/**/*.svg')],
+        to: [path.resolve(__dirname, 'src/shoelace-assets/assets/icons')],
+      },
+      verbose: false
+    }),
+    AssetMapper({
+      manifestFile: path.join(process.cwd(), ".bridgetown-cache", "asset-mapper-manifest.json"),
+      // outputRoot: path.join(process.cwd(), process.env.BASE_PATH)
+    })
+  ]
+
 }
 
 build(outputFolder, esbuildOptions)

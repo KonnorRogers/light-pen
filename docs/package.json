@@ -9,7 +9,9 @@
     "esbuild-dev": "node esbuild.config.js --watch"
   },
   "devDependencies": {
-    "esbuild": "^0.14.39",
+    "asset-mapper-esbuild": "^1.0.1",
+    "esbuild": "^0.19.3",
+    "esbuild-plugin-copy": "^2.1.1",
     "glob": "^8.0.1",
     "linkifyjs": "^4.1.1",
     "postcss": "^8.4.12",
@@ -23,7 +25,7 @@
     "@github/clipboard-copy-element": "^1.2.1",
     "@hotwired/stimulus": "^3.2.1",
     "@hotwired/turbo": "^7.3.0",
-    "@konnorr/bridgetown-quick-search": "^3.7.4",
+    "@konnorr/bridgetown-quick-search": "^3.8.0",
     "@shoelace-style/shoelace": "^2.7.0",
     "lit": "^2.8.0",
     "web-component-lazy-loader": "^1.0.1"

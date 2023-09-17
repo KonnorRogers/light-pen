@@ -14,6 +14,16 @@ class RodaApp < Bridgetown::Rack::Roda
   # uncomment the gem dependency in your `Gemfile` as well):
   # plugin :bridgetown_routes
 
+  plugin :default_headers,
+    {
+      'Content-Type'=>'text/html',
+      'Strict-Transport-Security'=>'max-age=16070400;',
+      'X-Content-Type-Options'=>'nosniff',
+      'X-Frame-Options'=>'deny',
+      'X-XSS-Protection'=>'1; mode=block',
+      'Access-Control-Allow-Origin'=>"*"
+    }
+
   route do |r|
     # Load Roda routes in server/routes (and src/_routes via `bridgetown-routes`)
     r.bridgetown

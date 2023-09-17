@@ -43,6 +43,7 @@ iframe {
 [part~="pre"] {
   padding: 1rem;
   margin: 0;
+  overflow: auto;
 }
 
 [part~="pre"],

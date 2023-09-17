@@ -1,8 +1,23 @@
 require 'json'
 require "nokogiri"
+require "asset_mapper"
 
 class Builders::Helpers < SiteBuilder
   def build
+    # Create an AssetMapper::Configuration instance
+    @asset_mapper = AssetMapper.new.configure do |config|
+      # Where the manifest files can be found on the host machine
+      config.manifest_files = [".bridgetown-cache/asset-mapper-manifest.json"]
+
+      # The URL or path prefix for the files.
+      config.asset_host = ENV["BASE_PATH"] + "/_bridgetown/static"
+
+      # Do not cache the manifest in testing or in development.
+      config.cache_manifest = false
+    end
+
+    helper "find_asset", :find_asset
+    helper "find_asset_file_path", :find_asset_file_path
     helper "version_number", :version_number
     helper "render_svg", :render_svg
     # All pages in "_documentation"
@@ -22,6 +37,14 @@ class Builders::Helpers < SiteBuilder
     helper "next_page_in_category", :next_page_in_category
     helper "previous_page_in_category", :previous_page_in_category
     helper "current_page_in_category_index", :current_page_in_category_index
+  end
+
+  def find_asset(file_name)
+    @asset_mapper.manifest.find(file_name)
+  end
+
+  def find_asset_file_path(file_name)
+    @asset_mapper.manifest.manifest_files[file_name]["file_path"]
   end
 
   def render_svg(filename, options = {})
@@ -50,7 +73,7 @@ class Builders::Helpers < SiteBuilder
     ordered_categories.map do |c|
       {
         category: c.data[:category],
-        url: ::Bridgetown::Utils.slugify(c.data[:category]),
+        url: site.config.base_path.to_s + "/" + ::Bridgetown::Utils.slugify(c.data[:category]),
         text: c.data[:category].split("_").map(&:capitalize).join(" ")
       }
     end

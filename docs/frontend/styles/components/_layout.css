@@ -67,7 +67,7 @@ main {
 }
 
 :is(.default, .home) .footer {
-  width: 100%;
+  width: 100vw;
 }
 
 :is(.doc, .index, .page, .post) main {

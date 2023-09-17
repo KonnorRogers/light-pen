@@ -204,6 +204,8 @@ class KrLayout extends LitElement {
   }
 }
 
+if (!window.customElements.get("kr-layout")) {
 window.customElements.define("kr-layout", KrLayout)
+}
 
 

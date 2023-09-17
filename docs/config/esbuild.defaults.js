@@ -212,7 +212,7 @@ const bridgetownPreset = (outputFolder) => ({
       const entrypoints = []
 
       // We don't need `frontend/` cluttering up everything
-      const stripPrefix = (str) => str.replace(/^frontend\//, "")
+      // const stripPrefix = (str) => str.replace(/^frontend\//, "")
 
       // For calculating the file size of bundle output
       const fileSize = (path) => {
@@ -222,29 +222,29 @@ const bridgetownPreset = (outputFolder) => ({
       }
 
       // Let's loop through all the various outputs
-      for (const key in result.metafile.outputs) {
-        const value = result.metafile.outputs[key]
-        const inputs = Object.keys(value.inputs)
-        const pathShortener = new RegExp(`^${outputFolder}\\/_bridgetown\\/static\\/`, "g")
-        const outputPath = key.replace(pathShortener, "")
+      // for (const key in result.metafile.outputs) {
+        // const value = result.metafile.outputs[key]
+        // const inputs = Object.keys(value.inputs)
+        // const pathShortener = new RegExp(`^${outputFolder}\\/_bridgetown\\/static\\/`, "g")
+        // const outputPath = key.replace(pathShortener, "")
 
-        if (value.entryPoint) {
-          // We have an entrypoint!
-          manifest[stripPrefix(value.entryPoint)] = outputPath
-          entrypoints.push([outputPath, fileSize(key)])
-        } else if (key.match(/index(\.js)?\.[^-.]*\.css/) && inputs.find(item => item.match(/\.(s?css|sass)$/))) {
-          // Special treatment for index.css
-          manifest[stripPrefix(inputs.find(item => item.match(/\.(s?css|sass)$/)))] = outputPath
-          entrypoints.push([outputPath, fileSize(key)])
-        } else if (inputs.length > 0) {
-          // Naive implementation, we'll just grab the first input and hope it's accurate
-          manifest[stripPrefix(inputs[0])] = outputPath
-        }
-      }
+        // if (value.entryPoint) {
+        //   // We have an entrypoint!
+        //   manifest[stripPrefix(value.entryPoint)] = outputPath
+        //   entrypoints.push([outputPath, fileSize(key)])
+        // } else if (key.match(/index(\.js)?\.[^-.]*\.css/) && inputs.find(item => item.match(/\.(s?css|sass)$/))) {
+        //   // Special treatment for index.css
+        //   manifest[stripPrefix(inputs.find(item => item.match(/\.(s?css|sass)$/)))] = outputPath
+        //   entrypoints.push([outputPath, fileSize(key)])
+        // } else if (inputs.length > 0) {
+        //   // Naive implementation, we'll just grab the first input and hope it's accurate
+        //   manifest[stripPrefix(inputs[0])] = outputPath
+        // }
+      // }
 
-      const manifestFolder = path.join(process.cwd(), ".bridgetown-cache", "frontend-bundling")
-      await fs.mkdir(manifestFolder, { recursive: true })
-      await fs.writeFile(path.join(manifestFolder, "manifest.json"), JSON.stringify(manifest))
+      // const manifestFolder = path.join(process.cwd(), ".bridgetown-cache", "frontend-bundling")
+      // await fs.mkdir(manifestFolder, { recursive: true })
+      // await fs.writeFile(path.join(manifestFolder, "manifest.json"), JSON.stringify(manifest))
 
       console.log("esbuild: frontend bundling complete!")
       console.log("esbuild: entrypoints processed:")
@@ -260,7 +260,7 @@ const bridgetownPreset = (outputFolder) => ({
 const postcssrc = require("postcss-load-config")
 const postCssConfig = postcssrc.sync()
 
-module.exports = (outputFolder, esbuildOptions) => {
+module.exports = async (outputFolder, esbuildOptions) => {
   esbuildOptions.plugins = esbuildOptions.plugins || []
   // Add the PostCSS & glob plugins to the top of the plugin stack
   esbuildOptions.plugins.unshift(postCssPlugin(postCssConfig, esbuildOptions.postCssPluginConfig || {}))
@@ -272,7 +272,11 @@ module.exports = (outputFolder, esbuildOptions) => {
   esbuildOptions.plugins.push(bridgetownPreset(outputFolder))
 
   // esbuild, take it away!
-  require("esbuild").build({
+  const esbuild = require("esbuild")
+
+  const watch = process.argv.includes("--watch")
+
+  const config = {
     bundle: true,
     loader: {
       ".jpg": "file",
@@ -286,7 +290,6 @@ module.exports = (outputFolder, esbuildOptions) => {
     },
     resolveExtensions: [".tsx", ".ts", ".jsx", ".js", ".css", ".scss", ".sass", ".json", ".js.rb"],
     nodePaths: ["frontend/javascript", "frontend/styles"],
-    watch: process.argv.includes("--watch"),
     minify: process.argv.includes("--minify"),
     sourcemap: true,
     target: "es2016",
@@ -296,5 +299,12 @@ module.exports = (outputFolder, esbuildOptions) => {
     publicPath: "/_bridgetown/static",
     metafile: true,
     ...esbuildOptions,
-  }).catch(() => process.exit(1))
+  }
+
+  if (watch) {
+    const context = await esbuild.context(config).catch(() => process.exit(1))
+    await context.watch().catch(() => process.exit(1))
+  } else {
+    await esbuild.build(config).catch(() => process.exit(1))
+  }
 }

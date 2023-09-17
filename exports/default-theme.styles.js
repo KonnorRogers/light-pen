@@ -1,3 +1,4 @@
+import { css } from "lit"
 export const theme = css`
 /*
 Atom One Light by Daniel Gamage

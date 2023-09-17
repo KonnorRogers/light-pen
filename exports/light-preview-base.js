@@ -264,7 +264,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
 
     const code = this.unescapePreviewCode()
 
-    let page = [`
+    let page = `
       <!doctype html>
       <html>
         <head>
@@ -275,25 +275,26 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
           ${code}
         </body>
       </html>`
-    ];
+
+    iframe.setAttribute("srcdoc", page)
 
 
-    const prevBlobUrl = this.blobUrl
+   //  const prevBlobUrl = this.blobUrl
+			//
+   //  const blob = new Blob(page, { type: "text/html" })
+   //  const blobUrl = URL.createObjectURL(blob)
+			//
+   //  this.blobUrl = blobUrl
+			//
+   //  if (iframe) {
+	  //   iframe.src = blobUrl
+	  // }
 
-    const blob = new Blob(page, { type: "text/html" })
-    const blobUrl = URL.createObjectURL(blob)
-
-    this.blobUrl = blobUrl
-
-    if (iframe) {
-	    iframe.src = blobUrl
-	  }
-
-    if (prevBlobUrl) {
-      setTimeout(() => {
-        URL.revokeObjectURL(prevBlobUrl)
-      }, 300)
-    }
+    // if (prevBlobUrl) {
+    //   setTimeout(() => {
+    //     URL.revokeObjectURL(prevBlobUrl)
+    //   }, 300)
+    // }
   }
 
   /**
