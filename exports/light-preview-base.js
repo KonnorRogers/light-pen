@@ -246,25 +246,10 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     return this.unescapeCharacters(this.previewCode || this.code)
   }
 
-  updateIframeContent () {
-    let iframe = this.shadowRoot?.querySelector("iframe")
-
-    if (iframe == null) return
-
-    const clone = iframe.cloneNode(true);
-    iframe.replaceWith(clone);
-
-    /**
-     * @type {HTMLIFrameElement}
-     */
-    // @ts-expect-error
-    iframe = clone
-
-    if (iframe?.contentWindow == null) return;
-
+  iframeSrcDoc () {
     const code = this.unescapePreviewCode()
 
-    let page = `
+    return `
       <!doctype html>
       <html>
         <head>
@@ -275,26 +260,6 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
           ${code}
         </body>
       </html>`
-
-    iframe.setAttribute("srcdoc", page)
-
-
-   //  const prevBlobUrl = this.blobUrl
-			//
-   //  const blob = new Blob(page, { type: "text/html" })
-   //  const blobUrl = URL.createObjectURL(blob)
-			//
-   //  this.blobUrl = blobUrl
-			//
-   //  if (iframe) {
-	  //   iframe.src = blobUrl
-	  // }
-
-    // if (prevBlobUrl) {
-    //   setTimeout(() => {
-    //     URL.revokeObjectURL(prevBlobUrl)
-    //   }, 300)
-    // }
   }
 
   /**
@@ -316,10 +281,10 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (["previewCode", "code", "baseURL"].some((str) => changedProperties.has(str))) {
-      if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
-      this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
-    }
+    // if (["previewCode", "code", "baseURL"].some((str) => changedProperties.has(str))) {
+    //   if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
+    //   this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
+    // }
 
     if (changedProperties.has("resizePosition")) {
       this.updateResizePosition()
@@ -379,7 +344,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
           ${when(this.inlinePreview,
               () => html`<div part="start-panel preview-div">${unsafeHTML(this.unescapePreviewCode())}</div>`,
               () => html`
-                <iframe part="start-panel iframe" frameborder="0" sandbox=${this.sandboxSettings || defaultSandboxSettings}></iframe>
+                <iframe part="start-panel iframe" frameborder="0" sandbox=${this.sandboxSettings || defaultSandboxSettings} srcdoc=${this.iframeSrcDoc()}></iframe>
               `
            )}
           <button
