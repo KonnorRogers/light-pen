@@ -34,6 +34,9 @@ export const previewStyles = css`
 [part~="preview"] {
   display: grid;
   grid-template-columns: minmax(0, var(--start-panel-width, 1fr)) minmax(0, auto) minmax(0, var(--end-panel-width, auto));
+  overflow: auto;
+  max-height: 100%;
+  resize: vertical;
 }
 
 [part~="start-panel"] {
@@ -41,8 +44,8 @@ export const previewStyles = css`
 }
 
 iframe {
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
 }
 
 [part~="pre"] {
@@ -80,11 +83,13 @@ iframe {
 button[part~="source-code-toggle"] {
   display: grid;
   grid-auto-flow: column;
-  align-items: center;
+  align-items:r center;
   justify-content: center;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   border-top: 1px solid var(--border-color);
+  min-height: 100%;
+  font-size: 1rem;
 }
 
 [part~="source-code-toggle"][aria-expanded="true"] svg {

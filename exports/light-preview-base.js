@@ -62,6 +62,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     baseURL: { reflect: true, attribute: "base-url" },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
+    iframeSrcDoc: { reflect: true, attribute: "iframe-src-doc" },
 
     // State
     code: { state: true },
@@ -128,6 +129,12 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
      * The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
      */
     this.resizePosition = 100
+
+    /**
+     * @property
+     * srcdoc to pass to the <iframe>
+     */
+    this.iframeSrcDoc = ""
 
     /**
      * @internal
@@ -246,10 +253,10 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     return this.unescapeCharacters(this.previewCode || this.code)
   }
 
-  iframeSrcDoc () {
+  updateIframeContent () {
     const code = this.unescapePreviewCode()
 
-    return `
+    const content = `
       <!doctype html>
       <html>
         <head>
@@ -260,6 +267,8 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
           ${code}
         </body>
       </html>`
+
+    this.iframeSrcDoc = content
   }
 
   /**
@@ -281,10 +290,10 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    // if (["previewCode", "code", "baseURL"].some((str) => changedProperties.has(str))) {
-    //   if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
-    //   this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
-    // }
+    if (["previewCode", "code", "baseURL"].some((str) => changedProperties.has(str))) {
+      if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
+      this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
+    }
 
     if (changedProperties.has("resizePosition")) {
       this.updateResizePosition()
@@ -329,11 +338,11 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   /**
    * @public
    * Override this function to use your own highlighter
-
    */
   highlight (code = this.code) {
     return code
   }
+
   render () {
     const language = this.highlightLanguage
     return html`
@@ -344,7 +353,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
           ${when(this.inlinePreview,
               () => html`<div part="start-panel preview-div">${unsafeHTML(this.unescapePreviewCode())}</div>`,
               () => html`
-                <iframe part="start-panel iframe" frameborder="0" sandbox=${this.sandboxSettings || defaultSandboxSettings} srcdoc=${this.iframeSrcDoc()}></iframe>
+                <iframe part="start-panel iframe" frameborder="0" srcdoc=${this.iframeSrcDoc}></iframe>
               `
            )}
           <button

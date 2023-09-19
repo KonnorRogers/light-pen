@@ -15,7 +15,7 @@ description: |
   <script type="text/plain" slot="code">
     <style>
       light-preview::part(iframe) {
-        max-height: 120px;
+        height: 80px;
       }
     </style>
 
@@ -38,7 +38,7 @@ description: |
   <script type="text/plain" slot="code">
     <style>
       light-preview::part(iframe) {
-        max-height: 120px;
+        height: 80px;
       }
     </style>
 
@@ -57,7 +57,7 @@ description: |
   <script type="text/plain" slot="preview-code">
     <style>
       light-preview::part(iframe) {
-        max-height: 120px;
+        height: 80px;
       }
     </style>
 
@@ -97,7 +97,7 @@ description: |
     </light-preview>
 
     <script type="module">
-      import LightPreview from "./exports/light-preview.js"
+      import LightPreview from "<%= find_asset "../exports/light-preview.js" %>"
       LightPreview.define()
     &lt;/script>
   </script>
@@ -105,6 +105,7 @@ description: |
 
 
 ## Additional buttons
+
 
 <style>
   #additional-buttons button {
@@ -169,6 +170,11 @@ description: |
         color: hsla(203, 77%, 43%);
         background-color: hsla(203, 77%, 43%, 0.1);
       }
+
+      light-preview::part(iframe) {
+        height: 80px;
+      }
+
     </style>
 
     <light-preview id="additional-buttons" base-url="<%= site.config.base_url %>/">
@@ -203,7 +209,7 @@ description: |
             background-color: hsla(203, 77%, 43%, 0.1);
           }
         </style>
-        <p>Showing off more buttons</p>
+        <div>Showing off more buttons</div>
 
       &lt;/script>
 
@@ -212,7 +218,7 @@ description: |
     </light-preview>
 
     <script type="module">
-      import LightPreview from "./exports/light-preview.js"
+      import LightPreview from "<%= find_asset "../exports/light-preview.js" %>"
       LightPreview.define()
     &lt;/script>
   </script>
