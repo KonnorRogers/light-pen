@@ -11,6 +11,7 @@ import { drag } from "../internal/drag.js";
 import { clamp } from "../internal/clamp.js";
 import { stringMap } from "../internal/string-map.js";
 import { debounce } from "../internal/debounce.js";
+import { resizeIcon } from "../internal/resize-icon.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -369,9 +370,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
             class=${this.resizing ? "is-active" : ""}
           >
             <slot name="resize-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grip-vertical" viewBox="0 0 16 16" part="svg">
-                <path d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
-              </svg>
+              ${resizeIcon}
             </slot>
           </button>
 

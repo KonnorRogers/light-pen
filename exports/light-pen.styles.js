@@ -173,22 +173,19 @@ export const styles = css`
   overflow-y: auto;
 }
 
-[part~="panel-resizer"] {
-  background-color: transparent;
-  appearance: none;
-  margin: 0;
-  -webkit-appearance: none;
+button:where([part~="panel-resizer"]) {
   height: 100%;
-  width: 4px;
-  padding: 4px;
-  border: 2px solid #b2b2b2;
   cursor: col-resize;
-  background-color: #b2b2b2;
+  background-color: white;
 }
 
-[part~="panel-resizer"]:focus {
-  outline: transparent;
-  border-color: royalblue;
+button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
+  cursor: col-resize;
+}
+
+[resizing],
+[part~="panel-resizer"].is-active {
+  cursor: col-resize;
 }
 
 [part~="sandbox-content"] {

@@ -44,10 +44,10 @@ button:focus-visible {
   }
 }
 
-button:hover {
+button:is(:active, :hover, .is-active) {
   cursor: pointer;
   color: hsla(203, 77%, 43%);
-  background-color: hsla(203, 77%, 43%, 0.1);
+  background-color: hsla(203, 77%, 93%);
 }
 `
 

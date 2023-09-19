@@ -12,12 +12,13 @@ import CSS from 'highlight.js/lib/languages/css';
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
 import { DefineableMixin } from "web-component-define";
-import { baseStyles } from "./base-styles.js";
+import { baseStyles, buttonStyles } from "./base-styles.js";
 
 import { clamp } from '../internal/clamp.js'
 import { dedent } from "../internal/dedent.js";
 import { drag } from "../internal/drag.js";
 import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
+import { resizeIcon } from "../internal/resize-icon.js";
 
 // Then register the languages you need
 HighlightJS.registerLanguage('javascript', JavaScript);
@@ -43,7 +44,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
   // Static
   static baseName = "light-pen"
 
-  static styles = [baseStyles, theme, styles]
+  static styles = [baseStyles, buttonStyles, theme, styles]
 
   static languageMap = {
     html: "xml",
@@ -62,7 +63,8 @@ export default class LightPen extends DefineableMixin(LitElement) {
     jsCode: { state: true },
     htmlResizeObserver: { state: true },
     jsResizeObserver: { state: true },
-    cssResizeObserver: { state: true }
+    cssResizeObserver: { state: true },
+    resizing: { state: true },
   }
   // Overrides
 
@@ -150,6 +152,10 @@ export default class LightPen extends DefineableMixin(LitElement) {
      */
     this.sandboxSettings = ""
 
+    /**
+     * @internal
+     */
+    this.resizing = false
   }
 
   /**
@@ -527,7 +533,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
         <slot name="js" @slotchange=${this.handleTemplate}></slot>
       </div>
 
-      <div part="base">
+      <div part="base" ?resizing=${this.resizing}>
 			  <div part="sandbox">
 				  <div part="sandbox-header">
             <slot name="title">
@@ -561,8 +567,11 @@ export default class LightPen extends DefineableMixin(LitElement) {
             @keydown=${this.handleResizerKeydown}
             @pointerdown=${this.handleDrag}
             @touchstart=${this.handleDrag}
+            class=${this.resizing ? "is-active" : ""}
           >
-            <slot name="panel-resize"></slot>
+            <slot name="panel-resize-icon">
+              ${resizeIcon}
+            </slot>
             <span class="visually-hidden">Resize Panel. Pull to left or right to resize.</span>
           </button>
 
@@ -604,9 +613,13 @@ export default class LightPen extends DefineableMixin(LitElement) {
       this.iframeElem.style.pointerEvents = "none"
     }
 
+    this.resizing = true
+
     drag(this, {
       onMove: (x, _y) => {
+        this.resizing = true
         let newPositionInPixels = x;
+
 
         this.resizePosition = clamp(this.pixelsToPercentage(newPositionInPixels), 0, 100);
         this.updateResizePosition()
@@ -616,6 +629,8 @@ export default class LightPen extends DefineableMixin(LitElement) {
         // Re-enable pointerevents so you can use tab keys etc.
           this.iframeElem.style.pointerEvents = "auto"
         }
+
+        this.resizing = false
       },
       initialEvent: event
     });
