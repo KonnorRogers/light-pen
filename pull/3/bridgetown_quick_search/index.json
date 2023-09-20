@@ -1,0 +1,98 @@
+[
+        {
+          "id": "light-pen-pull-3-components",
+          "title": "Components",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "components",
+          "tags": "",
+          "url": "/light-pen/pull/3/components/",
+          "content": ""
+        },
+        {
+          "id": "light-pen-pull-3-components-light-pen",
+          "title": "<light-pen>",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "components",
+          "tags": "",
+          "url": "/light-pen/pull/3/components/light-pen/",
+          "content": "Typical Usage"
+        },
+        {
+          "id": "light-pen-pull-3-components-light-preview",
+          "title": "<light-preview>",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "components",
+          "tags": "",
+          "url": "/light-pen/pull/3/components/light-preview/",
+          "content": "Typical Usage\n\n\n  \n  \n\n\nNesting a light-pen inside of a light-pen\n\n\n  \n\n  \n\n\nLoading inline\n\n\n  \n\n\nAdditional buttons\n\n\n\n\n  \n\n  HTML\n  Codepen"
+        },
+        {
+          "id": "light-pen-pull-3-guides",
+          "title": "Guides",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "guides",
+          "tags": "",
+          "url": "/light-pen/pull/3/guides/",
+          "content": ""
+        },
+        {
+          "id": "light-pen-pull-3-references",
+          "title": "References",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/light-pen/pull/3/references/",
+          "content": ""
+        },
+        {
+          "id": "light-pen-pull-3",
+          "title": "Rhino Editor",
+          "collection": {
+            "label": "pages",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "/light-pen/pull/3/",
+          "content": ""
+        },
+        {
+          "id": "light-pen-pull-3-bridgetown_quick_search-index.json",
+          "title": "Index",
+          "collection": {
+            "label": "pages",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "/light-pen/pull/3/bridgetown_quick_search/index.json",
+          "content": "[\n  {%- assign looped = false %}\n  {%- assign documents = site.documents %}\n  {%- if site.content_engine == \"resource\" %}{% assign documents = site.resources %}{% endif %}\n  {%- for document in documents %}\n    {%- if document.title %}\n      {%- unless document.exclude_from_search or document.id == \"\" %}\n        {%- assign url = document.url %}\n        {%- if site.content_engine == \"resource\" %}{% assign url = document.relative_url %}{% endif %}\n        {%- if looped %},{% endif %}\n        {\n          \"id\": \"{{ url | slugify }}\",\n          \"title\": {{ document.title | jsonify }},\n          {%- if document.collection %}\n          \"collection\": {\n            \"label\": {{ document.collection.label | jsonify }},\n            \"name\": {{ document.collection.name | default: \"Posts\" | jsonify }}\n          },\n          {%- endif %}\n          \"categories\": {{ document.categories | join: \", \" | jsonify }},\n          \"tags\": {{ document.tags | join: \", \" | jsonify }},\n          \"url\": {{ url | jsonify }},\n          \"content\": {{ document.content | strip_html | replace_regex: \"[\\s/\\n]+\",\" \" | strip | jsonify }}\n        }\n        {%- assign looped = true %}\n      {%- endunless %}\n    {%- endif %}\n  {%- endfor %}\n  {%- for document in site.generated_pages %}\n    {%- if document.name contains \".md\" or document.name contains \".html\" %}\n      {%- if document.title %}\n        {%- unless document.exclude_from_search %}\n          {%- if looped %},{% endif %}\n          {\n            \"id\": \"{{ document.url | slugify }}\",\n            \"title\": {{ document.title | jsonify }},\n            \"categories\": {{ document.categories | join: \", \" | jsonify }},\n            \"tags\": {{ document.tags | join: \", \" | jsonify }},\n            \"url\": {{ document.url | jsonify }},\n            \"content\": {{ document.content | strip_html | replace_regex: \"[\\s/\\n]+\",\" \" | strip | jsonify }}\n          }\n        {%- endunless %}\n      {%- endif %}\n    {%- endif %}\n  {%- endfor %}\n]"
+        },
+        {
+          "id": "",
+          "title": "Light(weight) [Code](pen|highlight|preview)",
+          "collection": {
+            "label": "data",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "",
+          "content": ""
+        }
+]
