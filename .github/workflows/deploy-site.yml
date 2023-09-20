@@ -54,11 +54,13 @@ jobs:
         run: pnpm run setup
 
       - name: Set production base URL
-        run: echo "BASE_URL=https://${{ env.DOMAIN }}/${{ github.event.repository.name }}/" >> $GITHUB_ENV
+        run: |
+          echo "URL=https://${{ env.DOMAIN }}" >> $GITHUB_ENV
+          echo "BASE_PATH="/${{ github.event.repository.name }}" >> $GITHUB_ENV
 
       - name: Set base URL for preview if PR
         if: github.ref != 'refs/heads/main'
-        run: echo "BASE_URL=https://${{ env.DOMAIN }}/${{ github.event.repository.name }}/${{ env.PR_PATH}}/" >> $GITHUB_ENV
+        run: echo "BASE_PATH=/${{ github.event.repository.name }}/${{ env.PR_PATH }}" >> $GITHUB_ENV
 
       - name: Build website
         run: |
