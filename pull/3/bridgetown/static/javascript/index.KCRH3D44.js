@@ -101,18 +101,18 @@ import{a as vt}from"/light-pen/pull/3/bridgetown/static/chunks/chunk-WGGMSSQV.js
       box-sizing: border-box;;
     }
 
-    :host::part(base) {
+    [part~="base"] {
       display: grid;
       /** Header, Main, Footer **/
       grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
       min-height: var(--height);
     }
 
-    :host::part(header) {
+    [part~="header"] {
       max-width: 100%;
       position: sticky;
       background: white;
-      z-index: 1;
+      z-index: 2;
     }
 
     :is(.header, .aside, .menu, .footer) ::slotted(*) {
@@ -125,19 +125,19 @@ import{a as vt}from"/light-pen/pull/3/bridgetown/static/chunks/chunk-WGGMSSQV.js
       max-width: 100%;
     }
 
-    :host::part(header) {
+    [part~="header"] {
       top: 0px;
     }
 
-    :host::part(body) {
+    [part~="body"] {
       display: grid;
       /** Menu, Main, Aside **/
       grid-template-columns: minmax(0, var(--menu-width)) minmax(0, var(--main-width)) minmax(0, var(--aside-width));
       grid-template-rows: minmax(0, 1fr);
     }
 
-    :host::part(aside),
-    :host::part(menu) {
+    [part~="aside"],
+    [part~="menu"] {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       max-height: calc(var(--height) - var(--header-height));
@@ -147,7 +147,7 @@ import{a as vt}from"/light-pen/pull/3/bridgetown/static/chunks/chunk-WGGMSSQV.js
       overscroll-behavior: contain;
     }
 
-    :host::part(main) {
+    [part~="main"] {
       position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -155,7 +155,7 @@ import{a as vt}from"/light-pen/pull/3/bridgetown/static/chunks/chunk-WGGMSSQV.js
       grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
     }
 
-    :host::part(footer) {}
+    [part~="footer"] {}
 
     sl-visually-hidden:not(:focus-within) {
       position: absolute !important;
@@ -183,4 +183,4 @@ import{a as vt}from"/light-pen/pull/3/bridgetown/static/chunks/chunk-WGGMSSQV.js
       text-align: center;
     }
   `),g(z,"properties",{main_id:{attribute:"main-id",reflect:!0}});window.customElements.get("kr-layout")||window.customElements.define("kr-layout",z);var Be={};U(Be,{default:()=>mt});var mt=class extends d{constructor(){super(...arguments);g(this,"showSuccess",()=>{this.element.classList.add("clipboard--success"),this.element.classList.remove("clipboard--idle"),this.timeout&&clearTimeout(this.timeout),this.timeout=setTimeout(()=>{this.element.classList.remove("clipboard--success"),this.element.classList.add("clipboard--idle")},2e3)})}connect(){this.element.addEventListener("clipboard-copy",this.showSuccess)}};var Ie={};U(Ie,{default:()=>ye});var ye=class extends d{connect(){}};var Ge={};U(Ge,{default:()=>bt});var bt=class extends d{constructor(){super(...arguments);g(this,"handleIntersect",e=>{e.forEach(i=>{i.isIntersecting?this.visibleSet.add(i.target):this.visibleSet.delete(i.target)}),this.updateActiveLinks()});g(this,"updateActiveLinks",()=>{let e=this.links;e.find(i=>{let r=this.linkMap.get(i);return r&&this.visibleSet.has(r)?(e.forEach(n=>n.parentElement.classList.toggle("is-active",n===i)),!0):!1})});g(this,"observeLinks",()=>{this.links.forEach(e=>{let i=e.hash.slice(1),r=i?document.querySelector(`main #${i}`):null;r&&(this.linkMap.set(e,r),this.observer.observe(r))})})}connect(){this.observer=new IntersectionObserver(this.handleIntersect,{rootMargin:"0px 0px"}),this.linkMap=new WeakMap,this.visibleSet=new WeakSet,this.observeLinks(),this.updateActiveLinks(),this.selector=["1","2","3","4","5","6"].map(e=>"h"+e+"[id]").join(","),document.querySelectorAll(this.selector).forEach(e=>{this.observer.observe(e)}),document.addEventListener("turbo:load",this.observeLinks),document.addEventListener("turbo:load",this.updateActiveLinks),this.observeLinks(),this.updateActiveLinks()}disconnect(){this.observer.disconnect()}get links(){return[...document.querySelectorAll("#table-of-contents li a")]}};var we={};U(we,{default:()=>pt});var pt=class extends d{show(){document.querySelector("bridgetown-ninja-keys").open()}};var Ue={};U(Ue,{default:()=>gt});var gt=class extends d{constructor(){super(...arguments);g(this,"reset",()=>{window.scrollTo(0,this.scrollTop),document.body.classList.remove("fixed-body")})}async open(){document.addEventListener("sl-hide",this.reset),this.drawer.removeAttribute("hidden"),this.scrollTop=window.scrollY,document.body.classList.add("fixed-body"),document.body.scroll(0,this.scrollTop),await this.drawer.show()}async close(){document.removeEventListener("sl-hide",this.reset),this.reset(),await this.drawer.hide()}async toggle(){this.drawer.open?await this.open():await this.close()}get drawer(){return document.querySelector("#side-nav-drawer")}};var Ce={};U(Ce,{default:()=>ft});var ft=class extends d{constructor(...t){super(...t),this.handleSelect=e=>{window.applyTheme(e.detail.item.value)},this.handleShortcut=e=>{e.key==="\\"&&!e.composedPath().some(i=>["input","textarea"].includes(i?.tagName?.toLowerCase())||i.hasAttribute?.("contenteditable")||i.getAttribute?.("role")==="textbox")&&(e.preventDefault(),window.applyTheme(window.themeIsDark()?"light":"dark"))},this.setLight=()=>{window.applyTheme("light")},this.setDark=()=>{window.applyTheme("dark")},window.applyTheme(window.getTheme())}connect(){this.element.addEventListener("sl-select",this.handleSelect),document.addEventListener("keydown",this.handleShortcut),window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",this.setDark),window.matchMedia("(prefers-color-scheme: light)").addEventListener("change",this.setLight),window.applyTheme(window.getTheme())}disconnect(){this.element.removeEventListener("sl-select",this.handleSelect),document.removeEventListener("keydown",this.handleShortcut)}};var Hs={"./controllers/clipboard_controller.js":Be,"./controllers/example_controller.js":Ie,"./controllers/scroll_spy_controller.js":Ge,"./controllers/search_controller.js":we,"./controllers/side_nav_controller.js":Ue,"./controllers/theme_switcher_controller.js":Ce},ni=Hs;window.Turbo=Qe;zt();vt("/light-pen/pull/3/shoelace-assets");window.Stimulus=K.start();Object.entries(ni).forEach(([s,t])=>{if(s.includes("_controller.")||s.includes("-controller.")){let e=s.replace("./controllers/","").replace(/[_-]controller..*$/,"").replace("_","-").replace("/","--");Stimulus.register(e,t.default)}});(()=>{window.scrollPositions||(window.scrollPositions={});function s(){document.querySelectorAll("[data-preserve-scroll").forEach(e=>{scrollPositions[e.id]=e.scrollTop})}function t(e){e.detail&&e.detail.newBody&&e.detail.newBody.querySelectorAll("[data-preserve-scroll]").forEach(i=>{i.scrollTop=scrollPositions[i.id]}),document.querySelectorAll("[data-preserve-scroll").forEach(i=>{i.scrollTop=scrollPositions[i.id]})}window.addEventListener("turbo:before-cache",s),window.addEventListener("turbo:before-render",t),window.addEventListener("turbo:render",t)})();
-//# sourceMappingURL=/light-pen/pull/3/bridgetown/static/javascript/index.P3WTYYIV.js.map
+//# sourceMappingURL=/light-pen/pull/3/bridgetown/static/javascript/index.KCRH3D44.js.map
