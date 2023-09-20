@@ -2,7 +2,7 @@ const build = require("./config/esbuild.defaults.js")
 
 const AssetMapper = require("asset-mapper-esbuild").default
 // Update this if you need to configure a destination folder other than `output`
-const outputFolder = "output"
+const outputFolder = "src"
 
 // You can customize this as you wish, perhaps to add new esbuild plugins.
 //

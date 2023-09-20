@@ -10,7 +10,7 @@ class Builders::Helpers < SiteBuilder
       config.manifest_files = [".bridgetown-cache/asset-mapper-manifest.json"]
 
       # The URL or path prefix for the files.
-      config.asset_host = ENV["BASE_PATH"] + "/_bridgetown/static"
+      config.asset_host = ENV["BASE_PATH"] + "/bridgetown/static"
 
       # Do not cache the manifest in testing or in development.
       config.cache_manifest = false
