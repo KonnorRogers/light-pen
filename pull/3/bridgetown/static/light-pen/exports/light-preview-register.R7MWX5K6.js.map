@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../exports/light-preview-register.js"],
+  "sourcesContent": ["import LightPreview from \"./light-preview.js\";\n\nexport default LightPreview\n\nLightPreview.define()\n"],
+  "mappings": "2NAEA,IAAOA,EAAQC,EAEfA,EAAa,OAAO",
+  "names": ["light_preview_register_default", "LightPreview"]
+}
