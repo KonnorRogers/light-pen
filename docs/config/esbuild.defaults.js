@@ -295,8 +295,8 @@ module.exports = async (outputFolder, esbuildOptions) => {
     target: "es2016",
     entryPoints: ["frontend/javascript/index.js"],
     entryNames: "[dir]/[name].[hash]",
-    outdir: path.join(process.cwd(), `${outputFolder}/_bridgetown/static`),
-    publicPath: "/_bridgetown/static",
+    outdir: path.join(process.cwd(), `${outputFolder}/bridgetown/static`),
+    publicPath: "/bridgetown/static",
     metafile: true,
     ...esbuildOptions,
   }

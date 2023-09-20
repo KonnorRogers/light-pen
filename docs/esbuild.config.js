@@ -31,7 +31,8 @@ const esbuildOptions = {
   define: {
     "process.env.BASE_PATH": `"${process.env.BASE_PATH}"`
   },
-  publicPath: process.env.BASE_PATH + "/_bridgetown/static",
+  publicPath: path.join(process.env.BASE_PATH, "bridgetown", "static"),
+  outdir: path.join(process.cwd(), outputFolder, "bridgetown", "static"),
   splitting: true,
   format: "esm",
   plugins: [
