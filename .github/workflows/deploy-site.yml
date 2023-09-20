@@ -56,11 +56,15 @@ jobs:
       - name: Set production base URL
         run: |
           echo "URL=https://${{ env.DOMAIN }}" >> $GITHUB_ENV
-          echo "BASE_PATH="/${{ github.event.repository.name }}" >> $GITHUB_ENV
+          echo "BASE_PATH=/${{ github.event.repository.name }}" >> $GITHUB_ENV
 
-      - name: Set base URL for preview if PR
+      - name: Set base_path for preview if PR
         if: github.ref != 'refs/heads/main'
         run: echo "BASE_PATH=/${{ github.event.repository.name }}/${{ env.PR_PATH }}" >> $GITHUB_ENV
+
+      - name: Set base_url
+        run: echo "BASE_URL=$URL/$BASE_PATH" >> $GITHUB_ENV
+
 
       - name: Build website
         run: |
