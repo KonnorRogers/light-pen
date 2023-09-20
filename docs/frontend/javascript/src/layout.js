@@ -31,18 +31,18 @@ class KrLayout extends LitElement {
       box-sizing: border-box;;
     }
 
-    :host::part(base) {
+    [part~="base"] {
       display: grid;
       /** Header, Main, Footer **/
       grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
       min-height: var(--height);
     }
 
-    :host::part(header) {
+    [part~="header"] {
       max-width: 100%;
       position: sticky;
       background: white;
-      z-index: 1;
+      z-index: 2;
     }
 
     :is(.header, .aside, .menu, .footer) ::slotted(*) {
@@ -55,19 +55,19 @@ class KrLayout extends LitElement {
       max-width: 100%;
     }
 
-    :host::part(header) {
+    [part~="header"] {
       top: 0px;
     }
 
-    :host::part(body) {
+    [part~="body"] {
       display: grid;
       /** Menu, Main, Aside **/
       grid-template-columns: minmax(0, var(--menu-width)) minmax(0, var(--main-width)) minmax(0, var(--aside-width));
       grid-template-rows: minmax(0, 1fr);
     }
 
-    :host::part(aside),
-    :host::part(menu) {
+    [part~="aside"],
+    [part~="menu"] {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       max-height: calc(var(--height) - var(--header-height));
@@ -77,7 +77,7 @@ class KrLayout extends LitElement {
       overscroll-behavior: contain;
     }
 
-    :host::part(main) {
+    [part~="main"] {
       position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -85,7 +85,7 @@ class KrLayout extends LitElement {
       grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
     }
 
-    :host::part(footer) {}
+    [part~="footer"] {}
 
     sl-visually-hidden:not(:focus-within) {
       position: absolute !important;
