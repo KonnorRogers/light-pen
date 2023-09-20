@@ -24,7 +24,7 @@
     "start": "web-dev-server --watch",
     "start:docs": "cd docs && overmind start -f Procfile.dev",
     "setup": "pnpm install && cd docs && pnpm install && bundle install",
-    "build:site": "cd docs && pnpm run build",
+    "build:docs": "cd docs && pnpm run build",
     "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
     "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
