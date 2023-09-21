@@ -233,9 +233,26 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
 
     let shouldReset = "type" in e && e.type === "slotchange"
 
-    const templates = slot.assignedElements({flatten: true})
+    let elements = slot.assignedElements({flatten: true})
 
-    const code = templates.map((template) => template.innerHTML).join("\n")
+    let strings = []
+
+    const scratch = document.createElement("div")
+
+    for (const el of elements) {
+      if (el instanceof HTMLTemplateElement) {
+        const node = el.content.cloneNode(true)
+
+        scratch.append(node)
+        strings.push(scratch.innerHTML)
+        scratch.innerHTML = ""
+        continue
+      }
+
+      strings.push(el.innerHTML)
+    }
+
+    const code = strings.join("\n")
 
     if (name === "preview-code") {
       if (shouldReset) this.resetIframeCodeMutationObserver()

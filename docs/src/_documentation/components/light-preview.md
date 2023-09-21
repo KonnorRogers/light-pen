@@ -9,10 +9,10 @@ description: |
 ## Typical Usage
 
 <light-preview base-url="<%= site.config.base_url %>/">
-  <script slot="preview-code" type="text/plain">
+  <template slot="preview-code">
     <button>Displaying a super cool button</button>
-  </script>
-  <script type="text/plain" slot="code">
+  </template>
+  <template slot="code">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -20,22 +20,22 @@ description: |
     </style>
 
     <light-preview base-url="<%= site.config.base_url %>/">
-      <script type="text/plain" slot="code">
+      <template slot="code">
         <button>Displaying a super cool button</button>
-      &lt;/script>
+      </template>
     </light-preview>
 
     <script type="module">
       import LightPreview from "light-pen/exports/light-preview.js";
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 </light-preview>
 
 ## Nesting a light-pen inside of a light-pen
 
 <light-preview base-url="<%= site.config.base_url %>/">
-  <script type="text/plain" slot="code">
+  <template slot="code">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -43,18 +43,18 @@ description: |
     </style>
 
     <light-preview base-url="<%= site.config.base_url %>/">
-      <script type="text/plain" slot="code">
+      <template slot="code">
         <button>Displaying a super cool button</button>
-      &lt;/script>
+      </template>
     </light-preview>
 
     <script type="module">
       import LightPreview from "light-pen/exports/light-preview.js"
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 
-  <script type="text/plain" slot="preview-code">
+  <template slot="preview-code">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -62,25 +62,25 @@ description: |
     </style>
 
     <light-preview base-url="<%= site.config.base_url %>/">
-      <script type="text/plain" slot="code">
+      <template slot="code">
         <button>Displaying a super cool button</button>
-      &lt;/script>
+      </template>
     </light-preview>
 
     <script type="module">
       import LightPreview from "<%= find_asset "../exports/light-preview.js" %>"
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 </light-preview>
 
 
 ## Loading inline
 
 <light-preview inline-preview base-url="<%= site.config.base_url %>/">
-  <script type="text/plain" slot="code">
+  <template slot="code">
     <light-preview inline-preview base-url="<%= site.config.base_url %>/">
-      <script type="text/plain" slot="code">
+      <template slot="code">
         <style>
           button.button {
             border-color: gray;
@@ -93,14 +93,14 @@ description: |
         <p>
           Notice how the button has the same styling as the toggle! That's because its not scoped into an iFrame!
         </p>
-      &lt;/script>
+      </template>
     </light-preview>
 
     <script type="module">
       import LightPreview from "<%= find_asset "../exports/light-preview.js" %>"
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 </light-preview>
 
 
@@ -140,7 +140,7 @@ description: |
 </style>
 
 <light-preview id="additional-buttons" base-url="<%= site.config.base_url %>/">
-  <script type="text/plain" slot="code">
+  <template slot="code">
     <style>
       #additional-buttons button {
         appearance: none;
@@ -178,9 +178,9 @@ description: |
     </style>
 
     <light-preview id="additional-buttons" base-url="<%= site.config.base_url %>/">
-      <script type="text/plain" slot="code">
+      <template slot="code">
         <div>Showing off more buttons</div>
-      &lt;/script>
+      </template>
 
       <button slot="actions">HTML</button>
       <button slot="actions">Codepen</button>
@@ -189,8 +189,8 @@ description: |
     <script type="module">
       import LightPreview from "<%= find_asset "../exports/light-preview.js" %>"
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 
   <button slot="actions">HTML</button>
   <button slot="actions">Codepen</button>
