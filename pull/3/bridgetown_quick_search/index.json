@@ -33,7 +33,7 @@
           "categories": "components",
           "tags": "",
           "url": "/light-pen/pull/3/components/light-preview/",
-          "content": "Typical Usage\n\n\n  \n  \n\n\nNesting a light-pen inside of a light-pen\n\n\n  \n\n  \n\n\nLoading inline\n\n\n  \n\n\nAdditional buttons\n\n\n\n\n  \n\n  HTML\n  Codepen"
+          "content": "Typical Usage\n\n\n  \n    Displaying a super cool button\n  \n  \n    \n\n    \n      \n        Displaying a super cool button\n      \n    \n\n    \n  \n\n\nNesting a light-pen inside of a light-pen\n\n\n  \n    \n\n    \n      \n        Displaying a super cool button\n      \n    \n\n    \n  \n\n  \n    \n\n    \n      \n        Displaying a super cool button\n      \n    \n\n    \n  \n\n\nLoading inline\n\n\n  \n    \n      \n        \n\n        Displaying a super cool button not inside an iframe\n\n        \n        \n          Notice how the button has the same styling as the toggle! That's because its not scoped into an iFrame!\n        \n      \n    \n\n    \n  \n\n\nAdditional buttons\n\n\n\n\n  \n    \n\n    \n      \n        Showing off more buttons\n      \n\n      HTML\n      Codepen\n    \n\n    \n  \n\n  HTML\n  Codepen"
         },
         {
           "id": "light-pen-pull-3-guides",

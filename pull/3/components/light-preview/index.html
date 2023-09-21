@@ -6,7 +6,7 @@
 <base href="/light-pen/pull/3/">
 
 <meta name="description" content="Rhino editor is a durable and flexible editor designed to provide an easy to use out of the box experience while providing hooks and plugins to allow for easy extension.">
-<link rel="modulepreload" href="/light-pen/pull/3/bridgetown/static/javascript/index.KCRH3D44.js">
+<link rel="modulepreload" href="/light-pen/pull/3/bridgetown/static/javascript/index.W4CLF7QQ.js">
 <link rel="modulepreload" href="/light-pen/pull/3/bridgetown/static/javascript/defer.3YZ5JEUH.js">
 <link rel="preload" href="/light-pen/pull/3/bridgetown/static/javascript/defer.XTPDDFH5.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/3/bridgetown/static/javascript/defer.XTPDDFH5.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/3/bridgetown/static/javascript/index.KCRH3D44.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/3/bridgetown/static/javascript/index.W4CLF7QQ.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/3/bridgetown/static/javascript/defer.3YZ5JEUH.js" type="module"></script>
 
 <!-- Favicons -->
@@ -260,10 +260,10 @@
         </h2>
 
 <light-preview base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
-  <script slot="preview-code" type="text/plain">
+  <template slot="preview-code">
     <button>Displaying a super cool button</button>
-  </script>
-  <script type="text/plain" slot="code">
+  </template>
+  <template slot="code">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -271,16 +271,16 @@
     </style>
 
     <light-preview base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
-      <script type="text/plain" slot="code">
+      <template slot="code">
         <button>Displaying a super cool button</button>
-      &lt;/script>
+      </template>
     </light-preview>
 
     <script type="module">
       import LightPreview from "light-pen/exports/light-preview.js";
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 </light-preview>
 
 <h2 id="nesting-a-light-pen-inside-of-a-light-pen">
@@ -288,7 +288,7 @@
         </h2>
 
 <light-preview base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
-  <script type="text/plain" slot="code">
+  <template slot="code">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -296,18 +296,18 @@
     </style>
 
     <light-preview base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
-      <script type="text/plain" slot="code">
+      <template slot="code">
         <button>Displaying a super cool button</button>
-      &lt;/script>
+      </template>
     </light-preview>
 
     <script type="module">
       import LightPreview from "light-pen/exports/light-preview.js"
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 
-  <script type="text/plain" slot="preview-code">
+  <template slot="preview-code">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -315,16 +315,16 @@
     </style>
 
     <light-preview base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
-      <script type="text/plain" slot="code">
+      <template slot="code">
         <button>Displaying a super cool button</button>
-      &lt;/script>
+      </template>
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/pull/3/bridgetown/static/light-pen/exports/light-preview.YJNHKO5T.js"
+      import LightPreview from "/light-pen/pull/3/bridgetown/static/light-pen/exports/light-preview.PPIN57TY.js"
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 </light-preview>
 
 <h2 id="loading-inline">
@@ -332,9 +332,9 @@
         </h2>
 
 <light-preview inline-preview="" base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
-  <script type="text/plain" slot="code">
-    <light-preview inline-preview base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
-      <script type="text/plain" slot="code">
+  <template slot="code">
+    <light-preview inline-preview="" base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
+      <template slot="code">
         <style>
           button.button {
             border-color: gray;
@@ -347,14 +347,14 @@
         <p>
           Notice how the button has the same styling as the toggle! That's because its not scoped into an iFrame!
         </p>
-      &lt;/script>
+      </template>
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/pull/3/bridgetown/static/light-pen/exports/light-preview.YJNHKO5T.js"
+      import LightPreview from "/light-pen/pull/3/bridgetown/static/light-pen/exports/light-preview.PPIN57TY.js"
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 </light-preview>
 
 <h2 id="additional-buttons">
@@ -394,7 +394,7 @@
 </style>
 
 <light-preview id="additional-buttons" base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
-  <script type="text/plain" slot="code">
+  <template slot="code">
     <style>
       #additional-buttons button {
         appearance: none;
@@ -432,19 +432,19 @@
     </style>
 
     <light-preview id="additional-buttons" base-url="https://KonnorRogers.github.io/light-pen/pull/3/">
-      <script type="text/plain" slot="code">
+      <template slot="code">
         <div>Showing off more buttons</div>
-      &lt;/script>
+      </template>
 
       <button slot="actions">HTML</button>
       <button slot="actions">Codepen</button>
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/pull/3/bridgetown/static/light-pen/exports/light-preview.YJNHKO5T.js"
+      import LightPreview from "/light-pen/pull/3/bridgetown/static/light-pen/exports/light-preview.PPIN57TY.js"
       LightPreview.define()
-    &lt;/script>
-  </script>
+    </script>
+  </template>
 
   <button slot="actions">HTML</button>
   <button slot="actions">Codepen</button>
