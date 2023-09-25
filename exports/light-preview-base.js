@@ -492,7 +492,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
 
     if (startWidth != null) {
       const endWidth = 100 - startWidth
-      this.style.setProperty("--start-panel-width", `clamp(275px, ${startWidth}%, 100%)`)
+      this.style.setProperty("--start-panel-width", `clamp(100px, ${startWidth}%, 100%)`)
       this.style.setProperty("--end-panel-width", `${endWidth}%`)
     }
   }

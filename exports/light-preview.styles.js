@@ -44,8 +44,8 @@ export const previewStyles = css`
 }
 
 iframe {
-  min-height: 100%;
-  min-width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 [part~="pre"] {
@@ -83,7 +83,7 @@ iframe {
 button[part~="source-code-toggle"] {
   display: grid;
   grid-auto-flow: column;
-  align-items:r center;
+  align-items: center;
   justify-content: center;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
