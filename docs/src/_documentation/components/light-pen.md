@@ -1,9 +1,7 @@
 ---
 title: <light-pen>
 permalink: /components/light-pen/
-description: |
-  A lightweight code sandbox component designed to show editable source code side by side with
-  a demo of your code in the browser.
+component: light-pen
 ---
 
 ## Typical Usage

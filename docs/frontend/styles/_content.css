@@ -7,6 +7,7 @@ pre.highlight {
   overflow-x: auto;
 }
 
+code
 .highlighter-rouge,
 .highlight {
   border-radius: 8px;
@@ -15,12 +16,14 @@ pre.highlight {
   font-family: var(--sl-font-mono);
 }
 
+code,
 .highlight,
 .highlighter-rouge {
   position: relative;
 }
 
 /* Inline code blocks */
+code,
 code.highlight,
 code.highlighter-rouge {
   /** Layout */

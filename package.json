@@ -47,16 +47,16 @@
     "access": "public"
   },
   "devDependencies": {
-    "@custom-elements-manifest/analyzer": "^0.8.4",
+    "@custom-elements-manifest/analyzer": "0.8.3",
     "@open-wc/testing-helpers": "^2.3.0",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.2.1",
+    "@types/node": "^20.8.0",
     "@web/dev-server": "^0.3.1",
     "@web/dev-server-rollup": "^0.5.2",
     "@web/rollup-plugin-html": "^2.0.1",
     "@web/test-runner": "^0.17.1",
     "@web/test-runner-playwright": "^0.10.1",
-    "custom-elements-manifest": "^2.0.0",
     "gh-pages": "^6.0.0",
     "light-pen": "link:.",
     "rimraf": "^5.0.1",

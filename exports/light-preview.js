@@ -1,4 +1,5 @@
 // @ts-check
+
 import HighlightJS from 'highlight.js/lib/core';
 import HTML from 'highlight.js/lib/languages/xml';
 import JavaScript from 'highlight.js/lib/languages/javascript';
@@ -15,9 +16,12 @@ HighlightJS.registerLanguage('javascript', JavaScript);
  * LightPreview is a very lightweight code previewer designed to load your code sample
  *   inside of an iFrame for encapsulated viewing. `<light-preview>` uses HighlightJS as it's
  *   default highlighter, but has a base class intended for extending.
- * @extends {LightPreviewBase}
+ * @customElement
+ * @tagname light-preview
+ * @extends LightPreviewBase
  */
 export default class LightPreview extends LightPreviewBase {
+  static baseName = "light-preview"
   static styles = LightPreviewBase.styles.concat([theme])
 
   /**

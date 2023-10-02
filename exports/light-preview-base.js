@@ -19,8 +19,8 @@ const sourceCodeFallback = "Show source code"
  * LightPreviewBase is not meant to be used directly, rather its the base implementation of
  *   previewing. It comes without a highlight theme or a highlighter. Go to LightPreview for how to
  *   implement your own theme and highlighter.
- * @tagname light-preview
  * @customElement
+ * @tagname light-preview-base
  *
  * @csspart base - The base wrapping element
  * @csspart preview - The wrapper around the iframe / div preview showing your code being run in the browser.
@@ -45,7 +45,7 @@ const sourceCodeFallback = "Show source code"
  * @slot code - Used to display both source code and to power your preview in the iframe. If you slot in "preview-code", then it will only be used to show / highlight your source code.
  */
 export default class LightPreviewBase extends DefineableMixin(LitElement) {
-  static baseName = "light-preview"
+  static baseName = "light-preview-base"
 
   static styles = [
     baseStyles,

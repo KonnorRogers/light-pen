@@ -1,4 +1,5 @@
 // @ts-check
+
 import { LitElement, html } from "lit"
 import { styles } from "./light-pen.styles.js"
 import { when } from "lit/directives/when.js";
@@ -720,3 +721,4 @@ export default class LightPen extends DefineableMixin(LitElement) {
     pre.scrollLeft = textarea.scrollLeft;
   }
 }
+

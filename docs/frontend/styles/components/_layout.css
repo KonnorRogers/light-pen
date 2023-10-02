@@ -2,11 +2,7 @@
   background-color: var(--sl-color-neutral-50);
 }
 
-.documentation-content {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-}
+/* .documentation-content {} */
 
 body:is(.index, .doc, .page, .post) kr-layout::part(main-content) {
 	background: var(--body-color);
