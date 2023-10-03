@@ -1,11 +1,32 @@
 module CustomElementsSchema
+  # @return [Array<JavaScriptExport, CustomElementExport>]
+  EXPORT = [JavaScriptExport, CustomElementExport].freeze
+
+  # @return [Hash{"public", "private", "protected" => "public", "private", "protected"}]
+  PRIVACY = {
+    public: 'public',
+    private: 'private',
+    protected: 'protected',
+  }.freeze
+
+  # @return [Array<ClassDeclaration, FunctionDeclaration, MixinDeclaration, VariableDeclaration, CustomElementDeclaration, CustomElementMixinDeclaration>]
+  #
+  DECLARATION = [
+    ClassDeclaration,
+    FunctionDeclaration,
+    MixinDeclaration,
+    VariableDeclaration,
+    CustomElementDeclaration,
+    CustomElementMixinDeclaration,
+  ].freeze
+
   # Top level interface that users will interact with when reading custom elements JSON.
   class Package
     attr_accessor :schemaVersion, :deprecated, :readme, :modules
 
     # @param schemaVersion [String] - Version of the schema.
     # @param readme [String, nil] - The Markdown to use for the main readme of this package.
-    # @param modules [Array<PackageModules>] - An array of the modules this package contains.
+    # @param modules [Array<JavaScriptModule>] - An array of the modules this package contains.
     # @param deprecated [Array<String, nil, Boolean>] - If nil or false, not deprecated.
     #   If true, deprecated. If it has a string, it should be the reason the package was deprecated.
     #
@@ -20,15 +41,29 @@ module CustomElementsSchema
     end
   end
 
-  # A JavaScript module...for now. Perhaps will be a CSS / HTML module in future as well.
-  class PackageModule < JavaScriptModule
+  # The error to raise when the Node "kind" does not match the static node type.
+  class MismatchedNodeTypeError < StandardError
+    def initialize(node_kind, node_kind_compare)
+      msg = "Expected to find a '#{node_kind}' but got '#{node_kind_compare}'"
+      super(msg)
+    end
+  end
+
+  # Basic top level node. This is really an abstract node.
+  class BasicNode
+    def self.kind; "basic-node"; end
+
+    def initialize(kind:)
+      raise MismatchedNodeTypeError.new(self.class.kind, kind) if kind != self.class.kind
+    end
   end
 
   # A JavaScript module!
-  class JavaScriptModule
-    def self.node_type; "javascript-module"; end
+  class JavaScriptModule < BasicNode
+    def self.kind; "javascript-module"; end
 
-    attr_accessor :path,
+    attr_accessor :kind,
+                  :path,
                   :summary,
                   :declarations,
                   :exports,
@@ -55,7 +90,9 @@ module CustomElementsSchema
     #   If the value is a string, it's the reason for the deprecation.
     #
     # @param kind ["javascript-module"] - The type of node
-    def initialize(path:, summary: nil, declarations: nil, exports: nil, deprecated: nil, kind: self.class.node_type)
+    def initialize(path:, kind:, summary: nil, declarations: nil, exports: nil, deprecated: nil)
+      super(kind: kind)
+      @kind = kind
       @path = path
       @summary = summary
       @declarations = declarations
@@ -64,11 +101,9 @@ module CustomElementsSchema
     end
   end
 
-  # Export = JavaScriptExport | CustomElementExport
-
   # A JavaScript export!
   class JavaScriptExport
-    def self.node_type; "js"; end
+    def self.kind; "js"; end
 
     # @param name [String] -
     #   The name of the exported symbol.
@@ -91,7 +126,8 @@ module CustomElementsSchema
     #   If the value is a string, it's the reason for the deprecation.
     #
     # @param kind ["js"] - The type of node
-    def initialize(name:, declaration:, deprecated: nil, kind: self.class.node_type)
+    def initialize(name:, kind:, declaration:, deprecated: nil)
+      super(kind: kind)
       @name = name
       @declaration = declaration
       @deprecated = deprecated
@@ -107,68 +143,191 @@ module CustomElementsSchema
   # available outside of the module it's defined it.
   #
   class CustomElementExport
-    def self.node_type; "custom-element-definition"; end
+    def self.kind; "custom-element-definition"; end
 
-#   /**
-#    * The tag name of the custom element.
-#    */
-#   name: string;
-#
-#   /**
-#    * A reference to the class or other declaration that implements the
-#    * custom element.
-#    */
-#   declaration: Reference;
-#
-#   /**
-#    * Whether the custom-element export is deprecated.
-#    * For example, a future version will not register the custom element in this file.
-#    * If the value is a string, it's the reason for the deprecation.
-#    */
-#   deprecated?: boolean | string;
-    def initialize
+    # @param name [String] - The tag name of the custom element
+    # @param deprecated [boolean, string, nil]
+    #  Whether the custom-element export is deprecated.
+    #  For example, a future version will not register the custom element in this file.
+    #  If the value is a string, it's the reason for the deprecation.
+    #
+    # @param declaration [Reference]
+    #   A reference to the class or other declaration that implements the
+    #   custom element.
+    #
+    def initialize(kind:, name:, declaration:, deprecated: nil)
+      super(kind: kind)
+      @name = name
+      @declaration = declaration
+      @deprecated = deprecated
     end
+  end
+
+  # A reference to an export of a module.
+  #
+  # All references are required to be publically accessible, so the canonical
+  # representation of a reference is the export it's available from.
+  #
+  # `package` should generally refer to an npm package name. If `package` is
+  # undefined then the reference is local to this package. If `module` is
+  # undefined the reference is local to the containing module.
+  #
+  # References to global symbols like `Array`, `HTMLElement`, or `Event` should
+  # use a `package` name of `"global:"`.
+  #
+  class Reference
+    attr_accessor :name, :package, :module
+
+    # We use kwargs here because "module" is a reserved keyword.
+    # @param kwargs [Hash<"name", "package", "module", String, nil>]
+    def initialize(**kwargs)
+      @name = kwargs[:name]
+      @package = kwargs[:package]
+      @module = kwargs[:module]
+    end
+  end
+
+  # Gets passed an href to an absolute URL to the source.
+  class SourceReference
+    attr_accessor :href
+
+    # @param href [String] - An absolute URL to the source (ie. a GitHub URL).
+    def initialize(href:)
+      @href = href
+    end
+  end
+
+  # Documents an "attribute" on a custom element.
+  class Attribute
+    attr_accessor :name,
+                  :summary,
+                  :description,
+                  :inheritedFrom,
+                  :type,
+                  :default,
+                  :fieldName,
+                  :deprecated
+
+    # @param name [String] - The name of the attribute you place on the element.
+    # @param summary [String, nil] - A markdown summary suitable for display in a listing.
+    # @param description [String, nil] - A markdown description.
+    # @param inheritedFrom [Reference, nil] - Reference to where it inherited its attribute
+    # @param type [Type, nil] - The type that the attribute will be serialized/deserialized as.
+    # @param default [String, nil] -
+    #   The default value of the attribute, if any.
+    #   As attributes are always strings, this is the actual value, not a human
+    #   readable description.
+    # @param fieldName [String, nil] - The name of the field this attribute is associated with, if any.
+    # @param deprecated [nil, Boolean, String] -
+    #   Whether the attribute is deprecated.
+    #   If the value is a string, it's the reason for the deprecation.
+    #
+    def initialize(
+      name:,
+      summary: nil,
+      description: nil,
+      inheritedFrom: nil,
+      type: nil,
+      default: nil,
+      fieldName: nil,
+      deprecated: nil
+    )
+      @name = name
+      @summary = summary
+      @description = description
+      @inheritedFrom = inheritedFrom
+      @type = type
+      @default = default
+      @fieldName = fieldName
+      @deprecated = deprecated
+    end
+  end
+
+  # Documents events on a custom element
+  class Event
+    attr_accessor :name,
+                  :type,
+                  :summary,
+                  :description,
+                  :deprecated,
+
+    # @param name [String]
+    # @param summary [nil, String] - A markdown summary suitable for display in a listing.
+    # @param description [nil, String] - A markdown description.
+    # @param type [Type] - The type of the event object that's fired.
+    # @param inheritedFrom [nil, Reference]
+    # @param deprecated [nil, Boolean, String]
+    #    Whether the event is deprecated.
+    #    If the value is a string, it's the reason for the deprecation.
+    def initialize(
+      name:,
+      type:,
+      summary: nil,
+      description: nil,
+      deprecated: nil
+    )
+      @name = name
+      @type = type
+      @summary = summary
+      @description = description
+      @deprecated = deprecated
+    end
+  end
+
+  # Documents slots for a custom element
+  class Slot
+    attr_accessor :name,
+                  :summary,
+                  :description,
+                  :deprecated
+
+    # @param name [String] - The slot name, or the empty string for an unnamed slot.
+    # @param summary [String, nil] - A markdown summary suitable for display in a listing.
+    # @param description [String, nil] - A markdown description.
+    # @param deprecated [nil, boolean, string] -
+    #   Whether the slot is deprecated.
+    #   If the value is a string, it's the reason for the deprecation.
+    def initialize(
+      name:,
+      summary: nil,
+      description: nil,
+      deprecated: nil
+    )
+      @name = name
+      @summary = summary
+      @description = description
+      @deprecated = deprecated
+    end
+  end
+
+#
+# The description of a CSS Part
+class CssPart
+  attr_accessor :name,
+                :summary,
+                :description,
+                :deprecated
+  # @param name [String] - Name of the CSS part
+  # @param summary [nil, String] - A markdown summary suitable for display in a listing.
+  # @param description [nil, String] - A markdown description.
+  # @param deprecated [nil, Boolean, String] -
+  #   Whether the CSS shadow part is deprecated.
+  #   If the value is a string, it's the reason for the deprecation.
+  def initialize(
+    name:,
+    summary: nil,
+    description: nil,
+    deprecated: nil
+  )
+    @name = name
+    @summary = summary
+    @description = description
+    @deprecated = deprecated
   end
 end
 
-# ::CustomElementsSchema::Package.new
+# ::CustomElementsSchema::Parser.new
 
-# export type Declaration =
-#   | ClassDeclaration
-#   | FunctionDeclaration
-#   | MixinDeclaration
-#   | VariableDeclaration
-#   | CustomElementDeclaration
-#   | CustomElementMixinDeclaration;
-#
-# /**
-#  * A reference to an export of a module.
-#  *
-#  * All references are required to be publically accessible, so the canonical
-#  * representation of a reference is the export it's available from.
-#  *
-#  * `package` should generally refer to an npm package name. If `package` is
-#  * undefined then the reference is local to this package. If `module` is
-#  * undefined the reference is local to the containing module.
-#  *
-#  * References to global symbols like `Array`, `HTMLElement`, or `Event` should
-#  * use a `package` name of `"global:"`.
-#  */
-# export interface Reference {
-#   name: string;
-#   package?: string;
-#   module?: string;
-# }
-#
-# /**
-#  * A reference to the source of a declaration or member.
-#  */
-# export interface SourceReference {
-#   /**
-#    * An absolute URL to the source (ie. a GitHub URL).
-#    */
-#   href: string;
-# }
 #
 # /**
 #  * A description of a custom element class.
@@ -235,119 +394,6 @@ end
 #    * custom element class
 #    */
 #   customElement: true;
-# }
-#
-# export interface Attribute {
-#   name: string;
-#
-#   /**
-#    * A markdown summary suitable for display in a listing.
-#    */
-#   summary?: string;
-#
-#   /**
-#    * A markdown description.
-#    */
-#   description?: string;
-#
-#   inheritedFrom?: Reference;
-#
-#   /**
-#    * The type that the attribute will be serialized/deserialized as.
-#    */
-#   type?: Type;
-#
-#   /**
-#    * The default value of the attribute, if any.
-#    *
-#    * As attributes are always strings, this is the actual value, not a human
-#    * readable description.
-#    */
-#   default?: string;
-#
-#   /**
-#    * The name of the field this attribute is associated with, if any.
-#    */
-#   fieldName?: string;
-#
-#   /**
-#    * Whether the attribute is deprecated.
-#    * If the value is a string, it's the reason for the deprecation.
-#    */
-#   deprecated?: boolean | string;
-# }
-#
-# export interface Event {
-#   name: string;
-#
-#   /**
-#    * A markdown summary suitable for display in a listing.
-#    */
-#   summary?: string;
-#
-#   /**
-#    * A markdown description.
-#    */
-#   description?: string;
-#
-#   /**
-#    * The type of the event object that's fired.
-#    */
-#   type: Type;
-#
-#   inheritedFrom?: Reference;
-#
-#   /**
-#    * Whether the event is deprecated.
-#    * If the value is a string, it's the reason for the deprecation.
-#    */
-#   deprecated?: boolean | string;
-# }
-#
-# export interface Slot {
-#   /**
-#    * The slot name, or the empty string for an unnamed slot.
-#    */
-#   name: string;
-#
-#   /**
-#    * A markdown summary suitable for display in a listing.
-#    */
-#   summary?: string;
-#
-#   /**
-#    * A markdown description.
-#    */
-#   description?: string;
-#
-#   /**
-#    * Whether the slot is deprecated.
-#    * If the value is a string, it's the reason for the deprecation.
-#    */
-#   deprecated?: boolean | string;
-# }
-#
-# /**
-#  * The description of a CSS Part
-#  */
-# export interface CssPart {
-#   name: string;
-#
-#   /**
-#    * A markdown summary suitable for display in a listing.
-#    */
-#   summary?: string;
-#
-#   /**
-#    * A markdown description.
-#    */
-#   description?: string;
-#
-#   /**
-#    * Whether the CSS shadow part is deprecated.
-#    * If the value is a string, it's the reason for the deprecation.
-#    */
-#   deprecated?: boolean | string;
 # }
 #
 # export interface CssCustomProperty {
@@ -696,7 +742,6 @@ end
 #   };
 # }
 #
-# export type Privacy = 'public' | 'private' | 'protected';
 #
 # export interface Demo {
 #   /**
@@ -713,13 +758,3 @@ end
 #   source?: SourceReference;
 # }
 #
-
-# The description of your module or class.
-# module MyModule
-#   # MyConstant is a constant used to store a fixed value.
-#
-#   MyConstant = "Some Value"
-# end
-
-# @param param [MyModule::MyConstant]
-# def stuff(param); end
