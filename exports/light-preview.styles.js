@@ -90,6 +90,7 @@ button[part~="source-code-toggle"] {
   border-top: 1px solid var(--border-color);
   min-height: 100%;
   font-size: 1rem;
+  padding: 0.75rem;
 }
 
 [part~="source-code-toggle"][aria-expanded="true"] svg {

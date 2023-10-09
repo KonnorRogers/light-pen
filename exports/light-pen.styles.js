@@ -3,10 +3,10 @@ export const styles = css`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
+  border: 1px solid darkgray;
 }
 
 [part~="sandbox"] {
-  background-color: #e5e5e5;
   color:#272727;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -73,7 +73,7 @@ export const styles = css`
 }
 
 [part~="details"]:not(:first-child) {
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 [part~="pre"],
@@ -118,13 +118,7 @@ export const styles = css`
 [part~="sandbox-console"],
 [part~="sandbox-console-result"] {
   background-color:#343d4d;
-  color:#fff
-}
-
-[part~="sandbox-header"]
-[part~="sandbox-console"] {
-  padding-top:.125em;
-  padding-bottom:.125em
+  color: #fff;
 }
 
 [part~="sandbox-header"] {
@@ -132,24 +126,27 @@ export const styles = css`
   grid-auto-flow: column;
   align-items: center;
   justify-content: space-between;
-  border-top-left-radius:.25em;
-  border-top-right-radius:.25em;
-  font-size:.8125em;
+  font-size: 0.8125em;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
 }
+
+[part~="sandbox-console"],
+[part~="sandbox-content"] {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  background-color: #e5e5e5;
+}
+
 
 [part~='sandbox-controls'] button {
   margin-bottom: 0;
 }
 
-[part~="sandbox-console"] {
-  border-bottom-left-radius:.25em;
-  border-bottom-right-radius:.25em
-}
-
 [part~="sandbox-console-log"] {
   font-family: Menlo,Monaco,"Courier New",monospace;
-  font-size:.875em;
-  min-height:1.2em;
+  font-size: 0.875em;
+  min-height: 1.2em;
 }
 
 .log-warn {
@@ -174,7 +171,7 @@ export const styles = css`
 }
 
 button:where([part~="panel-resizer"]) {
-  height: 100%;
+  height: calc(100% - 0.5em);
   cursor: col-resize;
   background-color: white;
 }

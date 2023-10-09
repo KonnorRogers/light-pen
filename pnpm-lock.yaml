@@ -12,13 +12,13 @@ dependencies:
     specifier: ^2.8.0
     version: 2.8.0
   web-component-define:
-    specifier: ^2.0.10
-    version: 2.0.10
+    specifier: ^2.0.11
+    version: 2.0.11
 
 devDependencies:
   '@custom-elements-manifest/analyzer':
-    specifier: 0.8.3
-    version: 0.8.3
+    specifier: 0.8.4
+    version: 0.8.4
   '@open-wc/testing-helpers':
     specifier: ^2.3.0
     version: 2.3.0
@@ -42,13 +42,16 @@ devDependencies:
     version: 2.0.1
   '@web/test-runner':
     specifier: ^0.17.1
-    version: 0.17.1(typescript@5.2.2)
+    version: 0.17.1(typescript@5.1.3)
   '@web/test-runner-playwright':
     specifier: ^0.10.1
     version: 0.10.1
   gh-pages:
     specifier: ^6.0.0
     version: 6.0.0
+  glob:
+    specifier: ^10.3.10
+    version: 10.3.10
   light-pen:
     specifier: link:.
     version: 'link:'
@@ -62,8 +65,8 @@ devDependencies:
     specifier: ^2.0.2
     version: 2.0.2
   typescript:
-    specifier: ^5.2.2
-    version: 5.2.2
+    specifier: ~5.1.0
+    version: 5.1.3
 
 packages:
 
@@ -97,8 +100,8 @@ packages:
       js-tokens: 4.0.0
     dev: true
 
-  /@custom-elements-manifest/analyzer@0.8.3:
-    resolution: {integrity: sha512-wT+t4JNVMj56bSCNxxjkDSKx2KJ6bzXQMjinXJe/2+9J7Abaw/9a4+EWYLWQ//KBXRvyNhWrkolFL6ICc/VATg==}
+  /@custom-elements-manifest/analyzer@0.8.4:
+    resolution: {integrity: sha512-hibYFNoqPc/xSH9ySuotOllz3UtQnnbG912oC0RtRwHGilnOVT5zeL3Ip26swCjiuFAp8Y0uLN5DwnMpa/xXYQ==}
     hasBin: true
     dependencies:
       '@custom-elements-manifest/find-dependencies': 0.0.5
@@ -226,7 +229,7 @@ packages:
     dev: true
     optional: true
 
-  /@puppeteer/browsers@1.4.6(typescript@5.2.2):
+  /@puppeteer/browsers@1.4.6(typescript@5.1.3):
     resolution: {integrity: sha512-x4BEjr2SjOPowNeiguzjozQbsc6h437ovD/wu+JpaenxVLm3jkgzHY2xOslMTp50HoTvQreMjiexiGQw1sqZlQ==}
     engines: {node: '>=16.3.0'}
     hasBin: true
@@ -241,7 +244,7 @@ packages:
       progress: 2.0.3
       proxy-agent: 6.3.0
       tar-fs: 3.0.4
-      typescript: 5.2.2
+      typescript: 5.1.3
       unbzip2-stream: 1.4.3
       yargs: 17.7.1
     transitivePeerDependencies:
@@ -483,8 +486,8 @@ packages:
       '@types/node': 20.8.0
     dev: true
 
-  /@types/yauzl@2.10.0:
-    resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
+  /@types/yauzl@2.10.1:
+    resolution: {integrity: sha512-CHzgNU3qYBnp/O4S3yv2tXPlvMTq0YWSTVg2/JYLqWZGHwwgJGAwd00poay/11asPq8wLFwHzubyInqHIFmmiw==}
     requiresBuild: true
     dependencies:
       '@types/node': 20.8.0
@@ -599,7 +602,7 @@ packages:
       parse5: 6.0.1
     dev: true
 
-  /@web/test-runner-chrome@0.14.1(typescript@5.2.2):
+  /@web/test-runner-chrome@0.14.1(typescript@5.1.3):
     resolution: {integrity: sha512-snyQN5xyiTFVXQ1bmJ1T5dqgnCXofngTv2aevv5gW4FumKo96aFF7kBr+SRQnEd3yary+xJsGFT+50A6/mJ+1A==}
     engines: {node: '>=16.0.0'}
     dependencies:
@@ -607,7 +610,7 @@ packages:
       '@web/test-runner-coverage-v8': 0.7.1
       async-mutex: 0.4.0
       chrome-launcher: 0.15.2
-      puppeteer-core: 20.9.0(typescript@5.2.2)
+      puppeteer-core: 20.9.0(typescript@5.1.3)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -704,7 +707,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@web/test-runner@0.17.1(typescript@5.2.2):
+  /@web/test-runner@0.17.1(typescript@5.1.3):
     resolution: {integrity: sha512-xHlvdopBUuU7yexB7WpKdThY3CszWw2Cz9/CCDGnSUPzOFZgDLhcQKpbHjZdW21ggINoWq2nx+6eCTQ448o9kw==}
     engines: {node: '>=16.0.0'}
     hasBin: true
@@ -712,7 +715,7 @@ packages:
       '@web/browser-logs': 0.3.3
       '@web/config-loader': 0.2.1
       '@web/dev-server': 0.3.1
-      '@web/test-runner-chrome': 0.14.1(typescript@5.2.2)
+      '@web/test-runner-chrome': 0.14.1(typescript@5.1.3)
       '@web/test-runner-commands': 0.8.0
       '@web/test-runner-core': 0.11.4
       '@web/test-runner-mocha': 0.8.1
@@ -1420,7 +1423,7 @@ packages:
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
-      '@types/yauzl': 2.10.0
+      '@types/yauzl': 2.10.1
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1603,13 +1606,13 @@ packages:
       is-glob: 4.0.3
     dev: true
 
-  /glob@10.3.4:
-    resolution: {integrity: sha512-6LFElP3A+i/Q8XQKEvZjkEWEOTgAIALR9AO2rwT8bgPhDd1anmqDJDZ6lLddI4ehxxxR1S5RIqKe1uapMQfYaQ==}
+  /glob@10.3.10:
+    resolution: {integrity: sha512-fa46+tv1Ak0UPK1TOy/pZrIybNNt4HCv7SDzwyfiOZkvZLEbjsZkJBPtDHVshZjbecAoAGSC20MjLDG/qr679g==}
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
     dependencies:
       foreground-child: 3.1.1
-      jackspeak: 2.3.1
+      jackspeak: 2.3.6
       minimatch: 9.0.3
       minipass: 7.0.3
       path-scurry: 1.10.1
@@ -1945,8 +1948,8 @@ packages:
       istanbul-lib-report: 3.0.1
     dev: true
 
-  /jackspeak@2.3.1:
-    resolution: {integrity: sha512-4iSY3Bh1Htv+kLhiiZunUhQ+OYXIn0ze3ulq8JeWrFKmhPAJSySV2+kdtRh2pGcCeF0s6oR8Oc+pYZynJj4t8A==}
+  /jackspeak@2.3.6:
+    resolution: {integrity: sha512-N3yCS/NegsOBokc8GAdM8UcmfsKiSS8cipheD/nivzr700H+nsMOxJjQnvwOcRYVuFkdH0wGUvW2WbXGmrZGbQ==}
     engines: {node: '>=14'}
     dependencies:
       '@isaacs/cliui': 8.0.2
@@ -2548,7 +2551,7 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /puppeteer-core@20.9.0(typescript@5.2.2):
+  /puppeteer-core@20.9.0(typescript@5.1.3):
     resolution: {integrity: sha512-H9fYZQzMTRrkboEfPmf7m3CLDN6JvbxXA3qTtS+dFt27tR+CsFHzPsT6pzp6lYL6bJbAPaR0HaPO6uSi+F94Pg==}
     engines: {node: '>=16.3.0'}
     peerDependencies:
@@ -2557,12 +2560,12 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@puppeteer/browsers': 1.4.6(typescript@5.2.2)
+      '@puppeteer/browsers': 1.4.6(typescript@5.1.3)
       chromium-bidi: 0.4.16(devtools-protocol@0.0.1147663)
       cross-fetch: 4.0.0
       debug: 4.3.4
       devtools-protocol: 0.0.1147663
-      typescript: 5.2.2
+      typescript: 5.1.3
       ws: 8.13.0
     transitivePeerDependencies:
       - bufferutil
@@ -2648,7 +2651,7 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      glob: 10.3.4
+      glob: 10.3.10
     dev: true
 
   /rollup-plugin-serve@2.0.2:
@@ -2969,8 +2972,8 @@ packages:
     hasBin: true
     dev: true
 
-  /typescript@5.2.2:
-    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+  /typescript@5.1.3:
+    resolution: {integrity: sha512-XH627E9vkeqhlZFQuL+UsyAXEnibT0kWR2FWONlr4sTjvxyJYnyefgrkyECLzM5NenmKzRAy2rR/OlYLA1HkZw==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
@@ -3021,8 +3024,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /web-component-define@2.0.10:
-    resolution: {integrity: sha512-gwkjTFdG8eE8fxI4+RZUCQRy06SSSkCyLpQ1YSCsA+z8ZLlnmqLX/3B3WD2ZraVRtyje3hLXS8bxL8CK1/bZYQ==}
+  /web-component-define@2.0.11:
+    resolution: {integrity: sha512-oMOngNGL5k55NyaQNnPz0UnV5QtPuESvSuxpBgmHHfNjb8sgVm4akAFq7HO4I5bhGHX8Of+0XnUZ3whBo0chgw==}
     dependencies:
       '@lit/reactive-element': 1.6.3
       '@open-wc/dedupe-mixin': 1.4.0

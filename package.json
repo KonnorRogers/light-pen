@@ -27,6 +27,7 @@
     "build:docs": "cd docs && pnpm run build",
     "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
     "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
+    "analyze": "custom-elements-manifest analyze --litelement",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
     "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",
     "deploy:major": "npm run build && npm version major && npm publish && git push --follow-tags",
@@ -47,7 +48,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@custom-elements-manifest/analyzer": "0.8.3",
+    "@custom-elements-manifest/analyzer": "0.8.4",
     "@open-wc/testing-helpers": "^2.3.0",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.2.1",
@@ -58,16 +59,17 @@
     "@web/test-runner": "^0.17.1",
     "@web/test-runner-playwright": "^0.10.1",
     "gh-pages": "^6.0.0",
+    "glob": "^10.3.10",
     "light-pen": "link:.",
     "rimraf": "^5.0.1",
     "rollup": "^3.29.0",
     "rollup-plugin-serve": "^2.0.2",
-    "typescript": "^5.2.2"
+    "typescript": "~5.1.0"
   },
   "dependencies": {
     "highlight.js": "^11.8.0",
     "lit": "^2.8.0",
-    "web-component-define": "^2.0.10"
+    "web-component-define": "^2.0.11"
   },
   "customElements": "custom-elements.json"
 }

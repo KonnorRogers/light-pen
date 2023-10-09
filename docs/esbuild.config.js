@@ -1,3 +1,7 @@
+// @ts-check
+const { spawn } = require("child_process");
+
+// const glob = require("glob")
 const build = require("./config/esbuild.defaults.js")
 
 const AssetMapper = require("asset-mapper-esbuild").default
@@ -18,6 +22,43 @@ const esbuildCopy = require('esbuild-plugin-copy').default
 // ```
 // const esbuildOptions = { publicPath: "/my_subfolder/_bridgetown/static" }
 // ```
+const watch = process.argv.includes("--watch")
+
+function ManifestBuilder () {
+  return {
+    name: "CustomElementsManifestBuilder",
+    setup(build) {
+      build.onStart(async () => {
+        await (() => {
+          /** @type Promise<void> */
+          const promise = new Promise((resolve) => {
+            const args = ["..", "&&", "npm", "run", "analyze"]
+            if (watch) args.push("--", "--watch")
+            const buildManifest = spawn("cd", args);
+
+            buildManifest.stdout.on("data", data => {
+              console.log(`[CustomElementsManifest]: ${data}`);
+            });
+
+            buildManifest.stderr.on("data", data => {
+              console.log(`[CustomElementsManifest]: ${data}`);
+            });
+
+            buildManifest.on('error', (error) => {
+              console.log(`[CustomElementsManifest]: ${error.message}`);
+            })
+
+            buildManifest.on("close", code => {
+              console.log(`[CustomElementsManifest]: Complete! [exit code: ${code}]`);
+              resolve()
+            })
+          })
+          return promise
+        })()
+      })
+    }
+  }
+}
 
 const esbuildOptions = {
   target: "es2020",
@@ -26,7 +67,6 @@ const esbuildOptions = {
     "javascript/defer": "frontend/javascript/defer.js",
     "light-pen/exports/light-pen": "../exports/light-pen.js",
     "light-pen/exports/light-preview": "../exports/light-preview.js",
-    "light-pen/exports/light-preview-register": "../exports/light-preview-register.js",
   },
   define: {
     "process.env.BASE_PATH": `"${process.env.BASE_PATH}"`
@@ -46,9 +86,9 @@ const esbuildOptions = {
     AssetMapper({
       manifestFile: path.join(process.cwd(), ".bridgetown-cache", "asset-mapper-manifest.json"),
       // outputRoot: path.join(process.cwd(), process.env.BASE_PATH)
-    })
+    }),
+    ManifestBuilder()
   ]
-
 }
 
 build(outputFolder, esbuildOptions)

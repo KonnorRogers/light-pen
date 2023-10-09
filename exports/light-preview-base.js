@@ -60,14 +60,14 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     inlinePreview: { type: Boolean, attribute: "inline-preview" },
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
     open: { reflect: true, type: Boolean },
-    baseURL: { reflect: true, attribute: "base-url" },
+    baseUrl: { reflect: true, attribute: "base-url" },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
     iframeSrcDoc: { reflect: true, attribute: "iframe-src-doc" },
 
     // State
-    code: { state: true },
-    previewCode: { state: true },
+    code: { attribute: false },
+    previewCode: { attribute: false },
   }
 
   constructor () {
@@ -111,9 +111,9 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     this.code = ""
 
     /**
-     * The baseURL
+     * The baseUrl to use for fetching assets. This maps to a `<base href=${this.baseUrl}>` inside of the `<iframe>`
      */
-    this.baseURL = ""
+    this.baseUrl = ""
 
     /**
      * If `disableHighlight` is true, then you must pass in an element into `previewCode` to be able to get
@@ -279,7 +279,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
       <html>
         <head>
           <meta charset="utf-8">
-          <base href="${this.baseURL || document.baseURI}">
+          <base href="${this.baseUrl || document.baseURI}">
         </head>
         <body>
           ${code}
@@ -308,7 +308,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (["previewCode", "code", "baseURL"].some((str) => changedProperties.has(str))) {
+    if (["previewCode", "code", "baseUrl"].some((str) => changedProperties.has(str))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
     }

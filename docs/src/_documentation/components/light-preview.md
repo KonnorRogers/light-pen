@@ -26,7 +26,7 @@ description: |
     </light-preview>
 
     <script type="module">
-      import LightPreview from "light-pen/exports/light-preview.js";
+      import LightPreview from "./exports/light-preview.js";
       LightPreview.define()
     </script>
   </template>

@@ -58,14 +58,15 @@ export default class LightPen extends DefineableMixin(LitElement) {
     resizePosition: { attribute: "resize-position", reflect: true, type: Number },
     console: { reflect: true },
     sandboxSettings: { reflect: true, attribute: "sandbox-settings"},
-    languages: { state: true, type: Array },
-    cssCode: { state: true },
-    htmlCode: { state: true },
-    jsCode: { state: true },
-    htmlResizeObserver: { state: true },
-    jsResizeObserver: { state: true },
-    cssResizeObserver: { state: true },
-    resizing: { state: true },
+    baseUrl: { reflect: true, attribute: "base-url" },
+    languages: { attribute: false, type: Array },
+    cssCode: { attribute: false },
+    htmlCode: { attribute: false },
+    jsCode: { attribute: false },
+    htmlResizeObserver: { attribute: false },
+    jsResizeObserver: { attribute: false },
+    cssResizeObserver: { attribute: false },
+    resizing: { attribute: false },
   }
   // Overrides
 
@@ -76,17 +77,31 @@ export default class LightPen extends DefineableMixin(LitElement) {
     super()
 
     /**
-     * @prop
+     * @property
      * @type {ResizeObserver}
      */
     this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
 
+    /**
+     * @property
+     * @type {ResizeObserver}
+     */
     this.htmlResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
+
+    /**
+     * @property
+     * @type {ResizeObserver}
+     */
     this.jsResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
+
+    /**
+     * @property
+     * @type {ResizeObserver}
+     */
     this.cssResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
 
     /**
-     * @attr
+     * @attribute
      * @reflect
      * @type {number}
      */
@@ -95,6 +110,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
     /**
      * Languages to have open on initial render
      * Comma separated list of elements to open on initial render "html,css,js" to open all.
+     * @attribute
      * @reflect
      * @type {string}
      */
@@ -102,40 +118,40 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     /**
      * @type {Array<SupportedLanguages>}
+     * @property
      */
     this.languages = ["html", "css", "js"]
 
     /**
-     * @reflect
-     * @type {"console" | "iframe"}
-     */
-    this.result = this.getAttribute('result') === "console" ? 'console' : 'iframe',
-
-    /**
+     * Not implemented.
      * @property
      * @type {"enabled" | "disabled"}
      */
     this.console = "disabled"
 
     /**
+     * Not implemented.
      * @property
      * @type {string}
      */
     this.consoleText = ""
 
     /**
+     * What to reset the HTML to.
      * @property
      * @type {string}
      */
     this.htmlReset = ""
 
     /**
+     * What to reset the CSS to.
      * @property
      * @type {string}
      */
     this.cssReset = ""
 
     /**
+     * What to reset the JS to.
      * @property
      * @type {string}
      */
@@ -143,6 +159,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     /**
      * @property
+     * @internal
      * @type {number}
      */
     this.cachedWidth = 0
@@ -157,6 +174,19 @@ export default class LightPen extends DefineableMixin(LitElement) {
      * @internal
      */
     this.resizing = false
+
+    /**
+     * @property
+     * @type {string}
+     * The baseURL to use for fetching assets. This maps to a `<base href=${this.baseUrl}>` inside of the `<iframe>`.
+     */
+    this.baseUrl = ""
+
+    /**
+     * @property
+     * srcdoc to pass to the <iframe>
+     */
+    this.iframeSrcDoc = ""
   }
 
   /**
@@ -231,7 +261,9 @@ export default class LightPen extends DefineableMixin(LitElement) {
    * Override this to use a highlighter of your choice.
    * @param {{code: string, language: SupportedLanguages}} options
    */
-  highlightCode ({ code, language }) {
+  highlightCode (options) {
+    let { code, language } = options
+
     const highlightJsLanguage = /** @type {typeof LightPen} */ (this.constructor).languageMap[language]
 
     code = this.unescapeCharacters(code)
@@ -271,12 +303,11 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     if (this.iframeElem.contentWindow == null) return;
 
-
     let page = `
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}<\/style>
-          <base href="${document.baseURI}">
+          <base href="${this.baseUrl || document.baseURI}">
         </head>
         <body>
           ${this.htmlCode}
@@ -289,22 +320,19 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     const iframe = this.shadowRoot?.querySelector("iframe")
     if (iframe) {
-      const prevBlobUrl = this.blobUrl
-
       const blob = new Blob([page], { type: "text/html" })
       const blobUrl = URL.createObjectURL(blob)
 
+      const prevBlobUrl = this.blobUrl
       this.blobUrl = blobUrl
 
       if (iframe) {
 	      iframe.src = blobUrl
 	    }
 
-      if (prevBlobUrl) {
-        setTimeout(() => {
-          URL.revokeObjectURL(prevBlobUrl)
-        }, 300)
-      }
+	    setTimeout(() => {
+        if (prevBlobUrl) URL.revokeObjectURL(prevBlobUrl)
+	    }, 1000)
 	  }
   }
 
@@ -316,7 +344,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    * @param {import("lit").PropertyValues} changedProperties
    */
   willUpdate (changedProperties) {
-    if (this.languages.some((str) => changedProperties.has(str + "Code"))) {
+    if (["cssCode", "htmlCode", "jsCode", "baseUrl"].some((str) => changedProperties.has(str))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
     }
@@ -581,6 +609,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
               sandbox=${this.sandboxSettings || defaultSandboxSettings}
               part="sandbox-iframe"
               frameborder="0"
+              src=${this.blobUrl}
              ></iframe>
 					</div>
 				</div>

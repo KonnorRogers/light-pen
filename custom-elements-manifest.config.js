@@ -30,7 +30,7 @@ export default {
     // myAwesomePlugin()
   ],
 
-  /** Overrides default module creation: */
+  // /** Overrides default module creation: */
   // overrideModuleCreation: ({ts, globs}) => {
   //   /**
   //    * @type {import("typescript")}
@@ -38,9 +38,10 @@ export default {
   //   const typescript = ts
   //
   //   const program = typescript.createProgram(globs, {});
-  //   // const typeChecker = program.getTypeChecker();
+  //   const typeChecker = program.getTypeChecker();
   //
   //
+  //   // program.getTypeChecker().signatureToString()
   //   return program.getSourceFiles().filter(sf => globs.find(glob => sf.fileName.includes(glob)));
   // },
 }
