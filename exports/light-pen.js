@@ -40,6 +40,9 @@ HighlightJS.registerLanguage('css', CSS);
  * @slot js - JavaScript to insert
  * @slot title - The title to appear at the top of the editor
  *
+ * @part base - The base wrapper
+ * @part sandbox - The wrapper around the editor and the iframe
+ * @part sandbox-header - The wrapper around the header area
  */
 export default class LightPen extends DefineableMixin(LitElement) {
   // Static
@@ -200,7 +203,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
     this.updateComplete.then(() => {
       this.resizeObserver.observe(this)
 
-      /**
+      /*
        * Grab reset values so we can reset the inputs
        */
       this.htmlReset = this.htmlTextArea?.value || ""

@@ -26,11 +26,14 @@ class Builders::ComponentGenerator < SiteBuilder
         # Use functions instead of methods so we don't clobber built-in #methods method.
         functions = metadata.members.select { |member| member.kind == "method" }
 
+        parts = metadata.cssParts
+
         resource.content += [
           slots_table(slots).html_safe,
           attributes_table(attributes).html_safe,
           events_table(events).html_safe,
-          functions_table(functions).html_safe
+          functions_table(functions).html_safe,
+          parts_table(parts).html_safe
         ].join("\n\n")
       end
     end
@@ -105,7 +108,7 @@ class Builders::ComponentGenerator < SiteBuilder
             <% end %>
           </td>
           <td>
-            #{member.to_s.empty? ? "-" : escape(member.description)}
+            #{member.description.to_s.empty? ? "-" : escape(member.description)}
           </td>
           <td>
             #{member.reflects ? "<sl-icon name='check-lg'></sl-icon>" : "-"}
@@ -190,7 +193,7 @@ class Builders::ComponentGenerator < SiteBuilder
     return "" if functions.nil? || functions.empty?
 
     tbody = functions.map do |function|
-      parameters = ""
+      parameters = "-"
       if not(function.parameters.to_s.empty?)
         parameters = "<code>" + escape(function.parameters.map { |parameter| parameter_string(parameter) }.join(", ")) + "</code>"
       end
@@ -229,4 +232,40 @@ class Builders::ComponentGenerator < SiteBuilder
       </div>
     HTML
   end
+
+  def parts_table(parts)
+    return "" if parts.nil? || parts.empty?
+
+    tbody = parts.map do |part|
+      <<~HTML
+        <tr>
+          <td>
+            <code>#{part.name}</code>
+          </td>
+          <td>
+            #{part.description.to_s.empty? ? "-" : escape(part.description)}
+          </td>
+        </tr>
+      HTML
+    end.join("\n")
+
+    <<~HTML
+      ## Parts
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            #{tbody}
+          </tbody>
+        </table>
+      </div>
+    HTML
+  end
+
 end

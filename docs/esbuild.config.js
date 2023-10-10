@@ -33,7 +33,6 @@ function ManifestBuilder () {
           /** @type Promise<void> */
           const promise = new Promise((resolve) => {
             const args = ["..", "&&", "npm", "run", "analyze"]
-            if (watch) args.push("--", "--watch")
             const buildManifest = spawn("cd", args);
 
             buildManifest.stdout.on("data", data => {

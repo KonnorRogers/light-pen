@@ -308,7 +308,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (["previewCode", "code", "baseUrl"].some((str) => changedProperties.has(str))) {
+    if (/** @type {Array<keyof LightPreviewBase>} */ (["previewCode", "code", "baseUrl"]).some((str) => changedProperties.has((str)))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
     }
