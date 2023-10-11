@@ -1,10 +1,11 @@
 // @ts-check
-// import { myAwesomePlugin } from 'awesome-plugin';
-// import ts from 'typescript'
+import ts from 'typescript'
+import path from "path";
+import { expandTypesPlugin } from "cem-plugin-expanded-types"
 
 export default {
   /** Globs to analyze */
-  globs: ['./{exports,types,internal}/**/*.{ts,js}'],
+  globs: ['exports/**/*.js', 'internal/**/*.js', 'types/**/*.d.ts'],
   /** Globs to exclude */
   exclude: ['./node_modules', './docs'],
   /** Directory to output CEM to */
@@ -27,21 +28,30 @@ export default {
   stencil: false,
   /** Provide custom plugins */
   plugins: [
-    // myAwesomePlugin()
+    expandTypesPlugin()
   ],
 
-  // /** Overrides default module creation: */
-  // overrideModuleCreation: ({ts, globs}) => {
-  //   /**
-  //    * @type {import("typescript")}
-  //    */
-  //   const typescript = ts
-  //
-  //   const program = typescript.createProgram(globs, {});
-  //   const typeChecker = program.getTypeChecker();
-  //
-  //
-  //   // program.getTypeChecker().signatureToString()
-  //   return program.getSourceFiles().filter(sf => globs.find(glob => sf.fileName.includes(glob)));
-  // },
+  overrideModuleCreation: ({ts, globs}) => {
+    const configFile = ts.findConfigFile(
+      process.cwd(),
+      ts.sys.fileExists,
+      "tsconfig.json"
+    );
+
+    if (!configFile) throw "No tsconfig found."
+
+    const { config } = ts.readConfigFile(configFile, ts.sys.readFile);
+
+    const {options, errors} = ts.convertCompilerOptionsFromJson(config.compilerOptions, ".");
+
+    const program = ts.createProgram(globs, options);
+
+    const typeChecker = program.getTypeChecker()
+
+    return program
+      .getSourceFiles()
+      .filter((sf) => globs.find((glob) => {
+        return sf.fileName.includes(glob)
+      }))
+  },
 }

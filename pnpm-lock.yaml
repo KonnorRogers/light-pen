@@ -46,6 +46,9 @@ devDependencies:
   '@web/test-runner-playwright':
     specifier: ^0.10.1
     version: 0.10.1
+  cem-plugin-expanded-types:
+    specifier: ^1.0.0
+    version: 1.0.0
   gh-pages:
     specifier: ^6.0.0
     version: 6.0.0
@@ -950,6 +953,10 @@ packages:
   /camelcase@6.3.0:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
+    dev: true
+
+  /cem-plugin-expanded-types@1.0.0:
+    resolution: {integrity: sha512-XHK5YcpQdE/T40Yl/njkDF/UnY6okM/jl2cnplGOIvD0sFlBAfBwUspb1Uo8hXtcBuAApvL4+9a7ZrdB2hkfSg==}
     dev: true
 
   /chalk-template@0.4.0:
