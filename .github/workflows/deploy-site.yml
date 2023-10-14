@@ -50,9 +50,6 @@ jobs:
           rubygems: latest
           bundler-cache: true
 
-      - name: Setup
-        run: pnpm run setup
-
       - name: Set production base URL
         run: |
           echo "URL=https://${{ env.DOMAIN }}" >> $GITHUB_ENV
@@ -70,6 +67,7 @@ jobs:
         run: |
           pnpm run setup
           pnpm run build:docs
+          pnpm run build:api
 
       - name: Set username + email
         run: |

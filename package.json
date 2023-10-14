@@ -24,7 +24,7 @@
     "start": "web-dev-server --watch",
     "start:docs": "cd docs && overmind start -f Procfile.dev",
     "setup": "pnpm install && cd docs && pnpm install && bundle install",
-    "build:docs": "cd docs && pnpm run build && cd ../ && pnpm run build:api",
+    "build:docs": "cd docs && pnpm run build",
     "build:api": "typedoc --basePath light-pen --out ./docs/output/references/api/ ./exports/**/*.js",
     "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
     "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
