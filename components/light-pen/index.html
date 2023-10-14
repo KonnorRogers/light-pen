@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="sl-theme-light" lang="en"><head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rhino Editor</title>
+<title></title>
 
 <!-- <base href="/light-pen/"> -->
 
@@ -82,7 +82,7 @@
 
 
   </head>
-  <body class="home " data-controller="search">
+  <body class="doc " data-controller="search">
     <kr-layout main-id="main">
       <header class="nav-header" slot="header">
   <nav class="top-nav" aria-labelledby="top-nav-label">
@@ -175,9 +175,10 @@
 </header>
 
 
-      <main id="main" style="margin: 0 auto; --main-width: 100ch;">
-  <div class="hero--mobile">
-    <a class="nav-link logo__link" href="/">
+      <sl-drawer id="side-nav-drawer" hidden="" no-header="" placement="start" class="drawer-placement-start side-nav__drawer" style="--size: clamp(400px, 75%, 1536px);" data-controller="side-nav" slot="dialog">
+  <div class="side-nav__drawer__header">
+    <div style="display: flex; align-items: center;">
+      <a class="nav-link logo__link" href="/">
   <!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
@@ -188,75 +189,667 @@
   </span>
 </a>
 
+        <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
+    main
   </div>
 
-  <h1 class="slogan">
-    A lightweight way to handle all your code.
+    </div>
+    <sl-icon-button name="x-lg" label="Close" data-action="click->side-nav#close"></sl-icon-button>
+  </div>
+
+  <nav id="side-nav--mobile" slot="" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--mobile" data-preserve-scroll="">
+  <ul class="side-nav__menu">
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/guides">Guides</a></li>
+        
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
+          <li class="side-nav__item is-active">
+    <a class="side-nav__link" href="/light-pen/components/light-pen/">&lt;light-pen&gt;</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-preview/">&lt;light-preview&gt;</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/references">References</a></li>
+        
+      </ul>
+  </ul>
+</nav>
+
+  <sl-button slot="footer" type="primary" data-action="click->side-nav#close">Close</sl-button>
+</sl-drawer>
+
+<nav id="side-nav--desktop" slot="menu" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--desktop" data-preserve-scroll="">
+  <ul class="side-nav__menu">
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/guides">Guides</a></li>
+        
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
+          <li class="side-nav__item is-active">
+    <a class="side-nav__link" href="/light-pen/components/light-pen/">&lt;light-pen&gt;</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-preview/">&lt;light-preview&gt;</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/references">References</a></li>
+        
+      </ul>
+  </ul>
+</nav>
+
+
+
+<main id="main" class="documentation-content">
+  <h1 id="<light-pen>">
+    <a href="#<light-pen>">
+      &lt;Light Pen&gt;
+    </a>
   </h1>
 
-  <ul class="call-to-action__items" style="list-style: none;">
-      <li>
-        <sl-button variant="primary" href="/tutorials/getting-started" class="call-to-action" pill="">
-          Getting Started
-        </sl-button>
-      </li>
-      <li>
-        <sl-button variant="neutral" href="/references/why-rhino-editor" class="call-to-action" pill="">
-          Why Rhino Editor?
-        </sl-button>
-      </li>
-  </ul>
+  <h2 id="typical-usage">
+          <a href="#typical-usage">Typical Usage</a>
+        </h2>
 
-  <h2 class="reason__header" style="margin-top: 2rem;">Why Rhino Editor?</h2>
+<light-pen style="padding: 8px; height: 100%;" resize-position="30" open-languages="js,html,css" base-url="https://KonnorRogers.github.io/light-pen/">
+  <template slot="html">
+    <light-pen>
+      <template slot="html">
+        <div>
+          This is kind of wild huh? We have a <code>&lt;light-pen&gt;</code>
+          component running inside of a <code>&lt;light-pen&gt;</code> component!!
+        </div>
+      </template>
 
-  <section class="reason__grid">
-      <article>
-        <h3>Compatibility.</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Rhino editor is compatible with your existing ActionText views.
-        </p>
-      </article>
-      <article>
-        <h3>Extensible.</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Rhino editor is built on top of ProseMirror / TipTap allowing for greater customization.
-        </p>
-      </article>
-      <article>
-        <h3>Plugins!</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Any and all Prosemirror / TipTap plugins are available to you!
-        </p>
-      </article>
-      <article>
-        <h3>A revamped toolbar</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          The toolbar is now focusable, and has an API designed to be extended.
-        </p>
-      </article>
-      <article>
-        <h3>Table Editing?!</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Table editing is possible by adding a couple of plugins!
-        </p>
-      </article>
-      <article>
-        <h3>Real Time Collaboration?!</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Real time collaboration is right at your fingertips!
-        </p>
-      </article>
-  </section>
+      <template slot="css">
+        code {
+          padding: 2px 6px;
+          display: inline-block;
+          font-size: 0.9em;
+          background-color: rgba(0,0,0,0.05);
+          border-radius: 4px;
+        }
+      </template>
+    </light-pen>
+  </template>
+
+  <template slot="css">
+    html, body {
+      height: 100%;
+      min-height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+
+    light-pen {
+      height: 100%;
+    }
+  </template>
+
+  <template slot="js">
+    import LightPen from "/light-pen/bridgetown/static/light-pen/exports/light-pen.4KUK635N.js";
+    LightPen.define()
+  </template>
+</light-pen>
+<h2 id="slots">
+          <a href="#slots">Slots</a>
+        </h2>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+    <code>html</code>
+  </td>
+  <td>
+    HTML to insert
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>css</code>
+  </td>
+  <td>
+    CSS to insert
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>js</code>
+  </td>
+  <td>
+    JavaScript to insert
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>title</code>
+  </td>
+  <td>
+    The title to appear at the top of the editor
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+<h2 id="attributes">
+          <a href="#attributes">Attributes</a>
+        </h2>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Reflects</th>
+        <th>Type</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>resize-position</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>resizePosition</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <sl-icon name="check-lg"></sl-icon>
+  </td>
+  <td>
+    <code>number</code>
+  </td>
+  <td>
+    <code>50</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>open-languages</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>openLanguages</code>
+  </td>
+  <td>
+    Languages to have open on initial render
+Comma separated list of elements to open on initial render "html,css,js" to open all.
+  </td>
+  <td>
+    <sl-icon name="check-lg"></sl-icon>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>console</code>
+  </td>
+  <td>
+    Not implemented.
+  </td>
+  <td>
+    <sl-icon name="check-lg"></sl-icon>
+  </td>
+  <td>
+    <code>"enabled" | "disabled"</code>
+  </td>
+  <td>
+    <code>"disabled"</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>sandbox-settings</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>sandboxSettings</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <sl-icon name="check-lg"></sl-icon>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>base-url</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>baseUrl</code>
+  </td>
+  <td>
+    The baseURL to use for fetching assets. This maps to a `&lt;base href=${this.baseUrl}&gt;` inside of the `&lt;iframe&gt;`.
+  </td>
+  <td>
+    <sl-icon name="check-lg"></sl-icon>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+<h2 id="functions">
+          <a href="#functions">Functions</a>
+        </h2>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Parameters</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+    <code>handleTextAreaResize()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>entries: ResizeObserverEntry[]</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>updateCachedWidth()</code>
+  </td>
+  <td>
+    Sets an initial width so we dont need to keep computing getBoundingClientRect
+  </td>
+  <td>
+    -
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>handleResize()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>entries: ResizeObserverEntry[]</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>highlightCode()</code>
+  </td>
+  <td>
+    Override this to use a highlighter of your choice.
+  </td>
+  <td>
+    <code>options: {code: string, language: SupportedLanguages}</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>unescapeCharacters()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>text: string</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>injectNewLine()</code>
+  </td>
+  <td>
+    Highlighters strip newlines. But you can see new lines in &lt;textarea&gt;, this fixes that.
+  </td>
+  <td>
+    <code>text: string</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>updateIframeContent()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    -
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>inputHandler()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    -
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>htmlTextAreaChanged()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>textarea: HTMLTextAreaElement</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>cssTextAreaChanged()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>textarea: HTMLTextAreaElement</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>jsTextAreaChanged()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>textarea: HTMLTextAreaElement</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>handleResizerKeydown()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>event: KeyboardEvent</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>updateResizePosition()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>resizePosition</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>updateCode()</code>
+  </td>
+  <td>
+    Lovely helper to scoop up our html, css, and js code
+  </td>
+  <td>
+    -
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>resetValues()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    -
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>keydownHandler()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>evt: KeyboardEvent</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>handleTemplate()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>e: Event</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>renderConsole()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    -
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>handleDrag()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>event: PointerEvent</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>pixelsToPercentage()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>pixels: number</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>renderDetails()</code>
+  </td>
+  <td>
+    -
+  </td>
+  <td>
+    <code>language: SupportedLanguages</code>
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+<h2 id="parts">
+          <a href="#parts">Parts</a>
+        </h2>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+    <code>base</code>
+  </td>
+  <td>
+    The base wrapper
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>sandbox</code>
+  </td>
+  <td>
+    The wrapper around the editor and the iframe
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>sandbox-header</code>
+  </td>
+  <td>
+    The wrapper around the header area
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+
+    <div class="pagination-footer">
+
+      <div></div>
+
+      <sl-button class="next-page" href="/light-pen/components/light-preview/">
+        <span style="text-align: start; display: block;">
+          <span style="display: block; color: var(--sl-color-neutral-500); font-size: 0.85rem;">Next Page</span>
+          <pagination-title>
+            &lt;light-preview&gt;
+          </pagination-title>
+        </span>
+
+        <span slot="suffix">
+          <sl-icon name="arrow-right" style="font-size: 1.5rem; display: block;"></sl-icon>
+        </span>
+
+      </sl-button>
+  </div>
+
 
 </main>
 
+<nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
+  <h2 class="table-of-contents__header">
+    &lt;Light Pen&gt;
+  </h2>
+  <ol class="table-of-contents__list">
+  <li class="side-nav__item">
+        <a href="#typical-usage" class="side-nav__link">Typical Usage</a>
+      </li><li class="side-nav__item">
+        <a href="#slots" class="side-nav__link">Slots</a>
+      </li><li class="side-nav__item">
+        <a href="#attributes" class="side-nav__link">Attributes</a>
+      </li><li class="side-nav__item">
+        <a href="#functions" class="side-nav__link">Functions</a>
+      </li><li class="side-nav__item">
+        <a href="#parts" class="side-nav__link">Parts</a>
+      </li></ol>
+</nav>
 
 
 
       <footer slot="main-footer">
   <div class="footer">
     Found a mistake? Want to contribute?
-    <a href="https://github.com/konnorrogers/rhino-editor/tree/main/docs/src/index.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
+    <a href="https://github.com/konnorrogers/rhino-editor/tree/main/docs/src/_documentation/components/light-pen.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
 
     <div style="margin: 1.5rem 0;"></div>
 
@@ -297,7 +890,7 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/components/light-pen/">&lt;light-pen&gt;</a>
   </li>
   <li class="side-nav__item ">

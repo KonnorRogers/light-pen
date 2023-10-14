@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="sl-theme-light" lang="en"><head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rhino Editor</title>
+<title>References</title>
 
 <!-- <base href="/light-pen/"> -->
 
@@ -82,7 +82,7 @@
 
 
   </head>
-  <body class="home " data-controller="search">
+  <body class="index " data-controller="search">
     <kr-layout main-id="main">
       <header class="nav-header" slot="header">
   <nav class="top-nav" aria-labelledby="top-nav-label">
@@ -175,9 +175,10 @@
 </header>
 
 
-      <main id="main" style="margin: 0 auto; --main-width: 100ch;">
-  <div class="hero--mobile">
-    <a class="nav-link logo__link" href="/">
+      <sl-drawer id="side-nav-drawer" hidden="" no-header="" placement="start" class="drawer-placement-start side-nav__drawer" style="--size: clamp(400px, 75%, 1536px);" data-controller="side-nav" slot="dialog">
+  <div class="side-nav__drawer__header">
+    <div style="display: flex; align-items: center;">
+      <a class="nav-link logo__link" href="/">
   <!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
@@ -188,75 +189,104 @@
   </span>
 </a>
 
+        <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
+    main
   </div>
 
-  <h1 class="slogan">
-    A lightweight way to handle all your code.
+    </div>
+    <sl-icon-button name="x-lg" label="Close" data-action="click->side-nav#close"></sl-icon-button>
+  </div>
+
+  <nav id="side-nav--mobile" slot="" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--mobile" data-preserve-scroll="">
+  <ul class="side-nav__menu">
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/guides">Guides</a></li>
+        
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-pen/">&lt;light-pen&gt;</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-preview/">&lt;light-preview&gt;</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/references">References</a></li>
+        
+      </ul>
+  </ul>
+</nav>
+
+  <sl-button slot="footer" type="primary" data-action="click->side-nav#close">Close</sl-button>
+</sl-drawer>
+
+<nav id="side-nav--desktop" slot="menu" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--desktop" data-preserve-scroll="">
+  <ul class="side-nav__menu">
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/guides">Guides</a></li>
+        
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-pen/">&lt;light-pen&gt;</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-preview/">&lt;light-preview&gt;</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/references">References</a></li>
+        
+      </ul>
+  </ul>
+</nav>
+
+
+
+<main id="main" class="documentation-content">
+  <h1 id="references">
+    <a href="#references">
+      References
+    </a>
   </h1>
 
-  <ul class="call-to-action__items" style="list-style: none;">
-      <li>
-        <sl-button variant="primary" href="/tutorials/getting-started" class="call-to-action" pill="">
-          Getting Started
-        </sl-button>
-      </li>
-      <li>
-        <sl-button variant="neutral" href="/references/why-rhino-editor" class="call-to-action" pill="">
-          Why Rhino Editor?
-        </sl-button>
-      </li>
-  </ul>
+  <ul class="list">
+  
+</ul>
 
-  <h2 class="reason__header" style="margin-top: 2rem;">Why Rhino Editor?</h2>
 
-  <section class="reason__grid">
-      <article>
-        <h3>Compatibility.</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Rhino editor is compatible with your existing ActionText views.
-        </p>
-      </article>
-      <article>
-        <h3>Extensible.</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Rhino editor is built on top of ProseMirror / TipTap allowing for greater customization.
-        </p>
-      </article>
-      <article>
-        <h3>Plugins!</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Any and all Prosemirror / TipTap plugins are available to you!
-        </p>
-      </article>
-      <article>
-        <h3>A revamped toolbar</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          The toolbar is now focusable, and has an API designed to be extended.
-        </p>
-      </article>
-      <article>
-        <h3>Table Editing?!</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Table editing is possible by adding a couple of plugins!
-        </p>
-      </article>
-      <article>
-        <h3>Real Time Collaboration?!</h3>
-        <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
-          Real time collaboration is right at your fingertips!
-        </p>
-      </article>
-  </section>
+
+
+
+    <div class="pagination-footer">
+
+      <div></div>
+
+      <div></div>
+  </div>
+
 
 </main>
 
+<nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
+  <h2 class="table-of-contents__header">
+    References
+  </h2>
+  <ol class="table-of-contents__list">
+  </ol>
+</nav>
 
 
 
       <footer slot="main-footer">
   <div class="footer">
     Found a mistake? Want to contribute?
-    <a href="https://github.com/konnorrogers/rhino-editor/tree/main/docs/src/index.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
+    <a href="https://github.com/konnorrogers/rhino-editor/tree/main/docs/src/_documentation/references/index.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
 
     <div style="margin: 1.5rem 0;"></div>
 
