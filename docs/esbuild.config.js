@@ -24,41 +24,6 @@ const esbuildCopy = require('esbuild-plugin-copy').default
 // ```
 const watch = process.argv.includes("--watch")
 
-function ManifestBuilder () {
-  return {
-    name: "CustomElementsManifestBuilder",
-    setup(build) {
-      build.onStart(async () => {
-        await (() => {
-          /** @type Promise<void> */
-          const promise = new Promise((resolve) => {
-            const args = ["..", "&&", "npm", "run", "analyze"]
-            const buildManifest = spawn("cd", args);
-
-            buildManifest.stdout.on("data", data => {
-              console.log(`[CustomElementsManifest]: ${data}`);
-            });
-
-            buildManifest.stderr.on("data", data => {
-              console.log(`[CustomElementsManifest]: ${data}`);
-            });
-
-            buildManifest.on('error', (error) => {
-              console.log(`[CustomElementsManifest]: ${error.message}`);
-            })
-
-            buildManifest.on("close", code => {
-              console.log(`[CustomElementsManifest]: Complete! [exit code: ${code}]`);
-              resolve()
-            })
-          })
-          return promise
-        })()
-      })
-    }
-  }
-}
-
 const esbuildOptions = {
   target: "es2020",
   entryPoints: {
@@ -86,7 +51,6 @@ const esbuildOptions = {
       manifestFile: path.join(process.cwd(), ".bridgetown-cache", "asset-mapper-manifest.json"),
       // outputRoot: path.join(process.cwd(), process.env.BASE_PATH)
     }),
-    ManifestBuilder()
   ]
 }
 
