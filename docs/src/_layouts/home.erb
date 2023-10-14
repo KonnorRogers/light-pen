@@ -24,7 +24,7 @@ layout: default
   <h2 class="reason__header" style="margin-top: 2rem;"><%= resource.data.reason_header %></h2>
 
   <section class="reason__grid">
-    <% resource.data.reasons.each do |reason| %>
+    <% resource.data&.reasons&.each do |reason| %>
       <article>
         <h3><%= reason[:header] %></h3>
         <p style="margin: 0; padding: 0.25em var(--sl-spacing-x-small);">
@@ -34,6 +34,7 @@ layout: default
     <% end %>
   </section>
 
+  <%= yield %>
 </main>
 
 
