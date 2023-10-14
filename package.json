@@ -25,6 +25,7 @@
     "start:docs": "cd docs && overmind start -f Procfile.dev",
     "setup": "pnpm install && cd docs && pnpm install && bundle install",
     "build:docs": "cd docs && pnpm run build",
+    "build:api": "typedoc --out ./docs/output/references/api/ ./exports/**/*.js",
     "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
     "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
     "analyze": "custom-elements-manifest analyze --litelement",
@@ -53,11 +54,12 @@
     "@types/node": "^20.8.0",
     "@web/test-runner": "^0.17.1",
     "@web/test-runner-playwright": "^0.10.1",
-    "cem-plugin-expanded-types": "^1.0.0",
+    "cem-plugin-expanded-types": "^1.1.0",
     "gh-pages": "^6.0.0",
     "glob": "^10.3.10",
     "light-pen": "link:.",
     "rimraf": "^5.0.1",
+    "typedoc": "^0.25.2",
     "typescript": "~5.2.0"
   },
   "dependencies": {
