@@ -40,18 +40,35 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - name: Install NPM packages
-        run: pnpm install
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            docs/pnpm-lock.yaml
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          rubygems: latest
+          bundler-cache: true
 
       - name: Set production base URL
-        run: echo "BASE_URL=https://${{ env.DOMAIN }}/${{ github.event.repository.name }}/" >> $GITHUB_ENV
+        run: |
+          echo "URL=https://${{ env.DOMAIN }}" >> $GITHUB_ENV
+          echo "BASE_PATH=/${{ github.event.repository.name }}" >> $GITHUB_ENV
 
-      - name: Set base URL for preview if PR
+      - name: Set base_path for preview if PR
         if: github.ref != 'refs/heads/main'
-        run: echo "BASE_URL=https://${{ env.DOMAIN }}/${{ github.event.repository.name }}/${{ env.PR_PATH}}/" >> $GITHUB_ENV
+        run: echo "BASE_PATH=/${{ github.event.repository.name }}/${{ env.PR_PATH }}" >> $GITHUB_ENV
+
+      - name: Set base_url
+        run: echo "BASE_URL=$URL/$BASE_PATH" >> $GITHUB_ENV
+
 
       - name: Build website
-        run: pnpm run build:site
+        run: |
+          pnpm run setup
+          pnpm run build
+          pnpm run build:docs
+          pnpm run build:api
 
       - name: Set username + email
         run: |
@@ -62,7 +79,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          pnpm exec gh-pages -d ./_site -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+          pnpm exec gh-pages -d ./docs/output -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -70,7 +87,7 @@ jobs:
         if: github.ref != 'refs/heads/main'
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          pnpm exec gh-pages -d ./_site --dest "${{ env.PR_PATH }}" -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+          pnpm exec gh-pages -d ./docs/output --dest "${{ env.PR_PATH }}" -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

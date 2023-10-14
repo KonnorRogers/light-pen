@@ -1,0 +1,33 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "overmind start -f Procfile.dev",
+    "build": "NODE_ENV=\"production\" pnpm run esbuild && BRIDGETOWN_ENV=\"production\" bundle exec bridgetown build --skip-frontend",
+    "esbuild": "node esbuild.config.js --minify",
+    "esbuild-dev": "node esbuild.config.js --watch"
+  },
+  "devDependencies": {
+    "asset-mapper-esbuild": "^1.0.1",
+    "esbuild": "^0.19.3",
+    "esbuild-plugin-copy": "^2.1.1",
+    "glob": "^8.0.1",
+    "linkifyjs": "^4.1.1",
+    "postcss": "^8.4.12",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.1.0",
+    "postcss-load-config": "^3.1.4",
+    "postcss-preset-env": "^7.4.3",
+    "read-cache": "^1.0.0"
+  },
+  "dependencies": {
+    "@github/clipboard-copy-element": "^1.2.1",
+    "@hotwired/stimulus": "^3.2.1",
+    "@hotwired/turbo": "^7.3.0",
+    "@konnorr/bridgetown-quick-search": "^3.8.0",
+    "@shoelace-style/shoelace": "^2.7.0",
+    "lit": "^2.8.0",
+    "web-component-lazy-loader": "^1.0.1"
+  }
+}

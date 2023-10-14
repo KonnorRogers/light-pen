@@ -1,7 +1,10 @@
 // @ts-check
+
 import { LitElement, html } from "lit"
-import { styles, theme } from "./light-pen.styles.js"
+import { styles } from "./light-pen.styles.js"
 import { when } from "lit/directives/when.js";
+
+import { theme } from './default-theme.styles.js'
 
 import HighlightJS from 'highlight.js/lib/core';
 import JavaScript from 'highlight.js/lib/languages/javascript';
@@ -10,7 +13,13 @@ import CSS from 'highlight.js/lib/languages/css';
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
 import { DefineableMixin } from "web-component-define";
+import { baseStyles, buttonStyles } from "./base-styles.js";
 
+import { clamp } from '../internal/clamp.js'
+import { dedent } from "../internal/dedent.js";
+import { drag } from "../internal/drag.js";
+import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
+import { resizeIcon } from "../internal/resize-icon.js";
 
 // Then register the languages you need
 HighlightJS.registerLanguage('javascript', JavaScript);
@@ -25,18 +34,21 @@ HighlightJS.registerLanguage('css', CSS);
 
 /**
  * @customElement
- * @tagName lit-pen
+ * @tagname light-pen
  * @slot html - HTML to insert
  * @slot css - CSS to insert
  * @slot js - JavaScript to insert
  * @slot title - The title to appear at the top of the editor
  *
+ * @part base - The base wrapper
+ * @part sandbox - The wrapper around the editor and the iframe
+ * @part sandbox-header - The wrapper around the header area
  */
 export default class LightPen extends DefineableMixin(LitElement) {
   // Static
   static baseName = "light-pen"
 
-  static styles = [theme, styles]
+  static styles = [baseStyles, buttonStyles, theme, styles]
 
   static languageMap = {
     html: "xml",
@@ -48,13 +60,16 @@ export default class LightPen extends DefineableMixin(LitElement) {
     openLanguages: { reflect: true, attribute: "open-languages" },
     resizePosition: { attribute: "resize-position", reflect: true, type: Number },
     console: { reflect: true },
-    languages: { state: true, type: Array },
-    cssCode: { state: true },
-    htmlCode: { state: true },
-    jsCode: { state: true },
-    htmlResizeObserver: { state: true },
-    jsResizeObserver: { state: true },
-    cssResizeObserver: { state: true }
+    sandboxSettings: { reflect: true, attribute: "sandbox-settings"},
+    baseUrl: { reflect: true, attribute: "base-url" },
+    languages: { attribute: false, type: Array },
+    cssCode: { attribute: false },
+    htmlCode: { attribute: false },
+    jsCode: { attribute: false },
+    htmlResizeObserver: { attribute: false },
+    jsResizeObserver: { attribute: false },
+    cssResizeObserver: { attribute: false },
+    resizing: { attribute: false },
   }
   // Overrides
 
@@ -64,19 +79,32 @@ export default class LightPen extends DefineableMixin(LitElement) {
   constructor() {
     super()
 
-
     /**
-     * @prop
+     * @property
      * @type {ResizeObserver}
      */
     this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
 
+    /**
+     * @property
+     * @type {ResizeObserver}
+     */
     this.htmlResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
+
+    /**
+     * @property
+     * @type {ResizeObserver}
+     */
     this.jsResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
+
+    /**
+     * @property
+     * @type {ResizeObserver}
+     */
     this.cssResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
 
     /**
-     * @attr
+     * @attribute
      * @reflect
      * @type {number}
      */
@@ -85,6 +113,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
     /**
      * Languages to have open on initial render
      * Comma separated list of elements to open on initial render "html,css,js" to open all.
+     * @attribute
      * @reflect
      * @type {string}
      */
@@ -92,40 +121,40 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     /**
      * @type {Array<SupportedLanguages>}
+     * @property
      */
     this.languages = ["html", "css", "js"]
 
     /**
-     * @reflect
-     * @type {"console" | "iframe"}
-     */
-    this.result = this.getAttribute('result') === "console" ? 'console' : 'iframe',
-
-    /**
+     * Not implemented.
      * @property
      * @type {"enabled" | "disabled"}
      */
     this.console = "disabled"
 
     /**
+     * Not implemented.
      * @property
      * @type {string}
      */
     this.consoleText = ""
 
     /**
+     * What to reset the HTML to.
      * @property
      * @type {string}
      */
     this.htmlReset = ""
 
     /**
+     * What to reset the CSS to.
      * @property
      * @type {string}
      */
     this.cssReset = ""
 
     /**
+     * What to reset the JS to.
      * @property
      * @type {string}
      */
@@ -133,11 +162,34 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     /**
      * @property
+     * @internal
      * @type {number}
      */
     this.cachedWidth = 0
 
+    /**
+     * @property
+     * @type {string}
+     */
+    this.sandboxSettings = ""
 
+    /**
+     * @internal
+     */
+    this.resizing = false
+
+    /**
+     * @property
+     * @type {string}
+     * The baseURL to use for fetching assets. This maps to a `<base href=${this.baseUrl}>` inside of the `<iframe>`.
+     */
+    this.baseUrl = ""
+
+    /**
+     * @property
+     * srcdoc to pass to the <iframe>
+     */
+    this.iframeSrcDoc = ""
   }
 
   /**
@@ -151,7 +203,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
     this.updateComplete.then(() => {
       this.resizeObserver.observe(this)
 
-      /**
+      /*
        * Grab reset values so we can reset the inputs
        */
       this.htmlReset = this.htmlTextArea?.value || ""
@@ -165,8 +217,11 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   handleTextAreaResize (entries) {
     const { target } = entries[0]
-    const { left, right, top, bottom } = entries[0].contentRect;
-    const width = left + right
+    const {
+      // left, right,
+      top, bottom
+    } = entries[0].contentRect;
+    // const width = left + right
     const height = top + bottom
 
     // @ts-expect-error
@@ -209,7 +264,9 @@ export default class LightPen extends DefineableMixin(LitElement) {
    * Override this to use a highlighter of your choice.
    * @param {{code: string, language: SupportedLanguages}} options
    */
-  highlightCode ({ code, language }) {
+  highlightCode (options) {
+    let { code, language } = options
+
     const highlightJsLanguage = /** @type {typeof LightPen} */ (this.constructor).languageMap[language]
 
     code = this.unescapeCharacters(code)
@@ -223,7 +280,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
    */
   unescapeCharacters (text) {
     // Update code
-    // return text.replaceAll("&gt;", ">").replaceAll("&lt;", "<"); /* Global RegExp */
     return text.replaceAll("&lt;/script>", "</script>")
   }
 
@@ -250,26 +306,36 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     if (this.iframeElem.contentWindow == null) return;
 
-
     let page = `
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}<\/style>
+          <base href="${this.baseUrl || document.baseURI}">
         </head>
         <body>
           ${this.htmlCode}
           <script type="module">
             ${this.jsCode}
-          <\/script>
+          </script>
         </body>
       </html>
     `
 
     const iframe = this.shadowRoot?.querySelector("iframe")
-    if (iframe && iframe.contentWindow) {
-	    iframe.contentWindow.document.open();
-	    iframe.contentWindow.document.writeln(page);
-	    iframe.contentWindow.document.close();
+    if (iframe) {
+      const blob = new Blob([page], { type: "text/html" })
+      const blobUrl = URL.createObjectURL(blob)
+
+      const prevBlobUrl = this.blobUrl
+      this.blobUrl = blobUrl
+
+      if (iframe) {
+	      iframe.src = blobUrl
+	    }
+
+	    setTimeout(() => {
+        if (prevBlobUrl) URL.revokeObjectURL(prevBlobUrl)
+	    }, 1000)
 	  }
   }
 
@@ -281,7 +347,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    * @param {import("lit").PropertyValues} changedProperties
    */
   willUpdate (changedProperties) {
-    if (this.languages.some((str) => changedProperties.has(str + "Code"))) {
+    if (["cssCode", "htmlCode", "jsCode", "baseUrl"].some((str) => changedProperties.has(str))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
     }
@@ -499,7 +565,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
         <slot name="js" @slotchange=${this.handleTemplate}></slot>
       </div>
 
-      <div part="base">
+      <div part="base" ?resizing=${this.resizing}>
 			  <div part="sandbox">
 				  <div part="sandbox-header">
             <slot name="title">
@@ -533,14 +599,20 @@ export default class LightPen extends DefineableMixin(LitElement) {
             @keydown=${this.handleResizerKeydown}
             @pointerdown=${this.handleDrag}
             @touchstart=${this.handleDrag}
+            class=${this.resizing ? "is-active" : ""}
           >
+            <slot name="panel-resize-icon">
+              ${resizeIcon}
+            </slot>
             <span class="visually-hidden">Resize Panel. Pull to left or right to resize.</span>
           </button>
 
 					<div part="sandbox-iframe-wrapper">
 						<iframe
+              sandbox=${this.sandboxSettings || defaultSandboxSettings}
               part="sandbox-iframe"
               frameborder="0"
+              src=${this.blobUrl}
              ></iframe>
 					</div>
 				</div>
@@ -574,9 +646,13 @@ export default class LightPen extends DefineableMixin(LitElement) {
       this.iframeElem.style.pointerEvents = "none"
     }
 
+    this.resizing = true
+
     drag(this, {
       onMove: (x, _y) => {
+        this.resizing = true
         let newPositionInPixels = x;
+
 
         this.resizePosition = clamp(this.pixelsToPercentage(newPositionInPixels), 0, 100);
         this.updateResizePosition()
@@ -586,6 +662,8 @@ export default class LightPen extends DefineableMixin(LitElement) {
         // Re-enable pointerevents so you can use tab keys etc.
           this.iframeElem.style.pointerEvents = "auto"
         }
+
+        this.resizing = false
       },
       initialEvent: event
     });
@@ -627,7 +705,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
           ><code
               part="code code-${language}"
               class="language-${language}"
-          >${code}</code></pre>
+            >${code}</code></pre>
           <!-- IMPORTANT! There must be no white-space above. -->
 					<textarea
             ${
@@ -676,101 +754,3 @@ export default class LightPen extends DefineableMixin(LitElement) {
   }
 }
 
-/**
- * @param {number} min
- * @param {number} curr
- * @param {number} max
- */
-function clamp (min, curr, max) {
-  return Math.min(Math.max(curr, min), max)
-}
-
-/**
- * @typedef {object} DragOptions
- * @property {(x: number, y: number) => void} onMove - Callback that runs as dragging occurs.
- * @property {() => void} onStop - Callback that runs when dragging stops.
- * @property {PointerEvent} initialEvent - When an initial event is passed, the first drag will be triggered immediately using the coordinates therein. This is useful when the drag is initiated by a mousedown/touchstart event but you want the initial "click" to activate a drag (e.g. resizePositioning a handle initially at the click target).
- */
-
-/**
- * @param {HTMLElement} container
- * @param {Partial<DragOptions>} [options]
-
- */
-function drag(container, options) {
-  /**
-   * @param {PointerEvent} pointerEvent
-   */
-  function move(pointerEvent) {
-    const dims = container.getBoundingClientRect();
-    const defaultView = container.ownerDocument.defaultView;
-    const offsetX = dims.left + (defaultView?.pageXOffset || 0);
-    const offsetY = dims.top + (defaultView?.pageYOffset || 0);
-    const x = pointerEvent.pageX - offsetX;
-    const y = pointerEvent.pageY - offsetY;
-
-    if (options?.onMove) {
-      options.onMove(x, y);
-    }
-  }
-
-  function stop() {
-    document.removeEventListener('pointermove', move);
-    document.removeEventListener('pointerup', stop);
-
-    if (options?.onStop) {
-      options.onStop();
-    }
-  }
-
-  document.addEventListener('pointermove', move, { passive: true });
-  document.addEventListener('pointerup', stop);
-
-  // If an initial event is set, trigger the first drag immediately
-  if (options?.initialEvent instanceof PointerEvent) {
-    move(options.initialEvent);
-  }
-}
-
-/**
- * @param {TemplateStringsArray|string} templateStrings
- * @param {any[]} values
- */
-function dedent (templateStrings, ...values) {
-	let matches = [];
-	let strings = typeof templateStrings === 'string' ? [ templateStrings ] : templateStrings.slice();
-
-	// 1. Remove trailing whitespace.
-	strings[strings.length - 1] = strings[strings.length - 1].replace(/\r?\n([\t ]*)$/, '');
-
-	// 2. Find all line breaks to determine the highest common indentation level.
-	for (let i = 0; i < strings.length; i++) {
-		let match;
-
-		if (match = strings[i].match(/\n[\t ]+/g)) {
-			matches.push(...match);
-		}
-	}
-
-	// 3. Remove the common indentation from all strings.
-	if (matches.length) {
-		let size = Math.min(...matches.map(value => value.length - 1));
-		let pattern = new RegExp(`\n[\t ]{${size}}`, 'g');
-
-		for (let i = 0; i < strings.length; i++) {
-			strings[i] = strings[i].replace(pattern, '\n');
-		}
-	}
-
-	// 4. Remove leading whitespace.
-	strings[0] = strings[0].replace(/^\r?\n/, '');
-
-	// 5. Perform interpolation.
-	let string = strings[0];
-
-	for (let i = 0; i < values.length; i++) {
-		string += values[i] + strings[i + 1];
-	}
-
-	return string;
-}

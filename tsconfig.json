@@ -1,13 +1,14 @@
 {
   "include": [
     "exports/**/*.js",
+    "internal/**/*.js",
     "types/**/*.d.ts"
   ],
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "NodeNext",
     "module": "NodeNext",
     "lib": ["ESNext", "DOM"],
     "declaration": true,
