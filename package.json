@@ -25,7 +25,7 @@
     "start:docs": "cd docs && overmind start -f Procfile.dev",
     "setup": "pnpm install && cd docs && pnpm install && bundle install",
     "build:docs": "cd docs && pnpm run build && touch output/.nojekyll",
-    "build:api": "typedoc --basePath light-pen --out ./docs/output/references/api/ ./exports/**/*.js",
+    "build:api": "typedoc --out ./docs/output/references/api/ ./exports/**/*.js",
     "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
     "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
     "analyze": "custom-elements-manifest analyze --litelement",
