@@ -1,9 +1,6 @@
 ---
 title: <light-preview>
 permalink: /components/light-preview/
-description: |
-  A lightweight code previewing component designed to show source code side by side with
-  a demo of your code in the browser.
 ---
 
 ## Typical Usage

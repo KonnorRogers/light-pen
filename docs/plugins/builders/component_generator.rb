@@ -19,6 +19,10 @@ class Builders::ComponentGenerator < SiteBuilder
         metadata = elements[component_name]
         next if metadata.nil?
 
+        resource.data.merge!({
+          "description" => metadata.description
+        })
+
         slots = metadata.slots
         attributes = metadata.members.select { |member| member.attributes[:attribute] }
         events = metadata.events

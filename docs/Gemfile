@@ -41,7 +41,7 @@ gem "asset_mapper", "~> 1.0"
 
 gem "rack-cors", "~> 2.0"
 
-gem "custom_elements_manifest_parser", "~> 0.2.1"
+gem "custom_elements_manifest_parser", "~> 0.2.4"
 
 gem "ruby-lsp", "~> 0.11.1", :group => :development, require: false
 gem "yard", "~> 0.9.34", :group => :development
