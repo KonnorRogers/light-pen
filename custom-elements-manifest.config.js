@@ -1,17 +1,13 @@
 // @ts-check
+// import { expandTypesPlugin } from './expand-types.js'
 
-// import { defaultCompilerOptions } from './compilerOptions.js';
-// import { myPlugin } from './my-plugin.js';
-// import { expandTypes } from './expandTypes'
-// import ts from "typescript"
-
-// let typeChecker = null
+const globs = ['exports/**/*.{d.ts,js}', 'internal/**/*.{d.ts,js}', 'types/**/*.d.ts']
 
 export default {
   /** Globs to analyze */
-  globs: ['./exports/**/*.js', './internal/**/*.js', './types/**/*.d.ts'],
+  globs,
   /** Globs to exclude */
-  exclude: ['./node_modules', './docs'],
+  exclude: ['node_modules', 'docs'],
   /** Directory to output CEM to */
   outdir: '.',
   /** Run in dev mode, provides extra logging */
@@ -30,15 +26,19 @@ export default {
   fast: false,
   /** Enable special handling for stencil */
   stencil: false,
-  // overrideModuleCreation: ({globs}) => {
+  // overrideModuleCreation: ({ts, globs}) => {
   //   const program = ts.createProgram(globs, {target: ts.ScriptTarget.ESNext, module: ts.ModuleKind.ESNext, allowJs: true, checkJs: true});
-  //   typeChecker = program.getTypeChecker();
   //
-  //   return program.getSourceFiles().filter(sf => globs.find(glob => sf.fileName.includes(glob)));
+  //   // If we dont do this, everything blows up.
+  //   program.getTypeChecker()
+  //
+  //   return program.getSourceFiles().filter(sf => globs.find(glob => {
+  //     return sf.fileName.includes(glob)
+  //   }))
   // },
-  /** Provide custom plugins */
+  // /** Provide custom plugins */
   // plugins: [
   //   /** You can now pass the typeChecker to your plugins */
-  //   expandTypes(typeChecker)
+  //   expandTypesPlugin({ globs })
   // ],
 }

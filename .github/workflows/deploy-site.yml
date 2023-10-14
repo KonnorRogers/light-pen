@@ -66,6 +66,7 @@ jobs:
       - name: Build website
         run: |
           pnpm run setup
+          pnpm run build
           pnpm run build:docs
           pnpm run build:api
 
