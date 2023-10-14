@@ -40,9 +40,6 @@ devDependencies:
   glob:
     specifier: ^10.3.10
     version: 10.3.10
-  light-pen:
-    specifier: link:.
-    version: 'link:'
   rimraf:
     specifier: ^5.0.1
     version: 5.0.1

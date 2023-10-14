@@ -57,7 +57,6 @@
     "cem-plugin-expanded-types": "^1.1.0",
     "gh-pages": "^6.0.0",
     "glob": "^10.3.10",
-    "light-pen": "link:.",
     "rimraf": "^5.0.1",
     "typedoc": "^0.25.2",
     "typescript": "~5.2.0"
