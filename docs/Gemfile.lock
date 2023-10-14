@@ -1,11 +1,3 @@
-PATH
-  remote: ../../custom_elements_manifest_parser
-  specs:
-    custom_elements_manifest_parser (0.2.3)
-      dry-struct (~> 1.0)
-      dry-types (~> 1.0)
-      dry-validation (~> 1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -64,6 +56,10 @@ GEM
       bridgetown (>= 1.2.0.beta2, < 2.0)
     colorator (1.1.0)
     concurrent-ruby (1.2.2)
+    custom_elements_manifest_parser (0.2.2)
+      dry-struct (~> 1.0)
+      dry-types (~> 1.0)
+      dry-validation (~> 1.0)
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
@@ -232,7 +228,7 @@ DEPENDENCIES
   asset_mapper (~> 1.0)
   bridgetown (~> 1.3)
   bridgetown-quick-search (~> 2.0)
-  custom_elements_manifest_parser!
+  custom_elements_manifest_parser (~> 0.2.1)
   debug (~> 1.8)
   nokogiri (~> 1.13)
   puma (~> 5.6)
