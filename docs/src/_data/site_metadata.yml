@@ -4,13 +4,12 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.metadata.myvariable }}.
 
-title: Light(weight) [Code](pen|highlight|preview)
+title: Lightweight Components for doing complex things.
 logo: "Light Pen"
-slogan: A lightweight way to handle all your code.
+slogan: Lightweight components for doing complex things.
 email: konnor5456@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Rhino editor is a durable and flexible editor designed to provide an easy to use out of the box
-  experience while providing hooks and plugins to allow for easy extension.
-github_url: https://github.com/konnorrogers/rhino-editor
+  A collection of components that don't generally fit a design system, but that I wanted to build.
+github_url: https://github.com/konnorrogers/light-pen
 default_branch: main
 doc_location: docs/src
