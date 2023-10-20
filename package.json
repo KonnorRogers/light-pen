@@ -1,6 +1,6 @@
 {
   "name": "light-pen",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A variety of simple components that match an aria-role",
   "main": "./exports/index.js",
   "module": "./exports/index.js",
