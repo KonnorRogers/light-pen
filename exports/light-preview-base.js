@@ -60,7 +60,6 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     inlinePreview: { type: Boolean, attribute: "inline-preview" },
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
     open: { reflect: true, type: Boolean },
-    baseUrl: { reflect: true, attribute: "base-url" },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
     iframeSrcDoc: { reflect: true, attribute: "iframe-src-doc" },
@@ -109,11 +108,6 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
      * If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
      */
     this.code = ""
-
-    /**
-     * The baseUrl to use for fetching assets. This maps to a `<base href=${this.baseUrl}>` inside of the `<iframe>`
-     */
-    this.baseUrl = ""
 
     /**
      * If `disableHighlight` is true, then you must pass in an element into `previewCode` to be able to get
@@ -279,7 +273,6 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
       <html>
         <head>
           <meta charset="utf-8">
-          <base href="${this.baseUrl || document.baseURI}">
         </head>
         <body>
           ${code}
@@ -308,7 +301,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (/** @type {Array<keyof LightPreviewBase>} */ (["previewCode", "code", "baseUrl"]).some((str) => changedProperties.has((str)))) {
+    if (/** @type {Array<keyof LightPreviewBase>} */ (["previewCode", "code"]).some((str) => changedProperties.has((str)))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
     }

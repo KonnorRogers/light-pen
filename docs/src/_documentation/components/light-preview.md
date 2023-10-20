@@ -5,7 +5,7 @@ permalink: /components/light-preview/
 
 ## Typical Usage
 
-<light-preview base-url="<%= site.config.base_url %>/">
+<light-preview>
   <template slot="preview-code">
     <button>Displaying a super cool button</button>
   </template>
@@ -16,7 +16,7 @@ permalink: /components/light-preview/
       }
     </style>
 
-    <light-preview base-url="<%= site.config.base_url %>/">
+    <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
       </template>
@@ -31,7 +31,7 @@ permalink: /components/light-preview/
 
 ## Nesting a light-pen inside of a light-pen
 
-<light-preview base-url="<%= site.config.base_url %>/">
+<light-preview>
   <template slot="code">
     <style>
       light-preview::part(iframe) {
@@ -39,7 +39,7 @@ permalink: /components/light-preview/
       }
     </style>
 
-    <light-preview base-url="<%= site.config.base_url %>/">
+    <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
       </template>
@@ -58,7 +58,7 @@ permalink: /components/light-preview/
       }
     </style>
 
-    <light-preview base-url="<%= site.config.base_url %>/">
+    <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
       </template>
@@ -74,9 +74,9 @@ permalink: /components/light-preview/
 
 ## Loading inline
 
-<light-preview inline-preview base-url="<%= site.config.base_url %>/">
+<light-preview inline-preview>
   <template slot="code">
-    <light-preview inline-preview base-url="<%= site.config.base_url %>/">
+    <light-preview inline-preview>
       <template slot="code">
         <style>
           button.button {
@@ -136,7 +136,7 @@ permalink: /components/light-preview/
   }
 </style>
 
-<light-preview id="additional-buttons" base-url="<%= site.config.base_url %>/">
+<light-preview id="additional-buttons">
   <template slot="code">
     <style>
       #additional-buttons button {
@@ -174,7 +174,7 @@ permalink: /components/light-preview/
 
     </style>
 
-    <light-preview id="additional-buttons" base-url="<%= site.config.base_url %>/">
+    <light-preview id="additional-buttons">
       <template slot="code">
         <div>Showing off more buttons</div>
       </template>
