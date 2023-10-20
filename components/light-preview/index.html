@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="A collection of components that don't generally fit a design system, but that I wanted to build.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.VD3Y7BEJ.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.VNMGYYXA.js">
 <link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.Y2F5KNM5.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.VD3Y7BEJ.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.VNMGYYXA.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.Y2F5KNM5.js" type="module"></script>
 
 <!-- Favicons -->
@@ -259,7 +259,7 @@
           <a href="#typical-usage">Typical Usage</a>
         </h2>
 
-<light-preview base-url="https://KonnorRogers.github.io/light-pen/">
+<light-preview>
   <template slot="preview-code">
     <button>Displaying a super cool button</button>
   </template>
@@ -270,7 +270,7 @@
       }
     </style>
 
-    <light-preview base-url="https://KonnorRogers.github.io/light-pen/">
+    <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
       </template>
@@ -287,7 +287,7 @@
           <a href="#nesting-a-light-pen-inside-of-a-light-pen">Nesting a light-pen inside of a light-pen</a>
         </h2>
 
-<light-preview base-url="https://KonnorRogers.github.io/light-pen/">
+<light-preview>
   <template slot="code">
     <style>
       light-preview::part(iframe) {
@@ -295,7 +295,7 @@
       }
     </style>
 
-    <light-preview base-url="https://KonnorRogers.github.io/light-pen/">
+    <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
       </template>
@@ -314,14 +314,14 @@
       }
     </style>
 
-    <light-preview base-url="https://KonnorRogers.github.io/light-pen/">
+    <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
       </template>
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.A4AW4WMR.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.AVNRWMMK.js"
       LightPreview.define()
     </script>
   </template>
@@ -331,9 +331,9 @@
           <a href="#loading-inline">Loading inline</a>
         </h2>
 
-<light-preview inline-preview="" base-url="https://KonnorRogers.github.io/light-pen/">
+<light-preview inline-preview="">
   <template slot="code">
-    <light-preview inline-preview="" base-url="https://KonnorRogers.github.io/light-pen/">
+    <light-preview inline-preview="">
       <template slot="code">
         <style>
           button.button {
@@ -351,7 +351,7 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.A4AW4WMR.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.AVNRWMMK.js"
       LightPreview.define()
     </script>
   </template>
@@ -393,7 +393,7 @@
   }
 </style>
 
-<light-preview id="additional-buttons" base-url="https://KonnorRogers.github.io/light-pen/">
+<light-preview id="additional-buttons">
   <template slot="code">
     <style>
       #additional-buttons button {
@@ -431,7 +431,7 @@
 
     </style>
 
-    <light-preview id="additional-buttons" base-url="https://KonnorRogers.github.io/light-pen/">
+    <light-preview id="additional-buttons">
       <template slot="code">
         <div>Showing off more buttons</div>
       </template>
@@ -441,7 +441,7 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.A4AW4WMR.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.AVNRWMMK.js"
       LightPreview.define()
     </script>
   </template>
@@ -599,30 +599,6 @@
   </td>
   <td>
     <code>false</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>base-url</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>baseUrl</code>
-  </td>
-  <td>
-    The baseUrl to use for fetching assets. This maps to a `&lt;base href=${this.baseUrl}&gt;` inside of the `&lt;iframe&gt;`
-  </td>
-  <td>
-    <sl-icon name="check-lg"></sl-icon>
-  </td>
-  <td>
-    <code>string</code>
-  </td>
-  <td>
-    <code>""</code>
   </td>
 </tr>
 
