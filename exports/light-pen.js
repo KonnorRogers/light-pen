@@ -61,7 +61,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
     resizePosition: { attribute: "resize-position", reflect: true, type: Number },
     console: { reflect: true },
     sandboxSettings: { reflect: true, attribute: "sandbox-settings"},
-    baseUrl: { reflect: true, attribute: "base-url" },
     languages: { attribute: false, type: Array },
     cssCode: { attribute: false },
     htmlCode: { attribute: false },
@@ -70,6 +69,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
     jsResizeObserver: { attribute: false },
     cssResizeObserver: { attribute: false },
     resizing: { attribute: false },
+    iframeSrcDoc: { attribute: false }
   }
   // Overrides
 
@@ -177,13 +177,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
      * @internal
      */
     this.resizing = false
-
-    /**
-     * @property
-     * @type {string}
-     * The baseURL to use for fetching assets. This maps to a `<base href=${this.baseUrl}>` inside of the `<iframe>`.
-     */
-    this.baseUrl = ""
 
     /**
      * @property
@@ -299,18 +292,12 @@ export default class LightPen extends DefineableMixin(LitElement) {
   updateIframeContent () {
     if (this.iframeElem == null) return
 
-    let clone = this.iframeElem.cloneNode();
-    this.iframeElem.replaceWith(clone);
-
     // this.setupIframeLogging();
-
-    if (this.iframeElem.contentWindow == null) return;
 
     let page = `
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}<\/style>
-          <base href="${this.baseUrl || document.baseURI}">
         </head>
         <body>
           ${this.htmlCode}
@@ -321,22 +308,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
       </html>
     `
 
-    const iframe = this.shadowRoot?.querySelector("iframe")
-    if (iframe) {
-      const blob = new Blob([page], { type: "text/html" })
-      const blobUrl = URL.createObjectURL(blob)
-
-      const prevBlobUrl = this.blobUrl
-      this.blobUrl = blobUrl
-
-      if (iframe) {
-	      iframe.src = blobUrl
-	    }
-
-	    setTimeout(() => {
-        if (prevBlobUrl) URL.revokeObjectURL(prevBlobUrl)
-	    }, 1000)
-	  }
+    this.iframeSrcDoc = page
   }
 
   inputHandler () {
@@ -347,7 +319,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
    * @param {import("lit").PropertyValues} changedProperties
    */
   willUpdate (changedProperties) {
-    if (["cssCode", "htmlCode", "jsCode", "baseUrl"].some((str) => changedProperties.has(str))) {
+    if (["cssCode", "htmlCode", "jsCode"].some((str) => changedProperties.has(str))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
     }
@@ -612,7 +584,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
               sandbox=${this.sandboxSettings || defaultSandboxSettings}
               part="sandbox-iframe"
               frameborder="0"
-              src=${this.blobUrl}
+              srcdoc=${this.iframeSrcDoc}
              ></iframe>
 					</div>
 				</div>
