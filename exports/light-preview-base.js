@@ -62,7 +62,6 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     open: { reflect: true, type: Boolean },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
-    iframeSrcDoc: { reflect: true, attribute: "iframe-src-doc" },
 
     // State
     code: { attribute: false },
@@ -124,12 +123,6 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
      * The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
      */
     this.resizePosition = 100
-
-    /**
-     * @property
-     * srcdoc to pass to the <iframe>
-     */
-    this.iframeSrcDoc = ""
 
     /**
      * @internal
@@ -268,6 +261,10 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   updateIframeContent () {
     const code = this.unescapePreviewCode()
 
+    const iframe = this.shadowRoot?.querySelector("iframe")
+
+    if (!iframe) return
+
     const content = `
       <!doctype html>
       <html>
@@ -279,7 +276,10 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
         </body>
       </html>`
 
-    this.iframeSrcDoc = content
+
+    iframe.contentWindow?.document.open()
+    iframe.contentWindow?.document.writeln(content)
+    iframe.contentWindow?.document.close()
   }
 
   /**
@@ -364,7 +364,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
           ${when(this.inlinePreview,
               () => html`<div part="start-panel preview-div">${unsafeHTML(this.unescapePreviewCode())}</div>`,
               () => html`
-                <iframe part="start-panel iframe" frameborder="0" srcdoc=${this.iframeSrcDoc}></iframe>
+                <iframe part="start-panel iframe" frameborder="0"></iframe>
               `
            )}
           <button

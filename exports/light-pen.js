@@ -18,7 +18,7 @@ import { baseStyles, buttonStyles } from "./base-styles.js";
 import { clamp } from '../internal/clamp.js'
 import { dedent } from "../internal/dedent.js";
 import { drag } from "../internal/drag.js";
-import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
+// import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 
 // Then register the languages you need
@@ -60,7 +60,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
     openLanguages: { reflect: true, attribute: "open-languages" },
     resizePosition: { attribute: "resize-position", reflect: true, type: Number },
     console: { reflect: true },
-    sandboxSettings: { reflect: true, attribute: "sandbox-settings"},
+    // sandboxSettings: { reflect: true, attribute: "sandbox-settings"},
     languages: { attribute: false, type: Array },
     cssCode: { attribute: false },
     htmlCode: { attribute: false },
@@ -177,12 +177,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
      * @internal
      */
     this.resizing = false
-
-    /**
-     * @property
-     * srcdoc to pass to the <iframe>
-     */
-    this.iframeSrcDoc = ""
   }
 
   /**
@@ -290,7 +284,8 @@ export default class LightPen extends DefineableMixin(LitElement) {
   }
 
   updateIframeContent () {
-    if (this.iframeElem == null) return
+    const iframeElem= this.iframeElem
+    if (iframeElem == null) return
 
     // this.setupIframeLogging();
 
@@ -308,7 +303,10 @@ export default class LightPen extends DefineableMixin(LitElement) {
       </html>
     `
 
-    this.iframeSrcDoc = page
+    // this.iframeSrcDoc = page
+    iframeElem.contentWindow?.document.open()
+    iframeElem.contentWindow?.document.writeln(page)
+    iframeElem.contentWindow?.document.close()
   }
 
   inputHandler () {
@@ -581,10 +579,8 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
 					<div part="sandbox-iframe-wrapper">
 						<iframe
-              sandbox=${this.sandboxSettings || defaultSandboxSettings}
               part="sandbox-iframe"
               frameborder="0"
-              srcdoc=${this.iframeSrcDoc}
              ></iframe>
 					</div>
 				</div>
