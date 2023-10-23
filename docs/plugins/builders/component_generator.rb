@@ -20,6 +20,7 @@ class Builders::ComponentGenerator < SiteBuilder
         next if metadata.nil?
 
         resource.data.merge!({
+          "summary" => metadata.summary,
           "description" => metadata.description
         })
 

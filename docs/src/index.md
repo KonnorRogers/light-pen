@@ -3,7 +3,7 @@ layout: home
 title: Rhino Editor
 call_to_action_items:
   - text: Getting Started
-    href: /tutorials/getting-started
+    href: guides/getting-started
     type: primary
   # - text: Why Rhino Editor?
   #   href: /references/why-rhino-editor

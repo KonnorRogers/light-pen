@@ -33,6 +33,7 @@ HighlightJS.registerLanguage('css', CSS);
 
 
 /**
+ * A lightweight codepen-like editor with none of the bells and whistles, and not nearly as many kbs of JS.
  * @customElement
  * @tagname light-pen
  * @slot html - HTML to insert

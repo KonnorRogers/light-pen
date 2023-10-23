@@ -11,6 +11,10 @@ layout: default
     </a>
   </h1>
 
+  <% if resource.data.description %>
+    <%= markdownify(resource.data.description) %>
+  <% end %>
+
   <%= yield %>
 
   <%= render "pagination" %>
