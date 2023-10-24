@@ -6,16 +6,16 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="A collection of components that don't generally fit a design system, but that I wanted to build.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.4JQVTUWK.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.EV73TQWD.js">
 <link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.Y2F5KNM5.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.ZCCOZC7U.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.YHGQLTJ5.css">
 <!-- Deferred CSS -->
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.4JQVTUWK.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.EV73TQWD.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.Y2F5KNM5.js" type="module"></script>
 
 <!-- Favicons -->
@@ -331,7 +331,7 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.N47JBHRU.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.BXHUKTH3.js"
       LightPreview.define()
     </script>
   </template>
@@ -361,7 +361,7 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.N47JBHRU.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.BXHUKTH3.js"
       LightPreview.define()
     </script>
   </template>
@@ -451,7 +451,7 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.N47JBHRU.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.BXHUKTH3.js"
       LightPreview.define()
     </script>
   </template>
@@ -459,13 +459,106 @@
   <button slot="actions">HTML</button>
   <button slot="actions">Codepen</button>
 </light-preview>
+<h2 id="imports">
+          <a href="#imports">Imports</a>
+        </h2>
+
+<sl-tab-group>
+<sl-tab slot="nav" panel="Script">Script</sl-tab>
+<sl-tab-panel name="Script">
+  <div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="f67ea1c7-229e-40f2-8afe-ed7a8b9532f9" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="f67ea1c7-229e-40f2-8afe-ed7a8b9532f9" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"&gt;&lt;/script&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span> <span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div></div></div>
+</sl-tab-panel>
+
+<sl-tab slot="nav" panel="CDN">CDN</sl-tab>
+<sl-tab-panel name="CDN">
+  <div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="a116c864-6ac2-46f8-b316-9844e7aede95" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="a116c864-6ac2-46f8-b316-9844e7aede95" hidden="">&lt;script type="module"&gt;
+  // Auto registers as &lt;light-preview&gt;
+  import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"
+
+  // Manual Register
+  import LightPreview from "https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview.js/exports/light-preview.js"
+  LightPreview.define()
+  // =&gt; Registers as &lt;light-preview&gt;
+&lt;/script&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span><span class="nt">&gt;</span>
+  <span class="c1">// Auto registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">preview</span><span class="o">&gt;</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js</span><span class="dl">"</span>
+
+  <span class="c1">// Manual Register</span>
+  <span class="k">import</span> <span class="nx">LightPreview</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview.js/exports/light-preview.js</span><span class="dl">"</span>
+  <span class="nx">LightPreview</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
+  <span class="c1">// =&gt; Registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">preview</span><span class="o">&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div></div>
+</sl-tab-panel>
+
+<sl-tab slot="nav" panel="Bundler">Bundler</sl-tab>
+<sl-tab-panel name="Bundler">
+  <div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            JavaScript
+          </div>
+
+          <clipboard-copy for="28fbe8db-d484-4337-8ab9-a569273a5c94" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="28fbe8db-d484-4337-8ab9-a569273a5c94" hidden="">// Auto registers as &lt;light-preview&gt;
+import "light-pen/exports/light-preview.js/exports/light-preview-register.js"
+
+// Manual Register
+import LightPreview "light-pen/exports/light-preview.js/exports/light-preview.js"
+LightPreview.define()
+// =&gt; Registers as &lt;light-preview&gt;
+</textarea>
+        </div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Auto registers as &lt;light-preview&gt;</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-preview.js/exports/light-preview-register.js</span><span class="dl">"</span>
+
+<span class="c1">// Manual Register</span>
+<span class="k">import</span> <span class="nx">LightPreview</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-preview.js/exports/light-preview.js</span><span class="dl">"</span>
+<span class="nx">LightPreview</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
+<span class="c1">// =&gt; Registers as &lt;light-preview&gt;</span>
+</code></pre></div></div></div>
+</sl-tab-panel>
+
+</sl-tab-group>
 
 <h2 id="attributes">
           <a href="#attributes">Attributes</a>
         </h2>
 
 <div class="table-container">
-  <table>
+  <table class="table--component">
     <thead>
       <tr>
         <th>Name</th>
@@ -490,10 +583,10 @@
     The sandbox settings to provide to the &lt;iframe&gt;
   </td>
   <td>
-    <sl-icon name="check-lg"></sl-icon>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>defaultSandboxSettings</code>
@@ -510,7 +603,7 @@
     The text to provide in the &lt;details&gt; toggle button
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>string</code>
@@ -534,7 +627,7 @@
     The language to highlight for.
   </td>
   <td>
-    <sl-icon name="check-lg"></sl-icon>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -558,7 +651,7 @@
     Set to true to not use an &lt;iframe&gt; for previewing
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>boolean</code>
@@ -578,7 +671,7 @@
     When the resizer is being dragged, this will be true.
   </td>
   <td>
-    <sl-icon name="check-lg"></sl-icon>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
   </td>
   <td>
     <code>boolean</code>
@@ -602,7 +695,7 @@
     If disabled, its on you to provide `&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;`
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>boolean</code>
@@ -622,7 +715,7 @@
     Whether or not the source code is being shown
   </td>
   <td>
-    <sl-icon name="check-lg"></sl-icon>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
   </td>
   <td>
     <code>boolean</code>
@@ -646,7 +739,7 @@
     The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
   </td>
   <td>
-    <sl-icon name="check-lg"></sl-icon>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
   </td>
   <td>
     <code>number</code>
@@ -665,7 +758,7 @@
         </h2>
 
 <div class="table-container">
-  <table>
+  <table class="table--component">
     <thead>
       <tr>
         <th>Name</th>
@@ -679,7 +772,7 @@
     <code>highlight()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>code</code>
@@ -694,7 +787,7 @@
     Reinstalls the mutation on slotted preview-code
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
 </tr>
 
@@ -706,7 +799,7 @@
     Reinstalls the mutation observer on slotted code
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
 </tr>
 
@@ -715,7 +808,7 @@
     <code>handleMutation()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>variable: "preview-code" | "code"</code>
@@ -727,7 +820,7 @@
     <code>findSlot()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>name: string</code>
@@ -739,7 +832,7 @@
     <code>handleTemplate()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>e: Event | { target?: undefined | null | HTMLSlotElement }</code>
@@ -751,10 +844,10 @@
     <code>unescapePreviewCode()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
 </tr>
 
@@ -763,10 +856,10 @@
     <code>updateIframeContent()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
 </tr>
 
@@ -775,7 +868,7 @@
     <code>escapeCharacters()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>text: string</code>
@@ -787,7 +880,7 @@
     <code>unescapeCharacters()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>text: string</code>
@@ -802,7 +895,7 @@
     Sets an initial width so we dont need to keep computing getBoundingClientRect
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
 </tr>
 
@@ -811,7 +904,7 @@
     <code>handleResize()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>entries: ResizeObserverEntry[]</code>
@@ -835,7 +928,7 @@
     <code>updateResizePosition()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>resizePosition</code>
@@ -847,7 +940,7 @@
     <code>handleResizerKeydown()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>event: KeyboardEvent</code>
@@ -859,7 +952,7 @@
     <code>pixelsToPercentage()</code>
   </td>
   <td>
-    -
+    <div style="text-align: center;">-</div>
   </td>
   <td>
     <code>pixels: number</code>
@@ -907,6 +1000,8 @@
         <a href="#loading-inline" class="side-nav__link">Loading inline</a>
       </li><li class="side-nav__item">
         <a href="#additional-buttons" class="side-nav__link">Additional buttons</a>
+      </li><li class="side-nav__item">
+        <a href="#imports" class="side-nav__link">Imports</a>
       </li><li class="side-nav__item">
         <a href="#attributes" class="side-nav__link">Attributes</a>
       </li><li class="side-nav__item">
