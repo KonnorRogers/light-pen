@@ -89,6 +89,27 @@ export default function lazyLoader() {
           );
         },
       },
+      "sl-tab": {
+        register() {
+          import(
+            "@shoelace-style/shoelace/dist/components/tab/tab.js"
+          );
+        },
+      },
+      "sl-tab-panel": {
+        register() {
+          import(
+            "@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js"
+          );
+        },
+      },
+      "sl-tab-group": {
+        register() {
+          import(
+            "@shoelace-style/shoelace/dist/components/tab-group/tab-group.js"
+          );
+        },
+      },
       "sl-visually-hidden": {
         register() {
           import(

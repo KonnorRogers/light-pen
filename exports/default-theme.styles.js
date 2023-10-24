@@ -19,27 +19,48 @@ hue-6-2: #c18401
 
 */
 
-.hljs {
-  color: #383a42;
-  background: #fafafa;
+:host {
+  --hljs-color: #383a42;
+  --hljs-background-color: #fafafa;
 }
 
-.hljs-comment,
+.hljs {
+  color: var(--hljs-color);
+  background: var(--hljs-background-color);
+}
+
+.hljs-comment {
+  color: #a0a1a7;
+}
+
 .hljs-quote {
   color: #a0a1a7;
-  font-style: italic;
 }
 
-.hljs-doctag,
-.hljs-keyword,
+.hljs-doctag {
+  color: #a626a4;
+}
+
+.hljs-keyword {
+  color: #a626a4;
+}
+
 .hljs-formula {
   color: #a626a4;
 }
 
-.hljs-section,
-.hljs-name,
-.hljs-selector-tag,
-.hljs-deletion,
+.hljs-section {
+  color: #e45649;
+}
+.hljs-name {
+  color: #e45649;
+}
+.hljs-selector-tag {
+  color: #e45649;
+}
+.hljs-deletion {
+  color: #e45649;
+}
 .hljs-subst {
   color: #e45649;
 }
@@ -48,36 +69,89 @@ hue-6-2: #c18401
   color: #0184bb;
 }
 
-.hljs-string,
-.hljs-regexp,
-.hljs-addition,
-.hljs-attribute,
+.hljs-string {
+  color: #50a14f;
+}
+
+.hljs-regexp {
+  color: #50a14f;
+}
+
+.hljs-addition {
+  color: #50a14f;
+}
+
+.hljs-attribute {
+  color: #50a14f;
+}
+
 .hljs-meta .hljs-string {
   color: #50a14f;
 }
 
-.hljs-attr,
-.hljs-variable,
-.hljs-template-variable,
-.hljs-type,
-.hljs-selector-class,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
+.hljs-attr {
+  color: #986801;
+}
+
+.hljs-variable {
+  color: #986801;
+}
+
+.hljs-template-variable {
+  color: #986801;
+}
+
+.hljs-type {
+  color: #986801;
+}
+
+.hljs-selector-class {
+  color: #986801;
+}
+
+.hljs-selector-attr {
+  color: #986801;
+}
+.hljs-selector-pseudo {
+  color: #986801;
+}
+
 .hljs-number {
   color: #986801;
 }
 
-.hljs-symbol,
-.hljs-bullet,
-.hljs-link,
-.hljs-meta,
-.hljs-selector-id,
+.hljs-symbol {
+  color: #4078f2;
+}
+
+.hljs-bullet {
+  color: #4078f2;
+}
+
+.hljs-link {
+  color: #4078f2;
+}
+
+.hljs-meta {
+  color: #4078f2;
+}
+
+.hljs-selector-id {
+  color: #4078f2;
+}
+
 .hljs-title {
   color: #4078f2;
 }
 
-.hljs-built_in,
-.hljs-title.class_,
+.hljs-built_in {
+  color: #c18401;
+}
+
+.hljs-title.class_ {
+  color: #c18401;
+}
+
 .hljs-class .hljs-title {
   color: #c18401;
 }

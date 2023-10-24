@@ -33,7 +33,8 @@ HighlightJS.registerLanguage('css', CSS);
 
 
 /**
- * A lightweight codepen-like editor with none of the bells and whistles, and not nearly as many kbs of JS.
+ * A lightweight codepen-like editor. `<light-pen>` is `~15kb` in size. Compared to `~90kb` from CodeMirror and `~160kb` from CodeSandbox. LightPen purposely is small and lightweight and is not intended to replace these tools. But rather
+ fill a gap for users who don't need as much power.
  * @customElement
  * @tagname light-pen
  * @slot html - HTML to insert

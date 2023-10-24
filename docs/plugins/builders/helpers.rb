@@ -115,6 +115,15 @@ class Builders::Helpers < SiteBuilder
     JSON.parse(package_json)["version"].to_s
   end
 
+  def package_name
+    package_json_file = File.join(File.expand_path("../../../", __dir__), "package.json")
+
+    return unless File.exist?(package_json_file)
+
+    package_json = File.read(package_json_file)
+    JSON.parse(package_json)["name"].to_s
+  end
+
   def next_page_in_category(resource, category = resource.data[:category])
     current_page_index = current_page_in_category_index(resource)
 

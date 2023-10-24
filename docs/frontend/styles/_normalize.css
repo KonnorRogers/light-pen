@@ -1,6 +1,8 @@
 html {
   box-sizing: border-box;
   height: 100%;
+  font-size: 16px;
+  /* letter-spacing: 0.025em; */
 }
 
 *, *:before, *:after {
@@ -94,7 +96,7 @@ p {
 }
 
 p, li {
-  line-height: 1.5;
+  line-height: 1.8;
 }
 
 li {

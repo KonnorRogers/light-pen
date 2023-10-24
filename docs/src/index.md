@@ -1,6 +1,6 @@
 ---
 layout: home
-title: Rhino Editor
+title: Light Pen
 call_to_action_items:
   - text: Getting Started
     href: guides/getting-started

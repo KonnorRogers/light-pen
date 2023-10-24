@@ -2,6 +2,19 @@ require "cgi"
 require "custom_elements_manifest_parser"
 
 class Builders::ComponentGenerator < SiteBuilder
+  # Convert a Markdown string into HTML output.
+  #
+  # @param input [String] the Markdown to convert, if no block is passed
+  # @return [String]
+  # @see {https://github.com/bridgetownrb/bridgetown/blob/1bf58ebdd514da7ac83623d1971062d0dafce00c/bridgetown-core/lib/bridgetown-core/helpers.rb#L43-L53}
+  def markdownify(input = nil, &block)
+    content = Bridgetown::Utils.reindent_for_markdown(
+      block.nil? ? input.to_s : block.call.to_s
+    )
+    converter = site.find_converter_instance(Bridgetown::Converters::Markdown)
+    converter.convert(content).strip.to_s.html_safe
+  end
+
   def build
     generator do
       custom_elements_manifest_path = File.read(File.expand_path("../../../custom-elements.json", __dir__))
@@ -24,6 +37,10 @@ class Builders::ComponentGenerator < SiteBuilder
           "description" => metadata.description
         })
 
+        path = metadata.parent_module.path
+        import_name = metadata.parent_module.exports.find { |hash| hash["name"] == "default" }["declaration"]["name"]
+        tag_name = metadata.tagName
+
         slots = metadata.slots
         attributes = metadata.members.select { |member| member.attributes[:attribute] }
         events = metadata.events
@@ -34,6 +51,7 @@ class Builders::ComponentGenerator < SiteBuilder
         parts = metadata.cssParts
 
         resource.content += [
+          import_tabs(path, import_name, tag_name).html_safe,
           slots_table(slots).html_safe,
           attributes_table(attributes).html_safe,
           events_table(events).html_safe,
@@ -48,6 +66,77 @@ class Builders::ComponentGenerator < SiteBuilder
     CGI.escape_html(html || "")
   end
 
+  def empty_property
+    "<div style='text-align: center;'>-</div>"
+  end
+
+  def checked_property
+    "<sl-icon name='check-lg' style='text-align: center; display: flex; margin: 0 auto;'></sl-icon>"
+  end
+
+  def import_tabs(path, import_name, tag_name)
+    str = <<~MD
+      ## Imports
+
+      <sl-tab-group>
+    MD
+
+    package_name = Builders::Helpers.new.package_name
+
+    path_without_ext = path.split(/\.js$/)[0]
+
+    script = <<~MD
+      ```html
+      <!-- Auto registers as <#{tag_name}> -->
+      <script type="module" src="https://cdn.jsdelivr.net/npm/#{package_name}/#{path_without_ext}-register.js"></script>
+      ```
+    MD
+
+    cdn = <<~MD
+      ```html
+      <script type="module">
+        // Auto registers as <#{tag_name}>
+        import "https://cdn.jsdelivr.net/npm/#{package_name}/#{path_without_ext}-register.js"
+
+        // Manual Register
+        import #{import_name} from "https://cdn.jsdelivr.net/npm/#{package_name}/#{path}/#{path}"
+        #{import_name}.define()
+        // => Registers as <#{tag_name}>
+      </script>
+      ```
+    MD
+
+    bundler = <<~MD
+      ```js
+      // Auto registers as <#{tag_name}>
+      import "#{package_name}/#{path}/#{path_without_ext}-register.js"
+
+      // Manual Register
+      import #{import_name} "#{package_name}/#{path}/#{path}"
+      #{import_name}.define()
+      // => Registers as <#{tag_name}>
+      ```
+    MD
+
+    path_types = {
+      Script: script,
+      CDN: cdn,
+      Bundler: bundler,
+    }
+
+    str += path_types.map do |key, value|
+      <<~HTML
+        <sl-tab slot="nav" panel="#{key}">#{key}</sl-tab>
+        <sl-tab-panel name="#{key}">
+          #{markdownify(value)}
+        </sl-tab-panel>
+      HTML
+    end.join("\n")
+
+    str += "\n</sl-tab-group>"
+    str
+  end
+
   def slots_table(slots)
     return "" if slots.nil? || slots.empty?
 
@@ -58,7 +147,7 @@ class Builders::ComponentGenerator < SiteBuilder
             <code>#{slot.name}</code>
           </td>
           <td>
-            #{slot.description.to_s.empty? ? "-" : escape(slot.description)}
+            #{slot.description.to_s.empty? ? empty_property : escape(slot.description)}
           </td>
         </tr>
       HTML
@@ -68,7 +157,7 @@ class Builders::ComponentGenerator < SiteBuilder
       ## Slots
 
       <div class="table-container">
-        <table>
+        <table class="table--component">
           <thead>
             <tr>
               <th>Name</th>
@@ -113,16 +202,16 @@ class Builders::ComponentGenerator < SiteBuilder
             <% end %>
           </td>
           <td>
-            #{member.description.to_s.empty? ? "-" : escape(member.description)}
+            #{member.description.to_s.empty? ? empty_property : escape(member.description)}
           </td>
           <td>
-            #{member.reflects ? "<sl-icon name='check-lg'></sl-icon>" : "-"}
+            #{member.reflects ? checked_property : empty_property}
           </td>
           <td>
-            #{type_text.blank? ? "-" : "<code>#{escape(type_text)}</code>"}
+            #{type_text.blank? ? empty_property : "<code>#{escape(type_text)}</code>"}
           </td>
           <td>
-            #{member.default.nil? ? "-" : "<code>#{escape(member.default)}</code>"}
+            #{member.default.nil? ? empty_property : "<code>#{escape(member.default)}</code>"}
           </td>
         </tr>
       HTML
@@ -132,7 +221,7 @@ class Builders::ComponentGenerator < SiteBuilder
       ## Attributes
 
       <div class="table-container">
-        <table>
+        <table class="table--component">
           <thead>
             <tr>
               <th>Name</th>
@@ -153,7 +242,6 @@ class Builders::ComponentGenerator < SiteBuilder
   def events_table(events)
     return "" if events.nil? || events.empty?
 
-
     tbody = events.map do |event|
       <<~HTML
         <tr>
@@ -170,7 +258,7 @@ class Builders::ComponentGenerator < SiteBuilder
       ## Events
 
       <div class="table-container">
-        <table>
+        <table class="table--component">
           <thead>
             <tr>
               <th>Name</th>
@@ -198,7 +286,7 @@ class Builders::ComponentGenerator < SiteBuilder
     return "" if functions.nil? || functions.empty?
 
     tbody = functions.map do |function|
-      parameters = "-"
+      parameters = empty_property
       if not(function.parameters.to_s.empty?)
         parameters = "<code>" + escape(function.parameters.map { |parameter| parameter_string(parameter) }.join(", ")) + "</code>"
       end
@@ -209,7 +297,7 @@ class Builders::ComponentGenerator < SiteBuilder
             <code>#{function.name}()</code>
           </td>
           <td>
-            #{function.description.to_s.empty? ? "-" : escape(function.description.to_s)}
+            #{function.description.to_s.empty? ? empty_property : escape(function.description.to_s)}
           </td>
           <td>
             #{parameters}
@@ -222,7 +310,7 @@ class Builders::ComponentGenerator < SiteBuilder
       ## Functions
 
       <div class="table-container">
-        <table>
+        <table class="table--component">
           <thead>
             <tr>
               <th>Name</th>
@@ -248,7 +336,7 @@ class Builders::ComponentGenerator < SiteBuilder
             <code>#{part.name}</code>
           </td>
           <td>
-            #{part.description.to_s.empty? ? "-" : escape(part.description)}
+            #{part.description.to_s.empty? ? empty_property : escape(part.description)}
           </td>
         </tr>
       HTML
@@ -258,7 +346,7 @@ class Builders::ComponentGenerator < SiteBuilder
       ## Parts
 
       <div class="table-container">
-        <table>
+        <table class="table--component">
           <thead>
             <tr>
               <th>Name</th>
@@ -272,5 +360,4 @@ class Builders::ComponentGenerator < SiteBuilder
       </div>
     HTML
   end
-
 end

@@ -28,6 +28,7 @@
     "build:api": "typedoc --out ./docs/output/references/api/ ./exports/**/*.js",
     "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
     "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
+    "watch:cem": "custom-elements-manifest analyze --litelement --watch",
     "analyze": "custom-elements-manifest analyze --litelement",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
     "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",

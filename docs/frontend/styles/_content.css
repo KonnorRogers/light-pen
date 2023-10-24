@@ -2,21 +2,22 @@
 
 /** Pretty syntax blocks */
 pre.highlight {
-  padding: 0.85rem 1rem;
+  padding: 0.6em 0.8em;
   margin: 0;
   overflow-x: auto;
 }
 
-code
+pre code {
+  padding: 0;
+}
+
 .highlighter-rouge,
 .highlight {
   border-radius: 8px;
   font-size: 1rem;
-  line-height: 1.4;
   font-family: var(--sl-font-mono);
 }
 
-code,
 .highlight,
 .highlighter-rouge {
   position: relative;
@@ -28,9 +29,8 @@ code.highlight,
 code.highlighter-rouge {
   /** Layout */
   display: inline-block;
-  font-size: 1rem;
-  padding: 0.1em 0.4em;
-  margin: 4px 0;
+  font-size: 1em;
+  padding: 0 0.4em;
   border-radius: 6px;
   white-space: break-spaces;
   vertical-align: middle;
@@ -39,4 +39,5 @@ code.highlighter-rouge {
   background-color: var(--code-background-color);
   color: var(--code-color);
 }
+
 
