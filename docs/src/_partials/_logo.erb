@@ -1,4 +1,4 @@
-<a class="nav-link logo__link" href="/">
+<a class="nav-link logo__link" href="<%= site.config.base_path || "/" %>">
   <%= render_svg "images/logo", class: "logo__svg", height: 50, width: 50 %>
   <span class="logo__text">
     <%= site.metadata.logo %>
