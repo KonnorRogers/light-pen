@@ -12,6 +12,7 @@ import { clamp } from "../internal/clamp.js";
 import { stringMap } from "../internal/string-map.js";
 import { debounce } from "../internal/debounce.js";
 import { resizeIcon } from "../internal/resize-icon.js";
+import { BaseElement } from "../internal/base-element.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -44,7 +45,7 @@ const sourceCodeFallback = "Show source code"
  * @slot preview-code - If you want to run code that is slightly different from the source code you want to display, slot it into "preview-code"
  * @slot code - Used to display both source code and to power your preview in the iframe. If you slot in "preview-code", then it will only be used to show / highlight your source code.
  */
-export default class LightPreviewBase extends DefineableMixin(LitElement) {
+export default class LightPreviewBase extends BaseElement {
   static baseName = "light-preview-base"
 
   static styles = [

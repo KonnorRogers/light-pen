@@ -1,6 +1,6 @@
 // @ts-check
 
-import { LitElement, html } from "lit"
+import { html } from "lit"
 import { styles } from "./light-pen.styles.js"
 import { when } from "lit/directives/when.js";
 
@@ -20,6 +20,8 @@ import { dedent } from "../internal/dedent.js";
 import { drag } from "../internal/drag.js";
 // import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
 import { resizeIcon } from "../internal/resize-icon.js";
+import { BaseElement } from "../internal/base-element.js";
+import LightEditor from "./light-editor.js";
 
 // Then register the languages you need
 HighlightJS.registerLanguage('javascript', JavaScript);
@@ -46,11 +48,15 @@ HighlightJS.registerLanguage('css', CSS);
  * @part sandbox - The wrapper around the editor and the iframe
  * @part sandbox-header - The wrapper around the header area
  */
-export default class LightPen extends DefineableMixin(LitElement) {
+export default class LightPen extends BaseElement {
   // Static
   static baseName = "light-pen"
 
   static styles = [baseStyles, buttonStyles, theme, styles]
+
+  static dependencies = {
+    'light-editor': LightEditor
+  }
 
   static languageMap = {
     html: "xml",
@@ -71,7 +77,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
     jsResizeObserver: { attribute: false },
     cssResizeObserver: { attribute: false },
     resizing: { attribute: false },
-    iframeSrcDoc: { attribute: false }
   }
   // Overrides
 
@@ -305,7 +310,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
       </html>
     `
 
-    // this.iframeSrcDoc = page
     iframeElem.contentWindow?.document.open()
     iframeElem.contentWindow?.document.writeln(page)
     iframeElem.contentWindow?.document.close()
@@ -430,34 +434,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
     if (this.jsTextArea) {
       this.jsCode = this.jsReset
       this.jsTextArea.value = this.jsReset
-    }
-  }
-
-  /**
-   * @param {KeyboardEvent} evt
-   */
-  keydownHandler(evt) {
-    /**
-     * @type {HTMLTextAreaElement}
-     */
-    // @ts-expect-error
-    const target = evt.target
-
-    const key = evt.key
-
-    if (["Tab", "Escape"].includes(key)) {
-      evt.preventDefault()
-
-      if ('Tab' === evt.key) {
-        return target.setRangeText('\t', target.selectionStart, target.selectionEnd, 'end')
-      }
-
-      if ('Escape' === evt.key) {
-        let e = target.closest('details');
-        if (!e) return;
-
-        e.querySelector("summary")?.focus()
-      }
     }
   }
 
@@ -648,23 +624,15 @@ export default class LightPen extends DefineableMixin(LitElement) {
   }
 
   /**
-   * @param {SupportedLanguages} language
+   * @param {string} value
    */
-  renderDetails (language) {
-    let fullLanguage = language.toUpperCase()
+  renderEditor (value) {
+    return html`
+      <light-editor value=${value}></light-editor>
 
-    let code = this[`${language}Code`]
-
-    // @ts-expect-error
-    code = code ? unsafeHTML(this.highlightCode({ code, language })) : ""
-    const open = this.openLanguages.split(",").includes(language)
-
-		return html`
-      <details ?open=${open} part="details details-${language}">
-				<summary part="summary summary-${language}">
-          ${fullLanguage}
-        </summary>
-				<label for="sandbox-${language}" class="visually-hidden">${fullLanguage} code</label>
+				<label for="editor" class="visually-hidden">
+          <slot name="label">${this.label}</slot>
+				</label>
 				<div class="sandbox-editor" part="sandbox-editor">
           <!-- This is where the fancy syntax highlighting comes in -->
 					<pre
@@ -696,31 +664,31 @@ export default class LightPen extends DefineableMixin(LitElement) {
             value=${this[`${language}Code`]}
           ></textarea>
 				</div>
-			</details>
-		`
+
+      `
   }
 
   /**
-   * @internal
-   * @param {Event} e
+   * @param {SupportedLanguages} language
    */
-  syncScroll (e) {
-    /**
-     * @type {null | HTMLTextAreaElement}
-     */
+  renderDetails (language) {
+    let fullLanguage = language.toUpperCase()
+
+    let code = this[`${language}Code`]
+
     // @ts-expect-error
-    const textarea = e.target
+    code = code ? unsafeHTML(this.highlightCode({ code, language })) : ""
+    const open = this.openLanguages.split(",").includes(language)
 
-    if (textarea == null) return
+		return html`
+      <details ?open=${open} part="details details-${language}">
+				<summary part="summary summary-${language}">
+          ${fullLanguage}
+        </summary>
 
-    const lang = textarea.dataset.codeLang
-
-    const pre = this.shadowRoot?.querySelector(`#pre-${lang}`)
-
-    if (pre == null) return
-
-    pre.scrollTop = textarea.scrollTop;
-    pre.scrollLeft = textarea.scrollLeft;
+        ${this.renderEditor()}
+			</details>
+		`
   }
 }
 
