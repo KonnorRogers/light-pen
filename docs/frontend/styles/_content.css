@@ -24,18 +24,15 @@ pre code {
 }
 
 /* Inline code blocks */
-code,
+:not(pre) > code,
 code.highlight,
 code.highlighter-rouge {
-  /** Layout */
   display: inline-block;
   font-size: 1em;
   padding: 0 0.4em;
   border-radius: 6px;
-  white-space: break-spaces;
   vertical-align: middle;
-
-  /* Decoration */
+  white-space: break-spaces;
   background-color: var(--code-background-color);
   color: var(--code-color);
 }
