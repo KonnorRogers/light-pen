@@ -16,6 +16,12 @@ HighlightJS.registerLanguage('javascript', JavaScript);
 HighlightJS.registerLanguage('xml', HTML);
 HighlightJS.registerLanguage('css', CSS);
 
+/**
+ * A bare bones plain text editor with syntax highlighting.
+ * @customElement
+ * @tagname light-editor
+ *
+ */
 export default class LightEditor extends BaseElement {
   static baseName = "light-editor"
 
