@@ -365,7 +365,7 @@ export default class LightPreviewBase extends BaseElement {
           ${when(this.inlinePreview,
               () => html`<div part="start-panel preview-div">${unsafeHTML(this.unescapePreviewCode())}</div>`,
               () => html`
-                <iframe part="start-panel iframe" frameborder="0"></iframe>
+                <iframe part="start-panel iframe" height="auto" frameborder="0"></iframe>
               `
            )}
           <button

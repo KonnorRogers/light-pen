@@ -3,6 +3,11 @@ import LazyLoader from "web-component-lazy-loader";
 export default function lazyLoader() {
   return new LazyLoader({
     components: {
+      "light-editor": {
+        register () {
+          import("light-pen/exports/light-editor-register.js")
+        }
+      },
       "light-pen": {
         register () {
           import("light-pen/exports/light-pen-register.js")

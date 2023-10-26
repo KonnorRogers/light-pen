@@ -12,7 +12,6 @@ import HTML from 'highlight.js/lib/languages/xml';
 import CSS from 'highlight.js/lib/languages/css';
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
-import { DefineableMixin } from "web-component-define";
 import { baseStyles, buttonStyles } from "./base-styles.js";
 
 import { clamp } from '../internal/clamp.js'
@@ -52,16 +51,10 @@ export default class LightPen extends BaseElement {
   // Static
   static baseName = "light-pen"
 
-  static styles = [baseStyles, buttonStyles, theme, styles]
+  static styles = [baseStyles, buttonStyles, styles]
 
   static dependencies = {
     'light-editor': LightEditor
-  }
-
-  static languageMap = {
-    html: "xml",
-    css: "css",
-    js: "javascript"
   }
 
   static properties = {
@@ -78,6 +71,13 @@ export default class LightPen extends BaseElement {
     cssResizeObserver: { attribute: false },
     resizing: { attribute: false },
   }
+
+  static {
+    Object.values(this.dependencies).forEach((ctor) => {
+      ctor.define()
+    })
+  }
+
   // Overrides
 
   /**
@@ -85,6 +85,12 @@ export default class LightPen extends BaseElement {
    */
   constructor() {
     super()
+
+    this.languageMap = {
+      html: "xml",
+      css: "css",
+      js: "javascript"
+    }
 
     /**
      * @property
@@ -254,40 +260,7 @@ export default class LightPen extends BaseElement {
     return this.shadowRoot?.querySelector("iframe")
   }
 
-  /**
-   * Override this to use a highlighter of your choice.
-   * @param {{code: string, language: SupportedLanguages}} options
-   */
-  highlightCode (options) {
-    let { code, language } = options
-
-    const highlightJsLanguage = /** @type {typeof LightPen} */ (this.constructor).languageMap[language]
-
-    code = this.unescapeCharacters(code)
-    code = this.injectNewLine(code)
-
-    return HighlightJS.highlight(code, {language: highlightJsLanguage}).value
-  }
-
-  /**
-   * @param {string} text
-   */
-  unescapeCharacters (text) {
-    // Update code
-    return text.replaceAll("&lt;/script>", "</script>")
-  }
-
-  /**
-   * Highlighters strip newlines. But you can see new lines in <textarea>, this fixes that.
-   * @param {string} text
-   */
-  injectNewLine (text) {
-    // Handle final newlines (see article)
-    if(text[text.length-1] == "\n") { // If the last character is a newline character
-      text += "\n"; // Add a placeholder space character to the final line
-    }
-
-    return text
+  handleEditorInput () {
   }
 
   updateIframeContent () {
@@ -496,6 +469,14 @@ export default class LightPen extends BaseElement {
     }
   }
 
+  /**
+   * @param {string} text
+   */
+  unescapeCharacters (text) {
+    // Update code
+    return text.replaceAll("&lt;/script>", "</script>")
+  }
+
   // Rendering
   renderConsole () {
     return html`<div part="sandbox-console-log"></div>`
@@ -624,48 +605,25 @@ export default class LightPen extends BaseElement {
   }
 
   /**
-   * @param {string} value
+   * @param {SupportedLanguages} language
    */
-  renderEditor (value) {
+  renderEditor (language) {
+    let highlightLang = this.languageMap[language]
+
     return html`
-      <light-editor value=${value}></light-editor>
-
-				<label for="editor" class="visually-hidden">
-          <slot name="label">${this.label}</slot>
-				</label>
-				<div class="sandbox-editor" part="sandbox-editor">
-          <!-- This is where the fancy syntax highlighting comes in -->
-					<pre
-            id="pre-${language}"
-            data-code-lang=${language}
-            aria-hidden="true"
-            part="pre pre-${language}"
-          ><code
-              part="code code-${language}"
-              class="language-${language}"
-            >${code}</code></pre>
-          <!-- IMPORTANT! There must be no white-space above. -->
-					<textarea
-            ${
-              // @ts-expect-error
-              ref(this[`${language}TextAreaChanged`])
-            }
-            id="textarea-${language}"
-            data-code-lang=${language}
-            part="textarea textarea-${language}"
-            spellcheck="false"
-            autocorrect="off"
-            autocapitalize="off"
-            translate="no"
-            @keydown=${this.keydownHandler}
-            @input=${this.inputHandler}
-            @input=${this.syncScroll}
-            @scroll=${this.syncScroll}
-            value=${this[`${language}Code`]}
-          ></textarea>
-				</div>
-
-      `
+      <light-editor
+        id=${`editor-${language}`}
+        part=${`sandbox-editor sandbox-editor--${language}`}
+        language=${highlightLang}
+        value=${this[`${language}Code`]}
+        @light-input=${/** @param {Event} e */ (e) => {
+          this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
+        }}
+        @light-change=${/** @param {Event} e */ (e) => {
+          this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
+        }}
+      ></light-editor>
+    `
   }
 
   /**
@@ -674,10 +632,6 @@ export default class LightPen extends BaseElement {
   renderDetails (language) {
     let fullLanguage = language.toUpperCase()
 
-    let code = this[`${language}Code`]
-
-    // @ts-expect-error
-    code = code ? unsafeHTML(this.highlightCode({ code, language })) : ""
     const open = this.openLanguages.split(",").includes(language)
 
 		return html`
@@ -686,7 +640,7 @@ export default class LightPen extends BaseElement {
           ${fullLanguage}
         </summary>
 
-        ${this.renderEditor()}
+        ${this.renderEditor(language)}
 			</details>
 		`
   }
