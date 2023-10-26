@@ -58,6 +58,12 @@ main {
 	color: var(--text-color);
 }
 
+.documentation-content {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+
 :is(.default, .home) main {
   max-width: var(--main-width);
 }

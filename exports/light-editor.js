@@ -11,6 +11,7 @@ import HTML from 'highlight.js/lib/languages/xml';
 import CSS from 'highlight.js/lib/languages/css';
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { dedent } from "../internal/dedent.js";
+import { createRef, ref } from "lit/directives/ref.js";
 
 HighlightJS.registerLanguage('javascript', JavaScript);
 HighlightJS.registerLanguage('xml', HTML);
@@ -52,6 +53,11 @@ export default class LightEditor extends BaseElement {
      * @type {string}
      */
     this.value = ''
+
+    /**
+     * @type {null | HTMLTextAreaElement}
+     */
+    this.textarea = null
   }
 
 
@@ -75,6 +81,7 @@ export default class LightEditor extends BaseElement {
         <!-- IMPORTANT! There must be no white-space above. -->
 				<textarea
           id="textarea-${language}"
+          ${ref(this.textareaChanged)}
           data-code-lang=${language}
           part="textarea textarea-${language}"
           spellcheck="false"
@@ -82,8 +89,11 @@ export default class LightEditor extends BaseElement {
           autocapitalize="off"
           translate="no"
           @keydown=${this.keydownHandler}
-          @input=${this.syncScroll}
+          @selectionchange=${/** @param {Event} e */ (e) => {
+            this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
+          }}
           @input=${/** @param {Event} e */ (e) => {
+            this.syncScroll(e)
             this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
             this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
           }}
@@ -96,6 +106,29 @@ export default class LightEditor extends BaseElement {
         >${this.value}</textarea>
 			</div>
 		`
+  }
+
+  /**
+   * @param {Element | undefined} element
+   */
+  textareaChanged (element) {
+    if (!(element instanceof HTMLTextAreaElement)) {
+      return
+    }
+
+    const textarea = element
+    const self = this
+
+    this.textareaObserver = new MutationObserver((mutationRecords) => {
+      // for (const mutation of mutationRecords) {
+      // }
+      this.value = textarea.value
+    })
+
+    this.textareaObserver.observe(textarea, {
+      characterData: true,
+      subtree: true
+    })
   }
 
   /**
@@ -141,7 +174,9 @@ export default class LightEditor extends BaseElement {
 
     if ('Tab' === evt.key) {
       evt.preventDefault()
-      return target.setRangeText('\t', target.selectionStart, target.selectionEnd, 'end')
+      target.setRangeText('\t', target.selectionStart, target.selectionEnd, 'end')
+      this.value = target.value
+      return
     }
   }
 
@@ -152,10 +187,9 @@ export default class LightEditor extends BaseElement {
   highlightCode (options) {
     let { code, language } = options
 
-    // const highlightJsLanguage = /** @type {typeof LightPen} */ (this.constructor).languageMap[language]
-
     code = this.unescapeCharacters(code)
-    code = dedent(code)
+    // Dedent is nice, but we don't want to do it on user type data.
+    // code = dedent(code)
     code = this.injectNewLine(code)
 
     return HighlightJS.highlight(code, {language}).value
@@ -183,4 +217,3 @@ export default class LightEditor extends BaseElement {
   }
 
 }
-
