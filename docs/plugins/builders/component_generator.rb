@@ -246,14 +246,14 @@ class Builders::ComponentGenerator < SiteBuilder
       <<~HTML
         <tr>
           <td>
-            #{event.name}
+            <code>#{event.name}</code>
           </td>
           <td>
-            #{event.description}
+            #{event.description.to_s.empty? ? empty_property : escape(event.description.to_s)}
           </td>
         </tr>
       HTML
-    end
+    end.join("\n")
 
     <<~HTML
       ## Events

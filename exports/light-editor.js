@@ -79,8 +79,10 @@ export default class LightEditor extends BaseElement {
     target.parentElement.style.setProperty("--textarea-height", `${height}px`)
 
 
-    /** @internal */
-    this.dispatchEvent(new LightResizeEvent({height, width}))
+    /**
+     * Fires whenever the editor resizes
+     */
+    this.dispatchEvent(new LightResizeEvent("light-resize", {height, width}))
     // One day we'll allow the textarea to resize the width.
     // target.parentElement.style.setProperty("--textarea-width", `${width}px`)
   }
@@ -129,6 +131,8 @@ export default class LightEditor extends BaseElement {
           .value=${this.value}
         >${this.value}</textarea>
 			</div>
+
+      <slot hidden></slot>
 		`
   }
 
