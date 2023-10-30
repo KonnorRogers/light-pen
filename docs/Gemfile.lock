@@ -56,7 +56,7 @@ GEM
       bridgetown (>= 1.2.0.beta2, < 2.0)
     colorator (1.1.0)
     concurrent-ruby (1.2.2)
-    custom_elements_manifest_parser (0.2.4)
+    custom_elements_manifest_parser (0.2.5)
       dry-struct (~> 1.0)
       dry-types (~> 1.0)
       dry-validation (~> 1.0)
