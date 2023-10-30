@@ -249,6 +249,7 @@ class Builders::ComponentGenerator < SiteBuilder
             #{event.name}
           </td>
           <td>
+            #{event.description}
           </td>
         </tr>
       HTML

@@ -24,7 +24,7 @@ export const styles = css`
 }
 
 [part~="sandbox-editor"] {
-  max-height: var(--textarea-height, 33vh);
+  height: var(--textarea-height, 33%);
 }
 
 [part~="base"] {

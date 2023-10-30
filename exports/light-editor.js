@@ -1,17 +1,16 @@
 import { html } from "lit";
-import { BaseElement } from "../internal/base-element.js";
-import { baseStyles } from "./base-styles.js";
-import { styles } from "./light-editor.styles.js";
-import { theme } from "./default-theme.styles.js";
-import { live } from "lit/directives/live.js";
-
 import HighlightJS from 'highlight.js/lib/core';
 import JavaScript from 'highlight.js/lib/languages/javascript';
 import HTML from 'highlight.js/lib/languages/xml';
 import CSS from 'highlight.js/lib/languages/css';
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { dedent } from "../internal/dedent.js";
-import { createRef, ref } from "lit/directives/ref.js";
+import { ref } from "lit/directives/ref.js";
+
+import { BaseElement } from "../internal/base-element.js";
+import { baseStyles } from "./base-styles.js";
+import { styles } from "./light-editor.styles.js";
+import { theme } from "./default-theme.styles.js";
+import { LightResizeEvent } from "./events/light-resize-event.js"
 
 HighlightJS.registerLanguage('javascript', JavaScript);
 HighlightJS.registerLanguage('xml', HTML);
@@ -21,6 +20,10 @@ HighlightJS.registerLanguage('css', CSS);
  * A bare bones plain text editor with syntax highlighting.
  * @customElement
  * @tagname light-editor
+ *
+ * @event {Event} light-change - Re-emits the textarea's "change" event
+ * @event {Event} light-selectionchange - Re-emits the textarea's "selectionchange" event
+ * @event {Event} light-input - Re-emits the textarea's "input" event
  *
  */
 export default class LightEditor extends BaseElement {
@@ -60,6 +63,27 @@ export default class LightEditor extends BaseElement {
     this.textarea = null
   }
 
+  /**
+   * @param {ResizeObserverEntry[]} entries
+   */
+  handleTextAreaResize (entries) {
+    const { target } = entries[0]
+    const {
+      left, right,
+      top, bottom
+    } = entries[0].contentRect;
+    const width = left + right
+    const height = top + bottom
+
+    // @ts-expect-error
+    target.parentElement.style.setProperty("--textarea-height", `${height}px`)
+
+
+    /** @internal */
+    this.dispatchEvent(new LightResizeEvent({height, width}))
+    // One day we'll allow the textarea to resize the width.
+    // target.parentElement.style.setProperty("--textarea-width", `${width}px`)
+  }
 
   render () {
     const language = this.language
@@ -67,7 +91,7 @@ export default class LightEditor extends BaseElement {
     const highlightedCode = this.value ? unsafeHTML(this.highlightCode({ code: this.value, language })) : ""
 
     return html`
-			<div class="editor" part="editor">
+			<div class="base" part="base">
         <!-- This is where the fancy syntax highlighting comes in -->
 				<pre
           id="pre-${language}"
@@ -81,13 +105,13 @@ export default class LightEditor extends BaseElement {
         <!-- IMPORTANT! There must be no white-space above. -->
 				<textarea
           id="textarea-${language}"
-          ${ref(this.textareaChanged)}
           data-code-lang=${language}
           part="textarea textarea-${language}"
           spellcheck="false"
           autocorrect="off"
           autocapitalize="off"
           translate="no"
+          ${ref(this.textareaChanged)}
           @keydown=${this.keydownHandler}
           @selectionchange=${/** @param {Event} e */ (e) => {
             this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
@@ -102,7 +126,7 @@ export default class LightEditor extends BaseElement {
             this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
           }}
           @scroll=${this.syncScroll}
-          value=${this.value}
+          .value=${this.value}
         >${this.value}</textarea>
 			</div>
 		`
@@ -117,15 +141,19 @@ export default class LightEditor extends BaseElement {
     }
 
     const textarea = element
-    const self = this
 
-    this.textareaObserver = new MutationObserver((mutationRecords) => {
+    this.textareaResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
+
+    this.textareaResizeObserver.observe(textarea)
+
+    this.textareaMutationObserver = new MutationObserver((mutationRecords) => {
+      // We actually don't care about what the mutation is, just update and move on.
       // for (const mutation of mutationRecords) {
       // }
       this.value = textarea.value
     })
 
-    this.textareaObserver.observe(textarea, {
+    this.textareaMutationObserver.observe(textarea, {
       characterData: true,
       subtree: true
     })
@@ -160,6 +188,12 @@ export default class LightEditor extends BaseElement {
 
     pre.scrollTop = textarea.scrollTop;
     pre.scrollLeft = textarea.scrollLeft;
+  }
+
+  disconnectedCallback () {
+    this.textareaResizeObserver?.disconnect()
+    this.textareaMutationObserver?.disconnect()
+    super.disconnectedCallback()
   }
 
   /**

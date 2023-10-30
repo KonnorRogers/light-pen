@@ -4,14 +4,6 @@ import { html } from "lit"
 import { styles } from "./light-pen.styles.js"
 import { when } from "lit/directives/when.js";
 
-import { theme } from './default-theme.styles.js'
-
-import HighlightJS from 'highlight.js/lib/core';
-import JavaScript from 'highlight.js/lib/languages/javascript';
-import HTML from 'highlight.js/lib/languages/xml';
-import CSS from 'highlight.js/lib/languages/css';
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { ref } from "lit/directives/ref.js";
 import { baseStyles, buttonStyles } from "./base-styles.js";
 
 import { clamp } from '../internal/clamp.js'
@@ -21,11 +13,6 @@ import { drag } from "../internal/drag.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 import { BaseElement } from "../internal/base-element.js";
 import LightEditor from "./light-editor.js";
-
-// Then register the languages you need
-HighlightJS.registerLanguage('javascript', JavaScript);
-HighlightJS.registerLanguage('xml', HTML);
-HighlightJS.registerLanguage('css', CSS);
 
 /**
  * @typedef {"html" | "css" | "js"} SupportedLanguages
@@ -69,7 +56,7 @@ export default class LightPen extends BaseElement {
     htmlResizeObserver: { attribute: false },
     jsResizeObserver: { attribute: false },
     cssResizeObserver: { attribute: false },
-    resizing: { attribute: false },
+    _resizing: { attribute: false },
   }
 
   static {
@@ -97,24 +84,6 @@ export default class LightPen extends BaseElement {
      * @type {ResizeObserver}
      */
     this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
-
-    /**
-     * @property
-     * @type {ResizeObserver}
-     */
-    this.htmlResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
-
-    /**
-     * @property
-     * @type {ResizeObserver}
-     */
-    this.jsResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
-
-    /**
-     * @property
-     * @type {ResizeObserver}
-     */
-    this.cssResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
 
     /**
      * @attribute
@@ -153,27 +122,6 @@ export default class LightPen extends BaseElement {
     this.consoleText = ""
 
     /**
-     * What to reset the HTML to.
-     * @property
-     * @type {string}
-     */
-    this.htmlReset = ""
-
-    /**
-     * What to reset the CSS to.
-     * @property
-     * @type {string}
-     */
-    this.cssReset = ""
-
-    /**
-     * What to reset the JS to.
-     * @property
-     * @type {string}
-     */
-    this.jsReset = ""
-
-    /**
      * @property
      * @internal
      * @type {number}
@@ -189,7 +137,33 @@ export default class LightPen extends BaseElement {
     /**
      * @internal
      */
-    this.resizing = false
+    this._resizing = false
+
+    this.cssCode = ""
+    this.htmlCode = ""
+    this.jsCode = ""
+  }
+
+
+  /**
+   * @type {undefined | null | LightEditor}
+   */
+  get jsEditor () {
+    return this.shadowRoot?.querySelector("#editor-js")
+  }
+
+  /**
+   * @type {undefined | null | LightEditor}
+   */
+  get cssEditor () {
+    return this.shadowRoot?.querySelector("#editor-css")
+  }
+
+  /**
+   * @type {undefined | null | LightEditor}
+   */
+  get htmlEditor () {
+    return this.shadowRoot?.querySelector("#editor-html")
   }
 
   /**
@@ -202,33 +176,7 @@ export default class LightPen extends BaseElement {
 
     this.updateComplete.then(() => {
       this.resizeObserver.observe(this)
-
-      /*
-       * Grab reset values so we can reset the inputs
-       */
-      this.htmlReset = this.htmlTextArea?.value || ""
-      this.cssReset = this.cssTextArea?.value || ""
-      this.jsReset = this.jsTextArea?.value || ""
     });
-  }
-
-  /**
-   * @param {ResizeObserverEntry[]} entries
-   */
-  handleTextAreaResize (entries) {
-    const { target } = entries[0]
-    const {
-      // left, right,
-      top, bottom
-    } = entries[0].contentRect;
-    // const width = left + right
-    const height = top + bottom
-
-    // @ts-expect-error
-    target.parentElement.style.setProperty("--textarea-height", `${height}px`)
-
-    // One day we'll allow the textarea to resize the width.
-    // target.parentElement.style.setProperty("--textarea-width", `${width}px`)
   }
 
   /**
@@ -260,9 +208,6 @@ export default class LightPen extends BaseElement {
     return this.shadowRoot?.querySelector("iframe")
   }
 
-  handleEditorInput () {
-  }
-
   updateIframeContent () {
     const iframeElem= this.iframeElem
     if (iframeElem == null) return
@@ -288,10 +233,6 @@ export default class LightPen extends BaseElement {
     iframeElem.contentWindow?.document.close()
   }
 
-  inputHandler () {
-    this.updateCode()
-  }
-
   /**
    * @param {import("lit").PropertyValues} changedProperties
    */
@@ -310,37 +251,7 @@ export default class LightPen extends BaseElement {
 
   disconnectedCallback() {
     super.disconnectedCallback()
-
-    this.htmlTextArea && this.htmlResizeObserver.disconnect()
-    this.cssTextArea && this.cssResizeObserver.disconnect()
-    this.jsTextArea && this.jsResizeObserver.disconnect()
-  }
-
-  /**
-   * @param {HTMLTextAreaElement} textarea
-   */
-  htmlTextAreaChanged (textarea) {
-    if (!textarea) return
-    this.htmlTextArea = textarea
-    this.htmlResizeObserver.observe(textarea)
-  }
-
-  /**
-   * @param {HTMLTextAreaElement} textarea
-   */
-  cssTextAreaChanged (textarea) {
-    if (!textarea) return
-    this.cssTextArea = textarea
-    this.cssResizeObserver.observe(textarea)
-  }
-
-  /**
-   * @param {HTMLTextAreaElement} textarea
-   */
-  jsTextAreaChanged (textarea) {
-    if (!textarea) return
-    this.jsTextArea = textarea
-    this.jsResizeObserver.observe(textarea)
+    this.resizeObserver.disconnect()
   }
 
   /**
@@ -384,30 +295,12 @@ export default class LightPen extends BaseElement {
   }
 
 
-  /**
-   * Lovely helper to scoop up our html, css, and js code
-   */
-  updateCode () {
-    this.cssCode = this.cssTextArea?.value
-    this.htmlCode = this.htmlTextArea?.value
-    this.jsCode = this.jsTextArea?.value
-  }
-
   resetValues () {
-    if (this.htmlTextArea) {
-      this.htmlCode = this.htmlReset
-      this.htmlTextArea.value = this.htmlReset
-    }
+    this.htmlCode = this.htmlEditor?.getAttribute("value") || ""
+    this.cssCode = this.cssEditor?.getAttribute("value") || ""
+    this.jsCode = this.cssEditor?.getAttribute("value") || ""
+    this.requestUpdate()
 
-    if (this.cssTextArea) {
-      this.cssCode = this.cssReset
-      this.cssTextArea.value = this.cssReset
-    }
-
-    if (this.jsTextArea) {
-      this.jsCode = this.jsReset
-      this.jsTextArea.value = this.jsReset
-    }
   }
 
   // setupIframeLogging() {
@@ -462,9 +355,10 @@ export default class LightPen extends BaseElement {
 
     this[`${codeType}Code`] = code
 
-    const textArea = this[`${codeType}TextArea`]
+    const textArea = this[`${codeType}Editor`]
 
     if (textArea && code) {
+      textArea.setAttribute("value", code)
       textArea.value = code
     }
   }
@@ -494,7 +388,7 @@ export default class LightPen extends BaseElement {
         <slot name="js" @slotchange=${this.handleTemplate}></slot>
       </div>
 
-      <div part="base" ?resizing=${this.resizing}>
+      <div part="base" ?resizing=${this._resizing}>
 			  <div part="sandbox">
 				  <div part="sandbox-header">
             <slot name="title">
@@ -528,7 +422,7 @@ export default class LightPen extends BaseElement {
             @keydown=${this.handleResizerKeydown}
             @pointerdown=${this.handleDrag}
             @touchstart=${this.handleDrag}
-            class=${this.resizing ? "is-active" : ""}
+            class=${this._resizing ? "is-active" : ""}
           >
             <slot name="panel-resize-icon">
               ${resizeIcon}
@@ -573,11 +467,11 @@ export default class LightPen extends BaseElement {
       this.iframeElem.style.pointerEvents = "none"
     }
 
-    this.resizing = true
+    this._resizing = true
 
     drag(this, {
       onMove: (x, _y) => {
-        this.resizing = true
+        this._resizing = true
         let newPositionInPixels = x;
 
 
@@ -590,7 +484,7 @@ export default class LightPen extends BaseElement {
           this.iframeElem.style.pointerEvents = "auto"
         }
 
-        this.resizing = false
+        this._resizing = false
       },
       initialEvent: event
     });
@@ -614,8 +508,14 @@ export default class LightPen extends BaseElement {
       <light-editor
         id=${`editor-${language}`}
         part=${`sandbox-editor sandbox-editor--${language}`}
+        exportparts="
+          base:sandbox-editor__base,
+          pre:sandbox-editor__pre,
+          code:sandbox-editor__code,
+          textarea:sandbox-editor__textarea
+        "
         language=${highlightLang}
-        value=${this[`${language}Code`]}
+        .value=${this[`${language}Code`]}
         @light-input=${/** @param {Event} e */ (e) => {
           this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
         }}

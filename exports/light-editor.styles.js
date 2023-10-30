@@ -1,7 +1,7 @@
 import { css } from "lit"
 
 export const styles = css`
-  [part~="editor"] {
+  [part~="base"] {
     display:grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr);
@@ -50,10 +50,22 @@ export const styles = css`
 	  background-color: #f7f7f7;
   }
 
+  [part~="pre"] {
+    height: var(--textarea-height, auto);
+    max-height: var(--textarea-height, auto);
+    width: var(--textarea-width, auto);
+    max-width: var(--textarea-width, auto);
+  }
+
   [part~="pre"],
   [part~="code"],
   [part~="textarea"] {
 	  font-family: Menlo, Monaco, "Courier New", monospace;
 	  font-size: 0.875rem;
+  }
+
+  [part~="textarea"]::selection {
+    color: inherit;
+    background-color: rgba(0,0,0,0.15);
   }
 `
