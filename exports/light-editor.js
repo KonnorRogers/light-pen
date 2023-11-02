@@ -64,6 +64,7 @@ export default class LightEditor extends BaseElement {
   }
 
   /**
+   * @ignore
    * @param {ResizeObserverEntry[]} entries
    */
   handleTextAreaResize (entries) {
@@ -137,6 +138,7 @@ export default class LightEditor extends BaseElement {
   }
 
   /**
+   * @ignore
    * @param {Element | undefined} element
    */
   textareaChanged (element) {
@@ -164,6 +166,7 @@ export default class LightEditor extends BaseElement {
   }
 
   /**
+   * @ignore
    * @param {Event} e
    */
   handleSlotChangeEvent (e) {
@@ -201,6 +204,7 @@ export default class LightEditor extends BaseElement {
   }
 
   /**
+   * @ignore
    * @param {KeyboardEvent} evt
    */
   keydownHandler(evt) {
@@ -219,6 +223,7 @@ export default class LightEditor extends BaseElement {
   }
 
   /**
+   * @ignore
    * Override this to use a highlighter of your choice.
    * @param {{code: string, language: string}} options
    */
@@ -234,6 +239,7 @@ export default class LightEditor extends BaseElement {
   }
 
   /**
+   * @ignore
    * @param {string} text
    */
   unescapeCharacters (text) {
@@ -242,6 +248,7 @@ export default class LightEditor extends BaseElement {
   }
 
   /**
+   * @ignore
    * Highlighters strip newlines. But you can see new lines in <textarea>, this fixes that.
    * @param {string} text
    */
