@@ -11,6 +11,7 @@ import { baseStyles } from "./base-styles.js";
 import { styles } from "./light-editor.styles.js";
 import { theme } from "./default-theme.styles.js";
 import { LightResizeEvent } from "./events/light-resize-event.js"
+import { dedent } from "../internal/dedent.js";
 
 HighlightJS.registerLanguage('javascript', JavaScript);
 HighlightJS.registerLanguage('xml', HTML);
@@ -41,7 +42,7 @@ export default class LightEditor extends BaseElement {
   static properties = {
     label: {},
     value: {},
-    language: {reflect: true}
+    language: {reflect: true},
   }
 
   constructor () {
@@ -130,10 +131,10 @@ export default class LightEditor extends BaseElement {
           }}
           @scroll=${this.syncScroll}
           .value=${this.value}
-        >${this.value}</textarea>
+        ></textarea>
 			</div>
 
-      <slot hidden></slot>
+      <slot hidden @slotchange=${this.handleSlotChangeEvent}></slot>
 		`
   }
 
@@ -170,10 +171,20 @@ export default class LightEditor extends BaseElement {
    * @param {Event} e
    */
   handleSlotChangeEvent (e) {
-    const target = /** @type {HTMLSlotElement} */ (e.target)
-
-    this.currentWatchedElements = target.assignedElements({ flatten: true })
     // @TODO: Attach mutations observers to update value.
+    /**
+     * @type {HTMLSlotElement}
+     */
+    // @ts-expect-error
+    const slot = e.target
+
+    const templates = slot.assignedElements({flatten: true})
+
+    const code = dedent(this.unescapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
+
+    if (code.trim()) {
+      this.value = code
+    }
   }
 
   /**
@@ -231,7 +242,7 @@ export default class LightEditor extends BaseElement {
     let { code, language } = options
 
     code = this.unescapeCharacters(code)
-    // Dedent is nice, but we don't want to do it on user type data.
+    // Dedent is nice, but we don't want to do it on user typed data.
     // code = dedent(code)
     code = this.injectNewLine(code)
 

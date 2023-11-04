@@ -23,9 +23,11 @@ export const styles = css`
   outline: 2px solid blue;
 }
 
+/*
 [part~="sandbox-editor"] {
   height: var(--textarea-height, 33%);
 }
+*/
 
 [part~="base"] {
 	word-wrap: break-word;

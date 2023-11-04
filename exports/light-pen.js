@@ -209,11 +209,16 @@ export default class LightPen extends BaseElement {
   }
 
   updateIframeContent () {
-    const iframeElem= this.iframeElem
+    const iframeElem = this.iframeElem
     if (iframeElem == null) return
 
     // this.setupIframeLogging();
 
+    console.log({
+      cssCode: this.cssCode,
+      htmlCode: this.htmlCode,
+      jsCode: this.jsCode,
+    })
     let page = `
       <!doctype html><html>
         <head><meta charset="utf-8">
@@ -298,7 +303,7 @@ export default class LightPen extends BaseElement {
   resetValues () {
     this.htmlCode = this.htmlEditor?.getAttribute("value") || ""
     this.cssCode = this.cssEditor?.getAttribute("value") || ""
-    this.jsCode = this.cssEditor?.getAttribute("value") || ""
+    this.jsCode = this.jsEditor?.getAttribute("value") || ""
     this.requestUpdate()
 
   }
@@ -330,47 +335,6 @@ export default class LightPen extends BaseElement {
   //   )
   // }
 
-  /**
-   * @param {Event} e
-   */
-  handleTemplate (e) {
-    /**
-     * @type {HTMLSlotElement}
-     */
-    // @ts-expect-error
-    const slot = e.target
-
-    const slotName = slot.getAttribute("name")
-    if (slotName == null) return
-
-    if (!this.languages.includes(/** @type {SupportedLanguages} */ (slotName))) {
-      return
-    }
-
-    const codeType = /** @type {SupportedLanguages} */ (slotName)
-
-    const templates = slot.assignedElements({flatten: true})
-
-    const code = dedent(this.unescapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
-
-    this[`${codeType}Code`] = code
-
-    const textArea = this[`${codeType}Editor`]
-
-    if (textArea && code) {
-      textArea.setAttribute("value", code)
-      textArea.value = code
-    }
-  }
-
-  /**
-   * @param {string} text
-   */
-  unescapeCharacters (text) {
-    // Update code
-    return text.replaceAll("&lt;/script>", "</script>")
-  }
-
   // Rendering
   renderConsole () {
     return html`<div part="sandbox-console-log"></div>`
@@ -382,12 +346,6 @@ export default class LightPen extends BaseElement {
   render () {
 		return html`
       <!-- Where users can declaratively provide templates -->
-      <div style="display: none;">
-        <slot name="html" @slotchange=${this.handleTemplate}></slot>
-        <slot name="css" @slotchange=${this.handleTemplate}></slot>
-        <slot name="js" @slotchange=${this.handleTemplate}></slot>
-      </div>
-
       <div part="base" ?resizing=${this._resizing}>
 			  <div part="sandbox">
 				  <div part="sandbox-header">
@@ -515,14 +473,7 @@ export default class LightPen extends BaseElement {
           textarea:sandbox-editor__textarea
         "
         language=${highlightLang}
-        .value=${this[`${language}Code`]}
-        @light-input=${/** @param {Event} e */ (e) => {
-          this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
-        }}
-        @light-change=${/** @param {Event} e */ (e) => {
-          this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
-        }}
-      ></light-editor>
+      ><slot name=${language}></slot></light-editor>
     `
   }
 

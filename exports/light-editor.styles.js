@@ -34,6 +34,11 @@ export const styles = css`
     overflow: auto;
     position: relative;
 
+    height: var(--textarea-height, auto);
+    width: var(--textarea-width, auto);
+    max-width: 100%;
+    max-height: 100%;
+
     /* this creates line-wrapping. */
 	  word-break: break-word;
     white-space: pre-wrap;
@@ -50,12 +55,6 @@ export const styles = css`
 	  background-color: #f7f7f7;
   }
 
-  [part~="pre"] {
-    height: var(--textarea-height, auto);
-    max-height: var(--textarea-height, auto);
-    width: var(--textarea-width, auto);
-    max-width: var(--textarea-width, auto);
-  }
 
   [part~="pre"],
   [part~="code"],
