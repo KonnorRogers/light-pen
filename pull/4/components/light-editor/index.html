@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/pull/4/"> -->
 
 <meta name="description" content="A collection of components that don't generally fit a design system, but that I wanted to build.">
-<link rel="modulepreload" href="/light-pen/pull/4/bridgetown/static/javascript/index.HP5KIRRR.js">
+<link rel="modulepreload" href="/light-pen/pull/4/bridgetown/static/javascript/index.WKXHYO4Q.js">
 <link rel="modulepreload" href="/light-pen/pull/4/bridgetown/static/javascript/defer.VLRTITQX.js">
 <link rel="preload" href="/light-pen/pull/4/bridgetown/static/javascript/defer.3P36MBVM.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/4/bridgetown/static/javascript/defer.3P36MBVM.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/4/bridgetown/static/javascript/index.HP5KIRRR.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/4/bridgetown/static/javascript/index.WKXHYO4Q.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/4/bridgetown/static/javascript/defer.VLRTITQX.js" type="module"></script>
 
 <!-- Favicons -->
@@ -277,6 +277,52 @@
     </light-editor>
   </template>
 </light-preview>
+
+<h2 id="with-a-template">
+          <a href="#with-a-template">With a template</a>
+        </h2>
+
+<light-preview inline-preview="">
+  <template slot="code">
+    <light-editor>
+      <template>
+        <div>
+          <div>Hello World</div>
+          <div>What's up dude</div>
+        </div>
+
+        <template>
+          A template in a template?!!?!?
+        </template>
+
+        This is madness!!
+      </template>
+    </light-editor>
+  </template>
+</light-preview>
+
+<h2 id="changing-the-language">
+          <a href="#changing-the-language">Changing the language</a>
+        </h2>
+
+<light-preview inline-preview="">
+  <template slot="code">
+    <light-editor language="css">
+      <template>
+        html, body {
+          min-height: 100%;
+          height: 100%;
+          padding: 0;
+          margin: 0;
+        }
+
+        light-pen {
+          height: 100%;
+        }
+      </template>
+    </light-editor>
+  </template>
+</light-preview>
 <h2 id="imports">
           <a href="#imports">Imports</a>
         </h2>
@@ -289,12 +335,12 @@
             HTML
           </div>
 
-          <clipboard-copy for="6b2ecc35-c7eb-4920-b474-4bb009882772" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="5504ef91-e95a-41e0-8e53-d9c00fd28205" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="6b2ecc35-c7eb-4920-b474-4bb009882772" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
+          <textarea id="5504ef91-e95a-41e0-8e53-d9c00fd28205" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -310,12 +356,12 @@
             HTML
           </div>
 
-          <clipboard-copy for="c12fa50d-918d-4213-82a5-d7d382ba07d9" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="3e6c2803-8d01-442a-ace5-75b39474ee99" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="c12fa50d-918d-4213-82a5-d7d382ba07d9" hidden="">&lt;script type="module"&gt;
+          <textarea id="3e6c2803-8d01-442a-ace5-75b39474ee99" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-editor&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js"
 
@@ -345,12 +391,12 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="084f7d03-f37c-4e8e-8615-5ced7416d68b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="5b27a697-b7fe-4aba-9a22-df458df4b06b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="084f7d03-f37c-4e8e-8615-5ced7416d68b" hidden="">// Auto registers as &lt;light-editor&gt;
+          <textarea id="5b27a697-b7fe-4aba-9a22-df458df4b06b" hidden="">// Auto registers as &lt;light-editor&gt;
 import "light-pen/exports/light-editor.js/exports/light-editor-register.js"
 
 // Manual Register
@@ -534,6 +580,10 @@ LightEditor.define()
   </h2>
   <ol class="table-of-contents__list">
   <li class="side-nav__item">
+        <a href="#with-a-template" class="side-nav__link">With a template</a>
+      </li><li class="side-nav__item">
+        <a href="#changing-the-language" class="side-nav__link">Changing the language</a>
+      </li><li class="side-nav__item">
         <a href="#imports" class="side-nav__link">Imports</a>
       </li><li class="side-nav__item">
         <a href="#attributes" class="side-nav__link">Attributes</a>

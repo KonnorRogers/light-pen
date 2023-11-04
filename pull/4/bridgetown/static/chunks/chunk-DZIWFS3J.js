@@ -1,4 +1,4 @@
-import{a as f}from"/light-pen/pull/4/bridgetown/static/chunks/chunk-72F3LNRY.js";import{a as l,b as c,c as g,d as x,e as y}from"/light-pen/pull/4/bridgetown/static/chunks/chunk-ZSZVW4LH.js";import{a as p,b as r,m,n as u,o as b}from"/light-pen/pull/4/bridgetown/static/chunks/chunk-5QG252ZY.js";import{d as a}from"/light-pen/pull/4/bridgetown/static/chunks/chunk-HTPW2NLW.js";var w=p`
+import{a as u}from"/light-pen/pull/4/bridgetown/static/chunks/chunk-F2QVVWSP.js";import{a as n,b as d,c as b,d as f}from"/light-pen/pull/4/bridgetown/static/chunks/chunk-2ROVY4QP.js";import{a as c,b as r,m as h,n as p,o as m}from"/light-pen/pull/4/bridgetown/static/chunks/chunk-QB2UPTP2.js";import{d as i}from"/light-pen/pull/4/bridgetown/static/chunks/chunk-HTPW2NLW.js";var g=c`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
@@ -22,9 +22,11 @@ import{a as f}from"/light-pen/pull/4/bridgetown/static/chunks/chunk-72F3LNRY.js"
   outline: 2px solid blue;
 }
 
+/*
 [part~="sandbox-editor"] {
   height: var(--textarea-height, 33%);
 }
+*/
 
 [part~="base"] {
 	word-wrap: break-word;
@@ -138,7 +140,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
   border-top:1px solid #1f252f;
   border-bottom-left-radius:0;
 }
-`;var i=class i extends m{constructor(){super(),this.languageMap={html:"xml",css:"css",js:"javascript"},this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),s=e+t;this.cachedWidth=s}handleResize(e){let{left:t,right:s}=e[0].contentRect,o=t+s;this.cachedWidth=o}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
+`;var o=class o extends h{constructor(){super(),this.languageMap={html:"xml",css:"css",js:"javascript"},this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),s=e+t;this.cachedWidth=s}handleResize(e){let{left:t,right:s}=e[0].contentRect,a=t+s;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;console.log({cssCode:this.cssCode,htmlCode:this.htmlCode,jsCode:this.jsCode});let t=`
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}</style>
@@ -150,15 +152,8 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
           <\/script>
         </body>
       </html>
-    `;e.contentWindow?.document.open(),e.contentWindow?.document.writeln(t),e.contentWindow?.document.close()}willUpdate(e){["cssCode","htmlCode","jsCode"].some(t=>e.has(t))&&(this._iframeDebounce!=null&&window.clearTimeout(this._iframeDebounce),this._iframeDebounce=setTimeout(()=>this.updateIframeContent(),300)),e.has("resizePosition")&&this.updateResizePosition(),super.willUpdate(e)}disconnectedCallback(){super.disconnectedCallback(),this.resizeObserver.disconnect()}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,s=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=s),e.key==="ArrowRight"&&(t+=s),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=c(t,0,100)}}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let s=100-t;this.style.setProperty("--start-panel-width",`${t}%`),this.style.setProperty("--end-panel-width",`${s}%`)}}resetValues(){this.htmlCode=this.htmlEditor?.getAttribute("value")||"",this.cssCode=this.cssEditor?.getAttribute("value")||"",this.jsCode=this.cssEditor?.getAttribute("value")||"",this.requestUpdate()}handleTemplate(e){let t=e.target,s=t.getAttribute("name");if(s==null||!this.languages.includes(s))return;let o=s,z=t.assignedElements({flatten:!0}),n=g(this.unescapeCharacters(z.map(v=>v.innerHTML).join(`
-`)));this[`${o}Code`]=n;let d=this[`${o}Editor`];d&&n&&(d.setAttribute("value",n),d.value=n)}unescapeCharacters(e){return e.replaceAll("&lt;/script>","<\/script>")}renderConsole(){return r`<div part="sandbox-console-log"></div>`}render(){return r`
+    `;e.contentWindow?.document.open(),e.contentWindow?.document.writeln(t),e.contentWindow?.document.close()}willUpdate(e){["cssCode","htmlCode","jsCode"].some(t=>e.has(t))&&(this._iframeDebounce!=null&&window.clearTimeout(this._iframeDebounce),this._iframeDebounce=setTimeout(()=>this.updateIframeContent(),300)),e.has("resizePosition")&&this.updateResizePosition(),super.willUpdate(e)}disconnectedCallback(){super.disconnectedCallback(),this.resizeObserver.disconnect()}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,s=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=s),e.key==="ArrowRight"&&(t+=s),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=d(t,0,100)}}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let s=100-t;this.style.setProperty("--start-panel-width",`${t}%`),this.style.setProperty("--end-panel-width",`${s}%`)}}resetValues(){this.htmlCode=this.htmlEditor?.getAttribute("value")||"",this.cssCode=this.cssEditor?.getAttribute("value")||"",this.jsCode=this.jsEditor?.getAttribute("value")||"",this.requestUpdate()}renderConsole(){return r`<div part="sandbox-console-log"></div>`}render(){return r`
       <!-- Where users can declaratively provide templates -->
-      <div style="display: none;">
-        <slot name="html" @slotchange=${this.handleTemplate}></slot>
-        <slot name="css" @slotchange=${this.handleTemplate}></slot>
-        <slot name="js" @slotchange=${this.handleTemplate}></slot>
-      </div>
-
       <div part="base" ?resizing=${this._resizing}>
 			  <div part="sandbox">
 				  <div part="sandbox-header">
@@ -173,7 +168,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
                 Reset
               </button>
 
-						  ${l(this.console==="enabled",()=>r`<button @click={}>Clear Console</button>`)}
+						  ${n(this.console==="enabled",()=>r`<button @click={}>Clear Console</button>`)}
 					  </span>
 				</div>
 				<div part="sandbox-content">
@@ -196,7 +191,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
             class=${this._resizing?"is-active":""}
           >
             <slot name="panel-resize-icon">
-              ${y}
+              ${f}
             </slot>
             <span class="visually-hidden">Resize Panel. Pull to left or right to resize.</span>
           </button>
@@ -210,7 +205,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
 				</div>
 
         <!--
-        ${l(this.console==="enabled",()=>r`
+        ${n(this.console==="enabled",()=>r`
               <details class="sandbox-console" ?open=${console}>
                 <summary part="summary summary-console" tabindex="0">Console</summary>
                 ${this.consoleText}
@@ -218,7 +213,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
             `)}
         -->
 			</div>
-		</div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,x(this,{onMove:(t,s)=>{this._resizing=!0;let o=t;this.resizePosition=c(this.pixelsToPercentage(o),0,100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){let t=this.languageMap[e];return r`
+		</div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,b(this,{onMove:(t,s)=>{this._resizing=!0;let a=t;this.resizePosition=d(this.pixelsToPercentage(a),0,100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){let t=this.languageMap[e];return r`
       <light-editor
         id=${`editor-${e}`}
         part=${`sandbox-editor sandbox-editor--${e}`}
@@ -229,10 +224,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
           textarea:sandbox-editor__textarea
         "
         language=${t}
-        .value=${this[`${e}Code`]}
-        @light-input=${s=>{this[`${e}Code`]=s.currentTarget.value}}
-        @light-change=${s=>{this[`${e}Code`]=s.currentTarget.value}}
-      ></light-editor>
+      ><slot name=${e}></slot></light-editor>
     `}renderDetails(e){let t=e.toUpperCase(),s=this.openLanguages.split(",").includes(e);return r`
       <details ?open=${s} part="details details-${e}">
 				<summary part="summary summary-${e}">
@@ -241,5 +233,5 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
 
         ${this.renderEditor(e)}
 			</details>
-		`}};a(i,"baseName","light-pen"),a(i,"styles",[u,b,w]),a(i,"dependencies",{"light-editor":f}),a(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}}),Object.values(i.dependencies).forEach(e=>{e.define()});var h=i;export{h as a};
-//# sourceMappingURL=/light-pen/pull/4/bridgetown/static/chunks/chunk-QFW6RFHB.js.map
+		`}};i(o,"baseName","light-pen"),i(o,"styles",[p,m,g]),i(o,"dependencies",{"light-editor":u}),i(o,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}}),Object.values(o.dependencies).forEach(e=>{e.define()});var l=o;export{l as a};
+//# sourceMappingURL=/light-pen/pull/4/bridgetown/static/chunks/chunk-DZIWFS3J.js.map
