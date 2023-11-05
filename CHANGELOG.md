@@ -1,3 +1,8 @@
+## 1.2.0
+
+- Added `<light-editor>`
+- `<light-pen>` now uses `<light-editor>` under the hood. A number of parts have been moved around for the editor.
+
 ## 1.1.2
 
 - Don't use `src` or `srcdoc`, return to using `iframe.contentWindow.writeln(content)` due to fixing
