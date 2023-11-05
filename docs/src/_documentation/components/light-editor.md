@@ -15,6 +15,8 @@ component: light-editor
 
 ## With a template
 
+We can use a `<template>` tag to be able to "slot" in values.
+
 <light-preview inline-preview>
   <template slot="code">
     <light-editor>
@@ -34,7 +36,10 @@ component: light-editor
   </template>
 </light-preview>
 
-## Changing the language
+## Changing the highlight language to CSS
+
+By default, the highlighter from Highlight.js only supports HTML / CSS / JS.
+This is intentional to keep the bundle size low.
 
 <light-preview inline-preview>
   <template slot="code">

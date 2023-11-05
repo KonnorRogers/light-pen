@@ -214,11 +214,6 @@ export default class LightPen extends BaseElement {
 
     // this.setupIframeLogging();
 
-    console.log({
-      cssCode: this.cssCode,
-      htmlCode: this.htmlCode,
-      jsCode: this.jsCode,
-    })
     let page = `
       <!doctype html><html>
         <head><meta charset="utf-8">
@@ -432,8 +427,7 @@ export default class LightPen extends BaseElement {
         this._resizing = true
         let newPositionInPixels = x;
 
-
-        this.resizePosition = clamp(this.pixelsToPercentage(newPositionInPixels), 0, 100);
+        this.resizePosition = clamp(0, this.pixelsToPercentage(newPositionInPixels), 100);
         this.updateResizePosition()
       },
       onStop: () => {
@@ -449,6 +443,7 @@ export default class LightPen extends BaseElement {
   }
 
   /**
+   * @internal
    * @param {number} pixels
    * @return {number}
    */
@@ -457,6 +452,7 @@ export default class LightPen extends BaseElement {
   }
 
   /**
+   * @internal
    * @param {SupportedLanguages} language
    */
   renderEditor (language) {
@@ -473,11 +469,14 @@ export default class LightPen extends BaseElement {
           textarea:sandbox-editor__textarea
         "
         language=${highlightLang}
+        @light-input=${(/** @type Event */ e) => this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value}
+        @light-change=${(/** @type Event */ e) => this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value}
       ><slot name=${language}></slot></light-editor>
     `
   }
 
   /**
+   * @internal
    * @param {SupportedLanguages} language
    */
   renderDetails (language) {

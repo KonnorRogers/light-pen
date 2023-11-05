@@ -1,6 +1,5 @@
 // @ts-check
-import { LitElement, html } from "lit";
-import { DefineableMixin } from "web-component-define";
+import { html } from "lit";
 import { buttonStyles, baseStyles } from "./base-styles.js";
 
 import { when } from "lit/directives/when.js";
@@ -148,6 +147,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @internal
    * Reinstalls the mutation on slotted preview-code
    */
   resetIframeCodeMutationObserver () {
@@ -164,6 +164,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @internal
    * Reinstalls the mutation observer on slotted code
    */
   resetCodeMutationObserver () {
@@ -181,6 +182,7 @@ export default class LightPreviewBase extends BaseElement {
 
 
   /**
+   * @internal
    * @param {"preview-code" | "code"} variable
    */
   handleMutation (variable) {
@@ -196,6 +198,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @internal
    * @param {string} name
    * @returns {HTMLSlotElement | null | undefined}
    */
@@ -204,6 +207,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @internal
    * @param {Event | { target?: undefined | null | HTMLSlotElement }} e
    */
   handleTemplate (e) {
@@ -255,10 +259,17 @@ export default class LightPreviewBase extends BaseElement {
     }
   }
 
+
+  /**
+   * @internal
+   */
   unescapePreviewCode () {
     return this.unescapeCharacters(this.previewCode || this.code)
   }
 
+  /**
+   * @internal
+   */
   updateIframeContent () {
     const code = this.unescapePreviewCode()
 
@@ -284,6 +295,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @internal
    * @param {string} text
    */
   escapeCharacters(text) {
@@ -292,6 +304,7 @@ export default class LightPreviewBase extends BaseElement {
 
 
   /**
+   * @internal
    * @param {string} text
    */
   unescapeCharacters (text) {
@@ -299,6 +312,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @internal
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
@@ -315,6 +329,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @internal
    * Sets an initial width so we dont need to keep computing getBoundingClientRect
    */
   updateCachedWidth () {
@@ -324,6 +339,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @internal
    * @param {ResizeObserverEntry[]} entries
    */
   handleResize (entries) {
@@ -432,6 +448,10 @@ export default class LightPreviewBase extends BaseElement {
     `
   }
 
+
+  /**
+   * @internal
+   */
   get panelResizer () {
     return this.shadowRoot?.querySelector("[part~='panel-resizer']")
   }
@@ -439,6 +459,7 @@ export default class LightPreviewBase extends BaseElement {
 
   /** Drag stuff */
   /**
+   * @internal
    * @param {PointerEvent} event
    */
 	handleDrag (event) {
@@ -481,6 +502,9 @@ export default class LightPreviewBase extends BaseElement {
     });
   }
 
+  /**
+   * @internal
+   */
   updateResizePosition (resizePosition = this.resizePosition) {
     const startWidth = resizePosition
 
@@ -492,6 +516,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @internal
    * @param {KeyboardEvent} event
    */
   handleResizerKeydown (event) {
@@ -523,6 +548,7 @@ export default class LightPreviewBase extends BaseElement {
 
 
   /**
+   * @internal
    * @param {number} pixels
    * @return {number}
    */
@@ -530,6 +556,4 @@ export default class LightPreviewBase extends BaseElement {
     // @ts-expect-error
     return (pixels / this.cachedWidth) * 100
   }
-
-
 }

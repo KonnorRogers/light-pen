@@ -130,7 +130,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
 
 [part~="sandbox-content"] {
   display:grid;
-  grid-template-columns: minmax(0,var(--start-panel-width, 1fr)) minmax(0, auto) minmax(0, var(--end-panel-width, 1fr));
+  grid-template-columns: minmax(var(--start-panel-min-width, 30px),var(--start-panel-width, 1fr)) minmax(0, auto) minmax(var(--end-panel-min-width, 30px), var(--end-panel-width, 1fr));
   grid-template-rows: minmax(0, 1fr);
 }
 

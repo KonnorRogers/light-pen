@@ -184,6 +184,8 @@ export default class LightEditor extends BaseElement {
 
     if (code.trim()) {
       this.value = code
+      this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
+      this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
     }
   }
 
@@ -225,12 +227,13 @@ export default class LightEditor extends BaseElement {
     // @ts-expect-error
     const target = evt.target
 
-    if ('Tab' === evt.key) {
-      evt.preventDefault()
-      target.setRangeText('\t', target.selectionStart, target.selectionEnd, 'end')
-      this.value = target.value
-      return
-    }
+    // Let's not focus trap. For now.
+    // if ('Tab' === evt.key) {
+    //   evt.preventDefault()
+    //   target.setRangeText('\t', target.selectionStart, target.selectionEnd, 'end')
+    //   this.value = target.value
+    //   return
+    // }
   }
 
   /**
