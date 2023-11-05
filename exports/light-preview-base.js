@@ -1,6 +1,5 @@
 // @ts-check
-import { LitElement, html } from "lit";
-import { DefineableMixin } from "web-component-define";
+import { html } from "lit";
 import { buttonStyles, baseStyles } from "./base-styles.js";
 
 import { when } from "lit/directives/when.js";
@@ -12,6 +11,7 @@ import { clamp } from "../internal/clamp.js";
 import { stringMap } from "../internal/string-map.js";
 import { debounce } from "../internal/debounce.js";
 import { resizeIcon } from "../internal/resize-icon.js";
+import { BaseElement } from "../internal/base-element.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -44,7 +44,7 @@ const sourceCodeFallback = "Show source code"
  * @slot preview-code - If you want to run code that is slightly different from the source code you want to display, slot it into "preview-code"
  * @slot code - Used to display both source code and to power your preview in the iframe. If you slot in "preview-code", then it will only be used to show / highlight your source code.
  */
-export default class LightPreviewBase extends DefineableMixin(LitElement) {
+export default class LightPreviewBase extends BaseElement {
   static baseName = "light-preview-base"
 
   static styles = [
@@ -147,6 +147,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
    * Reinstalls the mutation on slotted preview-code
    */
   resetIframeCodeMutationObserver () {
@@ -163,6 +164,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
    * Reinstalls the mutation observer on slotted code
    */
   resetCodeMutationObserver () {
@@ -180,6 +182,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
 
 
   /**
+   * @internal
    * @param {"preview-code" | "code"} variable
    */
   handleMutation (variable) {
@@ -195,6 +198,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
    * @param {string} name
    * @returns {HTMLSlotElement | null | undefined}
    */
@@ -203,6 +207,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
    * @param {Event | { target?: undefined | null | HTMLSlotElement }} e
    */
   handleTemplate (e) {
@@ -254,10 +259,17 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     }
   }
 
+
+  /**
+   * @internal
+   */
   unescapePreviewCode () {
     return this.unescapeCharacters(this.previewCode || this.code)
   }
 
+  /**
+   * @internal
+   */
   updateIframeContent () {
     const code = this.unescapePreviewCode()
 
@@ -283,6 +295,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
    * @param {string} text
    */
   escapeCharacters(text) {
@@ -291,6 +304,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
 
 
   /**
+   * @internal
    * @param {string} text
    */
   unescapeCharacters (text) {
@@ -298,6 +312,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
@@ -314,6 +329,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
    * Sets an initial width so we dont need to keep computing getBoundingClientRect
    */
   updateCachedWidth () {
@@ -323,6 +339,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
    * @param {ResizeObserverEntry[]} entries
    */
   handleResize (entries) {
@@ -364,7 +381,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
           ${when(this.inlinePreview,
               () => html`<div part="start-panel preview-div">${unsafeHTML(this.unescapePreviewCode())}</div>`,
               () => html`
-                <iframe part="start-panel iframe" frameborder="0"></iframe>
+                <iframe part="start-panel iframe" height="auto" frameborder="0"></iframe>
               `
            )}
           <button
@@ -431,6 +448,10 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     `
   }
 
+
+  /**
+   * @internal
+   */
   get panelResizer () {
     return this.shadowRoot?.querySelector("[part~='panel-resizer']")
   }
@@ -438,6 +459,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
 
   /** Drag stuff */
   /**
+   * @internal
    * @param {PointerEvent} event
    */
 	handleDrag (event) {
@@ -480,6 +502,9 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     });
   }
 
+  /**
+   * @internal
+   */
   updateResizePosition (resizePosition = this.resizePosition) {
     const startWidth = resizePosition
 
@@ -491,6 +516,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
    * @param {KeyboardEvent} event
    */
   handleResizerKeydown (event) {
@@ -522,6 +548,7 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
 
 
   /**
+   * @internal
    * @param {number} pixels
    * @return {number}
    */
@@ -529,6 +556,4 @@ export default class LightPreviewBase extends DefineableMixin(LitElement) {
     // @ts-expect-error
     return (pixels / this.cachedWidth) * 100
   }
-
-
 }

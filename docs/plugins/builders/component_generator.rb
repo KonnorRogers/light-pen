@@ -20,8 +20,7 @@ class Builders::ComponentGenerator < SiteBuilder
       custom_elements_manifest_path = File.read(File.expand_path("../../../custom-elements.json", __dir__))
       manifest = JSON.parse(custom_elements_manifest_path)
 
-      # @return [::CustomElementsManifestParser::Parser]
-      parser = ::CustomElementsManifestParser.parse(manifest)
+      parser = CustomElementsManifestParser.parse(manifest)
       elements = parser.find_all_tag_names
 
       resources = site.collections.documentation.resources
@@ -246,13 +245,14 @@ class Builders::ComponentGenerator < SiteBuilder
       <<~HTML
         <tr>
           <td>
-            #{event.name}
+            <code>#{event.name}</code>
           </td>
           <td>
+            #{event.description.to_s.empty? ? empty_property : escape(event.description.to_s)}
           </td>
         </tr>
       HTML
-    end
+    end.join("\n")
 
     <<~HTML
       ## Events

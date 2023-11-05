@@ -33,7 +33,7 @@
 :is(.language-bash, .language-shell, .language-zsh, .language-sh).highlighter-rouge pre.highlight::before {
   content: "$";
   user-select: none;
-  vertical-align: -2px;
+  /* vertical-align: -2px; */
   padding-inline-end: 0.45em;
   color: gray;
 }

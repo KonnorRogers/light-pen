@@ -1,6 +1,7 @@
 ---
 title: <light-preview>
 permalink: /components/light-preview/
+component: light-preview
 ---
 
 ## Typical Usage

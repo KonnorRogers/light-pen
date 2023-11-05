@@ -44,7 +44,7 @@ export const previewStyles = css`
 }
 
 iframe {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
 }
 

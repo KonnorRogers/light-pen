@@ -1,18 +1,9 @@
 // @ts-check
 
-import { LitElement, html } from "lit"
+import { html } from "lit"
 import { styles } from "./light-pen.styles.js"
 import { when } from "lit/directives/when.js";
 
-import { theme } from './default-theme.styles.js'
-
-import HighlightJS from 'highlight.js/lib/core';
-import JavaScript from 'highlight.js/lib/languages/javascript';
-import HTML from 'highlight.js/lib/languages/xml';
-import CSS from 'highlight.js/lib/languages/css';
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { ref } from "lit/directives/ref.js";
-import { DefineableMixin } from "web-component-define";
 import { baseStyles, buttonStyles } from "./base-styles.js";
 
 import { clamp } from '../internal/clamp.js'
@@ -20,11 +11,8 @@ import { dedent } from "../internal/dedent.js";
 import { drag } from "../internal/drag.js";
 // import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
 import { resizeIcon } from "../internal/resize-icon.js";
-
-// Then register the languages you need
-HighlightJS.registerLanguage('javascript', JavaScript);
-HighlightJS.registerLanguage('xml', HTML);
-HighlightJS.registerLanguage('css', CSS);
+import { BaseElement } from "../internal/base-element.js";
+import LightEditor from "./light-editor.js";
 
 /**
  * @typedef {"html" | "css" | "js"} SupportedLanguages
@@ -46,16 +34,14 @@ HighlightJS.registerLanguage('css', CSS);
  * @part sandbox - The wrapper around the editor and the iframe
  * @part sandbox-header - The wrapper around the header area
  */
-export default class LightPen extends DefineableMixin(LitElement) {
+export default class LightPen extends BaseElement {
   // Static
   static baseName = "light-pen"
 
-  static styles = [baseStyles, buttonStyles, theme, styles]
+  static styles = [baseStyles, buttonStyles, styles]
 
-  static languageMap = {
-    html: "xml",
-    css: "css",
-    js: "javascript"
+  static dependencies = {
+    'light-editor': LightEditor
   }
 
   static properties = {
@@ -70,9 +56,15 @@ export default class LightPen extends DefineableMixin(LitElement) {
     htmlResizeObserver: { attribute: false },
     jsResizeObserver: { attribute: false },
     cssResizeObserver: { attribute: false },
-    resizing: { attribute: false },
-    iframeSrcDoc: { attribute: false }
+    _resizing: { attribute: false },
   }
+
+  static {
+    Object.values(this.dependencies).forEach((ctor) => {
+      ctor.define()
+    })
+  }
+
   // Overrides
 
   /**
@@ -81,29 +73,17 @@ export default class LightPen extends DefineableMixin(LitElement) {
   constructor() {
     super()
 
+    this.languageMap = {
+      html: "xml",
+      css: "css",
+      js: "javascript"
+    }
+
     /**
      * @property
      * @type {ResizeObserver}
      */
     this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
-
-    /**
-     * @property
-     * @type {ResizeObserver}
-     */
-    this.htmlResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
-
-    /**
-     * @property
-     * @type {ResizeObserver}
-     */
-    this.jsResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
-
-    /**
-     * @property
-     * @type {ResizeObserver}
-     */
-    this.cssResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
 
     /**
      * @attribute
@@ -142,27 +122,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
     this.consoleText = ""
 
     /**
-     * What to reset the HTML to.
-     * @property
-     * @type {string}
-     */
-    this.htmlReset = ""
-
-    /**
-     * What to reset the CSS to.
-     * @property
-     * @type {string}
-     */
-    this.cssReset = ""
-
-    /**
-     * What to reset the JS to.
-     * @property
-     * @type {string}
-     */
-    this.jsReset = ""
-
-    /**
      * @property
      * @internal
      * @type {number}
@@ -178,7 +137,33 @@ export default class LightPen extends DefineableMixin(LitElement) {
     /**
      * @internal
      */
-    this.resizing = false
+    this._resizing = false
+
+    this.cssCode = ""
+    this.htmlCode = ""
+    this.jsCode = ""
+  }
+
+
+  /**
+   * @type {undefined | null | LightEditor}
+   */
+  get jsEditor () {
+    return this.shadowRoot?.querySelector("#editor-js")
+  }
+
+  /**
+   * @type {undefined | null | LightEditor}
+   */
+  get cssEditor () {
+    return this.shadowRoot?.querySelector("#editor-css")
+  }
+
+  /**
+   * @type {undefined | null | LightEditor}
+   */
+  get htmlEditor () {
+    return this.shadowRoot?.querySelector("#editor-html")
   }
 
   /**
@@ -191,33 +176,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
     this.updateComplete.then(() => {
       this.resizeObserver.observe(this)
-
-      /*
-       * Grab reset values so we can reset the inputs
-       */
-      this.htmlReset = this.htmlTextArea?.value || ""
-      this.cssReset = this.cssTextArea?.value || ""
-      this.jsReset = this.jsTextArea?.value || ""
     });
-  }
-
-  /**
-   * @param {ResizeObserverEntry[]} entries
-   */
-  handleTextAreaResize (entries) {
-    const { target } = entries[0]
-    const {
-      // left, right,
-      top, bottom
-    } = entries[0].contentRect;
-    // const width = left + right
-    const height = top + bottom
-
-    // @ts-expect-error
-    target.parentElement.style.setProperty("--textarea-height", `${height}px`)
-
-    // One day we'll allow the textarea to resize the width.
-    // target.parentElement.style.setProperty("--textarea-width", `${width}px`)
   }
 
   /**
@@ -249,44 +208,8 @@ export default class LightPen extends DefineableMixin(LitElement) {
     return this.shadowRoot?.querySelector("iframe")
   }
 
-  /**
-   * Override this to use a highlighter of your choice.
-   * @param {{code: string, language: SupportedLanguages}} options
-   */
-  highlightCode (options) {
-    let { code, language } = options
-
-    const highlightJsLanguage = /** @type {typeof LightPen} */ (this.constructor).languageMap[language]
-
-    code = this.unescapeCharacters(code)
-    code = this.injectNewLine(code)
-
-    return HighlightJS.highlight(code, {language: highlightJsLanguage}).value
-  }
-
-  /**
-   * @param {string} text
-   */
-  unescapeCharacters (text) {
-    // Update code
-    return text.replaceAll("&lt;/script>", "</script>")
-  }
-
-  /**
-   * Highlighters strip newlines. But you can see new lines in <textarea>, this fixes that.
-   * @param {string} text
-   */
-  injectNewLine (text) {
-    // Handle final newlines (see article)
-    if(text[text.length-1] == "\n") { // If the last character is a newline character
-      text += "\n"; // Add a placeholder space character to the final line
-    }
-
-    return text
-  }
-
   updateIframeContent () {
-    const iframeElem= this.iframeElem
+    const iframeElem = this.iframeElem
     if (iframeElem == null) return
 
     // this.setupIframeLogging();
@@ -305,14 +228,9 @@ export default class LightPen extends DefineableMixin(LitElement) {
       </html>
     `
 
-    // this.iframeSrcDoc = page
     iframeElem.contentWindow?.document.open()
     iframeElem.contentWindow?.document.writeln(page)
     iframeElem.contentWindow?.document.close()
-  }
-
-  inputHandler () {
-    this.updateCode()
   }
 
   /**
@@ -333,37 +251,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
 
   disconnectedCallback() {
     super.disconnectedCallback()
-
-    this.htmlTextArea && this.htmlResizeObserver.disconnect()
-    this.cssTextArea && this.cssResizeObserver.disconnect()
-    this.jsTextArea && this.jsResizeObserver.disconnect()
-  }
-
-  /**
-   * @param {HTMLTextAreaElement} textarea
-   */
-  htmlTextAreaChanged (textarea) {
-    if (!textarea) return
-    this.htmlTextArea = textarea
-    this.htmlResizeObserver.observe(textarea)
-  }
-
-  /**
-   * @param {HTMLTextAreaElement} textarea
-   */
-  cssTextAreaChanged (textarea) {
-    if (!textarea) return
-    this.cssTextArea = textarea
-    this.cssResizeObserver.observe(textarea)
-  }
-
-  /**
-   * @param {HTMLTextAreaElement} textarea
-   */
-  jsTextAreaChanged (textarea) {
-    if (!textarea) return
-    this.jsTextArea = textarea
-    this.jsResizeObserver.observe(textarea)
+    this.resizeObserver.disconnect()
   }
 
   /**
@@ -407,58 +295,12 @@ export default class LightPen extends DefineableMixin(LitElement) {
   }
 
 
-  /**
-   * Lovely helper to scoop up our html, css, and js code
-   */
-  updateCode () {
-    this.cssCode = this.cssTextArea?.value
-    this.htmlCode = this.htmlTextArea?.value
-    this.jsCode = this.jsTextArea?.value
-  }
-
   resetValues () {
-    if (this.htmlTextArea) {
-      this.htmlCode = this.htmlReset
-      this.htmlTextArea.value = this.htmlReset
-    }
+    this.htmlCode = this.htmlEditor?.getAttribute("value") || ""
+    this.cssCode = this.cssEditor?.getAttribute("value") || ""
+    this.jsCode = this.jsEditor?.getAttribute("value") || ""
+    this.requestUpdate()
 
-    if (this.cssTextArea) {
-      this.cssCode = this.cssReset
-      this.cssTextArea.value = this.cssReset
-    }
-
-    if (this.jsTextArea) {
-      this.jsCode = this.jsReset
-      this.jsTextArea.value = this.jsReset
-    }
-  }
-
-  /**
-   * @param {KeyboardEvent} evt
-   */
-  keydownHandler(evt) {
-    /**
-     * @type {HTMLTextAreaElement}
-     */
-    // @ts-expect-error
-    const target = evt.target
-
-    const key = evt.key
-
-    if (["Tab", "Escape"].includes(key)) {
-      evt.preventDefault()
-
-      if ('Tab' === evt.key) {
-        return target.setRangeText('\t', target.selectionStart, target.selectionEnd, 'end')
-      }
-
-      if ('Escape' === evt.key) {
-        let e = target.closest('details');
-        if (!e) return;
-
-        e.querySelector("summary")?.focus()
-      }
-    }
   }
 
   // setupIframeLogging() {
@@ -488,38 +330,6 @@ export default class LightPen extends DefineableMixin(LitElement) {
   //   )
   // }
 
-  /**
-   * @param {Event} e
-   */
-  handleTemplate (e) {
-    /**
-     * @type {HTMLSlotElement}
-     */
-    // @ts-expect-error
-    const slot = e.target
-
-    const slotName = slot.getAttribute("name")
-    if (slotName == null) return
-
-    if (!this.languages.includes(/** @type {SupportedLanguages} */ (slotName))) {
-      return
-    }
-
-    const codeType = /** @type {SupportedLanguages} */ (slotName)
-
-    const templates = slot.assignedElements({flatten: true})
-
-    const code = dedent(this.unescapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
-
-    this[`${codeType}Code`] = code
-
-    const textArea = this[`${codeType}TextArea`]
-
-    if (textArea && code) {
-      textArea.value = code
-    }
-  }
-
   // Rendering
   renderConsole () {
     return html`<div part="sandbox-console-log"></div>`
@@ -531,13 +341,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
   render () {
 		return html`
       <!-- Where users can declaratively provide templates -->
-      <div style="display: none;">
-        <slot name="html" @slotchange=${this.handleTemplate}></slot>
-        <slot name="css" @slotchange=${this.handleTemplate}></slot>
-        <slot name="js" @slotchange=${this.handleTemplate}></slot>
-      </div>
-
-      <div part="base" ?resizing=${this.resizing}>
+      <div part="base" ?resizing=${this._resizing}>
 			  <div part="sandbox">
 				  <div part="sandbox-header">
             <slot name="title">
@@ -571,7 +375,7 @@ export default class LightPen extends DefineableMixin(LitElement) {
             @keydown=${this.handleResizerKeydown}
             @pointerdown=${this.handleDrag}
             @touchstart=${this.handleDrag}
-            class=${this.resizing ? "is-active" : ""}
+            class=${this._resizing ? "is-active" : ""}
           >
             <slot name="panel-resize-icon">
               ${resizeIcon}
@@ -616,15 +420,14 @@ export default class LightPen extends DefineableMixin(LitElement) {
       this.iframeElem.style.pointerEvents = "none"
     }
 
-    this.resizing = true
+    this._resizing = true
 
     drag(this, {
       onMove: (x, _y) => {
-        this.resizing = true
+        this._resizing = true
         let newPositionInPixels = x;
 
-
-        this.resizePosition = clamp(this.pixelsToPercentage(newPositionInPixels), 0, 100);
+        this.resizePosition = clamp(0, this.pixelsToPercentage(newPositionInPixels), 100);
         this.updateResizePosition()
       },
       onStop: () => {
@@ -633,13 +436,14 @@ export default class LightPen extends DefineableMixin(LitElement) {
           this.iframeElem.style.pointerEvents = "auto"
         }
 
-        this.resizing = false
+        this._resizing = false
       },
       initialEvent: event
     });
   }
 
   /**
+   * @internal
    * @param {number} pixels
    * @return {number}
    */
@@ -648,15 +452,36 @@ export default class LightPen extends DefineableMixin(LitElement) {
   }
 
   /**
+   * @internal
+   * @param {SupportedLanguages} language
+   */
+  renderEditor (language) {
+    let highlightLang = this.languageMap[language]
+
+    return html`
+      <light-editor
+        id=${`editor-${language}`}
+        part=${`sandbox-editor sandbox-editor--${language}`}
+        exportparts="
+          base:sandbox-editor__base,
+          pre:sandbox-editor__pre,
+          code:sandbox-editor__code,
+          textarea:sandbox-editor__textarea
+        "
+        language=${highlightLang}
+        @light-input=${(/** @type Event */ e) => this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value}
+        @light-change=${(/** @type Event */ e) => this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value}
+      ><slot name=${language}></slot></light-editor>
+    `
+  }
+
+  /**
+   * @internal
    * @param {SupportedLanguages} language
    */
   renderDetails (language) {
     let fullLanguage = language.toUpperCase()
 
-    let code = this[`${language}Code`]
-
-    // @ts-expect-error
-    code = code ? unsafeHTML(this.highlightCode({ code, language })) : ""
     const open = this.openLanguages.split(",").includes(language)
 
 		return html`
@@ -664,63 +489,10 @@ export default class LightPen extends DefineableMixin(LitElement) {
 				<summary part="summary summary-${language}">
           ${fullLanguage}
         </summary>
-				<label for="sandbox-${language}" class="visually-hidden">${fullLanguage} code</label>
-				<div class="sandbox-editor" part="sandbox-editor">
-          <!-- This is where the fancy syntax highlighting comes in -->
-					<pre
-            id="pre-${language}"
-            data-code-lang=${language}
-            aria-hidden="true"
-            part="pre pre-${language}"
-          ><code
-              part="code code-${language}"
-              class="language-${language}"
-            >${code}</code></pre>
-          <!-- IMPORTANT! There must be no white-space above. -->
-					<textarea
-            ${
-              // @ts-expect-error
-              ref(this[`${language}TextAreaChanged`])
-            }
-            id="textarea-${language}"
-            data-code-lang=${language}
-            part="textarea textarea-${language}"
-            spellcheck="false"
-            autocorrect="off"
-            autocapitalize="off"
-            translate="no"
-            @keydown=${this.keydownHandler}
-            @input=${this.inputHandler}
-            @input=${this.syncScroll}
-            @scroll=${this.syncScroll}
-            value=${this[`${language}Code`]}
-          ></textarea>
-				</div>
+
+        ${this.renderEditor(language)}
 			</details>
 		`
-  }
-
-  /**
-   * @internal
-   * @param {Event} e
-   */
-  syncScroll (e) {
-    /**
-     * @type {null | HTMLTextAreaElement}
-     */
-    // @ts-expect-error
-    const textarea = e.target
-
-    if (textarea == null) return
-
-    const lang = textarea.dataset.codeLang
-
-    const pre = this.shadowRoot?.querySelector(`#pre-${lang}`)
-
-    if (pre == null) return
-
-    pre.scrollTop = textarea.scrollTop;
-    pre.scrollLeft = textarea.scrollLeft;
   }
 }
 
