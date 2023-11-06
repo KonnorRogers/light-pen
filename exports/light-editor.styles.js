@@ -1,14 +1,23 @@
 import { css } from "lit"
 
 export const styles = css`
-  [part~="base"] {
-    display:grid;
-    grid-template-columns: minmax(0, 1fr);
+  :host {
+    display: grid;
     grid-template-rows: minmax(0, 1fr);
-    column-gap: 0;
-    row-gap: 0;
+  }
+
+  [part~="base"] {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
     position: relative;
-    padding-top: 3px;
+    overflow: auto;
+    resize: vertical;
+    max-height: 100%;
+  }
+
+  [part~="base"]:focus-within,
+  [part~="base"]:focus-visible {
+    outline: 2px solid dodgerblue;
   }
 
   [part~="textarea"] {
@@ -17,25 +26,24 @@ export const styles = css`
     background-color: transparent;
     caret-color: black;
     z-index: 1;
-    resize: vertical;
+    resize: none;
   }
 
   [part~="pre"],
   [part~="textarea"] {
+    overflow: hidden;
     grid-area:1/1/2/2;
     margin-bottom:0;
     min-height:15em;
     margin: 0;
-    padding: 0;
 	  display: block;
 	  line-height: 1.5;
     padding: 8px;
     border: none;
-    overflow: auto;
     position: relative;
 
-    height: var(--textarea-height, auto);
-    width: var(--textarea-width, auto);
+    height: 100%;
+    width: 100%;
     max-width: 100%;
     max-height: 100%;
 
@@ -53,6 +61,7 @@ export const styles = css`
   [part~="code"] {
 	  color: #272727;
 	  background-color: #f7f7f7;
+
   }
 
 

@@ -6,6 +6,10 @@ export const styles = css`
   border: 1px solid darkgray;
 }
 
+[part~="sandbox-editor"]::part(base) {
+  resize: vertical;
+}
+
 [part~="sandbox"] {
   color:#272727;
   display: grid;
@@ -17,17 +21,16 @@ export const styles = css`
   font-size: .8125rem;
   font-weight: bold;
   padding: 0.4rem 0.6rem;
+  margin-bottom: 3px;
+}
+
+[part~="summary"]:hover {
+  background-color: rgba(0,0,0,0.10);
 }
 
 [part~="summary"]:focus {
   outline: 2px solid blue;
 }
-
-/*
-[part~="sandbox-editor"] {
-  height: var(--textarea-height, 33%);
-}
-*/
 
 [part~="base"] {
 	word-wrap: break-word;
@@ -35,8 +38,11 @@ export const styles = css`
 	font-size: 1em;
 }
 
+[part~="details"] {
+  padding: 4px;
+}
+
 [part~="details"]:not(:first-child) {
-  margin-top: 6px;
 }
 
 [part~="sandbox"],

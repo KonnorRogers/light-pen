@@ -64,31 +64,6 @@ export default class LightEditor extends BaseElement {
     this.textarea = null
   }
 
-  /**
-   * @ignore
-   * @param {ResizeObserverEntry[]} entries
-   */
-  handleTextAreaResize (entries) {
-    const { target } = entries[0]
-    const {
-      left, right,
-      top, bottom
-    } = entries[0].contentRect;
-    const width = left + right
-    const height = top + bottom
-
-    // @ts-expect-error
-    target.parentElement.style.setProperty("--textarea-height", `${height}px`)
-
-
-    /**
-     * Fires whenever the editor resizes
-     */
-    this.dispatchEvent(new LightResizeEvent("light-resize", {height, width}))
-    // One day we'll allow the textarea to resize the width.
-    // target.parentElement.style.setProperty("--textarea-width", `${width}px`)
-  }
-
   render () {
     const language = this.language
 
@@ -149,10 +124,6 @@ export default class LightEditor extends BaseElement {
 
     const textarea = element
 
-    this.textareaResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
-
-    this.textareaResizeObserver.observe(textarea)
-
     this.textareaMutationObserver = new MutationObserver((mutationRecords) => {
       // We actually don't care about what the mutation is, just update and move on.
       // for (const mutation of mutationRecords) {
@@ -194,20 +165,20 @@ export default class LightEditor extends BaseElement {
    * @param {Event} e
    */
   syncScroll (e) {
-    /**
-     * @type {null | HTMLTextAreaElement}
-     */
-    // @ts-expect-error
-    const textarea = e.target
-
-    if (textarea == null) return
-
-    const pre = this.shadowRoot?.querySelector(`pre`)
-
-    if (pre == null) return
-
-    pre.scrollTop = textarea.scrollTop;
-    pre.scrollLeft = textarea.scrollLeft;
+    // /**
+    //  * @type {null | HTMLTextAreaElement}
+    //  */
+    // // @ts-expect-error
+    // const textarea = e.target
+    //
+    // if (textarea == null) return
+    //
+    // const pre = this.shadowRoot?.querySelector(`pre`)
+    //
+    // if (pre == null) return
+    //
+    // pre.scrollTop = textarea.scrollTop;
+    // pre.scrollLeft = textarea.scrollLeft;
   }
 
   disconnectedCallback () {

@@ -6,7 +6,7 @@ component: light-pen
 
 ## Typical Usage
 
-<light-pen style="padding: 8px; height: 100%;" resize-position="30" open-languages="js,html,css">
+<light-pen style="padding: 8px; height: 75vh; max-height: 75vh;" resize-position="30" open-languages="js,html,css">
   <template slot="html">
     <light-pen>
       <template slot="html">
