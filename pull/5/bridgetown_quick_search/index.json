@@ -1,0 +1,122 @@
+[
+        {
+          "id": "light-pen-pull-5-components",
+          "title": "Components",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "components",
+          "tags": "",
+          "url": "/light-pen/pull/5/components/",
+          "content": ""
+        },
+        {
+          "id": "light-pen-pull-5-components-light-editor",
+          "title": "<light-editor>",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "components",
+          "tags": "",
+          "url": "/light-pen/pull/5/components/light-editor/",
+          "content": "With a template\n\nWe can use a &lt;template&gt; tag to be able to “slot” in values.\n\n\n  \n    \n      \n        \n          Hello World\n          What's up dude\n        \n\n        \n          A template in a template?!!?!?\n        \n\n        This is madness!!\n      \n    \n  \n\n\nChanging the highlight language to CSS\n\nBy default, the highlighter from Highlight.js only supports HTML / CSS / JS.\nThis is intentional to keep the bundle size low.\n\n\n  \n    \n      \n        html, body {\n          min-height: 100%;\n          height: 100%;\n          padding: 0;\n          margin: 0;\n        }\n\n        light-pen {\n          height: 100%;\n        }\n      \n    \n  \n\nImports\n\n\nScript\n\n  &lt;!-- Auto registers as &lt;light-editor&gt; --&gt;\n&lt;script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js\"&gt;&lt;/script&gt;\n\n\n\nCDN\n\n  &lt;script type=\"module\"&gt;\n  // Auto registers as &lt;light-editor&gt;\n  import \"https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js\"\n\n  // Manual Register\n  import LightEditor from \"https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor.js/exports/light-editor.js\"\n  LightEditor.define()\n  // =&gt; Registers as &lt;light-editor&gt;\n&lt;/script&gt;\n\n\n\nBundler\n\n  // Auto registers as &lt;light-editor&gt;\nimport \"light-pen/exports/light-editor.js/exports/light-editor-register.js\"\n\n// Manual Register\nimport LightEditor \"light-pen/exports/light-editor.js/exports/light-editor.js\"\nLightEditor.define()\n// =&gt; Registers as &lt;light-editor&gt;\n\n\n\n\n\nAttributes\n\n\n  \n    \n      \n        Name\n        Description\n        Reflects\n        Type\n        Default\n      \n    \n    \n      \n  \n      [Attribute + Property]\n      \n      language\n  \n  \n    -\n  \n  \n    \n  \n  \n    string\n  \n  \n    &#39;xml&#39;\n  \n\n\n\n  \n      [Attribute + Property]\n      \n      value\n  \n  \n    -\n  \n  \n    -\n  \n  \n    string\n  \n  \n    &#39;&#39;\n  \n\n\n\n  \n      [Attribute + Property]\n      \n      label\n  \n  \n    -\n  \n  \n    -\n  \n  \n    -\n  \n  \n    -\n  \n\n\n    \n  \n\n\nEvents\n\n\n  \n    \n      \n        Name\n        Description\n      \n    \n    \n      \n  \n    light-selectionchange\n  \n  \n    Re-emits the textarea&#39;s &quot;selectionchange&quot; event\n  \n\n\n\n  \n    light-input\n  \n  \n    Re-emits the textarea&#39;s &quot;input&quot; event\n  \n\n\n\n  \n    light-change\n  \n  \n    Re-emits the textarea&#39;s &quot;change&quot; event"
+        },
+        {
+          "id": "light-pen-pull-5-components-light-pen",
+          "title": "<light-pen>",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "components",
+          "tags": "",
+          "url": "/light-pen/pull/5/components/light-pen/",
+          "content": "Typical Usage\n\n\n  \n    \n      \n        \n          This is kind of wild huh? We have a &lt;light-pen&gt;\n          component running inside of a &lt;light-pen&gt; component!!\n        \n      \n\n      \n        code {\n          padding: 2px 6px;\n          display: inline-block;\n          font-size: 0.9em;\n          background-color: rgba(0,0,0,0.05);\n          border-radius: 4px;\n        }\n      \n    \n  \n\n  \n    html, body {\n      height: 100%;\n      min-height: 100%;\n      width: 100%;\n      margin: 0;\n    }\n\n    light-pen {\n      height: 100%;\n    }\n  \n\n  \n    import LightPen from \"/light-pen/pull/5/bridgetown/static/light-pen/exports/light-pen.5ASI66GL.js\";\n    LightPen.define()\n  \n\nImports\n\n\nScript\n\n  &lt;!-- Auto registers as &lt;light-pen&gt; --&gt;\n&lt;script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/light-pen/exports/light-pen-register.js\"&gt;&lt;/script&gt;\n\n\n\nCDN\n\n  &lt;script type=\"module\"&gt;\n  // Auto registers as &lt;light-pen&gt;\n  import \"https://cdn.jsdelivr.net/npm/light-pen/exports/light-pen-register.js\"\n\n  // Manual Register\n  import LightPen from \"https://cdn.jsdelivr.net/npm/light-pen/exports/light-pen.js/exports/light-pen.js\"\n  LightPen.define()\n  // =&gt; Registers as &lt;light-pen&gt;\n&lt;/script&gt;\n\n\n\nBundler\n\n  // Auto registers as &lt;light-pen&gt;\nimport \"light-pen/exports/light-pen.js/exports/light-pen-register.js\"\n\n// Manual Register\nimport LightPen \"light-pen/exports/light-pen.js/exports/light-pen.js\"\nLightPen.define()\n// =&gt; Registers as &lt;light-pen&gt;\n\n\n\n\n\nSlots\n\n\n  \n    \n      \n        Name\n        Description\n      \n    \n    \n      \n  \n    html\n  \n  \n    HTML to insert\n  \n\n\n\n  \n    css\n  \n  \n    CSS to insert\n  \n\n\n\n  \n    js\n  \n  \n    JavaScript to insert\n  \n\n\n\n  \n    title\n  \n  \n    The title to appear at the top of the editor\n  \n\n\n    \n  \n\n\nAttributes\n\n\n  \n    \n      \n        Name\n        Description\n        Reflects\n        Type\n        Default\n      \n    \n    \n      \n  \n      [Attribute]\n      \n      open-languages\n      \n      [Property]\n      \n      openLanguages\n  \n  \n    -\n  \n  \n    \n  \n  \n    -\n  \n  \n    -\n  \n\n\n\n  \n      [Attribute]\n      \n      resize-position\n      \n      [Property]\n      \n      resizePosition\n  \n  \n    -\n  \n  \n    \n  \n  \n    number\n  \n  \n    -\n  \n\n\n\n  \n      [Attribute + Property]\n      \n      console\n  \n  \n    -\n  \n  \n    \n  \n  \n    -\n  \n  \n    -\n  \n\n\n    \n  \n\n\nParts\n\n\n  \n    \n      \n        Name\n        Description\n      \n    \n    \n      \n  \n    base\n  \n  \n    The base wrapper\n  \n\n\n\n  \n    sandbox\n  \n  \n    The wrapper around the editor and the iframe\n  \n\n\n\n  \n    sandbox-header\n  \n  \n    The wrapper around the header area"
+        },
+        {
+          "id": "light-pen-pull-5-components-light-preview",
+          "title": "<light-preview>",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "components",
+          "tags": "",
+          "url": "/light-pen/pull/5/components/light-preview/",
+          "content": "Typical Usage\n\n\n  \n    Displaying a super cool button\n  \n  \n    \n\n    \n      \n        Displaying a super cool button\n      \n    \n\n    \n  \n\n\nNesting a light-pen inside of a light-pen\n\n\n  \n    \n\n    \n      \n        Displaying a super cool button\n      \n    \n\n    \n  \n\n  \n    \n\n    \n      \n        Displaying a super cool button\n      \n    \n\n    \n  \n\n\nLoading inline\n\n\n  \n    \n      \n        \n\n        Displaying a super cool button not inside an iframe\n\n        \n        \n          Notice how the button has the same styling as the toggle! That's because its not scoped into an iFrame!\n        \n      \n    \n\n    \n  \n\n\nAdditional buttons\n\n\n\n\n  \n    \n\n    \n      \n        Showing off more buttons\n      \n\n      HTML\n      Codepen\n    \n\n    \n  \n\n  HTML\n  Codepen\n\nImports\n\n\nScript\n\n  &lt;!-- Auto registers as &lt;light-preview&gt; --&gt;\n&lt;script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js\"&gt;&lt;/script&gt;\n\n\n\nCDN\n\n  &lt;script type=\"module\"&gt;\n  // Auto registers as &lt;light-preview&gt;\n  import \"https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js\"\n\n  // Manual Register\n  import LightPreview from \"https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview.js/exports/light-preview.js\"\n  LightPreview.define()\n  // =&gt; Registers as &lt;light-preview&gt;\n&lt;/script&gt;\n\n\n\nBundler\n\n  // Auto registers as &lt;light-preview&gt;\nimport \"light-pen/exports/light-preview.js/exports/light-preview-register.js\"\n\n// Manual Register\nimport LightPreview \"light-pen/exports/light-preview.js/exports/light-preview.js\"\nLightPreview.define()\n// =&gt; Registers as &lt;light-preview&gt;\n\n\n\n\n\nAttributes\n\n\n  \n    \n      \n        Name\n        Description\n        Reflects\n        Type\n        Default\n      \n    \n    \n      \n  \n      [Attribute]\n      \n      sandbox-settings\n      \n      [Property]\n      \n      sandboxSettings\n  \n  \n    The sandbox settings to provide to the &lt;iframe&gt;\n  \n  \n    \n  \n  \n    -\n  \n  \n    defaultSandboxSettings\n  \n\n\n\n  \n      [Attribute + Property]\n      \n      summary\n  \n  \n    The text to provide in the &lt;details&gt; toggle button\n  \n  \n    -\n  \n  \n    string\n  \n  \n    &quot;Show source code&quot;\n  \n\n\n\n  \n      [Attribute]\n      \n      highlight-language\n      \n      [Property]\n      \n      highlightLanguage\n  \n  \n    The language to highlight for.\n  \n  \n    \n  \n  \n    string\n  \n  \n    &quot;html&quot;\n  \n\n\n\n  \n      [Attribute]\n      \n      inline-preview\n      \n      [Property]\n      \n      inlinePreview\n  \n  \n    Set to true to not use an &lt;iframe&gt; for previewing\n  \n  \n    -\n  \n  \n    boolean\n  \n  \n    false\n  \n\n\n\n  \n      [Attribute + Property]\n      \n      resizing\n  \n  \n    When the resizer is being dragged, this will be true.\n  \n  \n    \n  \n  \n    boolean\n  \n  \n    false\n  \n\n\n\n  \n      [Attribute]\n      \n      disable-highlight\n      \n      [Property]\n      \n      disableHighlight\n  \n  \n    If disabled, its on you to provide `&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;`\n  \n  \n    -\n  \n  \n    boolean\n  \n  \n    false\n  \n\n\n\n  \n      [Attribute + Property]\n      \n      open\n  \n  \n    Whether or not the source code is being shown\n  \n  \n    \n  \n  \n    boolean\n  \n  \n    false\n  \n\n\n\n  \n      [Attribute]\n      \n      resize-position\n      \n      [Property]\n      \n      resizePosition\n  \n  \n    The current position of the resizer. 100 means all the way to right. 0 means all the way to left.\n  \n  \n    \n  \n  \n    number\n  \n  \n    100\n  \n\n\n    \n  \n\n\nFunctions\n\n\n  \n    \n      \n        Name\n        Description\n        Parameters\n      \n    \n    \n      \n  \n    highlight()\n  \n  \n    -\n  \n  \n    code"
+        },
+        {
+          "id": "light-pen-pull-5-guides-getting-started",
+          "title": "Getting Started",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "guides",
+          "tags": "",
+          "url": "/light-pen/pull/5/guides/getting-started/",
+          "content": "Installation\n\nnpm install light-pen\n\n\nUsage\n\n// entrypoint.js\nimport \"light-pen\"\n\n\n&lt;!-- Your HTML file --&gt;\n&lt;light-pen&gt;\n  &lt;template slot=\"html\"&gt;\n    &lt;!-- HTML --&gt;\n  &lt;/template&gt;\n\n  &lt;template slot=\"css\"&gt;\n    &lt;!-- CSS --&gt;\n  &lt;/template&gt;\n\n  &lt;template slot=\"js\"&gt;\n    &lt;!-- JS --&gt;\n  &lt;/template&gt;\n&lt;/light-pen&gt;\n\n\nFor additional components and how to use them, check out their component pages."
+        },
+        {
+          "id": "light-pen-pull-5-guides",
+          "title": "Guides",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "guides",
+          "tags": "",
+          "url": "/light-pen/pull/5/guides/",
+          "content": ""
+        },
+        {
+          "id": "light-pen-pull-5-references",
+          "title": "References",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/light-pen/pull/5/references/",
+          "content": "Coming Soon…"
+        },
+        {
+          "id": "light-pen-pull-5",
+          "title": "Light Pen",
+          "collection": {
+            "label": "pages",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "/light-pen/pull/5/",
+          "content": "A collection of components that may not fit a design system, but that I wanted to build."
+        },
+        {
+          "id": "light-pen-pull-5-bridgetown_quick_search-index.json",
+          "title": "Index",
+          "collection": {
+            "label": "pages",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "/light-pen/pull/5/bridgetown_quick_search/index.json",
+          "content": "[\n  {%- assign looped = false %}\n  {%- assign documents = site.documents %}\n  {%- if site.content_engine == \"resource\" %}{% assign documents = site.resources %}{% endif %}\n  {%- for document in documents %}\n    {%- if document.title %}\n      {%- unless document.exclude_from_search or document.id == \"\" %}\n        {%- assign url = document.url %}\n        {%- if site.content_engine == \"resource\" %}{% assign url = document.relative_url %}{% endif %}\n        {%- if looped %},{% endif %}\n        {\n          \"id\": \"{{ url | slugify }}\",\n          \"title\": {{ document.title | jsonify }},\n          {%- if document.collection %}\n          \"collection\": {\n            \"label\": {{ document.collection.label | jsonify }},\n            \"name\": {{ document.collection.name | default: \"Posts\" | jsonify }}\n          },\n          {%- endif %}\n          \"categories\": {{ document.categories | join: \", \" | jsonify }},\n          \"tags\": {{ document.tags | join: \", \" | jsonify }},\n          \"url\": {{ url | jsonify }},\n          \"content\": {{ document.content | strip_html | replace_regex: \"[\\s/\\n]+\",\" \" | strip | jsonify }}\n        }\n        {%- assign looped = true %}\n      {%- endunless %}\n    {%- endif %}\n  {%- endfor %}\n  {%- for document in site.generated_pages %}\n    {%- if document.name contains \".md\" or document.name contains \".html\" %}\n      {%- if document.title %}\n        {%- unless document.exclude_from_search %}\n          {%- if looped %},{% endif %}\n          {\n            \"id\": \"{{ document.url | slugify }}\",\n            \"title\": {{ document.title | jsonify }},\n            \"categories\": {{ document.categories | join: \", \" | jsonify }},\n            \"tags\": {{ document.tags | join: \", \" | jsonify }},\n            \"url\": {{ document.url | jsonify }},\n            \"content\": {{ document.content | strip_html | replace_regex: \"[\\s/\\n]+\",\" \" | strip | jsonify }}\n          }\n        {%- endunless %}\n      {%- endif %}\n    {%- endif %}\n  {%- endfor %}\n]"
+        },
+        {
+          "id": "",
+          "title": "Lightweight Components for doing complex things.",
+          "collection": {
+            "label": "data",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "",
+          "content": ""
+        }
+]
