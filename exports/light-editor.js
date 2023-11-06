@@ -10,7 +10,6 @@ import { BaseElement } from "../internal/base-element.js";
 import { baseStyles } from "./base-styles.js";
 import { styles } from "./light-editor.styles.js";
 import { theme } from "./default-theme.styles.js";
-import { LightResizeEvent } from "./events/light-resize-event.js"
 import { dedent } from "../internal/dedent.js";
 
 HighlightJS.registerLanguage('javascript', JavaScript);
@@ -96,7 +95,6 @@ export default class LightEditor extends BaseElement {
             this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
           }}
           @input=${/** @param {Event} e */ (e) => {
-            this.syncScroll(e)
             this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
             this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
           }}
@@ -104,7 +102,6 @@ export default class LightEditor extends BaseElement {
             this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
             this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
           }}
-          @scroll=${this.syncScroll}
           .value=${this.value}
         ></textarea>
 			</div>
@@ -160,29 +157,7 @@ export default class LightEditor extends BaseElement {
     }
   }
 
-  /**
-   * @internal
-   * @param {Event} e
-   */
-  syncScroll (e) {
-    // /**
-    //  * @type {null | HTMLTextAreaElement}
-    //  */
-    // // @ts-expect-error
-    // const textarea = e.target
-    //
-    // if (textarea == null) return
-    //
-    // const pre = this.shadowRoot?.querySelector(`pre`)
-    //
-    // if (pre == null) return
-    //
-    // pre.scrollTop = textarea.scrollTop;
-    // pre.scrollLeft = textarea.scrollLeft;
-  }
-
   disconnectedCallback () {
-    this.textareaResizeObserver?.disconnect()
     this.textareaMutationObserver?.disconnect()
     super.disconnectedCallback()
   }
@@ -198,7 +173,7 @@ export default class LightEditor extends BaseElement {
     // @ts-expect-error
     const target = evt.target
 
-    // Let's not focus trap. For now.
+    // Let's not trap focus. For now.
     // if ('Tab' === evt.key) {
     //   evt.preventDefault()
     //   target.setRangeText('\t', target.selectionStart, target.selectionEnd, 'end')
@@ -216,8 +191,6 @@ export default class LightEditor extends BaseElement {
     let { code, language } = options
 
     code = this.unescapeCharacters(code)
-    // Dedent is nice, but we don't want to do it on user typed data.
-    // code = dedent(code)
     code = this.injectNewLine(code)
 
     return HighlightJS.highlight(code, {language}).value
@@ -245,5 +218,4 @@ export default class LightEditor extends BaseElement {
 
     return text
   }
-
 }
