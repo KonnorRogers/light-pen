@@ -4,6 +4,7 @@ export const previewStyles = css`
 :host {
   --border-color: lightgray;
 }
+
 :host,
 [part~="base"] {
   max-width: 100%;
@@ -37,6 +38,7 @@ export const previewStyles = css`
   overflow: auto;
   max-height: 100%;
   resize: vertical;
+
 }
 
 [part~="start-panel"] {
@@ -91,6 +93,11 @@ button[part~="source-code-toggle"] {
   min-height: 100%;
   font-size: 1rem;
   padding: 0.75rem;
+}
+
+[part~="source-code-toggle"] svg {
+  transform-origin: 50% 50%;
+  transition: .25s transform ease;
 }
 
 [part~="source-code-toggle"][aria-expanded="true"] svg {

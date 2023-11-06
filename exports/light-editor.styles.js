@@ -61,9 +61,7 @@ export const styles = css`
   [part~="code"] {
 	  color: #272727;
 	  background-color: #f7f7f7;
-
   }
-
 
   [part~="pre"],
   [part~="code"],

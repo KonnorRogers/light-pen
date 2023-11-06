@@ -302,7 +302,6 @@ export default class LightPreviewBase extends BaseElement {
     return text.replaceAll(new RegExp("<", "g"), "&lt;").replaceAll(new RegExp(">", "g"), "&gt;")
   }
 
-
   /**
    * @internal
    * @param {string} text
@@ -403,7 +402,6 @@ export default class LightPreviewBase extends BaseElement {
 
           <div part="end-panel"></div>
         </div>
-
 
         <details id="details" ?open=${this.open} part="source-details" aria-labelledby="summary">
           <summary style="display: none;"></summary>

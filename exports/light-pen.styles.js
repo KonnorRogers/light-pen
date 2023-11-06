@@ -60,7 +60,7 @@ export const styles = css`
 [part~="pre"],
 [part~="code"],
 [part~="sandbox-iframe"] {
-  border-radius:.25em;
+  border-radius:.25rem;
 }
 
 [part~='sandbox-header'],
@@ -138,9 +138,6 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
   display:grid;
   grid-template-columns: minmax(var(--start-panel-min-width, 30px),var(--start-panel-width, 1fr)) minmax(0, auto) minmax(var(--end-panel-min-width, 30px), var(--end-panel-width, 1fr));
   grid-template-rows: minmax(0, 1fr);
-}
-
-[part~="sandbox-iframe-wrapper"] {
 }
 
 [part~="sandbox-console-result"] {
