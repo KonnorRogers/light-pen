@@ -1,4 +1,4 @@
-import{a as u}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-FTRZ2HNJ.js";import{a as n,b as d,c as b,d as f}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-IFN7YRMV.js";import{a as c,b as s,m as p,n as h,o as m}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-HIGFVGHC.js";import{d as o}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-OSUW2QPQ.js";var g=c`
+import{a as u}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-RZRTORZ4.js";import{a as n,b as d,c as b,d as f}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-IFN7YRMV.js";import{a as c,b as s,m as h,n as p,o as m}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-HIGFVGHC.js";import{d as o}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-OSUW2QPQ.js";var g=c`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
@@ -59,7 +59,7 @@ import{a as u}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-FTRZ2HNJ.js"
 [part~="pre"],
 [part~="code"],
 [part~="sandbox-iframe"] {
-  border-radius:.25em;
+  border-radius:.25rem;
 }
 
 [part~='sandbox-header'],
@@ -139,14 +139,11 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
   grid-template-rows: minmax(0, 1fr);
 }
 
-[part~="sandbox-iframe-wrapper"] {
-}
-
 [part~="sandbox-console-result"] {
   border-top:1px solid #1f252f;
   border-bottom-left-radius:0;
 }
-`;var i=class i extends p{constructor(){super(),this.languageMap={html:"xml",css:"css",js:"javascript"},this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
+`;var i=class i extends h{constructor(){super(),this.languageMap={html:"xml",css:"css",js:"javascript"},this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}</style>
@@ -241,5 +238,5 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
 
         ${this.renderEditor(e)}
 			</details>
-		`}};o(i,"baseName","light-pen"),o(i,"styles",[h,m,g]),o(i,"dependencies",{"light-editor":u}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}}),Object.values(i.dependencies).forEach(e=>{e.define()});var l=i;export{l as a};
-//# sourceMappingURL=/light-pen/pull/5/bridgetown/static/chunks/chunk-AO64YGHO.js.map
+		`}};o(i,"baseName","light-pen"),o(i,"styles",[p,m,g]),o(i,"dependencies",{"light-editor":u}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}}),Object.values(i.dependencies).forEach(e=>{e.define()});var l=i;export{l as a};
+//# sourceMappingURL=/light-pen/pull/5/bridgetown/static/chunks/chunk-JRVWIB37.js.map

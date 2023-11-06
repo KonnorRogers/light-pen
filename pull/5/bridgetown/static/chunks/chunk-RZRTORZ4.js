@@ -59,9 +59,7 @@ import{a as f,b as $,c as u,d as b,e as n,f as A,g as _,h as x,i as p,j as v,k a
   [part~="code"] {
 	  color: #272727;
 	  background-color: #f7f7f7;
-
   }
-
 
   [part~="pre"],
   [part~="code"],
@@ -132,4 +130,4 @@ lit-html/directives/ref.js:
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 */
-//# sourceMappingURL=/light-pen/pull/5/bridgetown/static/chunks/chunk-FTRZ2HNJ.js.map
+//# sourceMappingURL=/light-pen/pull/5/bridgetown/static/chunks/chunk-RZRTORZ4.js.map
