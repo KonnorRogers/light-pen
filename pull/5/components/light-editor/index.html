@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/pull/5/"> -->
 
 <meta name="description" content="A collection of components that don't generally fit a design system, but that I wanted to build.">
-<link rel="modulepreload" href="/light-pen/pull/5/bridgetown/static/javascript/index.ZDR3FF57.js">
+<link rel="modulepreload" href="/light-pen/pull/5/bridgetown/static/javascript/index.DDPCVOEJ.js">
 <link rel="modulepreload" href="/light-pen/pull/5/bridgetown/static/javascript/defer.3ZXEPLK3.js">
 <link rel="preload" href="/light-pen/pull/5/bridgetown/static/javascript/defer.VR3UQG5I.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/5/bridgetown/static/javascript/defer.VR3UQG5I.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/5/bridgetown/static/javascript/index.ZDR3FF57.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/5/bridgetown/static/javascript/index.DDPCVOEJ.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/5/bridgetown/static/javascript/defer.3ZXEPLK3.js" type="module"></script>
 
 <!-- Favicons -->
@@ -208,7 +208,10 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/pull/5/components">Components</a></li>
-          <li class="side-nav__item is-active">
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/pull/5/components/light-disclosure/">&lt;light-disclosure&gt;</a>
+  </li>
+  <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-editor/">&lt;light-editor&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -240,7 +243,10 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/pull/5/components">Components</a></li>
-          <li class="side-nav__item is-active">
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/pull/5/components/light-disclosure/">&lt;light-disclosure&gt;</a>
+  </li>
+  <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-editor/">&lt;light-editor&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -340,12 +346,12 @@ This is intentional to keep the bundle size low.</p>
             HTML
           </div>
 
-          <clipboard-copy for="7d129090-394e-45b5-8092-1e96ed2d6bab" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="7824961e-0b21-4a28-95f2-b02e5831bcb5" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="7d129090-394e-45b5-8092-1e96ed2d6bab" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
+          <textarea id="7824961e-0b21-4a28-95f2-b02e5831bcb5" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -361,12 +367,12 @@ This is intentional to keep the bundle size low.</p>
             HTML
           </div>
 
-          <clipboard-copy for="1123911b-4f86-4e2d-9af5-0b6db182ab14" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="15184ba1-e389-48ba-86f8-9df4c00cb2c4" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="1123911b-4f86-4e2d-9af5-0b6db182ab14" hidden="">&lt;script type="module"&gt;
+          <textarea id="15184ba1-e389-48ba-86f8-9df4c00cb2c4" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-editor&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js"
 
@@ -396,12 +402,12 @@ This is intentional to keep the bundle size low.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="46abffb9-18fb-4d4f-987f-dfe439935ac8" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="c3f67af1-0287-4501-99b8-195748314672" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="46abffb9-18fb-4d4f-987f-dfe439935ac8" hidden="">// Auto registers as &lt;light-editor&gt;
+          <textarea id="c3f67af1-0287-4501-99b8-195748314672" hidden="">// Auto registers as &lt;light-editor&gt;
 import "light-pen/exports/light-editor.js/exports/light-editor-register.js"
 
 // Manual Register
@@ -550,7 +556,19 @@ LightEditor.define()
 
     <div class="pagination-footer">
 
-      <div></div>
+      <sl-button class="previous-page" href="/light-pen/pull/5/components/light-disclosure/">
+        <span slot="prefix">
+          <sl-icon name="arrow-left" style="font-size: 1.5rem; display: block;"></sl-icon>
+        </span>
+
+        <span style="text-align: end; display: block;">
+          <span style="display: block; color: var(--sl-color-neutral-500); font-size: 0.85rem;">
+            Previous Page
+          </span>
+          <pagination-title>&lt;light-disclosure&gt;</pagination-title>
+        </span>
+
+      </sl-button>
 
       <sl-button class="next-page" href="/light-pen/pull/5/components/light-pen/">
         <span style="text-align: start; display: block;">
@@ -637,7 +655,10 @@ LightEditor.define()
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/pull/5/components">Components</a></li>
-          <li class="side-nav__item is-active">
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/pull/5/components/light-disclosure/">&lt;light-disclosure&gt;</a>
+  </li>
+  <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-editor/">&lt;light-editor&gt;</a>
   </li>
   <li class="side-nav__item ">

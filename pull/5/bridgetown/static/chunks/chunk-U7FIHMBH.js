@@ -1,4 +1,4 @@
-import{a as u}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-RZRTORZ4.js";import{a as n,b as d,c as b,d as f}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-IFN7YRMV.js";import{a as c,b as s,m as h,n as p,o as m}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-HIGFVGHC.js";import{d as o}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-OSUW2QPQ.js";var g=c`
+import{a as m}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-TWOFRJX4.js";import{a as n,b as d,c as u,d as b}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-CHYOFPLB.js";import{a as l,b as s,m as c,n as h,o as p}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-HQPUIQBR.js";import{d as o}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-OSUW2QPQ.js";var f=l`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
@@ -143,7 +143,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
   border-top:1px solid #1f252f;
   border-bottom-left-radius:0;
 }
-`;var i=class i extends h{constructor(){super(),this.languageMap={html:"xml",css:"css",js:"javascript"},this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
+`;var i=class extends c{constructor(){super(),this.languageMap={html:"xml",css:"css",js:"javascript"},this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}</style>
@@ -194,7 +194,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
             class=${this._resizing?"is-active":""}
           >
             <slot name="panel-resize-icon">
-              ${f}
+              ${b}
             </slot>
             <span class="visually-hidden">Resize Panel. Pull to left or right to resize.</span>
           </button>
@@ -216,7 +216,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
             `)}
         -->
 			</div>
-		</div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,b(this,{onMove:(t,r)=>{this._resizing=!0;let a=t;this.resizePosition=d(0,this.pixelsToPercentage(a),100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){let t=this.languageMap[e];return s`
+		</div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,u(this,{onMove:(t,r)=>{this._resizing=!0;let a=t;this.resizePosition=d(0,this.pixelsToPercentage(a),100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){let t=this.languageMap[e];return s`
       <light-editor
         id=${`editor-${e}`}
         part=${`sandbox-editor sandbox-editor--${e}`}
@@ -238,5 +238,5 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
 
         ${this.renderEditor(e)}
 			</details>
-		`}};o(i,"baseName","light-pen"),o(i,"styles",[p,m,g]),o(i,"dependencies",{"light-editor":u}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}}),Object.values(i.dependencies).forEach(e=>{e.define()});var l=i;export{l as a};
-//# sourceMappingURL=/light-pen/pull/5/bridgetown/static/chunks/chunk-JRVWIB37.js.map
+		`}};o(i,"baseName","light-pen"),o(i,"styles",[h,p,f]),o(i,"dependencies",{"light-editor":m}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{i as a};
+//# sourceMappingURL=/light-pen/pull/5/bridgetown/static/chunks/chunk-U7FIHMBH.js.map

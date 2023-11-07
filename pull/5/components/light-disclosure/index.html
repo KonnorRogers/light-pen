@@ -208,7 +208,7 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/pull/5/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -217,7 +217,7 @@
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-pen/">&lt;light-pen&gt;</a>
   </li>
-  <li class="side-nav__item is-active">
+  <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-preview/">&lt;light-preview&gt;</a>
   </li>
 
@@ -243,7 +243,7 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/pull/5/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -252,7 +252,7 @@
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-pen/">&lt;light-pen&gt;</a>
   </li>
-  <li class="side-nav__item is-active">
+  <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-preview/">&lt;light-preview&gt;</a>
   </li>
 
@@ -267,553 +267,46 @@
 
 
 <main id="main" class="documentation-content">
-  <h1 id="<light-preview>">
-    <a href="#<light-preview>">
-      &lt;Light Preview&gt;
+  <h1 id="<light-disclosure>">
+    <a href="#<light-disclosure>">
+      &lt;Light Disclosure&gt;
     </a>
   </h1>
 
-    <p>LightPreview is a very lightweight code previewer designed to load your code sample
-  inside of an iFrame for encapsulated viewing. <code class="highlighter-rouge">&lt;light-preview&gt;</code> uses HighlightJS as it’s
-  default highlighter, but has a base class intended for extending.</p>
 
   <h2 id="typical-usage">
           <a href="#typical-usage">Typical Usage</a>
         </h2>
 
-<light-preview>
-  <template slot="preview-code">
-    <button>Displaying a super cool button</button>
-  </template>
-  <template slot="code">
-    <style>
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-    </style>
-
-    <light-preview>
-      <template slot="code">
-        <button>Displaying a super cool button</button>
-      </template>
-    </light-preview>
-
-    <script type="module">
-      import LightPreview from "./exports/light-preview.js";
-      LightPreview.define()
-    </script>
-  </template>
-</light-preview>
-
-<h2 id="nesting-a-light-pen-inside-of-a-light-pen">
-          <a href="#nesting-a-light-pen-inside-of-a-light-pen">Nesting a light-pen inside of a light-pen</a>
-        </h2>
-
-<light-preview>
-  <template slot="code">
-    <style>
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-    </style>
-
-    <light-preview>
-      <template slot="code">
-        <button>Displaying a super cool button</button>
-      </template>
-    </light-preview>
-
-    <script type="module">
-      import LightPreview from "light-pen/exports/light-preview.js"
-      LightPreview.define()
-    </script>
-  </template>
-
-  <template slot="preview-code">
-    <style>
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-    </style>
-
-    <light-preview>
-      <template slot="code">
-        <button>Displaying a super cool button</button>
-      </template>
-    </light-preview>
-
-    <script type="module">
-      import LightPreview from "/light-pen/pull/5/bridgetown/static/light-pen/exports/light-preview.KW6PJO5C.js"
-      LightPreview.define()
-    </script>
-  </template>
-</light-preview>
-
-<h2 id="loading-inline">
-          <a href="#loading-inline">Loading inline</a>
-        </h2>
+<light-disclosure style="display: none;"></light-disclosure>
 
 <light-preview inline-preview="">
   <template slot="code">
-    <light-preview inline-preview="">
-      <template slot="code">
-        <style>
-          button.button {
-            border-color: gray;
-          }
-        </style>
-
-        <button class="button">Displaying a super cool button not inside an iframe</button>
-
-        <br>
-        <p>
-          Notice how the button has the same styling as the toggle! That's because its not scoped into an iFrame!
-        </p>
-      </template>
-    </light-preview>
-
-    <script type="module">
-      import LightPreview from "/light-pen/pull/5/bridgetown/static/light-pen/exports/light-preview.KW6PJO5C.js"
-      LightPreview.define()
-    </script>
+    <light-disclosure summary="Source Code">
+      <code style="background-color: rgba(0,0,0,0.01);">export const x = "hi"</code>
+    </light-disclosure>
   </template>
 </light-preview>
-
-<h2 id="additional-buttons">
-          <a href="#additional-buttons">Additional buttons</a>
-        </h2>
-
-<style>
-  #additional-buttons button {
-    appearance: none;
-    -webkit-appearance: none;
-    background-color: inherit;
-    padding: 0.4em 0.6em;
-    color: inherit;
-    border: 1px solid lightgray;
-    border-bottom-color: transparent;
-    border-right-color: transparent;
-    height: 100%;
-    border-radius: 0;
-  }
-
-
-  #additional-buttons button:focus-visible {
-    outline: 2px solid hsl(203, 77%, 43%);
-  }
-
-  @supports not selector(:focus-visible) {
-    #additional-buttons button:focus-within {
-      outline: 2px solid hsl(203, 77%, 43%);
-    }
-  }
-
-  #additional-buttons button:hover {
-    cursor: pointer;
-    color: hsla(203, 77%, 43%);
-    background-color: hsla(203, 77%, 43%, 0.1);
-  }
-</style>
-
-<light-preview id="additional-buttons">
-  <template slot="code">
-    <style>
-      #additional-buttons button {
-        appearance: none;
-        -webkit-appearance: none;
-        background-color: inherit;
-        padding: 0.4em 0.6em;
-        color: inherit;
-        border: 1px solid lightgray;
-        border-bottom-color: transparent;
-        border-right-color: transparent;
-        height: 100%;
-        border-radius: 0;
-      }
-
-      #additional-buttons button:focus-visible {
-        outline: 2px solid hsl(203, 77%, 43%);
-      }
-
-      @supports not selector(:focus-visible) {
-        #additional-buttons button:focus-within {
-          outline: 2px solid hsl(203, 77%, 43%);
-        }
-      }
-
-      #additional-buttons button:hover {
-        cursor: pointer;
-        color: hsla(203, 77%, 43%);
-        background-color: hsla(203, 77%, 43%, 0.1);
-      }
-
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-
-    </style>
-
-    <light-preview id="additional-buttons">
-      <template slot="code">
-        <div>Showing off more buttons</div>
-      </template>
-
-      <button slot="actions">HTML</button>
-      <button slot="actions">Codepen</button>
-    </light-preview>
-
-    <script type="module">
-      import LightPreview from "/light-pen/pull/5/bridgetown/static/light-pen/exports/light-preview.KW6PJO5C.js"
-      LightPreview.define()
-    </script>
-  </template>
-
-  <button slot="actions">HTML</button>
-  <button slot="actions">Codepen</button>
-</light-preview>
-<h2 id="imports">
-          <a href="#imports">Imports</a>
-        </h2>
-
-<sl-tab-group>
-<sl-tab slot="nav" panel="Script">Script</sl-tab>
-<sl-tab-panel name="Script">
-  <div class="syntax-block">        <div class="syntax-block__actions">
-          <div class="syntax-block__badge">
-            HTML
-          </div>
-
-          <clipboard-copy for="38b6576c-e0a9-424a-b9d2-ed3d10d9fdf7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
-
-          <textarea id="38b6576c-e0a9-424a-b9d2-ed3d10d9fdf7" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
-&lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"&gt;&lt;/script&gt;
-</textarea>
-        </div>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span> <span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-</code></pre></div></div></div>
-</sl-tab-panel>
-
-<sl-tab slot="nav" panel="CDN">CDN</sl-tab>
-<sl-tab-panel name="CDN">
-  <div class="syntax-block">        <div class="syntax-block__actions">
-          <div class="syntax-block__badge">
-            HTML
-          </div>
-
-          <clipboard-copy for="c7f87fd9-a609-4485-ad8b-9a9f45a95561" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
-
-          <textarea id="c7f87fd9-a609-4485-ad8b-9a9f45a95561" hidden="">&lt;script type="module"&gt;
-  // Auto registers as &lt;light-preview&gt;
-  import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"
-
-  // Manual Register
-  import LightPreview from "https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview.js/exports/light-preview.js"
-  LightPreview.define()
-  // =&gt; Registers as &lt;light-preview&gt;
-&lt;/script&gt;
-</textarea>
-        </div>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span><span class="nt">&gt;</span>
-  <span class="c1">// Auto registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">preview</span><span class="o">&gt;</span>
-  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js</span><span class="dl">"</span>
-
-  <span class="c1">// Manual Register</span>
-  <span class="k">import</span> <span class="nx">LightPreview</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview.js/exports/light-preview.js</span><span class="dl">"</span>
-  <span class="nx">LightPreview</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
-  <span class="c1">// =&gt; Registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">preview</span><span class="o">&gt;</span>
-<span class="nt">&lt;/script&gt;</span>
-</code></pre></div></div></div>
-</sl-tab-panel>
-
-<sl-tab slot="nav" panel="Bundler">Bundler</sl-tab>
-<sl-tab-panel name="Bundler">
-  <div class="syntax-block">        <div class="syntax-block__actions">
-          <div class="syntax-block__badge">
-            JavaScript
-          </div>
-
-          <clipboard-copy for="82304729-52a8-40ee-8bb8-7f102e150471" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
-
-          <textarea id="82304729-52a8-40ee-8bb8-7f102e150471" hidden="">// Auto registers as &lt;light-preview&gt;
-import "light-pen/exports/light-preview.js/exports/light-preview-register.js"
-
-// Manual Register
-import LightPreview "light-pen/exports/light-preview.js/exports/light-preview.js"
-LightPreview.define()
-// =&gt; Registers as &lt;light-preview&gt;
-</textarea>
-        </div>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Auto registers as &lt;light-preview&gt;</span>
-<span class="k">import</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-preview.js/exports/light-preview-register.js</span><span class="dl">"</span>
-
-<span class="c1">// Manual Register</span>
-<span class="k">import</span> <span class="nx">LightPreview</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-preview.js/exports/light-preview.js</span><span class="dl">"</span>
-<span class="nx">LightPreview</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
-<span class="c1">// =&gt; Registers as &lt;light-preview&gt;</span>
-</code></pre></div></div></div>
-</sl-tab-panel>
-
-</sl-tab-group>
-
-<h2 id="attributes">
-          <a href="#attributes">Attributes</a>
-        </h2>
-
-<div class="table-container">
-  <table class="table--component">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Reflects</th>
-        <th>Type</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-  <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>sandbox-settings</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>sandboxSettings</code>
-  </td>
-  <td>
-    The sandbox settings to provide to the &lt;iframe&gt;
-  </td>
-  <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <code>defaultSandboxSettings</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute + Property]</small>
-      <br>
-      <code>summary</code>
-  </td>
-  <td>
-    The text to provide in the &lt;details&gt; toggle button
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <code>string</code>
-  </td>
-  <td>
-    <code>"Show source code"</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>highlight-language</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>highlightLanguage</code>
-  </td>
-  <td>
-    The language to highlight for.
-  </td>
-  <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
-  </td>
-  <td>
-    <code>string</code>
-  </td>
-  <td>
-    <code>"html"</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>inline-preview</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>inlinePreview</code>
-  </td>
-  <td>
-    Set to true to not use an &lt;iframe&gt; for previewing
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <code>boolean</code>
-  </td>
-  <td>
-    <code>false</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute + Property]</small>
-      <br>
-      <code>resizing</code>
-  </td>
-  <td>
-    When the resizer is being dragged, this will be true.
-  </td>
-  <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
-  </td>
-  <td>
-    <code>boolean</code>
-  </td>
-  <td>
-    <code>false</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>disable-highlight</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>disableHighlight</code>
-  </td>
-  <td>
-    If disabled, its on you to provide `&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;`
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <code>boolean</code>
-  </td>
-  <td>
-    <code>false</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute + Property]</small>
-      <br>
-      <code>open</code>
-  </td>
-  <td>
-    Whether or not the source code is being shown
-  </td>
-  <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
-  </td>
-  <td>
-    <code>boolean</code>
-  </td>
-  <td>
-    <code>false</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>resize-position</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>resizePosition</code>
-  </td>
-  <td>
-    The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
-  </td>
-  <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
-  </td>
-  <td>
-    <code>number</code>
-  </td>
-  <td>
-    <code>100</code>
-  </td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-
-<h2 id="functions">
-          <a href="#functions">Functions</a>
-        </h2>
-
-<div class="table-container">
-  <table class="table--component">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Parameters</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-  <td>
-    <code>highlight()</code>
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <code>code</code>
-  </td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
 
 
 
     <div class="pagination-footer">
 
-      <sl-button class="previous-page" href="/light-pen/pull/5/components/light-pen/">
-        <span slot="prefix">
-          <sl-icon name="arrow-left" style="font-size: 1.5rem; display: block;"></sl-icon>
+      <div></div>
+
+      <sl-button class="next-page" href="/light-pen/pull/5/components/light-editor/">
+        <span style="text-align: start; display: block;">
+          <span style="display: block; color: var(--sl-color-neutral-500); font-size: 0.85rem;">Next Page</span>
+          <pagination-title>
+            &lt;light-editor&gt;
+          </pagination-title>
         </span>
 
-        <span style="text-align: end; display: block;">
-          <span style="display: block; color: var(--sl-color-neutral-500); font-size: 0.85rem;">
-            Previous Page
-          </span>
-          <pagination-title>&lt;light-pen&gt;</pagination-title>
+        <span slot="suffix">
+          <sl-icon name="arrow-right" style="font-size: 1.5rem; display: block;"></sl-icon>
         </span>
 
       </sl-button>
-
-      <div></div>
   </div>
 
 
@@ -821,23 +314,11 @@ LightPreview.define()
 
 <nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
   <h2 class="table-of-contents__header">
-    &lt;Light Preview&gt;
+    &lt;Light Disclosure&gt;
   </h2>
   <ol class="table-of-contents__list">
   <li class="side-nav__item">
         <a href="#typical-usage" class="side-nav__link">Typical Usage</a>
-      </li><li class="side-nav__item">
-        <a href="#nesting-a-light-pen-inside-of-a-light-pen" class="side-nav__link">Nesting a light-pen inside of a light-pen</a>
-      </li><li class="side-nav__item">
-        <a href="#loading-inline" class="side-nav__link">Loading inline</a>
-      </li><li class="side-nav__item">
-        <a href="#additional-buttons" class="side-nav__link">Additional buttons</a>
-      </li><li class="side-nav__item">
-        <a href="#imports" class="side-nav__link">Imports</a>
-      </li><li class="side-nav__item">
-        <a href="#attributes" class="side-nav__link">Attributes</a>
-      </li><li class="side-nav__item">
-        <a href="#functions" class="side-nav__link">Functions</a>
       </li></ol>
 </nav>
 
@@ -846,7 +327,7 @@ LightPreview.define()
       <footer slot="main-footer">
   <div class="footer">
     Found a mistake? Want to contribute?
-    <a href="https://github.com/konnorrogers/light-pen/tree/5/merge/docs/src/_documentation/components/light-preview.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
+    <a href="https://github.com/konnorrogers/light-pen/tree/5/merge/docs/src/_documentation/components/light-disclosure.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
 
     <div style="margin: 1.5rem 0;"></div>
 
@@ -890,7 +371,7 @@ LightPreview.define()
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/pull/5/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -899,7 +380,7 @@ LightPreview.define()
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-pen/">&lt;light-pen&gt;</a>
   </li>
-  <li class="side-nav__item is-active">
+  <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/pull/5/components/light-preview/">&lt;light-preview&gt;</a>
   </li>
 
