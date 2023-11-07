@@ -46,7 +46,8 @@ export const previewStyles = css`
 }
 
 iframe {
-  min-height: 100%;
+  height: max-content;
+  max-height: max-content;
   width: 100%;
 }
 
@@ -102,5 +103,9 @@ button[part~="source-code-toggle"] {
 
 [part~="source-code-toggle"][aria-expanded="true"] svg {
   transform: rotate(180deg);
+}
+
+[part~="source-details"]::part(summary) {
+  display: none;
 }
 `

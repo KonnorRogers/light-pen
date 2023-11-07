@@ -12,6 +12,7 @@ import { stringMap } from "../internal/string-map.js";
 import { debounce } from "../internal/debounce.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 import { BaseElement } from "../internal/base-element.js";
+import { LightDisclosure } from "./light-disclosure.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -46,6 +47,10 @@ const sourceCodeFallback = "Show source code"
  */
 export default class LightPreviewBase extends BaseElement {
   static baseName = "light-preview-base"
+
+  static dependencies = {
+    "light-disclosure": LightDisclosure
+  }
 
   static styles = [
     baseStyles,
@@ -406,8 +411,12 @@ export default class LightPreviewBase extends BaseElement {
         <light-disclosure
           id="details"
           ?open=${this.open}
+          @light-toggle=${(/** @type {Event} */ e) => this.open = /** @type {LightDisclosure} */ (e.currentTarget).open}
           part="source-details"
           aria-labelledby="summary"
+          exportparts="
+            summary:source-details__summary
+          "
         >
           <div part="code-wrapper">
             ${when(this.highlight,

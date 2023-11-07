@@ -59,12 +59,6 @@ export default class LightPen extends BaseElement {
     _resizing: { attribute: false },
   }
 
-  static {
-    Object.values(this.dependencies).forEach((ctor) => {
-      ctor.define()
-    })
-  }
-
   // Overrides
 
   /**

@@ -2,7 +2,13 @@ import { html, css } from "lit"
 import { baseStyles } from "./base-styles.js"
 import { BaseElement } from "../internal/base-element.js"
 
+/**
+ * A `<details>` element packaged nicely to animate like a disclosure.
+ * @customElement
+ * @tagName light-disclosure
+ */
 export class LightDisclosure extends BaseElement {
+  static baseName = "light-disclosure"
   static styles = [
     baseStyles,
     css`
@@ -16,7 +22,7 @@ export class LightDisclosure extends BaseElement {
         overflow: hidden;
       }
 
-      details[open].animating [part~="content-base"] {
+      details[open][expanded] [part~="content-base"] {
         grid-template-rows: 1fr;
       }
     `
@@ -42,9 +48,38 @@ export class LightDisclosure extends BaseElement {
 
   // TODO: Add a mutationObserver for when it connects
 
+  /**
+   * @param {import("lit").PropertyValues<this>} changedProperties
+   */
+  willUpdate (changedProperties) {
+    const details = this.details
+
+    if (details && changedProperties.has("open")) {
+      if (!this.open) {
+        if (details.hasAttribute("expanded")) {
+          details.removeAttribute("expanded")
+        } else {
+          details.open = this.open
+        }
+        // "transitionend" will fire and set "open" on the details element accordingly.
+      } else {
+        details.open = this.open
+        // If you only wait 1 animation frame, we get clipped by `display: none;`
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            details.setAttribute("expanded", "")
+          })
+        })
+      }
+    }
+  }
+
   render () {
     return html`
-      <details part="details" ?open=${this.open} @transitionend=${this.handleTransitionEnd} @toggle=${this.handleToggle}>
+      <details part="details"
+        @transitionend=${this.handleTransitionEnd}
+        @toggle=${this.handleToggle}
+      >
         <summary part="summary" @click=${this.handleSummaryClick}>
           <slot name="summary">${this.summary}</slot>
         </summary>
@@ -69,14 +104,19 @@ export class LightDisclosure extends BaseElement {
     const details = this.details
 
     if (!details) return
+    if (!(e.propertyName === "grid-template-rows")) return
 
-    if (e.propertyName === "grid-template-rows" && details.open === true && !details.classList.contains("animating")) {
-      details.open = false
+    if (details.open === true) {
+      if (!(details.hasAttribute("expanded"))) {
+        details.open = false
+      }
+    } else {
+      details.open = true
     }
   }
 
   /**
-   * Toggle fires after the attribute is set / unset, so its useless for animating. But useful for when users search a page with "ctrl+f"
+   * Toggle fires after the attribute is set / unset, so its useless for expanded. But useful for when users search a page with "ctrl+f"
    * @param {Event} _e
    */
   handleToggle (_e) {
@@ -84,7 +124,12 @@ export class LightDisclosure extends BaseElement {
 
     if (!details) return
 
-    details.classList.remove("animating")
+    if (details.open && !(details.hasAttribute("expanded"))) {
+      this.open = details.open
+      this.dispatchEvent(new Event("light-toggle"))
+      details.setAttribute("expanded", "")
+    }
+
   }
 
   /**
@@ -94,16 +139,15 @@ export class LightDisclosure extends BaseElement {
     const details = this.details
     if (!details) return
 
+    console.log("summary click")
+
+    e.preventDefault()
+
     if (details.open) {
-      e.preventDefault()
-      details.classList.remove("animating")
+      this.open = false
       return false
     }
-    // If you only wait 1 animation frame, we get clipped by `display: none;`
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        details.classList.add("animating")
-      })
-    })
+
+    this.open = true
   }
 }

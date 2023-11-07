@@ -11,9 +11,6 @@ dependencies:
   lit:
     specifier: ^2.8.0
     version: 2.8.0
-  stimulite:
-    specifier: ^0.0.5
-    version: 0.0.5
   web-component-define:
     specifier: ^2.0.11
     version: 2.0.11
@@ -2622,10 +2619,6 @@ packages:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
     dev: true
-
-  /stimulite@0.0.5:
-    resolution: {integrity: sha512-two2bx6HwIimzhIOp2tVJk2qqoLwacFConygRFsmoBBvs7WI4r5u7pIiFIRIe3C8M4T+5XrQsMKV7kEN7oielg==}
-    dev: false
 
   /stream-read-all@3.0.1:
     resolution: {integrity: sha512-EWZT9XOceBPlVJRrYcykW8jyRSZYbkb/0ZK36uLEmoWVO5gxBOnntNTseNzfREsqxqdfEGQrD8SXQ3QWbBmq8A==}
