@@ -2,8 +2,6 @@
 import { html } from "lit";
 import { buttonStyles, baseStyles } from "./base-styles.js";
 
-import { Application } from "stimulite";
-
 import { when } from "lit/directives/when.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
@@ -146,12 +144,6 @@ export default class LightPreviewBase extends BaseElement {
      * @internal
      */
     this.codeDebounce = debounce(() => this.handleMutation("code"), 20)
-
-    const shadowRoot = this.shadowRoot
-
-    if (shadowRoot) {
-      Application.start({ rootElement: shadowRoot })
-    }
   }
 
   /**
@@ -411,8 +403,12 @@ export default class LightPreviewBase extends BaseElement {
           <div part="end-panel"></div>
         </div>
 
-        <details id="details" ?open=${this.open} part="source-details" aria-labelledby="summary">
-          <summary style="display: none;"></summary>
+        <light-disclosure
+          id="details"
+          ?open=${this.open}
+          part="source-details"
+          aria-labelledby="summary"
+        >
           <div part="code-wrapper">
             ${when(this.highlight,
               () => html`
@@ -431,7 +427,7 @@ export default class LightPreviewBase extends BaseElement {
               () => html`${unsafeHTML(this.code)}`
             )}
           </div>
-        </details>
+        </light-disclosure>
 
         <div part="actions">
           <button part="source-code-toggle" aria-expanded=${this.open} aria-controls="details" @click=${() => this.open = !this.open} type="button">

@@ -16,14 +16,15 @@ export class LightDisclosure extends BaseElement {
         overflow: hidden;
       }
 
-      details[open].animating .grid {
+      details[open].animating [part~="content-base"] {
         grid-template-rows: 1fr;
       }
     `
   ]
 
   static properties = {
-    summary: {}
+    summary: {},
+    open: { type: Boolean }
   }
 
   constructor () {
@@ -32,12 +33,19 @@ export class LightDisclosure extends BaseElement {
      * @type {string}
      */
     this.summary = ""
+
+    /**
+     * @type {boolean}
+     */
+    this.open = false
   }
+
+  // TODO: Add a mutationObserver for when it connects
 
   render () {
     return html`
-      <details @transitionend=${this.handleTransitionEnd} @toggle=${this.handleToggle}>
-        <summary @click=${this.handleSummaryClick}>
+      <details part="details" ?open=${this.open} @transitionend=${this.handleTransitionEnd} @toggle=${this.handleToggle}>
+        <summary part="summary" @click=${this.handleSummaryClick}>
           <slot name="summary">${this.summary}</slot>
         </summary>
 

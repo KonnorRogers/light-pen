@@ -66,6 +66,7 @@
   "dependencies": {
     "highlight.js": "^11.8.0",
     "lit": "^2.8.0",
+    "stimulite": "^0.0.5",
     "web-component-define": "^2.0.11"
   },
   "customElements": "custom-elements.json"
