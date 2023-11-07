@@ -2,6 +2,8 @@
 import { html } from "lit";
 import { buttonStyles, baseStyles } from "./base-styles.js";
 
+import { Application } from "stimulite";
+
 import { when } from "lit/directives/when.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
@@ -144,6 +146,12 @@ export default class LightPreviewBase extends BaseElement {
      * @internal
      */
     this.codeDebounce = debounce(() => this.handleMutation("code"), 20)
+
+    const shadowRoot = this.shadowRoot
+
+    if (shadowRoot) {
+      Application.start({ rootElement: shadowRoot })
+    }
   }
 
   /**
