@@ -1,4 +1,4 @@
-import{a as v,b as y,c as O,d as R}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-CHYOFPLB.js";import{a as m,b as a,e as c,f as z,g as $,h as S,l as g,m as f,n as b,o as M,p as k,q as T}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-HQPUIQBR.js";import{d as r}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-OSUW2QPQ.js";var A=`
+import{a as v,b as y,c as k,d as R}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-CHYOFPLB.js";import{a as m,b as a,e as h,f as z,g as $,h as M,l as g,m as f,n as b,o as S,p as T,q as O}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-HQPUIQBR.js";import{d as r}from"/light-pen/pull/5/bridgetown/static/chunks/chunk-OSUW2QPQ.js";var E=`
   allow-forms
   allow-modals
   allow-pointer-lock
@@ -10,7 +10,7 @@ import{a as v,b as y,c as O,d as R}from"/light-pen/pull/5/bridgetown/static/chun
   allow-popups
   allow-presentation
   allow-same-origin
-`;var E=m`
+`;var _=m`
 :host {
   --border-color: lightgray;
 }
@@ -118,8 +118,9 @@ button[part~="source-code-toggle"] {
 [part~="source-details"]::part(summary) {
   display: none;
 }
-`;function _(l,e=" "){let t=[];for(let[i,s]of Object.entries(l))s&&t.push(i);return t.join(e)}function x(l,e=0){let t=null;return(...i)=>{t&&window.clearTimeout(t),t=window.setTimeout(()=>{l.apply(null,i)},e)}}var n=class extends f{constructor(){super(),this.summary="",this.open=!1}willUpdate(e){let t=this.details;t&&e.has("open")&&(this.open?(t.open=this.open,requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.setAttribute("expanded","")})})):t.hasAttribute("expanded")?t.removeAttribute("expanded"):t.open=this.open)}render(){return a`
-      <details part="details"
+`;function A(l,e=" "){let t=[];for(let[i,s]of Object.entries(l))s&&t.push(i);return t.join(e)}function x(l,e=0){let t=null;return(...i)=>{t&&window.clearTimeout(t),t=window.setTimeout(()=>{l.apply(null,i)},e)}}function W(){return window.matchMedia("(prefers-reduced-motion: reduce)")===!0||window.matchMedia("(prefers-reduced-motion: reduce)").matches===!0}var n=class extends f{constructor(){super(),this.summary="",this.open=!1,this._openOnToggle=!0}willUpdate(e){let t=this.details;t&&e.has("open")&&(this.open?(t.open=this.open,this._openOnToggle=!1,requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.setAttribute("expanded",""),this._openOnToggle=!0,this.dispatchEvent(new Event("light-toggle"))})})):(t.hasAttribute("expanded")?t.removeAttribute("expanded"):t.open=this.open,W()&&(t.open=this.open),this.dispatchEvent(new Event("light-toggle"))))}render(){return a`
+      <details
+        part="details"
         @transitionend=${this.handleTransitionEnd}
         @toggle=${this.handleToggle}
       >
@@ -133,11 +134,11 @@ button[part~="source-code-toggle"] {
           </div>
         </div>
       </details>
-    `}get details(){return this.shadowRoot?.querySelector("details")}handleTransitionEnd(e){let t=this.details;t&&e.propertyName==="grid-template-rows"&&(t.open===!0?t.hasAttribute("expanded")||(t.open=!1):t.open=!0)}handleToggle(e){let t=this.details;t&&t.open&&!t.hasAttribute("expanded")&&(this.open=t.open,this.dispatchEvent(new Event("light-toggle")),t.setAttribute("expanded",""))}handleSummaryClick(e){let t=this.details;if(t){if(console.log("summary click"),e.preventDefault(),t.open)return this.open=!1,!1;this.open=!0}}};r(n,"baseName","light-disclosure"),r(n,"styles",[b,m`
+    `}get details(){return this.shadowRoot?.querySelector("details")}handleTransitionEnd(e){let t=this.details;t&&e.propertyName==="grid-template-rows"&&(t.open===!0?t.hasAttribute("expanded")||(t.open=!1):t.open=!0)}handleToggle(e){let t=this.details;t&&t.open&&!t.hasAttribute("expanded")&&this._openOnToggle&&(this.open=t.open,this.dispatchEvent(new Event("light-toggle")),t.setAttribute("expanded",""))}handleSummaryClick(e){let t=this.details;if(t){if(e.preventDefault(),t.open)return this.open=!1,!1;this.open=!0}}};r(n,"baseName","light-disclosure"),r(n,"styles",[b,m`
       [part~="content-base"] {
         display: grid;
         grid-template-rows: 0fr;
-        transition: grid-template-rows 500ms ease;
+        transition: grid-template-rows 300ms ease-in-out;
       }
 
       [part~="content"] {
@@ -147,7 +148,16 @@ button[part~="source-code-toggle"] {
       details[open][expanded] [part~="content-base"] {
         grid-template-rows: 1fr;
       }
-    `]),r(n,"properties",{summary:{},open:{type:Boolean}});var P="Show source code",o=class extends f{constructor(){super(),this.sandboxSettings=A,this.summary=P,this.highlightLanguage="html",this.inlinePreview=!1,this.resizing=!1,this.disableHighlight=!1,this.code="",this.previewCode="",this.open=!1,this.resizePosition=100,this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.__mutationObserverConfig={childList:!0,subtree:!0,characterData:!0},this.previewCodeDebounce=x(()=>this.handleMutation("preview-code"),20),this.codeDebounce=x(()=>this.handleMutation("code"),20)}resetIframeCodeMutationObserver(){this.previewCodeMutationObserver&&this.previewCodeMutationObserver.disconnect(),this.previewCodeMutationObserver=new MutationObserver((...t)=>this.previewCodeDebounce());let e=this.findSlot("preview-code")?.assignedElements({flatten:!0})||[];for(let t of e)this.previewCodeMutationObserver.observe(t,this.__mutationObserverConfig)}resetCodeMutationObserver(){this.codeMutationObserver&&this.codeMutationObserver.disconnect(),this.codeMutationObserver=new MutationObserver((...t)=>this.codeDebounce());let e=this.findSlot("code")?.assignedElements({flatten:!0})||[];for(let t of e)this.codeMutationObserver.observe(t,this.__mutationObserverConfig)}handleMutation(e){if(e==="preview-code"){this.handleTemplate({target:this.findSlot("preview-code")});return}if(e==="code"){this.handleTemplate({target:this.findSlot("code")});return}}findSlot(e){return this.shadowRoot?.querySelector(`slot[name='${e}']`)}handleTemplate(e){let t=e.target;if(t==null)return;let i=t.getAttribute("name");if(["preview-code","code"].includes(i||"")===!1)return;let s="type"in e&&e.type==="slotchange",d=t.assignedElements({flatten:!0}),u=[],p=document.createElement("div");for(let w of d){if(w instanceof HTMLTemplateElement){let D=w.content.cloneNode(!0);p.append(D),u.push(p.innerHTML),p.innerHTML="";continue}u.push(w.innerHTML)}let C=u.join(`
+
+      @media (prefers-reduced-motion: reduce) {
+        [part~="content-base"] {
+          transition: none;
+        }
+        details[open] [part~="content-base"] {
+          grid-template-rows: 1fr;
+        }
+      }
+    `]),r(n,"properties",{summary:{},open:{type:Boolean}});var P="Show source code",o=class extends f{constructor(){super(),this.sandboxSettings=E,this.summary=P,this.highlightLanguage="html",this.inlinePreview=!1,this.resizing=!1,this.disableHighlight=!1,this.code="",this.previewCode="",this.open=!1,this.resizePosition=100,this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.__mutationObserverConfig={childList:!0,subtree:!0,characterData:!0},this.previewCodeDebounce=x(()=>this.handleMutation("preview-code"),20),this.codeDebounce=x(()=>this.handleMutation("code"),20)}resetIframeCodeMutationObserver(){this.previewCodeMutationObserver&&this.previewCodeMutationObserver.disconnect(),this.previewCodeMutationObserver=new MutationObserver((...t)=>this.previewCodeDebounce());let e=this.findSlot("preview-code")?.assignedElements({flatten:!0})||[];for(let t of e)this.previewCodeMutationObserver.observe(t,this.__mutationObserverConfig)}resetCodeMutationObserver(){this.codeMutationObserver&&this.codeMutationObserver.disconnect(),this.codeMutationObserver=new MutationObserver((...t)=>this.codeDebounce());let e=this.findSlot("code")?.assignedElements({flatten:!0})||[];for(let t of e)this.codeMutationObserver.observe(t,this.__mutationObserverConfig)}handleMutation(e){if(e==="preview-code"){this.handleTemplate({target:this.findSlot("preview-code")});return}if(e==="code"){this.handleTemplate({target:this.findSlot("code")});return}}findSlot(e){return this.shadowRoot?.querySelector(`slot[name='${e}']`)}handleTemplate(e){let t=e.target;if(t==null)return;let i=t.getAttribute("name");if(["preview-code","code"].includes(i||"")===!1)return;let s="type"in e&&e.type==="slotchange",d=t.assignedElements({flatten:!0}),u=[],p=document.createElement("div");for(let w of d){if(w instanceof HTMLTemplateElement){let D=w.content.cloneNode(!0);p.append(D),u.push(p.innerHTML),p.innerHTML="";continue}u.push(w.innerHTML)}let C=u.join(`
 `);if(i==="preview-code"){s&&this.resetIframeCodeMutationObserver(),this.previewCode=C;return}if(i==="code"){s&&this.resetCodeMutationObserver(),this.code=C;return}}unescapePreviewCode(){return this.unescapeCharacters(this.previewCode||this.code)}updateIframeContent(){let e=this.unescapePreviewCode(),t=this.shadowRoot?.querySelector("iframe");if(!t)return;let i=`
       <!doctype html>
       <html>
@@ -158,7 +168,7 @@ button[part~="source-code-toggle"] {
           ${e}
         </body>
       </html>`;t.contentWindow?.document.open(),t.contentWindow?.document.writeln(i),t.contentWindow?.document.close()}escapeCharacters(e){return e.replaceAll(new RegExp("<","g"),"&lt;").replaceAll(new RegExp(">","g"),"&gt;")}unescapeCharacters(e){return e.replaceAll(/&lt;\/([\w\d\.-_]+)>/g,"</$1>")}willUpdate(e){["previewCode","code"].some(t=>e.has(t))&&(this._iframeDebounce!=null&&window.clearTimeout(this._iframeDebounce),this._iframeDebounce=setTimeout(()=>this.updateIframeContent(),300)),e.has("resizePosition")&&this.updateResizePosition(),super.willUpdate(e)}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),i=e+t;this.cachedWidth=i}handleResize(e){let{left:t,right:i}=e[0].contentRect,s=t+i;this.cachedWidth=s}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this),this.resetIframeCodeMutationObserver(),this.resetCodeMutationObserver()})}highlight(e=this.code){return e}render(){let e=this.highlightLanguage;return a`
-      <div part=${_({base:!0})}>
+      <div part=${A({base:!0})}>
         <div part="preview">
           ${v(this.inlinePreview,()=>a`<div part="start-panel preview-div">${g(this.unescapePreviewCode())}</div>`,()=>a`
                 <iframe part="start-panel iframe" height="auto" frameborder="0"></iframe>
@@ -228,5 +238,5 @@ button[part~="source-code-toggle"] {
         <slot name="preview-code" @slotchange=${this.handleTemplate}></slot>
         <slot name="code" @slotchange=${this.handleTemplate}></slot>
       </div>
-    `}get panelResizer(){return this.shadowRoot?.querySelector("[part~='panel-resizer']")}handleDrag(e){e.cancelable&&e.preventDefault();let t=this.shadowRoot?.querySelector("iframe");t&&(t.style.pointerEvents="none"),this.resizing=!0;let s=(e.currentTarget?.offsetWidth||0)/2;O(this,{onMove:(d,u)=>{let p=d+s;this.resizePosition=y(0,this.pixelsToPercentage(p),100),this.updateResizePosition(),this.resizing=!0},onStop:()=>{let d=this.shadowRoot?.querySelector("iframe");d&&(d.style.pointerEvents="auto"),this.resizing=!1},initialEvent:e})}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let i=100-t;this.style.setProperty("--start-panel-width",`clamp(100px, ${t}%, 100%)`),this.style.setProperty("--end-panel-width",`${i}%`)}}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,i=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=i),e.key==="ArrowRight"&&(t+=i),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=y(0,t,100)}}pixelsToPercentage(e){return e/this.cachedWidth*100}};r(o,"baseName","light-preview-base"),r(o,"dependencies",{"light-disclosure":n}),r(o,"styles",[b,M,E]),r(o,"properties",{summary:{},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},highlightLanguage:{reflect:!0,attribute:"highlight-language"},inlinePreview:{type:Boolean,attribute:"inline-preview"},disableHighlight:{type:Boolean,attribute:"disable-highlight"},open:{reflect:!0,type:Boolean},resizePosition:{reflect:!0,type:Number,attribute:"resize-position"},resizing:{reflect:!0,type:Boolean},code:{attribute:!1},previewCode:{attribute:!1}});c.registerLanguage("html",$);c.registerLanguage("css",S);c.registerLanguage("javascript",z);var h=class extends o{highlight(e=this.code){return c.highlight(T(this.unescapeCharacters(e)),{language:this.highlightLanguage}).value}};r(h,"baseName","light-preview"),r(h,"styles",o.styles.concat([k]));export{h as a};
-//# sourceMappingURL=/light-pen/pull/5/bridgetown/static/chunks/chunk-6OHCIZUZ.js.map
+    `}get panelResizer(){return this.shadowRoot?.querySelector("[part~='panel-resizer']")}handleDrag(e){e.cancelable&&e.preventDefault();let t=this.shadowRoot?.querySelector("iframe");t&&(t.style.pointerEvents="none"),this.resizing=!0;let s=(e.currentTarget?.offsetWidth||0)/2;k(this,{onMove:(d,u)=>{let p=d+s;this.resizePosition=y(0,this.pixelsToPercentage(p),100),this.updateResizePosition(),this.resizing=!0},onStop:()=>{let d=this.shadowRoot?.querySelector("iframe");d&&(d.style.pointerEvents="auto"),this.resizing=!1},initialEvent:e})}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let i=100-t;this.style.setProperty("--start-panel-width",`clamp(100px, ${t}%, 100%)`),this.style.setProperty("--end-panel-width",`${i}%`)}}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,i=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=i),e.key==="ArrowRight"&&(t+=i),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=y(0,t,100)}}pixelsToPercentage(e){return e/this.cachedWidth*100}};r(o,"baseName","light-preview-base"),r(o,"dependencies",{"light-disclosure":n}),r(o,"styles",[b,S,_]),r(o,"properties",{summary:{},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},highlightLanguage:{reflect:!0,attribute:"highlight-language"},inlinePreview:{type:Boolean,attribute:"inline-preview"},disableHighlight:{type:Boolean,attribute:"disable-highlight"},open:{reflect:!0,type:Boolean},resizePosition:{reflect:!0,type:Number,attribute:"resize-position"},resizing:{reflect:!0,type:Boolean},code:{attribute:!1},previewCode:{attribute:!1}});h.registerLanguage("html",$);h.registerLanguage("css",M);h.registerLanguage("javascript",z);var c=class extends o{highlight(e=this.code){return h.highlight(O(this.unescapeCharacters(e)),{language:this.highlightLanguage}).value}};r(c,"baseName","light-preview"),r(c,"styles",o.styles.concat([T]));export{c as a};
+//# sourceMappingURL=/light-pen/pull/5/bridgetown/static/chunks/chunk-BLRFT7JL.js.map
