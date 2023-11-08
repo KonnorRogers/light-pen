@@ -2,6 +2,10 @@ import { html, css } from "lit"
 import { baseStyles } from "./base-styles.js"
 import { BaseElement } from "../internal/base-element.js"
 
+function motionReduced () {
+  return /** @type {any} */ (window.matchMedia(`(prefers-reduced-motion: reduce)`)) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
+}
+
 /**
  * A `<details>` element packaged nicely to animate like a disclosure.
  * @customElement
@@ -15,7 +19,7 @@ export class LightDisclosure extends BaseElement {
       [part~="content-base"] {
         display: grid;
         grid-template-rows: 0fr;
-        transition: grid-template-rows 500ms ease;
+        transition: grid-template-rows 300ms ease-in-out;
       }
 
       [part~="content"] {
@@ -24,6 +28,15 @@ export class LightDisclosure extends BaseElement {
 
       details[open][expanded] [part~="content-base"] {
         grid-template-rows: 1fr;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        [part~="content-base"] {
+          transition: none;
+        }
+        details[open] [part~="content-base"] {
+          grid-template-rows: 1fr;
+        }
       }
     `
   ]
@@ -44,6 +57,13 @@ export class LightDisclosure extends BaseElement {
      * @type {boolean}
      */
     this.open = false
+
+    /**
+     * @internal
+     * This is used because Safari has strange timing on the "toggle" event. If we don't use this,
+     *   our initial opening of the disclosure gets clipped and is like a normal `<details>`
+     */
+    this._openOnToggle = true
   }
 
   // TODO: Add a mutationObserver for when it connects
@@ -61,13 +81,25 @@ export class LightDisclosure extends BaseElement {
         } else {
           details.open = this.open
         }
+
         // "transitionend" will fire and set "open" on the details element accordingly.
+        // If motion is reduced, our transition will never fire. so we need to set "open" on the <details> here.
+        if (motionReduced()) {
+          details.open = this.open
+        }
+
+        this.dispatchEvent(new Event("light-toggle"))
       } else {
         details.open = this.open
+
+        this._openOnToggle = false
+
         // If you only wait 1 animation frame, we get clipped by `display: none;`
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             details.setAttribute("expanded", "")
+            this._openOnToggle = true
+            this.dispatchEvent(new Event("light-toggle"))
           })
         })
       }
@@ -76,7 +108,8 @@ export class LightDisclosure extends BaseElement {
 
   render () {
     return html`
-      <details part="details"
+      <details
+        part="details"
         @transitionend=${this.handleTransitionEnd}
         @toggle=${this.handleToggle}
       >
@@ -124,12 +157,11 @@ export class LightDisclosure extends BaseElement {
 
     if (!details) return
 
-    if (details.open && !(details.hasAttribute("expanded"))) {
+    if (details.open && !(details.hasAttribute("expanded")) && this._openOnToggle) {
       this.open = details.open
       this.dispatchEvent(new Event("light-toggle"))
       details.setAttribute("expanded", "")
     }
-
   }
 
   /**
@@ -138,8 +170,6 @@ export class LightDisclosure extends BaseElement {
   handleSummaryClick (e) {
     const details = this.details
     if (!details) return
-
-    console.log("summary click")
 
     e.preventDefault()
 
