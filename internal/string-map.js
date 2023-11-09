@@ -1,6 +1,8 @@
+// @ts-check
 /**
  * @param {Record<string, unknown>} obj
- * @returns {Record<string, boolean>}
+ * @param {string} [spacer=" "]
+ * @returns {string}
  */
 export function stringMap (obj, spacer = " ") {
   let strings = []
@@ -11,9 +13,5 @@ export function stringMap (obj, spacer = " ") {
     }
   }
 
-  /**
-   * @type {Record<string, boolean>}
-   */
-  // @ts-expect-error
   return strings.join(spacer)
 }
