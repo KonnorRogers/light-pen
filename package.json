@@ -21,7 +21,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "start": "web-dev-server --watch",
+    "start": "cd docs && overmind start -f Procfile.dev",
     "start:docs": "cd docs && bin/bridgetown start",
     "setup": "pnpm install && cd docs && pnpm install && bundle install",
     "build:docs": "cd docs && pnpm run build && touch output/.nojekyll",
