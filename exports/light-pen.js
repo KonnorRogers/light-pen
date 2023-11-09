@@ -13,6 +13,7 @@ import { drag } from "../internal/drag.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 import { BaseElement } from "../internal/base-element.js";
 import LightEditor from "./light-editor.js";
+import { LightDisclosure } from "./light-disclosure.js";
 
 /**
  * @typedef {"html" | "css" | "js"} SupportedLanguages
@@ -41,7 +42,8 @@ export default class LightPen extends BaseElement {
   static styles = [baseStyles, buttonStyles, styles]
 
   static dependencies = {
-    'light-editor': LightEditor
+    'light-editor': LightEditor,
+    'light-disclosure': LightDisclosure
   }
 
   static properties = {
@@ -479,13 +481,11 @@ export default class LightPen extends BaseElement {
     const open = this.openLanguages.split(",").includes(language)
 
 		return html`
-      <details ?open=${open} part="details details-${language}">
-				<summary part="summary summary-${language}">
-          ${fullLanguage}
-        </summary>
+      <light-disclosure ?open=${open} part="disclosure disclosure-${language}">
+        <div slot="summary"><slot name=${`summary-${language}`}>${fullLanguage}</slot></div>
 
         ${this.renderEditor(language)}
-			</details>
+			</light-disclosure>
 		`
   }
 }

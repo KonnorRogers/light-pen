@@ -12,7 +12,7 @@ component: light-disclosure
 <light-preview inline-preview>
   <template slot="code">
     <light-disclosure summary="Source Code">
-      <code style="background-color: rgba(0,0,0,0.01);">export const x = "hi"</code>
+      <code style="background-color: rgba(0,0,0,0.1);">export const x = "hi"</code>
     </light-disclosure>
   </template>
 </light-preview>

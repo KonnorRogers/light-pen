@@ -30,6 +30,15 @@ export class LightDisclosure extends BaseElement {
         grid-template-rows: 1fr;
       }
 
+      summary {
+        padding: 0.4em 0.6em;
+        cursor: pointer;
+      }
+
+      summary:hover {
+        background-color: rgba(0,0,0,0.05);
+      }
+
       @media (prefers-reduced-motion: reduce) {
         [part~="content-base"] {
           transition: none;
