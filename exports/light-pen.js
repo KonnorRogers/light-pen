@@ -481,7 +481,7 @@ export default class LightPen extends BaseElement {
     const open = this.openLanguages.split(",").includes(language)
 
 		return html`
-      <light-disclosure ?open=${open} part="disclosure disclosure-${language}">
+      <light-disclosure part="disclosure disclosure-${language}">
         <div slot="summary"><slot name=${`summary-${language}`}>${fullLanguage}</slot></div>
 
         ${this.renderEditor(language)}

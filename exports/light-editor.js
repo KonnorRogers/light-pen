@@ -11,6 +11,7 @@ import { baseStyles } from "./base-styles.js";
 import { styles } from "./light-editor.styles.js";
 import { theme } from "./default-theme.styles.js";
 import { dedent } from "../internal/dedent.js";
+import { LightResizeEvent } from "./events/light-resize-event.js";
 
 HighlightJS.registerLanguage('javascript', JavaScript);
 HighlightJS.registerLanguage('xml', HTML);
@@ -97,10 +98,15 @@ export default class LightEditor extends BaseElement {
           @input=${/** @param {Event} e */ (e) => {
             this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
             this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
+            this.syncScroll()
           }}
           @change=${/** @param {Event} e */ (e) => {
             this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
             this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
+            this.syncScroll()
+          }}
+          @scroll=${/** @param {Event} e */ (e) => {
+            this.syncScroll()
           }}
           .value=${this.value}
         ></textarea>
@@ -108,6 +114,51 @@ export default class LightEditor extends BaseElement {
 
       <slot hidden @slotchange=${this.handleSlotChangeEvent}></slot>
 		`
+  }
+
+  /**
+   * @ignore
+   * @param {ResizeObserverEntry[]} entries
+   */
+  handleTextAreaResize (entries) {
+    const { target } = entries[0]
+    const {
+      left, right,
+      top, bottom
+    } = entries[0].contentRect;
+    const width = left + right
+    const height = top + bottom
+
+    /**
+     * Fires whenever the editor resizes
+     */
+    this.dispatchEvent(new LightResizeEvent("light-resize", {height, width}));
+    // One day we'll allow the textarea to resize the width.
+
+    /** @type {HTMLElement} */ (target.parentElement).style.setProperty("--textarea-height", `${height}px`);
+    /** @type {HTMLElement} */ (target.parentElement).style.setProperty("--textarea-width", `${width}px`);
+
+    this.syncScroll()
+  }
+
+  /**
+   * Syncs the `<pre>` element scroll position to the same as the `<textarea>`
+   * @internal
+   */
+  syncScroll () {
+    /**
+     * @type {undefined | null | HTMLTextAreaElement}
+     */
+    const textarea = this.shadowRoot?.querySelector("textarea")
+
+    if (textarea == null) return
+
+    const pre = this.shadowRoot?.querySelector(`pre`)
+
+    if (pre == null) return
+
+    pre.scrollTop = textarea.scrollTop;
+    pre.scrollLeft = textarea.scrollLeft;
   }
 
   /**
@@ -120,6 +171,11 @@ export default class LightEditor extends BaseElement {
     }
 
     const textarea = element
+    this.textarea = textarea
+
+    this.textareaResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
+
+    this.textareaResizeObserver.observe(textarea)
 
     this.textareaMutationObserver = new MutationObserver((mutationRecords) => {
       // We actually don't care about what the mutation is, just update and move on.

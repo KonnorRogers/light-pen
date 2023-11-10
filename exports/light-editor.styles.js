@@ -9,9 +9,6 @@ export const styles = css`
   [part~="base"] {
     display: grid;
     grid-template-rows: minmax(0, 1fr);
-    position: relative;
-    overflow: auto;
-    resize: vertical;
     max-height: 100%;
   }
 
@@ -26,26 +23,34 @@ export const styles = css`
     background-color: transparent;
     caret-color: black;
     z-index: 1;
-    resize: none;
+    resize: both;
+  }
+
+  [part~="pre"] {
+    border-color: transparent;
+    height: var(--textarea-height, auto);
+    width: var(--textarea-width, auto);
+  }
+
+  [part~="textarea"]:focus {
+    outline: transparent;
   }
 
   [part~="pre"],
   [part~="textarea"] {
-    overflow: hidden;
-    grid-area:1/1/2/2;
+    overflow: auto;
+    min-height: 15em;
+    max-height: 100%;
+    max-width: 100%;
+    grid-area: 1/1/2/2;
     margin-bottom:0;
-    min-height:15em;
     margin: 0;
 	  display: block;
 	  line-height: 1.5;
-    padding: 8px;
-    border: none;
+    /* border: 2px solid red; */
+    border: 1px solid transparent;
     position: relative;
-
-    height: 100%;
-    width: 100%;
-    max-width: 100%;
-    max-height: 100%;
+    padding: 8px;
 
     /* this creates line-wrapping. */
 	  word-break: break-word;
