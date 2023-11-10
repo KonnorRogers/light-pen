@@ -478,7 +478,7 @@ export default class LightPen extends BaseElement {
   renderDetails (language) {
     let fullLanguage = language.toUpperCase()
 
-    const open = this.openLanguages.split(",").includes(language)
+    // const open = this.openLanguages.split(",").includes(language)
 
 		return html`
       <light-disclosure part="disclosure disclosure-${language}">

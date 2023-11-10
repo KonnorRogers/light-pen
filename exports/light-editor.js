@@ -105,12 +105,12 @@ export default class LightEditor extends BaseElement {
             this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
           }}
           @input=${/** @param {Event} e */ (e) => {
-            this.value = this.injectNewLine(/** @type {HTMLTextAreaElement} */ (e.currentTarget).value)
+            this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
             this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
             this.syncScroll()
           }}
           @change=${/** @param {Event} e */ (e) => {
-            this.value = this.injectNewLine(/** @type {HTMLTextAreaElement} */ (e.currentTarget).value)
+            this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
             this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
             this.syncScroll()
           }}
@@ -138,8 +138,6 @@ export default class LightEditor extends BaseElement {
     const width = left + right
     const height = top + bottom;
 
-    ;/** @type {HTMLElement} */ (target.parentElement).style.setProperty("--textarea-height", `${height}px`);
-    ;/** @type {HTMLElement} */ (target.parentElement).style.setProperty("--textarea-width", `${width}px`);
 
     /**
      * Fires whenever the editor resizes, usually due to zoom in / out

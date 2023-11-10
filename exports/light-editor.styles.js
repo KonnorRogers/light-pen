@@ -2,14 +2,17 @@ import { css } from "lit"
 
 export const styles = css`
   :host {
-    display: grid;
-    grid-template-rows: minmax(0, 1fr);
+    --padding: 16px;
   }
 
   [part~="base"] {
-    display: grid;
-    grid-template-rows: minmax(0, 1fr);
-    grid-template-columns: minmax(0, 1fr);
+    height: 15em;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    overflow: hidden;
+    resize: both;
   }
 
   [part~="textarea"] {
@@ -18,33 +21,34 @@ export const styles = css`
     background-color: transparent;
     caret-color: black;
     z-index: 1;
-    resize: both;
+    resize: none;
   }
 
   [part~="pre"] {
     border-color: transparent;
-    max-height: var(--textarea-height);
-    max-width: var(--textarea-width);
+  }
+
+  [part~="base"]:focus-within {
+    outline: 2px solid dodgerblue;
   }
 
   [part~="textarea"]:focus {
-    outline: 2px solid dodgerblue;
+    outline: transparent;
   }
 
   [part~="pre"],
   [part~="textarea"] {
-    overflow: auto;
-    max-height: 100%;
-    max-width: 100%;
-    grid-area: 1/1/2/2;
-    margin-bottom:0;
+    width: 100%;
+    height: 100%;
     margin: 0;
-	  display: block;
+    padding: 0;
+    position: absolute;
 	  line-height: 1.5;
-    /* border: 2px solid red; */
-    border: 1px solid transparent;
-    position: relative;
     padding: 8px;
+    border: none;
+    overflow: auto;
+
+    border: 1px solid transparent;
 
     /* this creates line-wrapping. */
 	  word-break: break-word;
