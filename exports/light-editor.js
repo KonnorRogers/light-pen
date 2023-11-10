@@ -92,16 +92,25 @@ export default class LightEditor extends BaseElement {
           translate="no"
           ${ref(this.textareaChanged)}
           @keydown=${this.keydownHandler}
+          @focus=${() => {
+            this.syncScroll()
+            this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
+          }}
+          @blur=${() => {
+            this.syncScroll()
+            this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))
+          }}
           @selectionchange=${/** @param {Event} e */ (e) => {
+            this.syncScroll()
             this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
           }}
           @input=${/** @param {Event} e */ (e) => {
-            this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
+            this.value = this.injectNewLine(/** @type {HTMLTextAreaElement} */ (e.currentTarget).value)
             this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
             this.syncScroll()
           }}
           @change=${/** @param {Event} e */ (e) => {
-            this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
+            this.value = this.injectNewLine(/** @type {HTMLTextAreaElement} */ (e.currentTarget).value)
             this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
             this.syncScroll()
           }}
@@ -127,17 +136,15 @@ export default class LightEditor extends BaseElement {
       top, bottom
     } = entries[0].contentRect;
     const width = left + right
-    const height = top + bottom
+    const height = top + bottom;
+
+    ;/** @type {HTMLElement} */ (target.parentElement).style.setProperty("--textarea-height", `${height}px`);
+    ;/** @type {HTMLElement} */ (target.parentElement).style.setProperty("--textarea-width", `${width}px`);
 
     /**
-     * Fires whenever the editor resizes
+     * Fires whenever the editor resizes, usually due to zoom in / out
      */
     this.dispatchEvent(new LightResizeEvent("light-resize", {height, width}));
-    // One day we'll allow the textarea to resize the width.
-
-    /** @type {HTMLElement} */ (target.parentElement).style.setProperty("--textarea-height", `${height}px`);
-    /** @type {HTMLElement} */ (target.parentElement).style.setProperty("--textarea-width", `${width}px`);
-
     this.syncScroll()
   }
 
@@ -223,11 +230,7 @@ export default class LightEditor extends BaseElement {
    * @param {KeyboardEvent} evt
    */
   keydownHandler(evt) {
-    /**
-     * @type {HTMLTextAreaElement}
-     */
-    // @ts-expect-error
-    const target = evt.target
+    // this.textarea
 
     // Let's not trap focus. For now.
     // if ('Tab' === evt.key) {

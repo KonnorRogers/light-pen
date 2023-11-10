@@ -9,12 +9,7 @@ export const styles = css`
   [part~="base"] {
     display: grid;
     grid-template-rows: minmax(0, 1fr);
-    max-height: 100%;
-  }
-
-  [part~="base"]:focus-within,
-  [part~="base"]:focus-visible {
-    outline: 2px solid dodgerblue;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   [part~="textarea"] {
@@ -28,18 +23,17 @@ export const styles = css`
 
   [part~="pre"] {
     border-color: transparent;
-    height: var(--textarea-height, auto);
-    width: var(--textarea-width, auto);
+    max-height: var(--textarea-height);
+    max-width: var(--textarea-width);
   }
 
   [part~="textarea"]:focus {
-    outline: transparent;
+    outline: 2px solid dodgerblue;
   }
 
   [part~="pre"],
   [part~="textarea"] {
     overflow: auto;
-    min-height: 15em;
     max-height: 100%;
     max-width: 100%;
     grid-area: 1/1/2/2;
