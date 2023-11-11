@@ -68,6 +68,7 @@ export default class LightEditor extends BaseElement {
     const language = this.language
 
     const highlightedCode = this.value ? unsafeHTML(this.highlightCode({ code: this.value, language })) : ""
+    this.syncScroll()
 
     return html`
 			<div class="base" part="base">
@@ -143,6 +144,10 @@ export default class LightEditor extends BaseElement {
      * Fires whenever the editor resizes, usually due to zoom in / out
      */
     this.dispatchEvent(new LightResizeEvent("light-resize", {height, width}));
+    // this.syncScroll()
+  }
+
+  updated () {
     this.syncScroll()
   }
 
@@ -269,8 +274,8 @@ export default class LightEditor extends BaseElement {
    */
   injectNewLine (text) {
     // Handle final newlines (see article)
-    if(text[text.length-1] == "\n") { // If the last character is a newline character
-      text += "\n"; // Add a placeholder space character to the final line
+    if(text[text.length-1] === "\n") { // If the last character is a newline character
+      text += " "; // Add a placeholder space character to the final line
     }
 
     return text

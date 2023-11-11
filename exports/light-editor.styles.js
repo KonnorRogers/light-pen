@@ -13,6 +13,19 @@ export const styles = css`
     position: relative;
     overflow: hidden;
     resize: both;
+    font-size: normal;
+    font-family: monospace;
+    line-height: 1.5; /* Inherited to child elements */
+    tab-size: 2;
+    caret-color: darkgrey;
+
+    /* this creates line-wrapping. */
+	  /* word-break: break-word; */
+    /* white-space: pre-wrap; */
+
+    /* No wrapping */
+	  /* word-break: break-all; */
+    white-space: pre;
   }
 
   [part~="textarea"] {
@@ -34,30 +47,37 @@ export const styles = css`
 
   [part~="textarea"]:focus {
     outline: transparent;
+    color: red;
+  }
+
+  [part~="code"] {
   }
 
   [part~="pre"],
   [part~="textarea"] {
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    tab-size: inherit;
+    caret-color: inherit;
+    white-space: inherit;
+    white-space: inherit;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     position: absolute;
-	  line-height: 1.5;
+    top: 0;
+    left: 0;
     padding: 8px;
     border: none;
     overflow: auto;
 
     border: 1px solid transparent;
-
-    /* this creates line-wrapping. */
-	  word-break: break-word;
-    white-space: pre-wrap;
-
-    /* No wrapping */
-	  /* word-break: break-all; */
-    /* white-space: pre; */
-    tab-size: 2;
   }
 
   [part~="pre"],
