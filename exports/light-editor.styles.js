@@ -6,6 +6,8 @@ export const styles = css`
   }
 
   [part~="base"] {
+	  font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 1rem;
     height: 15em;
     width: 100%;
     max-width: 100%;
@@ -18,27 +20,20 @@ export const styles = css`
     line-height: 1.5; /* Inherited to child elements */
     tab-size: 2;
     caret-color: darkgrey;
-
-    /* this creates line-wrapping. */
-	  /* word-break: break-word; */
-    /* white-space: pre-wrap; */
-
-    /* No wrapping */
-	  /* word-break: break-all; */
-    white-space: pre;
   }
 
   [part~="textarea"] {
-    position: relative;
     color: transparent;
     background-color: transparent;
     caret-color: black;
     z-index: 1;
     resize: none;
+    position: absolute;
   }
 
   [part~="pre"] {
     border-color: transparent;
+    position: relative;
   }
 
   [part~="base"]:focus-within {
@@ -50,27 +45,36 @@ export const styles = css`
     color: red;
   }
 
-  [part~="code"] {
-  }
+  [part~="pre"], [part~="textarea"], [part~="code"] {
+    /* I don't love this, but it fixes font size inconsistencies on mobile. The alternative is listen for font-size changes, which is...challenging. */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 
-  [part~="pre"],
-  [part~="textarea"] {
     font-size: inherit;
     font-family: inherit;
     line-height: inherit;
     tab-size: inherit;
-    caret-color: inherit;
-    white-space: inherit;
-    white-space: inherit;
+
+    /* this creates line-wrapping. */
+	  word-break: break-word;
+    white-space: pre-wrap;
+
+    /* This would remove line-wrapping */
+	  /* word-break: break-all; */
+    /* white-space: pre; */
+
     word-spacing: normal;
     word-break: normal;
     word-wrap: normal;
+  }
 
+  [part~="pre"],
+  [part~="textarea"] {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
-    position: absolute;
     top: 0;
     left: 0;
     padding: 8px;
@@ -84,13 +88,6 @@ export const styles = css`
   [part~="code"] {
 	  color: #272727;
 	  background-color: #f7f7f7;
-  }
-
-  [part~="pre"],
-  [part~="code"],
-  [part~="textarea"] {
-	  font-family: Menlo, Monaco, "Courier New", monospace;
-	  font-size: 0.875rem;
   }
 
   [part~="textarea"]::selection {
