@@ -42,7 +42,6 @@ export const styles = css`
 
   [part~="textarea"]:focus {
     outline: transparent;
-    color: red;
   }
 
   [part~="pre"], [part~="textarea"], [part~="code"] {
