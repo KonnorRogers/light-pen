@@ -40,7 +40,6 @@ import{a as $,b as x,c as v,d as A,e as n,f as _,g as w,h as y,i as g,j as m,k a
 
   [part~="textarea"]:focus {
     outline: transparent;
-    color: red;
   }
 
   [part~="pre"], [part~="textarea"], [part~="code"] {
@@ -152,4 +151,4 @@ lit-html/directives/ref.js:
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 */
-//# sourceMappingURL=/light-pen/pull/6/bridgetown/static/chunks/chunk-XPAO7PS5.js.map
+//# sourceMappingURL=/light-pen/pull/6/bridgetown/static/chunks/chunk-VY3VDIBN.js.map
