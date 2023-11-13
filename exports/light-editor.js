@@ -284,6 +284,7 @@ export default class LightEditor extends BaseElement {
 
     if (this.currentLineNumber === currentLineNumber) return
 
+    // @ts-expect-error
     this.currentLineNumber = currentLineNumber
 
     if (currentLineNumber != null && currentLineNumber >= 0) {
