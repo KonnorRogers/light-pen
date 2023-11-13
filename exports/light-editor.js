@@ -114,16 +114,16 @@ export default class LightEditor extends BaseElement {
               this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
             }}
             @input=${/** @param {Event} e */ (e) => {
+              this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
               this.injectGutterCells()
               this.setCurrentLineHighlight()
-              this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
               this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
               this.syncScroll()
             }}
             @change=${/** @param {Event} e */ (e) => {
+              this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
               this.injectGutterCells()
               this.setCurrentLineHighlight()
-              this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
               this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
               this.syncScroll()
             }}
@@ -284,17 +284,19 @@ export default class LightEditor extends BaseElement {
 
     if (this.currentLineNumber === currentLineNumber) return
 
+    const prevLineNumber = this.currentLineNumber
+
     // @ts-expect-error
     this.currentLineNumber = currentLineNumber
 
     if (currentLineNumber != null && currentLineNumber >= 0) {
-      if (this.currentEl) {
-        this.currentEl.classList.remove("active")
-      }
-
       const el = code.children[currentLineNumber]
-      this.currentEl = el
-      el.classList.add("active")
+
+      if (el) {
+        code.children[prevLineNumber]?.classList?.remove("is-active")
+        this.currentEl = el
+        el.classList.add("is-active")
+      }
     }
   }
 
@@ -313,8 +315,15 @@ export default class LightEditor extends BaseElement {
 
     const newLineRegex = /\n(?!$)/
     /** We use this to wrap every line to perform line counting operations. */
-    code = code.split(newLineRegex).map((str) => {
-      return `<span class="light-line">${str}</span>`
+    code = code.split(newLineRegex).map((str, index) => {
+      let isActive = false
+
+      if (index === this.currentLineNumber) {
+        isActive = true
+      }
+
+      // Insert a blank space if the string is empty so we get line highlighting
+      return `<span class="light-line ${isActive ? "is-active" : ""}">${str || " "}</span>`
     }).join("\n")
 
     return code
@@ -357,11 +366,14 @@ export default class LightEditor extends BaseElement {
       // @ts-expect-error
       const height = /** @type {number} */ (el.offsetHeight)
 
+      const isCurrent = index === this.currentLineNumber
+
+      const parts = `gutter-cell ${isCurrent ? "gutter-cell--active" : ""}`
       if (height) {
-        return html`<span part="gutter-cell" style="${`height: ${height}px`}">${index}</span>`
+        return html`<span part=${parts} style="${`height: ${height}px`}">${index}</span>`
       }
 
-      return html`<span part="gutter-cell">${index}</span>`
+      return html`<span part=${parts}>${index}</span>`
     })
   }
 

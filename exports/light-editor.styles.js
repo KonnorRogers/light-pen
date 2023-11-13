@@ -26,7 +26,7 @@ export const styles = css`
   }
 
   [part~="textarea"], [part~="pre"], [part~="gutter"] {
-    padding: 6px;
+    /* padding: 6px; */
   }
 
   [part~="textarea"] {
@@ -114,11 +114,11 @@ export const styles = css`
     width: 100%;
   }
 
-  [part~="base"]:focus-within .light-line.active {
+  [part~="base"]:focus-within .light-line.is-active {
     background-color: rgba(255, 247, 0, 0.1);
   }
 
-  .light-line.active {
+  .light-line.is-active {
     background-color: rgba(0,0,0,0.05);
   }
 
