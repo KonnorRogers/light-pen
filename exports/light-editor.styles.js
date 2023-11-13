@@ -104,6 +104,23 @@ export const styles = css`
     display: block;
   }
 
+  [part~="gutter-cell"] {
+    font-size: 100%;
+    display: block;
+  }
+
+  .light-line {
+    display: inline-block;
+  }
+
+  [part~="base"]:focus-within .light-line.active {
+    background-color: rgba(255, 247, 0, 0.1);
+  }
+
+  .light-line.active {
+    background-color: rgba(0,0,0,0.05);
+  }
+
   [part~="base-editor"] {
     position: relative;
     display: grid;

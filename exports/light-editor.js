@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html, render } from "lit";
 import HighlightJS from 'highlight.js/lib/core';
 import JavaScript from 'highlight.js/lib/languages/javascript';
 import HTML from 'highlight.js/lib/languages/xml';
@@ -12,6 +12,7 @@ import { styles } from "./light-editor.styles.js";
 import { theme } from "./default-theme.styles.js";
 import { dedent } from "../internal/dedent.js";
 import { LightResizeEvent } from "./events/light-resize-event.js";
+import { repeat } from "lit/directives/repeat.js";
 
 HighlightJS.registerLanguage('javascript', JavaScript);
 HighlightJS.registerLanguage('xml', HTML);
@@ -70,18 +71,10 @@ export default class LightEditor extends BaseElement {
     const highlightedCode = unsafeHTML(this.highlightCode({ code: this.value, language }))
     this.syncScroll()
 
-    setTimeout(() => {
-      const gutter = this.shadowRoot?.querySelector("[part~='gutter']")
-
-      if (gutter) {
-        gutter.innerHTML = this.renderGutters()
-      }
-    })
-
     return html`
 			<div class="base" part="base">
-			  <div part="gutter">
-			  </div>
+        <!-- Super important to not have white space here due to how white space is handled -->
+			  <div part="gutter"></div>
         <!-- This is where the fancy syntax highlighting comes in -->
         <div part="base-editor">
 				  <pre
@@ -106,6 +99,7 @@ export default class LightEditor extends BaseElement {
             @keydown=${this.keydownHandler}
             @focus=${() => {
               this.syncScroll()
+              this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
             }}
             @blur=${() => {
@@ -114,25 +108,25 @@ export default class LightEditor extends BaseElement {
             }}
             @selectionchange=${/** @param {Event} e */ (e) => {
               this.syncScroll()
-              this.getCurrentLineNumber()
+              this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
             }}
             @input=${/** @param {Event} e */ (e) => {
-              this.renderGutters()
-              this.getCurrentLineNumber()
+              this.injectGutterCells()
+              this.setCurrentLineHighlight()
               this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
               this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
               this.syncScroll()
             }}
             @change=${/** @param {Event} e */ (e) => {
-              this.renderGutters()
-              this.getCurrentLineNumber()
+              this.injectGutterCells()
+              this.setCurrentLineHighlight()
               this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
               this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
               this.syncScroll()
             }}
             @scroll=${/** @param {Event} e */ (e) => {
-              this.getCurrentLineNumber()
+              this.setCurrentLineHighlight()
               this.syncScroll()
             }}
             .value=${this.value}
@@ -164,11 +158,17 @@ export default class LightEditor extends BaseElement {
      */
     this.dispatchEvent(new LightResizeEvent("light-resize", {height, width}));
     this.syncScroll()
-    this.renderGutters()
+    this.injectGutterCells()
   }
 
-  updated () {
+  /**
+   * @param {import("lit").PropertyValues<this>} changedProperties
+   */
+  updated (changedProperties) {
+    super.updated(changedProperties)
+
     this.syncScroll()
+    this.injectGutterCells()
   }
 
   /**
@@ -271,6 +271,28 @@ export default class LightEditor extends BaseElement {
     // }
   }
 
+  setCurrentLineHighlight () {
+    const code = this.shadowRoot?.querySelector("code")
+
+    if (!code) return
+
+    const currentLineNumber = this.getCurrentLineNumber()
+
+    if (currentLineNumber != null && currentLineNumber >= 0) {
+      const el = code.children[currentLineNumber]
+      this.removeCurrentLineHighlight()
+      el.classList.add("active")
+    }
+  }
+
+  removeCurrentLineHighlight () {
+    const code = this.shadowRoot?.querySelector("code")
+
+    if (!code) return
+
+    code.querySelectorAll(".light-line.active")?.forEach((el) => el.classList.remove("active"))
+  }
+
   /**
    * @ignore
    * Override this to use a highlighter of your choice.
@@ -293,11 +315,11 @@ export default class LightEditor extends BaseElement {
     return code
   }
 
-  injectGutters () {
+  injectGutterCells () {
     const gutter = this.shadowRoot?.querySelector("[part~='gutter']")
 
     if (gutter) {
-      gutter.innerHTML = this.renderGutters()
+      render(this.renderGutterCells(), /** @type {HTMLElement} */ (gutter))
     }
   }
 
@@ -308,8 +330,10 @@ export default class LightEditor extends BaseElement {
 
     const textLines = textArea.value.substr(0, textArea.selectionStart).split("\n");
     const currentLineNumber = textLines.length - 1;
-    const currentColumnIndex = textLines[textLines.length-1].length;
-    console.log("Current Line Number "+ currentLineNumber+" Current Column Index "+currentColumnIndex );
+    // const currentColumnIndex = textLines[textLines.length-1].length;
+    // console.log("Current Line Number "+ currentLineNumber+" Current Column Index "+currentColumnIndex );
+
+    return currentLineNumber
   }
 
   /**
@@ -339,29 +363,28 @@ export default class LightEditor extends BaseElement {
     return lineHeight;
   }
 
-  renderGutters () {
+  renderGutterCells () {
     const lines = this.shadowRoot?.querySelector("pre > code")?.children
 
     if (!lines) return ``
 
-    const lineHeight = this.calculateLineHeight(lines[0])
+    const ary = Array.from(lines)
 
-    return Array.from(lines).map((el, index) => {
-      let height = lineHeight
-
+    return repeat(ary, (el, index) => {
       // @ts-expect-error
-      const offsetHeight = /** @type {number} */ (el.offsetHeight)
+      const height = /** @type {number} */ (el.offsetHeight)
 
-      if (offsetHeight > lineHeight) {
-        height = Math.ceil(offsetHeight / lineHeight) * lineHeight
-      }
+      return index + height
+    }, (el ,index) => {
+      // @ts-expect-error
+      const height = /** @type {number} */ (el.offsetHeight)
 
       if (height) {
-        return `<span part="gutter-cell" style="${`height: ${height}px`}">${index}</span>`
+        return html`<span part="gutter-cell" style="${`height: ${height}px`}">${index}</span>`
       }
 
-      return `<span part="gutter-cell">${index}</span>`
-    }).join("")
+      return html`<span part="gutter-cell">${index}</span>`
+    })
   }
 
   /**
