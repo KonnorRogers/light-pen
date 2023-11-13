@@ -111,6 +111,7 @@ export const styles = css`
 
   .light-line {
     display: inline-block;
+    width: 100%;
   }
 
   [part~="base"]:focus-within .light-line.active {
