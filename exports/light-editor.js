@@ -336,33 +336,6 @@ export default class LightEditor extends BaseElement {
     return currentLineNumber
   }
 
-  /**
-    * @param {Element} element
-    */
-  calculateLineHeight (element) {
-    if (!(element instanceof HTMLElement)) {
-      return 0
-    }
-
-    let lineHeight = parseInt(window.getComputedStyle(element).lineHeight, 10);
-    let clone;
-    let singleLineHeight;
-    let doubleLineHeight;
-
-    if (isNaN(lineHeight)) {
-      clone = /** @type {HTMLElement} */ (element.cloneNode());
-      clone.innerHTML = '<br>';
-      element.appendChild(clone);
-      singleLineHeight = clone.offsetHeight;
-      clone.innerHTML = '<br><br>';
-      doubleLineHeight = clone.offsetHeight;
-      element.removeChild(clone);
-      lineHeight = doubleLineHeight - singleLineHeight;
-    }
-
-    return lineHeight;
-  }
-
   renderGutterCells () {
     const lines = this.shadowRoot?.querySelector("pre > code")?.children
 
