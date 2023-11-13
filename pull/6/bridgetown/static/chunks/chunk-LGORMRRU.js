@@ -109,6 +109,7 @@ import{a as N,b as C,c as j,d as E,e as P,f as D,g as $,h as I,i as O,j as V,k a
 
   .light-line {
     display: inline-block;
+    width: 100%;
   }
 
   [part~="base"]:focus-within .light-line.active {
@@ -227,4 +228,4 @@ lit-html/directives/repeat.js:
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 */
-//# sourceMappingURL=/light-pen/pull/6/bridgetown/static/chunks/chunk-V3QQUQI7.js.map
+//# sourceMappingURL=/light-pen/pull/6/bridgetown/static/chunks/chunk-LGORMRRU.js.map
