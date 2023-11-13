@@ -379,7 +379,6 @@ export default class LightEditor extends BaseElement {
    * @param {string} text
    */
   injectNewLine (text) {
-    console.log("TEXT: ", text)
     // Handle final newlines (see article)
     if(text === "" || text[text.length-1] === "\n") { // If the last character is a newline character
       text += " "; // Add a placeholder space character to the final line
