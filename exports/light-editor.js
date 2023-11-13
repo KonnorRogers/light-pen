@@ -322,7 +322,7 @@ export default class LightEditor extends BaseElement {
         isActive = true
       }
 
-      // Insert a blank space if the string is empty so we get line highlighting
+      // Inset a blank string if it's empty so that it has a height and can get highlighted.
       return `<span class="light-line ${isActive ? "is-active" : ""}">${str || " "}</span>`
     }).join("\n")
 

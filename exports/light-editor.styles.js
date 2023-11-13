@@ -25,8 +25,22 @@ export const styles = css`
     grid-template-rows: minmax(0, 1fr);
   }
 
-  [part~="textarea"], [part~="pre"], [part~="gutter"] {
-    /* padding: 6px; */
+  /* Include "pre" if line numbers are disabled */
+  [part~="textarea"], [part~="gutter"] {
+    padding: 6px;
+  }
+
+  .light-line {
+    padding-inline-start: 6px;
+    padding-inline-end: 6px;
+  }
+
+  .light-line:first-child {
+    padding-top: 6px;
+  }
+
+  .light-line:last-child {
+    padding-bottom: 6px;
   }
 
   [part~="textarea"] {
