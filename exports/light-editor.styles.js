@@ -26,21 +26,9 @@ export const styles = css`
   }
 
   /* Include "pre" if line numbers are disabled */
-  [part~="textarea"], [part~="gutter"] {
-    padding: 6px;
-  }
-
-  .light-line {
+  [part~="textarea"], [part~="pre"], [part~="gutter"] {
+    padding: 0px;
     padding-inline-start: 6px;
-    padding-inline-end: 6px;
-  }
-
-  .light-line:first-child {
-    padding-top: 6px;
-  }
-
-  .light-line:last-child {
-    padding-bottom: 6px;
   }
 
   [part~="textarea"] {
@@ -91,7 +79,8 @@ export const styles = css`
   }
 
   [part~="gutter"] {
-    color: rgba(0,0,0,0.2);
+    color: rgba(0,0,0,0.35);
+	  background-color: rgba(50,50,50,0.08);
     font-variant-numeric: tabular-nums;
     padding-inline-end: 16px;
     padding-inline-start: 12px;
@@ -154,15 +143,10 @@ export const styles = css`
     border: 1px solid transparent;
   }
 
-  [part~="gutter"],
-  [part~="pre"],
-  [part~="code"] {
-	  background-color: #f7f7f7;
-  }
-
   [part~="pre"],
   [part~="code"] {
 	  color: #272727;
+	  background-color: #f7f7f7;
   }
 
   [part~="textarea"]::selection {

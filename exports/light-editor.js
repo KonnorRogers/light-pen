@@ -363,8 +363,7 @@ export default class LightEditor extends BaseElement {
 
       return index + height
     }, (el ,index) => {
-      // @ts-expect-error
-      const height = /** @type {number} */ (el.offsetHeight)
+      const height = /** @type {number} */ (el.getBoundingClientRect().height)
 
       const isCurrent = index === this.currentLineNumber
 
