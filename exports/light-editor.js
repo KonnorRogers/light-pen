@@ -102,8 +102,10 @@ export default class LightEditor extends BaseElement {
               this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
             }}
+
             @blur=${() => {
               this.syncScroll()
+              this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))
             }}
             @selectionchange=${/** @param {Event} e */ (e) => {
@@ -261,6 +263,7 @@ export default class LightEditor extends BaseElement {
    * @param {KeyboardEvent} evt
    */
   keydownHandler(evt) {
+    this.setCurrentLineHighlight()
     // this.textarea
 
     // Let's not trap focus. For now.
@@ -279,19 +282,19 @@ export default class LightEditor extends BaseElement {
 
     const currentLineNumber = this.getCurrentLineNumber()
 
+    if (this.currentLineNumber === currentLineNumber) return
+
+    this.currentLineNumber = currentLineNumber
+
     if (currentLineNumber != null && currentLineNumber >= 0) {
+      if (this.currentEl) {
+        this.currentEl.classList.remove("active")
+      }
+
       const el = code.children[currentLineNumber]
-      this.removeCurrentLineHighlight()
+      this.currentEl = el
       el.classList.add("active")
     }
-  }
-
-  removeCurrentLineHighlight () {
-    const code = this.shadowRoot?.querySelector("code")
-
-    if (!code) return
-
-    code.querySelectorAll(".light-line.active")?.forEach((el) => el.classList.remove("active"))
   }
 
   /**
