@@ -169,6 +169,7 @@ export default class LightEditor extends BaseElement {
 
     this.syncScroll()
     this.injectGutterCells()
+    this.setCurrentLineHighlight()
   }
 
   /**
