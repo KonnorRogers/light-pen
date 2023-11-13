@@ -102,7 +102,6 @@ export default class LightEditor extends BaseElement {
               this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
             }}
-
             @blur=${() => {
               this.syncScroll()
               this.setCurrentLineHighlight()
@@ -112,6 +111,12 @@ export default class LightEditor extends BaseElement {
               this.syncScroll()
               this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
+            }}
+            @click=${() => {
+              this.setCurrentLineHighlight()
+            }}
+            @touchstart=${() => {
+              this.setCurrentLineHighlight()
             }}
             @input=${/** @param {Event} e */ (e) => {
               this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
@@ -171,7 +176,7 @@ export default class LightEditor extends BaseElement {
 
     this.syncScroll()
     this.injectGutterCells()
-    this.setCurrentLineHighlight()
+    setTimeout(() => this.setCurrentLineHighlight())
   }
 
   /**
@@ -263,7 +268,7 @@ export default class LightEditor extends BaseElement {
    * @param {KeyboardEvent} evt
    */
   keydownHandler(evt) {
-    this.setCurrentLineHighlight()
+    setTimeout(() => this.setCurrentLineHighlight())
     // this.textarea
 
     // Let's not trap focus. For now.
