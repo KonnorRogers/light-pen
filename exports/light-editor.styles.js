@@ -2,7 +2,6 @@ import { css } from "lit"
 
 export const styles = css`
   :host {
-    --padding: 16px;
   }
 
   [part~="base"] {
@@ -19,16 +18,23 @@ export const styles = css`
     font-family: monospace;
     line-height: 1.5; /* Inherited to child elements */
     tab-size: 2;
-    caret-color: darkgrey;
+    caret-color: black;
+    counter-reset: linenumber 0;
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  [part~="textarea"], [part~="pre"], [part~="gutter"] {
+    padding: 6px;
   }
 
   [part~="textarea"] {
     color: transparent;
     background-color: transparent;
-    caret-color: black;
+    caret-color: inherit;
     z-index: 1;
     resize: none;
-    position: absolute;
   }
 
   [part~="pre"] {
@@ -44,7 +50,7 @@ export const styles = css`
     outline: transparent;
   }
 
-  [part~="pre"], [part~="textarea"], [part~="code"] {
+  [part~="pre"], [part~="textarea"], [part~="code"], [part~="gutter"] {
     /* I don't love this, but it fixes font size inconsistencies on mobile. The alternative is listen for font-size changes, which is...challenging. */
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
@@ -62,31 +68,69 @@ export const styles = css`
     /* This would remove line-wrapping */
 	  /* word-break: break-all; */
     /* white-space: pre; */
+  }
 
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
+  /** Hide scrollbars for the gutter */
+  [part~="gutter"]::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+  }
+
+  [part~="gutter"] {
+    color: rgba(0,0,0,0.2);
+    font-variant-numeric: tabular-nums;
+    padding-inline-end: 16px;
+    padding-inline-start: 12px;
+    border-inline-end: 1px solid darkgray;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    tab-size: inherit;
+
+    /* this creates line-wrapping. */
+	  word-break: break-word;
+    white-space: pre-wrap;
+    text-align: end;
+  }
+
+  [part~="gutter-cell"] {
+    font-size: 100%;
+    display: block;
+  }
+
+  [part~="base-editor"] {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
   }
 
   [part~="pre"],
   [part~="textarea"] {
+    grid-area: 1/1/2/2;
     width: 100%;
     height: 100%;
     margin: 0;
-    padding: 0;
-    top: 0;
-    left: 0;
-    padding: 8px;
     border: none;
     overflow: auto;
-
     border: 1px solid transparent;
+  }
+
+  [part~="gutter"],
+  [part~="pre"],
+  [part~="code"] {
+	  background-color: #f7f7f7;
   }
 
   [part~="pre"],
   [part~="code"] {
 	  color: #272727;
-	  background-color: #f7f7f7;
   }
 
   [part~="textarea"]::selection {

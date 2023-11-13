@@ -7,6 +7,30 @@ component: light-editor
 <light-editor style="display: none;"></light-editor>
 
 <light-preview inline-preview>
+  <template slot='code'>
+    <light-editor>
+      <template>
+        <div>Hello World!</div>fwkfwjkfjkwfjkwefjkefkjewfkjewfkjewfkjefkjewkjfewjkfewjkfewjkfewkjfekwjfjewfjekwfkjewfjekwfkejfjkewjkfwejkfwjk
+        kjwjkfwfkjwfkjfkjwefwjkf
+        2jkrjkwjkrfw
+        wfjkwjfkwfjkw
+        wjfwkjfwjkf
+        2jkrjkwjkrfw
+        wfjkwjfkwfjkw
+        wjfwkjfwjkf
+        2jkrjkwjkrfw
+        wfjkwjfkwfjkw
+        wjfwkjfwjkf
+        2jkrjkwjkrfw
+        wfjkwjfkwfjkw
+        wjfwkjfwjkf
+      </template>
+    </light-editor>
+  </template>
+</light-preview>
+
+
+<light-preview inline-preview>
   <template slot="code">
     <light-editor value="<div>Hello World!</div>">
     </light-editor>

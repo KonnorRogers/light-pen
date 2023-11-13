@@ -67,61 +67,80 @@ export default class LightEditor extends BaseElement {
   render () {
     const language = this.language
 
-    const highlightedCode = this.value ? unsafeHTML(this.highlightCode({ code: this.value, language })) : ""
+    const highlightedCode = unsafeHTML(this.highlightCode({ code: this.value, language }))
     this.syncScroll()
+
+    setTimeout(() => {
+      const gutter = this.shadowRoot?.querySelector("[part~='gutter']")
+
+      if (gutter) {
+        gutter.innerHTML = this.renderGutters()
+      }
+    })
 
     return html`
 			<div class="base" part="base">
+			  <div part="gutter">
+			  </div>
         <!-- This is where the fancy syntax highlighting comes in -->
-				<pre
-          id="pre-${language}"
-          data-code-lang=${language}
-          aria-hidden="true"
-          part="pre pre-${language}"
-        ><code
-            part="code code-${language}"
-            class="language-${language}"
-          >${highlightedCode}</code></pre>
-        <!-- IMPORTANT! There must be no white-space above. -->
-				<textarea
-          id="textarea-${language}"
-          data-code-lang=${language}
-          part="textarea textarea-${language}"
-          spellcheck="false"
-          autocorrect="off"
-          autocapitalize="off"
-          translate="no"
-          ${ref(this.textareaChanged)}
-          @keydown=${this.keydownHandler}
-          @focus=${() => {
-            this.syncScroll()
-            this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
-          }}
-          @blur=${() => {
-            this.syncScroll()
-            this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))
-          }}
-          @selectionchange=${/** @param {Event} e */ (e) => {
-            this.syncScroll()
-            this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
-          }}
-          @input=${/** @param {Event} e */ (e) => {
-            this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
-            this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
-            this.syncScroll()
-          }}
-          @change=${/** @param {Event} e */ (e) => {
-            this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
-            this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
-            this.syncScroll()
-          }}
-          @scroll=${/** @param {Event} e */ (e) => {
-            this.syncScroll()
-          }}
-          .value=${this.value}
-        ></textarea>
-			</div>
+        <div part="base-editor">
+				  <pre
+            id="pre-${language}"
+            data-code-lang=${language}
+            aria-hidden="true"
+            part="pre pre-${language}"
+          ><code
+              part="code code-${language}"
+              class="language-${language}"
+            >${highlightedCode}</code></pre>
+          <!-- IMPORTANT! There must be no white-space above. -->
+				  <textarea
+            id="textarea-${language}"
+            data-code-lang=${language}
+            part="textarea textarea-${language}"
+            spellcheck="false"
+            autocorrect="off"
+            autocapitalize="off"
+            translate="no"
+            ${ref(this.textareaChanged)}
+            @keydown=${this.keydownHandler}
+            @focus=${() => {
+              this.syncScroll()
+              this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
+            }}
+            @blur=${() => {
+              this.syncScroll()
+              this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))
+            }}
+            @selectionchange=${/** @param {Event} e */ (e) => {
+              this.syncScroll()
+              this.getCurrentLineNumber()
+              this.dispatchEvent(new Event("light-selectionchange", { bubbles: true, composed: true }))
+            }}
+            @input=${/** @param {Event} e */ (e) => {
+              this.renderGutters()
+              this.getCurrentLineNumber()
+              this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
+              this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
+              this.syncScroll()
+            }}
+            @change=${/** @param {Event} e */ (e) => {
+              this.renderGutters()
+              this.getCurrentLineNumber()
+              this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
+              this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
+              this.syncScroll()
+            }}
+            @scroll=${/** @param {Event} e */ (e) => {
+              this.getCurrentLineNumber()
+              this.syncScroll()
+            }}
+            .value=${this.value}
+          ></textarea>
+        </div> <!-- base-editor -->
+			</div> <!-- base -->
 
+      <!-- Hidden slot for holding content -->
       <slot hidden @slotchange=${this.handleSlotChangeEvent}></slot>
 		`
   }
@@ -144,7 +163,8 @@ export default class LightEditor extends BaseElement {
      * Fires whenever the editor resizes, usually due to zoom in / out
      */
     this.dispatchEvent(new LightResizeEvent("light-resize", {height, width}));
-    // this.syncScroll()
+    this.syncScroll()
+    this.renderGutters()
   }
 
   updated () {
@@ -165,10 +185,17 @@ export default class LightEditor extends BaseElement {
 
     const pre = this.shadowRoot?.querySelector(`pre`)
 
-    if (pre == null) return
+    if (pre) {
+      pre.scrollTop = textarea.scrollTop;
+      pre.scrollLeft = textarea.scrollLeft;
+    }
 
-    pre.scrollTop = textarea.scrollTop;
-    pre.scrollLeft = textarea.scrollLeft;
+    const gutter = this.shadowRoot?.querySelector("[part~='gutter']")
+
+    if (gutter) {
+      gutter.scrollTop = textarea.scrollTop;
+      gutter.scrollLeft = textarea.scrollLeft;
+    }
   }
 
   /**
@@ -255,7 +282,86 @@ export default class LightEditor extends BaseElement {
     code = this.unescapeCharacters(code)
     code = this.injectNewLine(code)
 
-    return HighlightJS.highlight(code, {language}).value
+    code = HighlightJS.highlight(code, {language}).value
+
+    const newLineRegex = /\n(?!$)/
+    /** We use this to wrap every line to perform line counting operations. */
+    code = code.split(newLineRegex).map((str) => {
+      return `<span class="light-line">${str}</span>`
+    }).join("\n")
+
+    return code
+  }
+
+  injectGutters () {
+    const gutter = this.shadowRoot?.querySelector("[part~='gutter']")
+
+    if (gutter) {
+      gutter.innerHTML = this.renderGutters()
+    }
+  }
+
+  getCurrentLineNumber () {
+    const textArea = this.textarea
+
+    if (!textArea) return
+
+    const textLines = textArea.value.substr(0, textArea.selectionStart).split("\n");
+    const currentLineNumber = textLines.length - 1;
+    const currentColumnIndex = textLines[textLines.length-1].length;
+    console.log("Current Line Number "+ currentLineNumber+" Current Column Index "+currentColumnIndex );
+  }
+
+  /**
+    * @param {Element} element
+    */
+  calculateLineHeight (element) {
+    if (!(element instanceof HTMLElement)) {
+      return 0
+    }
+
+    let lineHeight = parseInt(window.getComputedStyle(element).lineHeight, 10);
+    let clone;
+    let singleLineHeight;
+    let doubleLineHeight;
+
+    if (isNaN(lineHeight)) {
+      clone = /** @type {HTMLElement} */ (element.cloneNode());
+      clone.innerHTML = '<br>';
+      element.appendChild(clone);
+      singleLineHeight = clone.offsetHeight;
+      clone.innerHTML = '<br><br>';
+      doubleLineHeight = clone.offsetHeight;
+      element.removeChild(clone);
+      lineHeight = doubleLineHeight - singleLineHeight;
+    }
+
+    return lineHeight;
+  }
+
+  renderGutters () {
+    const lines = this.shadowRoot?.querySelector("pre > code")?.children
+
+    if (!lines) return ``
+
+    const lineHeight = this.calculateLineHeight(lines[0])
+
+    return Array.from(lines).map((el, index) => {
+      let height = lineHeight
+
+      // @ts-expect-error
+      const offsetHeight = /** @type {number} */ (el.offsetHeight)
+
+      if (offsetHeight > lineHeight) {
+        height = Math.ceil(offsetHeight / lineHeight) * lineHeight
+      }
+
+      if (height) {
+        return `<span part="gutter-cell" style="${`height: ${height}px`}">${index}</span>`
+      }
+
+      return `<span part="gutter-cell">${index}</span>`
+    }).join("")
   }
 
   /**
@@ -273,8 +379,9 @@ export default class LightEditor extends BaseElement {
    * @param {string} text
    */
   injectNewLine (text) {
+    console.log("TEXT: ", text)
     // Handle final newlines (see article)
-    if(text[text.length-1] === "\n") { // If the last character is a newline character
+    if(text === "" || text[text.length-1] === "\n") { // If the last character is a newline character
       text += " "; // Add a placeholder space character to the final line
     }
 
