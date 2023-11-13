@@ -115,7 +115,10 @@ export default class LightEditor extends BaseElement {
             @click=${() => {
               this.setCurrentLineHighlight()
             }}
-            @touchstart=${() => {
+            @pointerdown=${() => {
+              this.setCurrentLineHighlight()
+            }}
+            @pointerup=${() => {
               this.setCurrentLineHighlight()
             }}
             @input=${/** @param {Event} e */ (e) => {
@@ -368,7 +371,8 @@ export default class LightEditor extends BaseElement {
 
       return index + height
     }, (el ,index) => {
-      const height = /** @type {number} */ (el.getBoundingClientRect().height)
+      // @ts-expect-error
+      const height = /** @type {number} */ (el.offsetHeight)
 
       const isCurrent = index === this.currentLineNumber
 
