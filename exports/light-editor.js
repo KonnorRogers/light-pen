@@ -44,6 +44,7 @@ export default class LightEditor extends BaseElement {
     label: {},
     value: {},
     language: {reflect: true},
+    hasFocused: { attribute: "has-focused", reflect: true }
   }
 
   constructor () {
@@ -63,6 +64,11 @@ export default class LightEditor extends BaseElement {
      * @type {null | HTMLTextAreaElement}
      */
     this.textarea = null
+
+    /**
+     * Tracks if the user has interacted with the `<textarea>`
+     */
+    this.hasInteracted = false
   }
 
   render () {
@@ -74,7 +80,15 @@ export default class LightEditor extends BaseElement {
     return html`
 			<div class="base" part="base">
         <!-- Super important to not have white space here due to how white space is handled -->
-			  <div part="gutter"></div>
+			  <div part="gutter"
+			    @focus=${() => {
+            this.textarea?.focus()
+			    }}
+			    @click=${(/** @type {Event} */ e) => {
+			      // Don't let a user focus on this area.
+            this.textarea?.focus()
+			    }}
+			  ></div>
         <!-- This is where the fancy syntax highlighting comes in -->
         <div part="base-editor">
 				  <pre
@@ -82,6 +96,14 @@ export default class LightEditor extends BaseElement {
             data-code-lang=${language}
             aria-hidden="true"
             part="pre pre-${language}"
+            tabindex="-1"
+			      @focus=${() => {
+              this.textarea?.focus()
+			      }}
+			      @click=${(/** @type {Event} */ e) => {
+			        // Don't let a user focus on this area.
+              this.textarea?.focus()
+			      }}
           ><code
               part="code code-${language}"
               class="language-${language}"
@@ -98,6 +120,7 @@ export default class LightEditor extends BaseElement {
             ${ref(this.textareaChanged)}
             @keydown=${this.keydownHandler}
             @focus=${() => {
+              this.hasFocused = true
               this.syncScroll()
               this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
@@ -222,6 +245,7 @@ export default class LightEditor extends BaseElement {
 
     this.textareaResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
     this.textareaResizeObserver.observe(textarea)
+
   }
 
   /**
@@ -242,15 +266,15 @@ export default class LightEditor extends BaseElement {
 
     if (code.trim()) {
       this.value = code
+      setTimeout(() => this.textarea?.setSelectionRange(0, 0))
       this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
       this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
     }
   }
 
-  disconnectedCallback () {
-    this.textareaMutationObserver?.disconnect()
-    super.disconnectedCallback()
-  }
+  // disconnectedCallback () {
+  //   super.disconnectedCallback()
+  // }
 
   /**
    * @ignore

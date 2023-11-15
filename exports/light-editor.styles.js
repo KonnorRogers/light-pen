@@ -121,7 +121,8 @@ export const styles = css`
     background-color: rgba(255, 247, 0, 0.1);
   }
 
-  .light-line.is-active {
+  /* We don't want to show the focus position if the user hasn't interacted with the textarea. */
+  :where(:host([has-focused]) .light-line.is-active) {
     background-color: rgba(0,0,0,0.05);
   }
 
