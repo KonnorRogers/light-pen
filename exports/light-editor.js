@@ -162,7 +162,6 @@ export default class LightEditor extends BaseElement {
     const width = left + right
     const height = top + bottom;
 
-
     /**
      * Fires whenever the editor resizes, usually due to zoom in / out
      */
@@ -222,21 +221,7 @@ export default class LightEditor extends BaseElement {
     this.textarea = textarea
 
     this.textareaResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
-
     this.textareaResizeObserver.observe(textarea)
-
-    // If we don't do this, then we miss if someone programmatically sets the value of the `<textarea>`
-    this.textareaMutationObserver = new MutationObserver((mutationRecords) => {
-      // We actually don't care about what the mutation is, just update and move on.
-      // for (const mutation of mutationRecords) {
-      // }
-      this.value = textarea.value
-    })
-
-    this.textareaMutationObserver.observe(textarea, {
-      characterData: true,
-      subtree: true
-    })
   }
 
   /**
