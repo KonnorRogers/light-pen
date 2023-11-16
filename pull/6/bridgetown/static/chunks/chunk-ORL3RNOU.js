@@ -1,4 +1,4 @@
-import{a as m}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-6RGL6TTA.js";import{a as n,b as d,c as u,d as b,e as f}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-G4T5POF4.js";import{a as l,b as s,o as c,p as h,q as p}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-ANZGNVLF.js";import{d as i}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-S5ENCXQS.js";var g=l`
+import{a as m}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-OULLGDXT.js";import{a as n,b as d,c as u,d as b,e as f}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-E4TU32H6.js";import{a as l,b as s,o as c,p,q as h}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-RFXGSISN.js";import{d as o}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-S5ENCXQS.js";var g=l`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
@@ -17,18 +17,12 @@ import{a as m}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-6RGL6TTA.js"
 }
 
 [part~="summary"] {
-  font-size: .8125rem;
-  font-weight: bold;
-  padding: 0.4rem 0.6rem;
-  margin-bottom: 3px;
+  display: inline-block;
+  margin: 6px 0px;
 }
 
-[part~="summary"]:hover {
-  background-color: rgba(0,0,0,0.10);
-}
-
-[part~="summary"]:focus {
-  outline: 2px solid blue;
+[part~="disclosure"]::part(summary) {
+  margin: 6px 0px;
 }
 
 [part~="base"] {
@@ -118,6 +112,11 @@ import{a as m}from"/light-pen/pull/6/bridgetown/static/chunks/chunk-6RGL6TTA.js"
   overflow-y: auto;
 }
 
+[part~="sandbox-code"] > *:not(:first-child) {
+  margin-top: 6px;
+}
+
+
 button:where([part~="panel-resizer"]) {
   height: calc(100% - 0.5em);
   cursor: col-resize;
@@ -143,7 +142,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
   border-top:1px solid #1f252f;
   border-bottom-left-radius:0;
 }
-`;var o=class extends c{constructor(){super(),this.languageMap={html:"xml",css:"css",js:"javascript"},this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
+`;var i=class extends c{constructor(){super(),this.languageMap={html:"xml",css:"css",js:"javascript"},this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}</style>
@@ -232,9 +231,9 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
       ><slot name=${e}></slot></light-editor>
     `}renderDetails(e){let t=e.toUpperCase();return s`
       <light-disclosure part="disclosure disclosure-${e}">
-        <span slot="summary"><slot name=${`summary-${e}`}>${t}</slot></span>
+        <span part="summary" slot="summary"><slot name=${`summary-${e}`}>${t}</slot></span>
 
         ${this.renderEditor(e)}
 			</light-disclosure>
-		`}};i(o,"baseName","light-pen"),i(o,"styles",[h,p,g]),i(o,"dependencies",{"light-editor":m,"light-disclosure":f}),i(o,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{o as a};
-//# sourceMappingURL=/light-pen/pull/6/bridgetown/static/chunks/chunk-Q5XHCZXM.js.map
+		`}};o(i,"baseName","light-pen"),o(i,"styles",[p,h,g]),o(i,"dependencies",{"light-editor":m,"light-disclosure":f}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{i as a};
+//# sourceMappingURL=/light-pen/pull/6/bridgetown/static/chunks/chunk-ORL3RNOU.js.map
