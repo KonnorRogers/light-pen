@@ -13,9 +13,10 @@ import { theme } from "./default-theme.styles.js";
 import { dedent } from "../internal/dedent.js";
 import { LightResizeEvent } from "./events/light-resize-event.js";
 import { repeat } from "lit/directives/repeat.js";
+import { elementsToString } from "../internal/elements-to-strings.js";
 
 HighlightJS.registerLanguage('javascript', JavaScript);
-HighlightJS.registerLanguage('xml', HTML);
+HighlightJS.registerLanguage('html', HTML);
 HighlightJS.registerLanguage('css', CSS);
 
 /**
@@ -44,7 +45,7 @@ export default class LightEditor extends BaseElement {
     label: {},
     value: {},
     language: {reflect: true},
-    hasFocused: { attribute: "has-focused", reflect: true }
+    hasFocused: { type: Boolean, attribute: "has-focused", reflect: true }
   }
 
   constructor () {
@@ -53,7 +54,7 @@ export default class LightEditor extends BaseElement {
     /**
      * @type {string}
      */
-    this.language = 'xml'
+    this.language = 'html'
 
     /**
      * @type {string}
@@ -67,8 +68,9 @@ export default class LightEditor extends BaseElement {
 
     /**
      * Tracks if the user has interacted with the `<textarea>`
+     * @type {boolean}
      */
-    this.hasInteracted = false
+    this.hasFocused = false
   }
 
   render () {
@@ -162,8 +164,7 @@ export default class LightEditor extends BaseElement {
               this.setCurrentLineHighlight()
               this.syncScroll()
             }}
-            .value=${this.value}
-          ></textarea>
+          >${this.value}</textarea>
         </div> <!-- base-editor -->
 			</div> <!-- base -->
 
@@ -262,9 +263,9 @@ export default class LightEditor extends BaseElement {
 
     const templates = slot.assignedElements({flatten: true})
 
-    const code = dedent(this.unescapeCharacters(templates.map((template) => template.innerHTML).join("\n")))
+    const code = dedent(elementsToString(...templates).trim())
 
-    if (code.trim()) {
+    if (code) {
       this.value = code
       setTimeout(() => this.textarea?.setSelectionRange(0, 0))
       this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
@@ -401,7 +402,7 @@ export default class LightEditor extends BaseElement {
    */
   unescapeCharacters (text) {
     // Update code
-    return text.replaceAll("&lt;/script>", "</script>")
+    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
   }
 
   /**

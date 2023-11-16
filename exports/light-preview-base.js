@@ -13,6 +13,8 @@ import { debounce } from "../internal/debounce.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 import { BaseElement } from "../internal/base-element.js";
 import { LightDisclosure } from "./light-disclosure.js";
+import { elementsToString } from "../internal/elements-to-strings.js";
+import { dedent } from "../internal/dedent.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -232,24 +234,8 @@ export default class LightPreviewBase extends BaseElement {
 
     let elements = slot.assignedElements({flatten: true})
 
-    let strings = []
-
-    const scratch = document.createElement("div")
-
-    for (const el of elements) {
-      if (el instanceof HTMLTemplateElement) {
-        const node = el.content.cloneNode(true)
-
-        scratch.append(node)
-        strings.push(scratch.innerHTML)
-        scratch.innerHTML = ""
-        continue
-      }
-
-      strings.push(el.innerHTML)
-    }
-
-    const code = strings.join("\n")
+    const code = dedent(elementsToString(...elements).trim())
+    // console.log({code})
 
     if (name === "preview-code") {
       if (shouldReset) this.resetIframeCodeMutationObserver()

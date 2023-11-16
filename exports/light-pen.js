@@ -482,7 +482,7 @@ export default class LightPen extends BaseElement {
 
 		return html`
       <light-disclosure part="disclosure disclosure-${language}">
-        <span slot="summary"><slot name=${`summary-${language}`}>${fullLanguage}</slot></span>
+        <span part="summary" slot="summary"><slot name=${`summary-${language}`}>${fullLanguage}</slot></span>
 
         ${this.renderEditor(language)}
 			</light-disclosure>

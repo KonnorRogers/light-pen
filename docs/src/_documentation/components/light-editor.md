@@ -7,24 +7,24 @@ component: light-editor
 <light-editor style="display: none;"></light-editor>
 
 <light-preview inline-preview>
-  <template slot='code'>
+  <template type="text/plain" slot='code'>
     <light-editor>
-      <template>
-        <div>Hello World!</div>fwkfwjkfjkwfjkwefjkefkjewfkjewfkjewfkjefkjewkjfewjkfewjkfewjkfewkjfekwjfjewfjekwfkjewfjekwfkejfjkewjkfwejkfwjk
-        kjwjkfwfkjwfkjfkjwefwjkf
-        2jkrjkwjkrfw
-        wfjkwjfkwfjkw
-        wjfwkjfwjkf
-        2jkrjkwjkrfw
-        wfjkwjfkwfjkw
-        wjfwkjfwjkf
-        2jkrjkwjkrfw
-        wfjkwjfkwfjkw
-        wjfwkjfwjkf
-        2jkrjkwjkrfw
-        wfjkwjfkwfjkw
-        wjfwkjfwjkf
-      </template>
+      <textarea>
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <title>Hello World</title>
+          </head>
+          <body>
+            <main>
+              <h1>Hello World</h1>
+              Sup
+            </main>
+            <script>console.log("Hello World")</script>
+          </body>
+        </html>
+      </textarea>
     </light-editor>
   </template>
 </light-preview>

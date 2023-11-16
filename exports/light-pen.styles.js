@@ -18,18 +18,12 @@ export const styles = css`
 }
 
 [part~="summary"] {
-  font-size: .8125rem;
-  font-weight: bold;
-  padding: 0.4rem 0.6rem;
-  margin-bottom: 3px;
+  display: inline-block;
+  margin: 6px 0px;
 }
 
-[part~="summary"]:hover {
-  background-color: rgba(0,0,0,0.10);
-}
-
-[part~="summary"]:focus {
-  outline: 2px solid blue;
+[part~="disclosure"]::part(summary) {
+  margin: 6px 0px;
 }
 
 [part~="base"] {
@@ -118,6 +112,11 @@ export const styles = css`
   max-height: 100%;
   overflow-y: auto;
 }
+
+[part~="sandbox-code"] > *:not(:first-child) {
+  margin-top: 6px;
+}
+
 
 button:where([part~="panel-resizer"]) {
   height: calc(100% - 0.5em);
