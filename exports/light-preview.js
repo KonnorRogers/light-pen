@@ -28,6 +28,6 @@ export default class LightPreview extends LightPreviewBase {
    * @override
    */
   highlight (code = this.code) {
-    return HighlightJS.highlight(this.unescapeCharacters(code), {language: this.highlightLanguage}).value
+    return HighlightJS.highlight(code, {language: this.highlightLanguage}).value
   }
 }

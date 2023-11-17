@@ -6,25 +6,88 @@ component: light-editor
 
 <light-editor style="display: none;"></light-editor>
 
+<light-editor>
+  <textarea>
+    <!DOCTYPE html>
+    <html lang='en'>
+      <head>
+        <meta charset='UTF-8'>
+        <title>Hello World</title>
+      </head>
+      <body>
+        <main>
+          <h1>Hello World</h1>
+          Sup
+          <script>console.log('Yo')</script>
+        </main>
+      </body>
+    </html>
+  </textarea>
+</light-editor>
+
 <light-preview inline-preview>
-  <template type="text/plain" slot='code'>
+  <template slot="code">
     <light-editor>
       <textarea>
         <!DOCTYPE html>
-        <html lang="en">
+        <html lang='en'>
           <head>
-            <meta charset="UTF-8">
+            <meta charset='UTF-8'>
             <title>Hello World</title>
           </head>
           <body>
             <main>
               <h1>Hello World</h1>
               Sup
+              <script>console.log('Yo')</script>
+              &lt;textarea&gt;&lt;/textarea&gt;
             </main>
-            <script>console.log("Hello World")</script>
           </body>
         </html>
       </textarea>
+    </light-editor>
+  </template>
+</light-preview>
+
+<light-preview inline-preview>
+  <template slot='code'>
+    <light-editor>
+      <textarea>
+        <!DOCTYPE html>
+        <html lang='en'>
+          <head>
+            <meta charset='UTF-8'>
+            <title>Hello World</title>
+          </head>
+          <body>
+            <main>
+              <h1>Hello World</h1>
+              Sup
+              <script>console.log('Yo')</script>
+            </main>
+          </body>
+        </html>
+      </textarea>
+    </light-editor>
+  </template>
+</light-preview>
+
+<light-preview inline-preview>
+  <template slot='code'>
+    <light-editor value="<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'>
+    <title>Hello World</title>
+  </head>
+  <body>
+    <main>
+      <h1>Hello World</h1>
+      Sup
+      <script>console.log('Yo')</script>
+    </main>
+  </body>
+</html>">
     </light-editor>
   </template>
 </light-preview>

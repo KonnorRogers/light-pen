@@ -128,9 +128,9 @@ export default class LightEditor extends BaseElement {
               this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
             }}
             @blur=${() => {
-              this.syncScroll()
-              this.setCurrentLineHighlight()
-              this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))
+              // this.syncScroll()
+              // this.setCurrentLineHighlight()
+              // this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))
             }}
             @selectionchange=${/** @param {Event} e */ (e) => {
               this.syncScroll()
@@ -327,7 +327,6 @@ export default class LightEditor extends BaseElement {
   highlightCode (options) {
     let { code, language } = options
 
-    code = this.unescapeCharacters(code)
     code = this.injectNewLine(code)
 
     code = HighlightJS.highlight(code, {language}).value
@@ -400,10 +399,10 @@ export default class LightEditor extends BaseElement {
    * @ignore
    * @param {string} text
    */
-  unescapeCharacters (text) {
-    // Update code
-    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
-  }
+  // This gets tricky. We could do this, but it may be unexpected...
+  // unescapeCharacters (text) {
+    // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+  // }
 
   /**
    * @ignore

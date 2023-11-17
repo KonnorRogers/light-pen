@@ -235,7 +235,6 @@ export default class LightPreviewBase extends BaseElement {
     let elements = slot.assignedElements({flatten: true})
 
     const code = dedent(elementsToString(...elements).trim())
-    // console.log({code})
 
     if (name === "preview-code") {
       if (shouldReset) this.resetIframeCodeMutationObserver()
@@ -255,7 +254,8 @@ export default class LightPreviewBase extends BaseElement {
    * @internal
    */
   unescapePreviewCode () {
-    return this.unescapeCharacters(this.previewCode || this.code)
+    const code = this.unescapeCharacters(this.previewCode || this.code)
+    return code
   }
 
   /**
@@ -290,7 +290,8 @@ export default class LightPreviewBase extends BaseElement {
    * @param {string} text
    */
   escapeCharacters(text) {
-    return text.replaceAll(new RegExp("<", "g"), "&lt;").replaceAll(new RegExp(">", "g"), "&gt;")
+    return text
+    // return text.replaceAll(new RegExp("<", "g"), "&lt;").replaceAll(new RegExp(">", "g"), "&gt;")
   }
 
   /**
@@ -298,7 +299,8 @@ export default class LightPreviewBase extends BaseElement {
    * @param {string} text
    */
   unescapeCharacters (text) {
-    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+    return text
+    // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
   }
 
   /**
@@ -369,7 +371,7 @@ export default class LightPreviewBase extends BaseElement {
         })}>
         <div part="preview">
           ${when(this.inlinePreview,
-              () => html`<div part="start-panel preview-div">${unsafeHTML(this.unescapePreviewCode())}</div>`,
+              () => html`<div part="start-panel preview-div">${unsafeHTML(this.code || this.previewCode)}</div>`,
               () => html`
                 <iframe part="start-panel iframe" height="auto" frameborder="0"></iframe>
               `

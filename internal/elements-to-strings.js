@@ -4,12 +4,10 @@
 export function elementsToString (...elements) {
   const strings = []
 
-  const scratch = document.createElement("script")
-  scratch.type = "text/plain"
+  const scratch = document.createElement("div")
 
   for (const el of elements) {
     if (el instanceof HTMLTemplateElement) {
-      console.log(el)
       const node = el.content.cloneNode(true)
 
       scratch.append(node)
@@ -20,6 +18,11 @@ export function elementsToString (...elements) {
 
     if (el instanceof HTMLTextAreaElement) {
       strings.push(el.value)
+      continue
+    }
+
+    if (el instanceof HTMLScriptElement) {
+      strings.push(el.innerHTML)
       continue
     }
 
