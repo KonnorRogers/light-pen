@@ -64,7 +64,7 @@ export default class LightPreviewBase extends BaseElement {
     summary: {},
     sandboxSettings: { reflect: true, attribute: "sandbox-settings" },
     highlightLanguage: { reflect: true, attribute: "highlight-language" },
-    inlinePreview: { type: Boolean, attribute: "inline-preview" },
+    previewMode: { reflect: true, attribute: "preview-mode" },
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
     open: { reflect: true, type: Boolean },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
@@ -80,31 +80,37 @@ export default class LightPreviewBase extends BaseElement {
 
     /**
      * The sandbox settings to provide to the <iframe>
+     * @type {string}
      */
     this.sandboxSettings = defaultSandboxSettings
 
     /**
      * The text to provide in the <details> toggle button
+     * @type {string}
      */
     this.summary = sourceCodeFallback
 
     /**
      * The language to highlight for.
+     * @type {string}
      */
     this.highlightLanguage = "html"
 
     /**
      * Set to true to not use an <iframe> for previewing
+     * @type {"iframe" | "shadow-dom"}
      */
-    this.inlinePreview = false
+    this.previewMode = "iframe"
 
     /**
      * When the resizer is being dragged, this will be true.
+     * @type {boolean}
      */
     this.resizing = false
 
     /**
      * If disabled, its on you to provide `<pre><code></code></pre>`
+     * @type {boolean}
      */
     this.disableHighlight = false
 
@@ -112,27 +118,32 @@ export default class LightPreviewBase extends BaseElement {
      * We will take the code, wrap it in `<pre><code></code></pre>` and run it through
      * Highlight.js.
      * If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
+     * @type {string}
      */
     this.code = ""
 
     /**
      * If `disableHighlight` is true, then you must pass in an element into `previewCode` to be able to get
      *   the code to run in the previewer.
+     * @type {string}
      */
     this.previewCode = ""
 
     /**
      * Whether or not the source code is being shown
+     * @type {boolean}
      */
     this.open = false
 
     /**
      * The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
+     * @type {number}
      */
     this.resizePosition = 100
 
     /**
      * @internal
+     * @type {ResizeObserver}
      */
     this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
 
@@ -144,11 +155,13 @@ export default class LightPreviewBase extends BaseElement {
 
     /**
      * @internal
+     * @type {() => void}
      */
     this.previewCodeDebounce = debounce(() => this.handleMutation("preview-code"), 20)
 
     /**
      * @internal
+     * @type {() => void}
      */
     this.codeDebounce = debounce(() => this.handleMutation("code"), 20)
   }
@@ -370,7 +383,7 @@ export default class LightPreviewBase extends BaseElement {
           "base": true,
         })}>
         <div part="preview">
-          ${when(this.inlinePreview,
+          ${when(this.previewMode === "shadow-dom",
               () => html`<div part="start-panel preview-div">${unsafeHTML(this.code || this.previewCode)}</div>`,
               () => html`
                 <iframe part="start-panel iframe" height="auto" frameborder="0"></iframe>

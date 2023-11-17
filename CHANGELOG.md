@@ -1,3 +1,10 @@
+## 2.0.0
+
+- BREAKING_CHANGE: Renamed `inline-preview` to `preview-mode` for `<light-preview>` with options of `"iframe"` or `"shadow-dom"`
+- BREAKING_CHANGE: Changed underlying highlighting library from Highlight.JS to PrismJS
+- BREAKING_CHANGE: `<light-editor>` and `<light-preview>` No longer attempt to escape / unescape characters in editors and previews.
+- Added `<light-disclosure>`
+
 ## 1.2.0
 
 - Added `<light-editor>`
