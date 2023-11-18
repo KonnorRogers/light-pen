@@ -21,11 +21,6 @@ export function elementsToString (...elements) {
       continue
     }
 
-    if (el instanceof HTMLScriptElement) {
-      strings.push(el.innerHTML)
-      continue
-    }
-
     strings.push(el.innerHTML)
   }
 

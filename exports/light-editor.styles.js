@@ -26,8 +26,17 @@ export const styles = css`
   }
 
   /* Include "pre" if line numbers are disabled */
-  [part~="textarea"], [part~="pre"], [part~="gutter"] {
+  [part~="textarea"], .light-line {
     padding: 0px;
+    padding-inline-start: 6px;
+  }
+
+  /** @TODO: If line numbers disabled */
+  :host([line-numbers="disabled"]) .light-line {
+    padding-inline-start: 0px;
+  }
+
+  :host([line-numbers="disabled"]) [part~="pre"] {
     padding-inline-start: 6px;
   }
 

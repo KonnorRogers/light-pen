@@ -247,7 +247,7 @@ export default class LightPreviewBase extends BaseElement {
 
     let elements = slot.assignedElements({flatten: true})
 
-    const code = dedent(elementsToString(...elements).trim())
+    const code = dedent(this.unescapeCharacters(elementsToString(...elements)).trim())
 
     if (name === "preview-code") {
       if (shouldReset) this.resetIframeCodeMutationObserver()
@@ -262,20 +262,11 @@ export default class LightPreviewBase extends BaseElement {
     }
   }
 
-
-  /**
-   * @internal
-   */
-  unescapePreviewCode () {
-    const code = this.unescapeCharacters(this.previewCode || this.code)
-    return code
-  }
-
   /**
    * @internal
    */
   updateIframeContent () {
-    const code = this.unescapePreviewCode()
+    const code = this.previewCode || this.code
 
     const iframe = this.shadowRoot?.querySelector("iframe")
 
@@ -292,7 +283,6 @@ export default class LightPreviewBase extends BaseElement {
         </body>
       </html>`
 
-
     iframe.contentWindow?.document.open()
     iframe.contentWindow?.document.writeln(content)
     iframe.contentWindow?.document.close()
@@ -308,12 +298,12 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * Only used to unescape things like `&lt;/script>` from slotted content.
    * @internal
    * @param {string} text
    */
   unescapeCharacters (text) {
-    return text
-    // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
   }
 
   /**

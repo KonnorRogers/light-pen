@@ -20,13 +20,20 @@ HighlightJS.registerLanguage('html', HTML);
 HighlightJS.registerLanguage('css', CSS);
 
 /**
- * A bare bones plain text editor with syntax highlighting.
+ * A minimal plain text editor with syntax highlighting, line numbers, and line highlighting.
+ *    `<light-editor>` is not intended to replace full solutions like CodeMirror, but it
+ *    is a lightweight alternative using a `<pre>` overlaid on top of a `<textarea>`
+ *    and a few extra divs to make for an enjoyable text editing experience.
+ *
  * @customElement
  * @tagname light-editor
  *
+ * @event {Event} light-input - Re-emits the textarea's "input" event
  * @event {Event} light-change - Re-emits the textarea's "change" event
  * @event {Event} light-selectionchange - Re-emits the textarea's "selectionchange" event
- * @event {Event} light-input - Re-emits the textarea's "input" event
+ * @event {Event} light-focus - Re-emits the textarea's "focus" event
+ * @event {Event} light-blur - Re-emits the textarea's "blur" event
+ * @event {Event} light-resize - Is emitting whenever the editor resizes.
  *
  */
 export default class LightEditor extends BaseElement {
@@ -45,7 +52,8 @@ export default class LightEditor extends BaseElement {
     label: {},
     value: {},
     language: {reflect: true},
-    hasFocused: { type: Boolean, attribute: "has-focused", reflect: true }
+    hasInteracted: { type: Boolean, attribute: "has-interacted", reflect: true },
+    preserveWhitespace: { type: Boolean, reflect: true, attribute: "preserve-whitespace" }
   }
 
   constructor () {
@@ -70,7 +78,24 @@ export default class LightEditor extends BaseElement {
      * Tracks if the user has interacted with the `<textarea>`
      * @type {boolean}
      */
-    this.hasFocused = false
+    this.hasInteracted = false
+
+    /**
+     * Whether to strip whitespace before first character, and after the last character.
+     * @type {boolean}
+     */
+    this.preserveWhitespace = false
+  }
+
+  /**
+   * @param {import("lit").PropertyValues<this>} changedProperties
+   */
+  willUpdate (changedProperties) {
+    if (this.value === this.getAttribute("value") && this.preserveWhitespace !== true) {
+      this.value = this.value.trim()
+    }
+
+    super.willUpdate(changedProperties)
   }
 
   render () {
@@ -120,17 +145,18 @@ export default class LightEditor extends BaseElement {
             autocapitalize="off"
             translate="no"
             ${ref(this.textareaChanged)}
+            @keyup=${this.keyupHandler}
             @keydown=${this.keydownHandler}
             @focus=${() => {
-              this.hasFocused = true
+              this.hasInteracted = true
               this.syncScroll()
               this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
             }}
             @blur=${() => {
-              // this.syncScroll()
-              // this.setCurrentLineHighlight()
-              // this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))
+              this.syncScroll()
+              this.setCurrentLineHighlight()
+              this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))
             }}
             @selectionchange=${/** @param {Event} e */ (e) => {
               this.syncScroll()
@@ -263,7 +289,8 @@ export default class LightEditor extends BaseElement {
 
     const templates = slot.assignedElements({flatten: true})
 
-    const code = dedent(elementsToString(...templates).trim())
+    // We only unescape when passed into templates.
+    const code = dedent(this.unescapeTags(elementsToString(...templates)).trim())
 
     if (code) {
       this.value = code
@@ -273,15 +300,23 @@ export default class LightEditor extends BaseElement {
     }
   }
 
-  // disconnectedCallback () {
-  //   super.disconnectedCallback()
-  // }
+  /**
+   * @ignore
+   * @param {KeyboardEvent} evt
+   */
+  keyupHandler(evt) {
+    this.setCurrentLineHighlight()
+    // setTimeout is needed for Safari which appears to be "slow" to update selection APIs.
+    setTimeout(() => this.setCurrentLineHighlight())
+  }
 
   /**
    * @ignore
    * @param {KeyboardEvent} evt
    */
   keydownHandler(evt) {
+    this.setCurrentLineHighlight()
+    // setTimeout is needed for Safari which appears to be "slow" to update selection APIs.
     setTimeout(() => this.setCurrentLineHighlight())
     // this.textarea
 
@@ -400,9 +435,9 @@ export default class LightEditor extends BaseElement {
    * @param {string} text
    */
   // This gets tricky. We could do this, but it may be unexpected...
-  // unescapeCharacters (text) {
-    // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
-  // }
+  unescapeTags (text) {
+    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+  }
 
   /**
    * @ignore

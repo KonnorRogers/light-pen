@@ -7,8 +7,36 @@ component: light-editor
 <!-- Register it with the lazy loader -->
 <light-editor style="display: none;"></light-editor>
 
-<light-editor>
-  <textarea>
+<light-preview preview-mode="shadow-dom">
+  <template slot="code">
+    <light-editor>
+      <textarea>
+        <!DOCTYPE html>
+        <html lang='en'>
+          <head>
+            <meta charset='UTF-8'>
+            <title>Hello World</title>
+          </head>
+          <body>
+            <main>
+              <h1>Hello World</h1>
+              Sup
+              <script></script>
+            </main>
+          </body>
+        </html>
+      </textarea>
+    </light-editor>
+  </template>
+</light-preview>
+
+## Using `value` attribute
+
+Using the `value` attribute is the generally recommended way to provide the most consistent experience.
+
+<light-preview preview-mode="shadow-dom">
+  <template slot='code'>
+    <light-editor value="
     <!DOCTYPE html>
     <html lang='en'>
       <head>
@@ -21,89 +49,43 @@ component: light-editor
           Sup
           <script>console.log('Yo')</script>
         </main>
-      </body>
+        </body>
     </html>
-  </textarea>
-</light-editor>
-
-<light-preview preview-mode="shadow-dom">
-  <template slot="code">
-    <light-editor>
-      <textarea>
-        <!DOCTYPE html>
-        <html lang='en'>
-          <head>
-            <meta charset='UTF-8'>
-            <title>Hello World</title>
-          </head>
-          <body>
-            <main>
-              <h1>Hello World</h1>
-              Sup
-              <script>console.log('Yo')</script>
-              &lt;textarea&gt;&lt;/textarea&gt;
-            </main>
-          </body>
-        </html>
-      </textarea>
+">
     </light-editor>
   </template>
 </light-preview>
+
+## Preserve white space with `value` attribute
+
+By default, extra white space before the first character and after the last character will be stripped.
+If you want to leave extra white-space, pass the `preserve-whitespace` boolean attribute to the editor.
 
 <light-preview preview-mode="shadow-dom">
   <template slot='code'>
-    <light-editor>
-      <textarea>
-        <!DOCTYPE html>
-        <html lang='en'>
-          <head>
-            <meta charset='UTF-8'>
-            <title>Hello World</title>
-          </head>
-          <body>
-            <main>
-              <h1>Hello World</h1>
-              Sup
-              <script>console.log('Yo')</script>
-            </main>
-          </body>
-        </html>
-      </textarea>
+    <light-editor preserve-whitespace="" value="
+    <!DOCTYPE html>
+    <html lang='en'>
+      <head>
+        <meta charset='UTF-8'>
+        <title>Hello World</title>
+      </head>
+      <body>
+        <main>
+          <h1>Hello World</h1>
+          Sup
+          <script>console.log('Yo')</script>
+        </main>
+        </body>
+    </html>
+">
     </light-editor>
   </template>
 </light-preview>
 
-<light-preview preview-mode="shadow-dom">
-  <template slot='code'>
-    <light-editor value="<!DOCTYPE html>
-<html lang='en'>
-  <head>
-    <meta charset='UTF-8'>
-    <title>Hello World</title>
-  </head>
-  <body>
-    <main>
-      <h1>Hello World</h1>
-      Sup
-      <script>console.log('Yo')</script>
-    </main>
-  </body>
-</html>">
-    </light-editor>
-  </template>
-</light-preview>
+## With a `<template>` tag
 
-
-<light-preview preview-mode="shadow-dom">
-  <template slot="code">
-    <light-editor value="<div>Hello World!</div>">
-    </light-editor>
-  </template>
-</light-preview>
-
-## With a template
-
-We can use a `<template>` tag to be able to "slot" in values.
+We can use a `<template>` tag to be able to "slot" in the default `value`
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
@@ -127,7 +109,7 @@ We can use a `<template>` tag to be able to "slot" in values.
 ## Changing the highlight language to CSS
 
 By default, the highlighter from Highlight.js only supports HTML / CSS / JS.
-This is intentional to keep the bundle size low.
+This is intentional to keep the bundle size low. Supported languages are `html`, `css`, and `js`.
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
@@ -148,15 +130,22 @@ This is intentional to keep the bundle size low.
   </template>
 </light-preview>
 
-## Caveats
+## Caveats to the editor initial value
 
-Declarative slots are hard. The most "consistent" is to use `value`. Like so:
+Declarative slots are hard. The most "consistent" way to provide a default value for the editor
+is to use `value` attribute. Like so:
 
-```
+```html
 <light-editor value="<html></html>"></light-editor>
 ```
 
 ### Problems with declarative slotting
+
+If you really *need* declarative slotting, it's best to use a `<textarea>` in the default slot.
+The editor is really a `<textarea>` at it's core, so its recommended to use the `<textarea>` element to slot in elements.
+It has 1 drawback which is around not being able to slot in a `<textarea>` directly.
+And showing `&lt;` and `&gt;` literals is challenging. `&amp;lt;html&amp;gt;` is equivalent to `&gt;html&lt;>`
+This limitation only exists for slotting.
 
 `<textarea>` requires:
 
@@ -168,15 +157,20 @@ Declarative slots are hard. The most "consistent" is to use `value`. Like so:
 </light-editor>
 ```
 
+### Using a `script` tag
+
 ```html
 <light-editor>
+  <!-- Important to use `type="text/plain"` -->
   <script type="text/plain">
     <script>&lt;/script>
   </script>
 </light-editor>
 ```
 
-`<template>` formats the HTML and strips improper HTML. It's also not suitable for non-HTML strings.
-`<xmp>` is deprecated and also has some issues.
-`<!-- -->` Could be used but runs into issues if you want comments in HTML.
+### Other slottable tags
+
+`<template>` formats the HTML and strips improper HTML. It's also not suitable for non-HTML strings. You can do it, but you've been warned.
+`<xmp>` is deprecated and also has some issues around if you do something like: `<!DOCTYPE html >`
+`<!-- -->` isn't supported like with Prism's auto escape plugin could be used, but runs into issues if you want comments nested in comments.
 

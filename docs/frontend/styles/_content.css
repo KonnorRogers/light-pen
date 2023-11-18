@@ -28,7 +28,7 @@ pre code {
 code.highlight,
 code.highlighter-rouge {
   display: inline-block;
-  font-size: 1em;
+  font-size: 0.85em;
   padding: 0 0.4em;
   border-radius: 6px;
   vertical-align: middle;
