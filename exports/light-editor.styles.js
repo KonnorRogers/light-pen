@@ -42,6 +42,7 @@ export const styles = css`
 
   [part~="textarea"] {
     color: transparent;
+    /* color: rgba(255,0,0,0.2); */
     background-color: transparent;
     caret-color: inherit;
     z-index: 1;
@@ -87,12 +88,15 @@ export const styles = css`
     height: 0;
   }
 
+  [part~="gutter-cell"] {
+    padding-inline-end: 16px;
+    padding-inline-start: 12px;
+  }
+
   [part~="gutter"] {
     color: rgba(0,0,0,0.35);
 	  background-color: rgba(50,50,50,0.08);
     font-variant-numeric: tabular-nums;
-    padding-inline-end: 16px;
-    padding-inline-start: 12px;
     border-inline-end: 1px solid darkgray;
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
@@ -127,13 +131,18 @@ export const styles = css`
   }
 
   [part~="base"]:focus-within .light-line.is-active {
-    background-color: rgba(255, 247, 0, 0.1);
+    background-color: rgba(255,255,209,1);
   }
 
   /* We don't want to show the focus position if the user hasn't interacted with the textarea. */
-  :where(:host([has-focused]) .light-line.is-active) {
+  :where(:host([has-interacted]) .light-line.is-active) {
     background-color: rgba(0,0,0,0.05);
   }
+
+  [part~="gutter-cell"][part~="gutter-cell--active"] {
+    background-color: rgba(0,0,0,0.05);
+  }
+
 
   [part~="base-editor"] {
     position: relative;
@@ -156,6 +165,9 @@ export const styles = css`
   [part~="pre"],
   [part~="code"] {
 	  color: #272727;
+  }
+
+  [part~="pre"] {
 	  background-color: #f7f7f7;
   }
 

@@ -247,7 +247,7 @@ export default class LightPreviewBase extends BaseElement {
 
     let elements = slot.assignedElements({flatten: true})
 
-    const code = dedent(this.unescapeCharacters(elementsToString(...elements)).trim())
+    const code = dedent(this.unescapeTags(elementsToString(...elements)).trim())
 
     if (name === "preview-code") {
       if (shouldReset) this.resetIframeCodeMutationObserver()
@@ -302,8 +302,9 @@ export default class LightPreviewBase extends BaseElement {
    * @internal
    * @param {string} text
    */
-  unescapeCharacters (text) {
-    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+  unescapeTags (text) {
+    // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+    return text.replace(/&lt;\//g, '</');
   }
 
   /**
@@ -419,6 +420,7 @@ export default class LightPreviewBase extends BaseElement {
                   part="pre pre-${language}"
                   tabindex="0"
                   aria-labelledby="source-code-label"
+                  class="language-${language}"
                   role="region"
                 ><code
                     part="code code-${language}"

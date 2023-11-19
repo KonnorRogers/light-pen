@@ -7,53 +7,69 @@ component: light-editor
 <!-- Register it with the lazy loader -->
 <light-editor style="display: none;"></light-editor>
 
+<light-editor label="A small editor">
+  <script type="text/plain">
+    <script>
+      const greeting = "Hello World"
+      console.log(greeting)
+    &lt;/script>
+  </script>
+</light-editor>
+
 <light-preview preview-mode="shadow-dom">
-  <template slot="code">
-    <light-editor>
-      <textarea>
-        <!DOCTYPE html>
-        <html lang='en'>
-          <head>
-            <meta charset='UTF-8'>
-            <title>Hello World</title>
-          </head>
-          <body>
-            <main>
-              <h1>Hello World</h1>
-              Sup
-              <script></script>
-            </main>
-          </body>
-        </html>
-      </textarea>
+  <script type="text/plain" slot="code">
+    <light-editor label="A small editor" value="
+      <!DOCTYPE html>
+      <html lang='en'>
+        <head>
+          <meta charset='UTF-8'>
+          <title>Hello World</title>
+        </head>
+        <body>
+          <main>
+            <h1>Hello World</h1>
+            Sup
+            <script>
+              const greeting = "Hello World"
+              console.log(greeting)
+            </script>
+          </main>
+        </body>
+      </html>
+    ">
     </light-editor>
-  </template>
+  </script>
 </light-preview>
 
-## Using `value` attribute
+## Using the `value` attribute
 
-Using the `value` attribute is the generally recommended way to provide the most consistent experience.
+Using the `value` attribute is the generally recommended way to provide the most consistent experience. By default,
+leading and trailing newlines / whitespace will be stripped.
 
 <light-preview preview-mode="shadow-dom">
-  <template slot='code'>
-    <light-editor value="
-    <!DOCTYPE html>
-    <html lang='en'>
-      <head>
-        <meta charset='UTF-8'>
-        <title>Hello World</title>
-      </head>
-      <body>
-        <main>
-          <h1>Hello World</h1>
-          Sup
-          <script>console.log('Yo')</script>
-        </main>
+  <script type="text/plain" slot='code'>
+    <light-editor
+      value="
+      <!DOCTYPE html>
+      <html lang='en'>
+        <head>
+          <meta charset='UTF-8'>
+          <title>Hello World</title>
+        </head>
+        <body>
+          <main>
+            <h1>Hello World</h1>
+            Sup
+            <script>
+              const greeting = 'Hello World'
+              console.log(greeting)
+            &lt;/script>
+          </main>
         </body>
-    </html>
-">
+      </html>"
+    >
     </light-editor>
-  </template>
+  </script>
 </light-preview>
 
 ## Preserve white space with `value` attribute
@@ -83,7 +99,7 @@ If you want to leave extra white-space, pass the `preserve-whitespace` boolean a
   </template>
 </light-preview>
 
-## With a `<template>` tag
+## With a template tag
 
 We can use a `<template>` tag to be able to "slot" in the default `value`
 
@@ -130,7 +146,7 @@ This is intentional to keep the bundle size low. Supported languages are `html`,
   </template>
 </light-preview>
 
-## Caveats to the editor initial value
+## Caveats to the initial editor value
 
 Declarative slots are hard. The most "consistent" way to provide a default value for the editor
 is to use `value` attribute. Like so:
@@ -141,13 +157,14 @@ is to use `value` attribute. Like so:
 
 ### Problems with declarative slotting
 
-If you really *need* declarative slotting, it's best to use a `<textarea>` in the default slot.
+If you really *want* declarative slotting, it's best to use a `<textarea>` in the default slot.
 The editor is really a `<textarea>` at it's core, so its recommended to use the `<textarea>` element to slot in elements.
 It has 1 drawback which is around not being able to slot in a `<textarea>` directly.
 And showing `&lt;` and `&gt;` literals is challenging. `&amp;lt;html&amp;gt;` is equivalent to `&gt;html&lt;>`
 This limitation only exists for slotting.
 
-`<textarea>` requires:
+Using a `<textarea>` element for the default slot requires the following markup to nest a
+`<textarea>` string literal inside of it:
 
 ```html
 <light-editor>

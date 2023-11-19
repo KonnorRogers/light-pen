@@ -16,6 +16,12 @@ export function elementsToString (...elements) {
       continue
     }
 
+    if (el instanceof HTMLScriptElement) {
+      strings.push(el.textContent)
+      continue
+    }
+
+    // We don't want this for preview, only for <light-editor>
     if (el instanceof HTMLTextAreaElement) {
       strings.push(el.value)
       continue

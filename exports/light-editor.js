@@ -3,6 +3,12 @@ import HighlightJS from 'highlight.js/lib/core';
 import JavaScript from 'highlight.js/lib/languages/javascript';
 import HTML from 'highlight.js/lib/languages/xml';
 import CSS from 'highlight.js/lib/languages/css';
+import PrismJS, { Token } from "prismjs"
+import "prismjs/components/prism-markup.js"
+import "prismjs/components/prism-css.js"
+import "prismjs/components/prism-css-extras.js"
+import "prismjs/components/prism-javascript.js"
+
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
 
@@ -14,10 +20,9 @@ import { dedent } from "../internal/dedent.js";
 import { LightResizeEvent } from "./events/light-resize-event.js";
 import { repeat } from "lit/directives/repeat.js";
 import { elementsToString } from "../internal/elements-to-strings.js";
+import { PrismHighlight } from "../internal/prism-highlight.js";
 
-HighlightJS.registerLanguage('javascript', JavaScript);
-HighlightJS.registerLanguage('html', HTML);
-HighlightJS.registerLanguage('css', CSS);
+const newLineRegex = /\r\n?|\n/g
 
 /**
  * A minimal plain text editor with syntax highlighting, line numbers, and line highlighting.
@@ -85,6 +90,12 @@ export default class LightEditor extends BaseElement {
      * @type {boolean}
      */
     this.preserveWhitespace = false
+
+    /**
+     * Label to display above the editor
+     * @type {string}
+     */
+    this.label = ""
   }
 
   /**
@@ -92,7 +103,9 @@ export default class LightEditor extends BaseElement {
    */
   willUpdate (changedProperties) {
     if (this.value === this.getAttribute("value") && this.preserveWhitespace !== true) {
-      this.value = this.value.trim()
+      // Remove only lines that are blank with spaces that are blank. trim() removes preceding white-space for the line with characters.
+      // https://stackoverflow.com/questions/14572413/remove-line-breaks-from-start-and-end-of-string#comment104290392_14572494
+      this.value = dedent(this.value.replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, "")).trim()
     }
 
     super.willUpdate(changedProperties)
@@ -105,7 +118,10 @@ export default class LightEditor extends BaseElement {
     this.syncScroll()
 
     return html`
-			<div class="base" part="base">
+      <div part="label" style="display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, auto);">
+        <label id="label"><slot name="label">${this.label}</slot></label>
+      </div>
+			<div part="base">
         <!-- Super important to not have white space here due to how white space is handled -->
 			  <div part="gutter"
 			    @focus=${() => {
@@ -123,6 +139,7 @@ export default class LightEditor extends BaseElement {
             data-code-lang=${language}
             aria-hidden="true"
             part="pre pre-${language}"
+            class="language-${language}"
             tabindex="-1"
 			      @focus=${() => {
               this.textarea?.focus()
@@ -137,6 +154,7 @@ export default class LightEditor extends BaseElement {
             >${highlightedCode}</code></pre>
           <!-- IMPORTANT! There must be no white-space above. -->
 				  <textarea
+				    aria-labelledby="label"
             id="textarea-${language}"
             data-code-lang=${language}
             part="textarea textarea-${language}"
@@ -331,8 +349,7 @@ export default class LightEditor extends BaseElement {
 
   setCurrentLineHighlight () {
     const code = this.shadowRoot?.querySelector("code")
-
-    if (!code) return
+    const gutter = this.shadowRoot?.querySelector("[part~='gutter']")
 
     const currentLineNumber = this.getCurrentLineNumber()
 
@@ -344,12 +361,17 @@ export default class LightEditor extends BaseElement {
     this.currentLineNumber = currentLineNumber
 
     if (currentLineNumber != null && currentLineNumber >= 0) {
-      const el = code.children[currentLineNumber]
+      const activeLineElement = code?.children[currentLineNumber]
+      const activeGutterElement = gutter?.children[currentLineNumber]
 
-      if (el) {
+      if (activeLineElement) {
         code.children[prevLineNumber]?.classList?.remove("is-active")
-        this.currentEl = el
-        el.classList.add("is-active")
+        activeLineElement.classList.add("is-active")
+      }
+
+      if (activeGutterElement) {
+        gutter.children[prevLineNumber]?.part?.remove("gutter-cell--active")
+        activeGutterElement.part.add("gutter-cell--active")
       }
     }
   }
@@ -363,21 +385,32 @@ export default class LightEditor extends BaseElement {
     let { code, language } = options
 
     code = this.injectNewLine(code)
+    code = this.unescapeTags(code)
 
-    code = HighlightJS.highlight(code, {language}).value
+    code = PrismHighlight(code, PrismJS.languages[language], language, {
+      afterTokenize: [
+        (env) => {
+          const currentToken = env.tokens[this.currentLineNumber]
+          if (!currentToken) return
 
-    const newLineRegex = /\n(?!$)/
+          currentToken.type = currentToken.type + " is-active"
+        }
+      ]
+    })
+
+    // code = code.split(newLineRegex).map((str, index) => {
+    //   let isActive = false
+    //
+    //   if (index === this.currentLineNumber) {
+    //     isActive = true
+    //   }
+    //
+    //   // Inset a blank string if it's empty so that it has a height and can get highlighted.
+    //   return `<span class="light-line ${isActive ? "is-active" : ""}">${str || " "}</span>`
+    // }).join("\n")
+
+
     /** We use this to wrap every line to perform line counting operations. */
-    code = code.split(newLineRegex).map((str, index) => {
-      let isActive = false
-
-      if (index === this.currentLineNumber) {
-        isActive = true
-      }
-
-      // Inset a blank string if it's empty so that it has a height and can get highlighted.
-      return `<span class="light-line ${isActive ? "is-active" : ""}">${str || " "}</span>`
-    }).join("\n")
 
     return code
   }
@@ -395,7 +428,7 @@ export default class LightEditor extends BaseElement {
 
     if (!textArea) return
 
-    const textLines = textArea.value.substr(0, textArea.selectionStart).split("\n");
+    const textLines = textArea.value.substr(0, textArea.selectionStart).split(newLineRegex);
     const currentLineNumber = textLines.length - 1;
     // const currentColumnIndex = textLines[textLines.length-1].length;
     // console.log("Current Line Number "+ currentLineNumber+" Current Column Index "+currentColumnIndex );
@@ -413,8 +446,9 @@ export default class LightEditor extends BaseElement {
     return repeat(ary, (el, index) => {
       // @ts-expect-error
       const height = /** @type {number} */ (el.offsetHeight)
+      const isCurrent = index === this.currentLineNumber
 
-      return index + height
+      return index + height + isCurrent.toString()
     }, (el ,index) => {
       // @ts-expect-error
       const height = /** @type {number} */ (el.offsetHeight)
@@ -436,7 +470,9 @@ export default class LightEditor extends BaseElement {
    */
   // This gets tricky. We could do this, but it may be unexpected...
   unescapeTags (text) {
-    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+    // Replace usages of `&lt;/script>` with `</script>`. Match against
+    // `&lt;/` so that other usages of &lt; aren't replaced.
+    return text.replace(/&lt;\//g, '</');
   }
 
   /**

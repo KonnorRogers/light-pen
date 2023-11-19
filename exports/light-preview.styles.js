@@ -55,6 +55,13 @@ iframe {
   padding: 1rem;
   margin: 0;
   overflow: auto;
+	word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.light-line {
+  display: inline-block;
+  width: 100%;
 }
 
 [part~="pre"],
