@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/pull/6/"> -->
 
 <meta name="description" content="A collection of components that don't generally fit a design system, but that I wanted to build.">
-<link rel="modulepreload" href="/light-pen/pull/6/bridgetown/static/javascript/index.7Q7AWUYS.js">
+<link rel="modulepreload" href="/light-pen/pull/6/bridgetown/static/javascript/index.BA6YJ2IJ.js">
 <link rel="modulepreload" href="/light-pen/pull/6/bridgetown/static/javascript/defer.PEFSMSWD.js">
 <link rel="preload" href="/light-pen/pull/6/bridgetown/static/javascript/defer.GHMOJTJI.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/6/bridgetown/static/javascript/defer.GHMOJTJI.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/6/bridgetown/static/javascript/index.7Q7AWUYS.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/6/bridgetown/static/javascript/index.BA6YJ2IJ.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/6/bridgetown/static/javascript/defer.PEFSMSWD.js" type="module"></script>
 
 <!-- Favicons -->
@@ -281,38 +281,35 @@
   <!-- Register it with the lazy loader -->
 <light-editor style="display: none;"></light-editor>
 
-<light-editor label="A small editor">
-  <script type="text/plain">
-    <script>
-      const greeting = "Hello World"
-      console.log(greeting)
-    &lt;/script>
-  </script>
-</light-editor>
-
 <light-preview preview-mode="shadow-dom">
-  <script type="text/plain" slot="code">
-    <light-editor label="A small editor" value="
-      <!DOCTYPE html>
-      <html lang='en'>
-        <head>
-          <meta charset='UTF-8'>
-          <title>Hello World</title>
-        </head>
-        <body>
-          <main>
-            <h1>Hello World</h1>
-            Sup
-            <script>
-              const greeting = "Hello World"
-              console.log(greeting)
-            </script>
-          &lt;/main&gt;
-        &lt;/body&gt;
-      &lt;/html&gt;
-    "&gt;
-    &lt;/light-editor&gt;
-  &lt;/script&gt;
+  <template slot="code">
+    <light-editor label="A small editor">
+      <!-- We use a `<script type="text/plain">` because there's a lot of caveats to using `<template>` -->
+      <script type="text/plain">
+        <!DOCTYPE html>
+        <html lang='en'>
+          <head>
+            <meta charset='UTF-8'>
+            <title>Hello World</title>
+
+            <style>
+              h1 { font-size: 1.8rem; }
+            </style>
+          </head>
+          <body>
+            <main>
+              <h1>Hello World</h1>
+              Sup
+              <script>
+                const greeting = 'Hello World'
+                console.log(greeting)
+              &lt;/script>
+            </main>
+          </body>
+        </html>
+      </script>
+    </light-editor>
+  </template>
 </light-preview>
 
 <h2 id="using-the-value-attribute">
@@ -358,21 +355,24 @@ If you want to leave extra white-space, pass the <code class="highlighter-rouge"
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
     <light-editor preserve-whitespace="" value="
-    <!DOCTYPE html>
-    <html lang='en'>
-      <head>
-        <meta charset='UTF-8'>
-        <title>Hello World</title>
-      </head>
-      <body>
-        <main>
-          <h1>Hello World</h1>
-          Sup
-          <script>console.log('Yo')</script>
-        </main>
+      <!DOCTYPE html>
+      <html lang='en'>
+        <head>
+          <meta charset='UTF-8'>
+          <title>Hello World</title>
+        </head>
+        <body>
+          <main>
+            <h1>Hello World</h1>
+            Sup
+            <script>
+              const greeting = 'Hello World!'
+              console.log(greeting)
+            </script>
+          </main>
         </body>
-    </html>
-">
+      </html>
+      ">
     </light-editor>
   </template>
 </light-preview>
@@ -440,12 +440,12 @@ is to use <code class="highlighter-rouge">value</code> attribute. Like so:</p>
             HTML
           </div>
 
-          <clipboard-copy for="269c9850-6f5e-472c-bec1-7bb172499f77" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="0c437b11-e747-4757-b6de-bc301c179031" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="269c9850-6f5e-472c-bec1-7bb172499f77" hidden="">&lt;light-editor value="&lt;html&gt;&lt;/html&gt;"&gt;&lt;/light-editor&gt;
+          <textarea id="0c437b11-e747-4757-b6de-bc301c179031" hidden="">&lt;light-editor value="&lt;html&gt;&lt;/html&gt;"&gt;&lt;/light-editor&gt;
 </textarea>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-editor</span> <span class="na">value=</span><span class="s">"&lt;html&gt;&lt;/html&gt;"</span><span class="nt">&gt;&lt;/light-editor&gt;</span>
@@ -469,12 +469,12 @@ This limitation only exists for slotting.</p>
             HTML
           </div>
 
-          <clipboard-copy for="ecabc601-80cf-4a58-b172-5288dea7bd23" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="dbfb4a01-a049-4c33-b4be-ca91bb09750d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="ecabc601-80cf-4a58-b172-5288dea7bd23" hidden="">&lt;light-editor&gt;
+          <textarea id="dbfb4a01-a049-4c33-b4be-ca91bb09750d" hidden="">&lt;light-editor&gt;
   &lt;textarea&gt;
     &lt;textarea&gt;&lt;/textarea&gt;
   </textarea>
@@ -497,12 +497,12 @@ This limitation only exists for slotting.</p>
             HTML
           </div>
 
-          <clipboard-copy for="0fdde1b9-134b-4793-a343-5c4e24641a43" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="337e1e35-f72f-4eca-acb9-a13f98187c70" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="0fdde1b9-134b-4793-a343-5c4e24641a43" hidden="">&lt;light-editor&gt;
+          <textarea id="337e1e35-f72f-4eca-acb9-a13f98187c70" hidden="">&lt;light-editor&gt;
   &lt;!-- Important to use `type="text/plain"` --&gt;
   &lt;script type="text/plain"&gt;
     &lt;script&gt;&lt;/script&gt;
@@ -538,12 +538,12 @@ This limitation only exists for slotting.</p>
             HTML
           </div>
 
-          <clipboard-copy for="04bfc2f8-2216-47b7-a44a-b8e3f3e3d0c7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="7d468e32-8dd9-49fa-a51c-ba9eecdf0797" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="04bfc2f8-2216-47b7-a44a-b8e3f3e3d0c7" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
+          <textarea id="7d468e32-8dd9-49fa-a51c-ba9eecdf0797" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -559,12 +559,12 @@ This limitation only exists for slotting.</p>
             HTML
           </div>
 
-          <clipboard-copy for="b0bb5e53-bb91-48ed-b6f8-1a73e04597ac" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="f7e45fb3-e7b5-4f41-88a5-4626af21f64e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="b0bb5e53-bb91-48ed-b6f8-1a73e04597ac" hidden="">&lt;script type="module"&gt;
+          <textarea id="f7e45fb3-e7b5-4f41-88a5-4626af21f64e" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-editor&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js"
 
@@ -594,12 +594,12 @@ This limitation only exists for slotting.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="546ca02f-0bf8-430b-8989-c5168f777564" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="314ee560-d5bc-43f9-aa64-b9b4a1ef73a4" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="546ca02f-0bf8-430b-8989-c5168f777564" hidden="">// Auto registers as &lt;light-editor&gt;
+          <textarea id="314ee560-d5bc-43f9-aa64-b9b4a1ef73a4" hidden="">// Auto registers as &lt;light-editor&gt;
 import "light-pen/exports/light-editor.js/exports/light-editor-register.js"
 
 // Manual Register
@@ -643,7 +643,7 @@ LightEditor.define()
       <code>language</code>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    The language used for highlighting. Default is "html". "css" and "js" also included by default.
   </td>
   <td>
     <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
@@ -721,26 +721,6 @@ LightEditor.define()
   </td>
   <td>
     <code>false</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute + Property]</small>
-      <br>
-      <code>label</code>
-  </td>
-  <td>
-    Label to display above the editor
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <code>string</code>
-  </td>
-  <td>
-    <code>""</code>
   </td>
 </tr>
 
