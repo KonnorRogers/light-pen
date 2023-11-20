@@ -20,6 +20,6 @@ export default class LightPreview extends LightPreviewBase {
    * @override
    */
   highlight (code = this.code) {
-    return PrismHighlight(code, PrismJS.languages[this.highlightLanguage], this.highlightLanguage)
+    return PrismHighlight(code, PrismJS.languages[this.language], this.language)
   }
 }

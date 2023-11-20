@@ -65,7 +65,6 @@
   },
   "dependencies": {
     "@types/prismjs": "^1.26.3",
-    "highlight.js": "^11.8.0",
     "lit": "^2.8.0",
     "prismjs": "^1.29.0",
     "web-component-define": "^2.0.11"

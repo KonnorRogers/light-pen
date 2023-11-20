@@ -7,38 +7,35 @@ component: light-editor
 <!-- Register it with the lazy loader -->
 <light-editor style="display: none;"></light-editor>
 
-<light-editor label="A small editor">
-  <script type="text/plain">
-    <script>
-      const greeting = "Hello World"
-      console.log(greeting)
-    &lt;/script>
-  </script>
-</light-editor>
-
 <light-preview preview-mode="shadow-dom">
-  <script type="text/plain" slot="code">
-    <light-editor label="A small editor" value="
-      <!DOCTYPE html>
-      <html lang='en'>
-        <head>
-          <meta charset='UTF-8'>
-          <title>Hello World</title>
-        </head>
-        <body>
-          <main>
-            <h1>Hello World</h1>
-            Sup
-            <script>
-              const greeting = "Hello World"
-              console.log(greeting)
-            </script>
-          </main>
-        </body>
-      </html>
-    ">
+  <template slot="code">
+    <light-editor label="A small editor">
+      <!-- We use a `<script type="text/plain">` because there's a lot of caveats to using `<template>` -->
+      <script type="text/plain">
+        <!DOCTYPE html>
+        <html lang='en'>
+          <head>
+            <meta charset='UTF-8'>
+            <title>Hello World</title>
+
+            <style>
+              h1 { font-size: 1.8rem; }
+            </style>
+          </head>
+          <body>
+            <main>
+              <h1>Hello World</h1>
+              Sup
+              <script>
+                const greeting = 'Hello World'
+                console.log(greeting)
+              &lt;/script>
+            </main>
+          </body>
+        </html>
+      </script>
     </light-editor>
-  </script>
+  </template>
 </light-preview>
 
 ## Using the `value` attribute
@@ -80,21 +77,25 @@ If you want to leave extra white-space, pass the `preserve-whitespace` boolean a
 <light-preview preview-mode="shadow-dom">
   <template slot='code'>
     <light-editor preserve-whitespace="" value="
-    <!DOCTYPE html>
-    <html lang='en'>
-      <head>
-        <meta charset='UTF-8'>
-        <title>Hello World</title>
-      </head>
-      <body>
-        <main>
-          <h1>Hello World</h1>
-          Sup
-          <script>console.log('Yo')</script>
-        </main>
+      <!DOCTYPE html>
+      <html lang='en'>
+        <head>
+          <meta charset='UTF-8'>
+          <title>Hello World</title>
+        </head>
+        <body>
+          <main>
+            <h1>Hello World</h1>
+            Sup
+            &lt;script&gt;
+              const greeting = 'Hello World!'
+              console.log(greeting)
+            &lt;/script&gt;
+          </main>
         </body>
-    </html>
-">
+      </html>
+      "
+    >
     </light-editor>
   </template>
 </light-preview>

@@ -63,12 +63,12 @@ export default class LightPreviewBase extends BaseElement {
   static properties = {
     summary: {},
     sandboxSettings: { reflect: true, attribute: "sandbox-settings" },
-    highlightLanguage: { reflect: true, attribute: "highlight-language" },
     previewMode: { reflect: true, attribute: "preview-mode" },
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
     open: { reflect: true, type: Boolean },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
+    language: {},
 
     // State
     code: { attribute: false },
@@ -94,7 +94,7 @@ export default class LightPreviewBase extends BaseElement {
      * The language to highlight for.
      * @type {string}
      */
-    this.highlightLanguage = "html"
+    this.language = "html"
 
     /**
      * Set to true to not use an <iframe> for previewing
@@ -304,7 +304,9 @@ export default class LightPreviewBase extends BaseElement {
    */
   unescapeTags (text) {
     // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
-    return text.replace(/&lt;\//g, '</');
+    // @TODO: Find a way to not need to unescape for the editor.
+    // return text.replace(/&lt;\//g, '</');
+    return text
   }
 
   /**
@@ -368,7 +370,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   render () {
-    const language = this.highlightLanguage
+    const language = this.language
     return html`
       <div part=${stringMap({
           "base": true,
@@ -411,7 +413,7 @@ export default class LightPreviewBase extends BaseElement {
           "
         >
           <div part="code-wrapper">
-            ${when(this.highlight,
+            ${when(!this.disableHighlight,
               () => html`
 					      <pre
                   id="pre-${language}"

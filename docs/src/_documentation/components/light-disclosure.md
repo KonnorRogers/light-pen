@@ -9,7 +9,7 @@ component: light-disclosure
 
 <light-disclosure style="display: none;"></light-disclosure>
 
-<light-preview inline-preview>
+<light-preview preview-mode="shadow-dom">
   <template slot="code">
     <light-disclosure summary="Source Code">
       <code style="background-color: rgba(0,0,0,0.1);">export const x = "hi"</code>

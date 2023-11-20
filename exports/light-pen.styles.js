@@ -6,8 +6,18 @@ export const styles = css`
   border: 1px solid darkgray;
 }
 
+[part~="sandbox-editor"] {
+  padding: 4px;
+}
+
+[part~="sandbox-editor"]::part(base):focus-within {
+  border-color: dodgerblue;
+}
+
 [part~="sandbox-editor"]::part(base) {
   resize: vertical;
+  border: 2px solid gray;
+  border-radius: 8px;
 }
 
 [part~="sandbox"] {

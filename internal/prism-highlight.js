@@ -1,15 +1,33 @@
 // A custom Prism highlight implementation specific for adding line numbers for the editor by
 // modifying the tokenizer.
 
-import { splitLines } from "./split-lines.js";
 import PrismJS, { Token } from "prismjs"
 
+// HTML
+import "prismjs/components/prism-markup.js"
+import "prismjs/components/prism-markup-templating.js"
+
+// CSS
+import "prismjs/components/prism-css.js"
+import "prismjs/components/prism-css-extras.js"
+
+// JS
+import "prismjs/components/prism-javascript.js"
+import "prismjs/components/prism-js-extras.js"
+import "prismjs/components/prism-js-templates.js"
+
+// JSX
+import "prismjs/components/prism-jsx.js"
+
+// TS
+import "prismjs/components/prism-typescript.js"
+
+// TSX
+import "prismjs/components/prism-tsx.js"
+
 /**
- * @typedef {Object} Env
- * @property {string} code
- * @property {import("prismjs").Grammar} grammar
- * @property {string} language
- * @property {Array<Token>} tokens
+ * @typedef {import("prismjs").hooks.TokenizeEnvironment & { tokens: Array<string | Token>}} Env
+ * @typedef {import("prismjs").hooks.HookCallback} HookCallback
  */
 
 /**
@@ -54,14 +72,12 @@ export function PrismHighlight(text, grammar, language, hooks = {}) {
 	}
 
   // New tokenizer wrapping every new line
-	env.tokens = splitLines(
-	  PrismJS.tokenize(env.code, env.grammar)
-	);
+	env.tokens = PrismJS.tokenize(env.code, env.grammar)
 
-	PrismJS.hooks.run('after-tokenize', env);
 	hooks.afterTokenize?.forEach((hook) => {
     hook(env)
 	})
+	PrismJS.hooks.run('after-tokenize', env);
 
 	return Token.stringify(PrismJS.util.encode(env.tokens), env.language);
 }

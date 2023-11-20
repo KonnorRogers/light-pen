@@ -1,19 +1,29 @@
-import Prism, { Token } from 'prismjs';
+// @ts-check
+import Prism, { Token, hooks } from 'prismjs';
 
 const newLineRegex = /\r\n|\r|\n/
 
 /**
- * @param {Array<string | Token>} tokens
- * @return {Array<Token>}
+ * Options for the LineNumberPlugin. Currently nothing.
+ * @typedef {object} Options
  */
-export function splitLines(
-  tokens,
-) {
-  const lines = splitLinesRec(tokens).map((ary) => {
-    return new Prism.Token("light-line", ary)
-  });
 
-  return lines;
+/**
+ * @param {Options} [options={}]
+ * @return {import('./prism-highlight.js').Hook}
+ */
+export function LineNumberPlugin(
+  options = {}
+) {
+  /**
+   * @type {import('./prism-highlight.js').Hook}
+   */
+  return function lineNumberPlugin (env) {
+    env.tokens = splitLinesRec(env.tokens).map((ary) => {
+      return new Prism.Token("light-line", ary)
+    });
+
+  }
 }
 
 /**

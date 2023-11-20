@@ -1,9 +1,6 @@
 import { css } from "lit"
 
 export const styles = css`
-  :host {
-  }
-
   [part~="base"] {
 	  font-family: Menlo, Monaco, "Courier New", monospace;
     font-size: 1rem;
@@ -162,11 +159,11 @@ export const styles = css`
     border: 1px solid transparent;
   }
 
-  [part~="pre"],
-  [part~="code"] {
+  [part~="pre"] {
 	  color: #272727;
   }
 
+  [part~="gutter"],
   [part~="pre"] {
 	  background-color: #f7f7f7;
   }

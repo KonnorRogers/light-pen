@@ -1,13 +1,5 @@
 import { html, render } from "lit";
-import HighlightJS from 'highlight.js/lib/core';
-import JavaScript from 'highlight.js/lib/languages/javascript';
-import HTML from 'highlight.js/lib/languages/xml';
-import CSS from 'highlight.js/lib/languages/css';
-import PrismJS, { Token } from "prismjs"
-import "prismjs/components/prism-markup.js"
-import "prismjs/components/prism-css.js"
-import "prismjs/components/prism-css-extras.js"
-import "prismjs/components/prism-javascript.js"
+
 
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
@@ -20,7 +12,9 @@ import { dedent } from "../internal/dedent.js";
 import { LightResizeEvent } from "./events/light-resize-event.js";
 import { repeat } from "lit/directives/repeat.js";
 import { elementsToString } from "../internal/elements-to-strings.js";
-import { PrismHighlight } from "../internal/prism-highlight.js";
+import { PrismHighlight, PrismJS } from "../internal/prism-highlight.js";
+import { LineNumberPlugin } from "../internal/line-number-plugin.js";
+import { Token } from "prismjs";
 
 const newLineRegex = /\r\n?|\n/g
 
@@ -50,11 +44,10 @@ export default class LightEditor extends BaseElement {
     theme,
   ]
 
-  // One day.
+  // We will need to decide if we want to formAssociate or just mirror to a light DOM textarea.
   // static formAssociated = true
 
   static properties = {
-    label: {},
     value: {},
     language: {reflect: true},
     hasInteracted: { type: Boolean, attribute: "has-interacted", reflect: true },
@@ -65,6 +58,7 @@ export default class LightEditor extends BaseElement {
     super()
 
     /**
+     * The language used for highlighting. Default is "html". "css" and "js" also included by default.
      * @type {string}
      */
     this.language = 'html'
@@ -90,12 +84,6 @@ export default class LightEditor extends BaseElement {
      * @type {boolean}
      */
     this.preserveWhitespace = false
-
-    /**
-     * Label to display above the editor
-     * @type {string}
-     */
-    this.label = ""
   }
 
   /**
@@ -118,9 +106,6 @@ export default class LightEditor extends BaseElement {
     this.syncScroll()
 
     return html`
-      <div part="label" style="display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, auto);">
-        <label id="label"><slot name="label">${this.label}</slot></label>
-      </div>
 			<div part="base">
         <!-- Super important to not have white space here due to how white space is handled -->
 			  <div part="gutter"
@@ -389,29 +374,19 @@ export default class LightEditor extends BaseElement {
 
     code = PrismHighlight(code, PrismJS.languages[language], language, {
       afterTokenize: [
+        LineNumberPlugin(),
         (env) => {
           const currentToken = env.tokens[this.currentLineNumber]
           if (!currentToken) return
 
-          currentToken.type = currentToken.type + " is-active"
+          if (currentToken instanceof Token) {
+            currentToken.type = currentToken.type + " is-active"
+          }
         }
       ]
     })
 
-    // code = code.split(newLineRegex).map((str, index) => {
-    //   let isActive = false
-    //
-    //   if (index === this.currentLineNumber) {
-    //     isActive = true
-    //   }
-    //
-    //   // Inset a blank string if it's empty so that it has a height and can get highlighted.
-    //   return `<span class="light-line ${isActive ? "is-active" : ""}">${str || " "}</span>`
-    // }).join("\n")
-
-
     /** We use this to wrap every line to perform line counting operations. */
-
     return code
   }
 
@@ -472,7 +447,9 @@ export default class LightEditor extends BaseElement {
   unescapeTags (text) {
     // Replace usages of `&lt;/script>` with `</script>`. Match against
     // `&lt;/` so that other usages of &lt; aren't replaced.
-    return text.replace(/&lt;\//g, '</');
+    // return text.replace(/&lt;\//g, '</');
+
+    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
   }
 
   /**
