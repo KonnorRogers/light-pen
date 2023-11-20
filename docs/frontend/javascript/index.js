@@ -31,6 +31,10 @@ Object.entries(controllers).forEach(([filename, controller]) => {
   }
 })
 
+if (window.Prism) {
+  window.Prism.manual = true
+}
+
 ;(() => {
   if (!window.scrollPositions) {
     window.scrollPositions = {};
@@ -59,3 +63,4 @@ Object.entries(controllers).forEach(([filename, controller]) => {
   window.addEventListener('turbo:before-render', restoreScroll);
   window.addEventListener('turbo:render', restoreScroll);
 })();
+

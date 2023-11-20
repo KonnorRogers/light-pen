@@ -82,4 +82,7 @@ export function PrismHighlight(text, grammar, language, hooks = {}) {
 	return Token.stringify(PrismJS.util.encode(env.tokens), env.language);
 }
 
+// @TODO: Fork prism, make an ESM build that isn't a global UMD and attempts to immediately highlight everything.
+PrismJS.manual = true
+
 export { PrismJS }
