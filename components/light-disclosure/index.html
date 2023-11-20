@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="sl-theme-light" lang="en"><head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>References</title>
+<title></title>
 
 <!-- <base href="/light-pen/"> -->
 
@@ -82,7 +82,7 @@
 
 
   </head>
-  <body class="index " data-controller="search">
+  <body class="doc " data-controller="search">
     <kr-layout main-id="main">
       <header class="nav-header" slot="header">
   <nav class="top-nav" aria-labelledby="top-nav-label">
@@ -208,7 +208,7 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -243,7 +243,7 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -267,23 +267,26 @@
 
 
 <main id="main" class="documentation-content flow">
-  <h1 id="references">
-    <a href="#references">
-      References
+  <h1 id="<light-disclosure>">
+    <a href="#<light-disclosure>">
+      &lt;Light Disclosure&gt;
     </a>
   </h1>
 
 
-  <ul class="list">
-  
-</ul>
+  <h2 id="typical-usage">
+          <a href="#typical-usage">Typical Usage</a>
+        </h2>
 
-<sl-alert variant="warning" open="">
-  <sl-icon slot="icon" name="cone-striped"></sl-icon>
-  
-  <p>Coming Soon…</p>
-</sl-alert>
+<light-disclosure style="display: none;"></light-disclosure>
 
+<light-preview preview-mode="shadow-dom">
+  <template slot="code">
+    <light-disclosure summary="Source Code">
+      <code style="background-color: rgba(0,0,0,0.1);">export const x = "hi"</code>
+    </light-disclosure>
+  </template>
+</light-preview>
 
 
 
@@ -291,7 +294,19 @@
 
       <div></div>
 
-      <div></div>
+      <sl-button class="next-page" href="/light-pen/components/light-editor/">
+        <span style="text-align: start; display: block;">
+          <span style="display: block; color: var(--sl-color-neutral-500); font-size: 0.85rem;">Next Page</span>
+          <pagination-title>
+            &lt;light-editor&gt;
+          </pagination-title>
+        </span>
+
+        <span slot="suffix">
+          <sl-icon name="arrow-right" style="font-size: 1.5rem; display: block;"></sl-icon>
+        </span>
+
+      </sl-button>
   </div>
 
 
@@ -299,10 +314,12 @@
 
 <nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
   <h2 class="table-of-contents__header">
-    References
+    &lt;Light Disclosure&gt;
   </h2>
   <ol class="table-of-contents__list">
-  </ol>
+  <li class="side-nav__item">
+        <a href="#typical-usage" class="side-nav__link">Typical Usage</a>
+      </li></ol>
 </nav>
 
 
@@ -310,7 +327,7 @@
       <footer slot="main-footer">
   <div class="footer">
     Found a mistake? Want to contribute?
-    <a href="https://github.com/konnorrogers/light-pen/tree/main/docs/src/_documentation/references/index.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
+    <a href="https://github.com/konnorrogers/light-pen/tree/main/docs/src/_documentation/components/light-disclosure.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
 
     <div style="margin: 1.5rem 0;"></div>
 
@@ -354,7 +371,7 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
