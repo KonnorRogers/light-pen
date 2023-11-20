@@ -4,6 +4,7 @@ export const previewStyles = css`
 :host {
   --border-color: lightgray;
 }
+
 :host,
 [part~="base"] {
   max-width: 100%;
@@ -37,6 +38,7 @@ export const previewStyles = css`
   overflow: auto;
   max-height: 100%;
   resize: vertical;
+
 }
 
 [part~="start-panel"] {
@@ -44,7 +46,8 @@ export const previewStyles = css`
 }
 
 iframe {
-  min-height: 100%;
+  height: max-content;
+  max-height: max-content;
   width: 100%;
 }
 
@@ -52,6 +55,13 @@ iframe {
   padding: 1rem;
   margin: 0;
   overflow: auto;
+	word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.light-line {
+  display: inline-block;
+  width: 100%;
 }
 
 [part~="pre"],
@@ -93,7 +103,16 @@ button[part~="source-code-toggle"] {
   padding: 0.75rem;
 }
 
+[part~="source-code-toggle"] svg {
+  transform-origin: 50% 50%;
+  transition: .25s transform ease;
+}
+
 [part~="source-code-toggle"][aria-expanded="true"] svg {
   transform: rotate(180deg);
+}
+
+[part~="source-details"]::part(summary) {
+  display: none;
 }
 `

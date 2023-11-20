@@ -6,6 +6,20 @@ export const styles = css`
   border: 1px solid darkgray;
 }
 
+[part~="sandbox-editor"] {
+  padding: 4px;
+}
+
+[part~="sandbox-editor"]::part(base):focus-within {
+  border-color: dodgerblue;
+}
+
+[part~="sandbox-editor"]::part(base) {
+  resize: vertical;
+  border: 2px solid gray;
+  border-radius: 8px;
+}
+
 [part~="sandbox"] {
   color:#272727;
   display: grid;
@@ -14,20 +28,13 @@ export const styles = css`
 }
 
 [part~="summary"] {
-  font-size: .8125rem;
-  font-weight: bold;
-  padding: 0.4rem 0.6rem;
+  display: inline-block;
+  margin: 6px 0px;
 }
 
-[part~="summary"]:focus {
-  outline: 2px solid blue;
+[part~="disclosure"]::part(summary) {
+  margin: 6px 0px;
 }
-
-/*
-[part~="sandbox-editor"] {
-  height: var(--textarea-height, 33%);
-}
-*/
 
 [part~="base"] {
 	word-wrap: break-word;
@@ -35,8 +42,11 @@ export const styles = css`
 	font-size: 1em;
 }
 
+[part~="details"] {
+  padding: 4px;
+}
+
 [part~="details"]:not(:first-child) {
-  margin-top: 6px;
 }
 
 [part~="sandbox"],
@@ -54,7 +64,7 @@ export const styles = css`
 [part~="pre"],
 [part~="code"],
 [part~="sandbox-iframe"] {
-  border-radius:.25em;
+  border-radius:.25rem;
 }
 
 [part~='sandbox-header'],
@@ -113,6 +123,11 @@ export const styles = css`
   overflow-y: auto;
 }
 
+[part~="sandbox-code"] > *:not(:first-child) {
+  margin-top: 6px;
+}
+
+
 button:where([part~="panel-resizer"]) {
   height: calc(100% - 0.5em);
   cursor: col-resize;
@@ -132,9 +147,6 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
   display:grid;
   grid-template-columns: minmax(var(--start-panel-min-width, 30px),var(--start-panel-width, 1fr)) minmax(0, auto) minmax(var(--end-panel-min-width, 30px), var(--end-panel-width, 1fr));
   grid-template-rows: minmax(0, 1fr);
-}
-
-[part~="sandbox-iframe-wrapper"] {
 }
 
 [part~="sandbox-console-result"] {

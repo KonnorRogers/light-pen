@@ -13,6 +13,7 @@ import { drag } from "../internal/drag.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 import { BaseElement } from "../internal/base-element.js";
 import LightEditor from "./light-editor.js";
+import { LightDisclosure } from "./light-disclosure.js";
 
 /**
  * @typedef {"html" | "css" | "js"} SupportedLanguages
@@ -41,7 +42,8 @@ export default class LightPen extends BaseElement {
   static styles = [baseStyles, buttonStyles, styles]
 
   static dependencies = {
-    'light-editor': LightEditor
+    'light-editor': LightEditor,
+    'light-disclosure': LightDisclosure
   }
 
   static properties = {
@@ -57,12 +59,6 @@ export default class LightPen extends BaseElement {
     jsResizeObserver: { attribute: false },
     cssResizeObserver: { attribute: false },
     _resizing: { attribute: false },
-  }
-
-  static {
-    Object.values(this.dependencies).forEach((ctor) => {
-      ctor.define()
-    })
   }
 
   // Overrides
@@ -482,16 +478,14 @@ export default class LightPen extends BaseElement {
   renderDetails (language) {
     let fullLanguage = language.toUpperCase()
 
-    const open = this.openLanguages.split(",").includes(language)
+    // const open = this.openLanguages.split(",").includes(language)
 
 		return html`
-      <details ?open=${open} part="details details-${language}">
-				<summary part="summary summary-${language}">
-          ${fullLanguage}
-        </summary>
+      <light-disclosure part="disclosure disclosure-${language}">
+        <span part="summary" slot="summary"><slot name=${`summary-${language}`}>${fullLanguage}</slot></span>
 
         ${this.renderEditor(language)}
-			</details>
+			</light-disclosure>
 		`
   }
 }

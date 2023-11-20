@@ -12,6 +12,9 @@ import { stringMap } from "../internal/string-map.js";
 import { debounce } from "../internal/debounce.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 import { BaseElement } from "../internal/base-element.js";
+import { LightDisclosure } from "./light-disclosure.js";
+import { elementsToString } from "../internal/elements-to-strings.js";
+import { dedent } from "../internal/dedent.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -47,6 +50,10 @@ const sourceCodeFallback = "Show source code"
 export default class LightPreviewBase extends BaseElement {
   static baseName = "light-preview-base"
 
+  static dependencies = {
+    "light-disclosure": LightDisclosure
+  }
+
   static styles = [
     baseStyles,
     buttonStyles,
@@ -56,12 +63,12 @@ export default class LightPreviewBase extends BaseElement {
   static properties = {
     summary: {},
     sandboxSettings: { reflect: true, attribute: "sandbox-settings" },
-    highlightLanguage: { reflect: true, attribute: "highlight-language" },
-    inlinePreview: { type: Boolean, attribute: "inline-preview" },
+    previewMode: { reflect: true, attribute: "preview-mode" },
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
     open: { reflect: true, type: Boolean },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
+    language: {},
 
     // State
     code: { attribute: false },
@@ -73,31 +80,37 @@ export default class LightPreviewBase extends BaseElement {
 
     /**
      * The sandbox settings to provide to the <iframe>
+     * @type {string}
      */
     this.sandboxSettings = defaultSandboxSettings
 
     /**
      * The text to provide in the <details> toggle button
+     * @type {string}
      */
     this.summary = sourceCodeFallback
 
     /**
      * The language to highlight for.
+     * @type {string}
      */
-    this.highlightLanguage = "html"
+    this.language = "html"
 
     /**
      * Set to true to not use an <iframe> for previewing
+     * @type {"iframe" | "shadow-dom"}
      */
-    this.inlinePreview = false
+    this.previewMode = "iframe"
 
     /**
      * When the resizer is being dragged, this will be true.
+     * @type {boolean}
      */
     this.resizing = false
 
     /**
      * If disabled, its on you to provide `<pre><code></code></pre>`
+     * @type {boolean}
      */
     this.disableHighlight = false
 
@@ -105,27 +118,32 @@ export default class LightPreviewBase extends BaseElement {
      * We will take the code, wrap it in `<pre><code></code></pre>` and run it through
      * Highlight.js.
      * If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
+     * @type {string}
      */
     this.code = ""
 
     /**
      * If `disableHighlight` is true, then you must pass in an element into `previewCode` to be able to get
      *   the code to run in the previewer.
+     * @type {string}
      */
     this.previewCode = ""
 
     /**
      * Whether or not the source code is being shown
+     * @type {boolean}
      */
     this.open = false
 
     /**
      * The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
+     * @type {number}
      */
     this.resizePosition = 100
 
     /**
      * @internal
+     * @type {ResizeObserver}
      */
     this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
 
@@ -137,11 +155,13 @@ export default class LightPreviewBase extends BaseElement {
 
     /**
      * @internal
+     * @type {() => void}
      */
     this.previewCodeDebounce = debounce(() => this.handleMutation("preview-code"), 20)
 
     /**
      * @internal
+     * @type {() => void}
      */
     this.codeDebounce = debounce(() => this.handleMutation("code"), 20)
   }
@@ -227,24 +247,7 @@ export default class LightPreviewBase extends BaseElement {
 
     let elements = slot.assignedElements({flatten: true})
 
-    let strings = []
-
-    const scratch = document.createElement("div")
-
-    for (const el of elements) {
-      if (el instanceof HTMLTemplateElement) {
-        const node = el.content.cloneNode(true)
-
-        scratch.append(node)
-        strings.push(scratch.innerHTML)
-        scratch.innerHTML = ""
-        continue
-      }
-
-      strings.push(el.innerHTML)
-    }
-
-    const code = strings.join("\n")
+    const code = dedent(this.unescapeTags(elementsToString(...elements)).trim())
 
     if (name === "preview-code") {
       if (shouldReset) this.resetIframeCodeMutationObserver()
@@ -259,19 +262,11 @@ export default class LightPreviewBase extends BaseElement {
     }
   }
 
-
-  /**
-   * @internal
-   */
-  unescapePreviewCode () {
-    return this.unescapeCharacters(this.previewCode || this.code)
-  }
-
   /**
    * @internal
    */
   updateIframeContent () {
-    const code = this.unescapePreviewCode()
+    const code = this.previewCode || this.code
 
     const iframe = this.shadowRoot?.querySelector("iframe")
 
@@ -288,7 +283,6 @@ export default class LightPreviewBase extends BaseElement {
         </body>
       </html>`
 
-
     iframe.contentWindow?.document.open()
     iframe.contentWindow?.document.writeln(content)
     iframe.contentWindow?.document.close()
@@ -299,16 +293,20 @@ export default class LightPreviewBase extends BaseElement {
    * @param {string} text
    */
   escapeCharacters(text) {
-    return text.replaceAll(new RegExp("<", "g"), "&lt;").replaceAll(new RegExp(">", "g"), "&gt;")
+    return text
+    // return text.replaceAll(new RegExp("<", "g"), "&lt;").replaceAll(new RegExp(">", "g"), "&gt;")
   }
 
-
   /**
+   * Only used to unescape things like `&lt;/script>` from slotted content.
    * @internal
    * @param {string} text
    */
-  unescapeCharacters (text) {
-    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+  unescapeTags (text) {
+    // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+    // @TODO: Find a way to not need to unescape for the editor.
+    // return text.replace(/&lt;\//g, '</');
+    return text
   }
 
   /**
@@ -372,14 +370,14 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   render () {
-    const language = this.highlightLanguage
+    const language = this.language
     return html`
       <div part=${stringMap({
           "base": true,
         })}>
         <div part="preview">
-          ${when(this.inlinePreview,
-              () => html`<div part="start-panel preview-div">${unsafeHTML(this.unescapePreviewCode())}</div>`,
+          ${when(this.previewMode === "shadow-dom",
+              () => html`<div part="start-panel preview-div">${unsafeHTML(this.code || this.previewCode)}</div>`,
               () => html`
                 <iframe part="start-panel iframe" height="auto" frameborder="0"></iframe>
               `
@@ -404,11 +402,18 @@ export default class LightPreviewBase extends BaseElement {
           <div part="end-panel"></div>
         </div>
 
-
-        <details id="details" ?open=${this.open} part="source-details" aria-labelledby="summary">
-          <summary style="display: none;"></summary>
+        <light-disclosure
+          id="details"
+          ?open=${this.open}
+          @light-toggle=${(/** @type {Event} */ e) => this.open = /** @type {LightDisclosure} */ (e.currentTarget).open}
+          part="source-details"
+          aria-labelledby="summary"
+          exportparts="
+            summary:source-details__summary
+          "
+        >
           <div part="code-wrapper">
-            ${when(this.highlight,
+            ${when(!this.disableHighlight,
               () => html`
 					      <pre
                   id="pre-${language}"
@@ -417,6 +422,7 @@ export default class LightPreviewBase extends BaseElement {
                   part="pre pre-${language}"
                   tabindex="0"
                   aria-labelledby="source-code-label"
+                  class="language-${language}"
                   role="region"
                 ><code
                     part="code code-${language}"
@@ -425,7 +431,7 @@ export default class LightPreviewBase extends BaseElement {
               () => html`${unsafeHTML(this.code)}`
             )}
           </div>
-        </details>
+        </light-disclosure>
 
         <div part="actions">
           <button part="source-code-toggle" aria-expanded=${this.open} aria-controls="details" @click=${() => this.open = !this.open} type="button">

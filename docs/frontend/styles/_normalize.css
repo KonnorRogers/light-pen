@@ -42,6 +42,10 @@ p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
 
+.flow > * + * {
+  margin-block-start: var(--flow-space, 1em);
+}
+
 body {
   font-family: var(--sl-font-sans);
   min-height: 100%;
@@ -138,8 +142,6 @@ kr-layout::part(skip-link) {
   display: inline;
   padding: 0.25em;
   margin: -0.25em;
-  line-height: 1.2;
-  transition: all 0.2s;
 }
 
 kr-layout::part(skip-link):is(:hover),
