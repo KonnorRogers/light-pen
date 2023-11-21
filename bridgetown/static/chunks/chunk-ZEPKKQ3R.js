@@ -1,4 +1,4 @@
-import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-7B4R7EYV.js";import{a as n,b as d,c as u,d as b,e as f}from"/light-pen/bridgetown/static/chunks/chunk-J2Y25ERL.js";import{a as l,b as s,k as c,l as p,m as h}from"/light-pen/bridgetown/static/chunks/chunk-ZKRCKNCY.js";import{d as o}from"/light-pen/bridgetown/static/chunks/chunk-25GN2ENT.js";var g=l`
+import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-KQGXJEY4.js";import{a as n,b as d,c as u,d as b,e as f}from"/light-pen/bridgetown/static/chunks/chunk-QIQKK4GJ.js";import{a as l,b as s,k as c,l as p,m as h}from"/light-pen/bridgetown/static/chunks/chunk-32AZ3G57.js";import{d as i}from"/light-pen/bridgetown/static/chunks/chunk-25GN2ENT.js";var x=l`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
@@ -152,7 +152,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
   border-top:1px solid #1f252f;
   border-bottom-left-radius:0;
 }
-`;var i=class extends c{constructor(){super(),this.languageMap={html:"xml",css:"css",js:"javascript"},this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
+`;var o=class extends c{constructor(){super(),this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}</style>
@@ -225,7 +225,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
             `)}
         -->
 			</div>
-		</div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,u(this,{onMove:(t,r)=>{this._resizing=!0;let a=t;this.resizePosition=d(0,this.pixelsToPercentage(a),100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){let t=this.languageMap[e];return s`
+		</div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,u(this,{onMove:(t,r)=>{this._resizing=!0;let a=t;this.resizePosition=d(0,this.pixelsToPercentage(a),100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){return s`
       <light-editor
         id=${`editor-${e}`}
         part=${`sandbox-editor sandbox-editor--${e}`}
@@ -235,9 +235,10 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
           code:sandbox-editor__code,
           textarea:sandbox-editor__textarea
         "
-        language=${t}
-        @light-input=${r=>this[`${e}Code`]=r.currentTarget.value}
-        @light-change=${r=>this[`${e}Code`]=r.currentTarget.value}
+        language=${e}
+        .value=${this[`${e}Code`]}
+        @light-input=${t=>{this[`${e}Code`]=t.currentTarget.value}}
+        @light-change=${t=>{this[`${e}Code`]=t.currentTarget.value}}
       ><slot name=${e}></slot></light-editor>
     `}renderDetails(e){let t=e.toUpperCase();return s`
       <light-disclosure part="disclosure disclosure-${e}">
@@ -245,5 +246,5 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
 
         ${this.renderEditor(e)}
 			</light-disclosure>
-		`}};o(i,"baseName","light-pen"),o(i,"styles",[p,h,g]),o(i,"dependencies",{"light-editor":m,"light-disclosure":f}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{i as a};
-//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-TB2O6TPI.js.map
+		`}};i(o,"baseName","light-pen"),i(o,"styles",[p,h,x]),i(o,"dependencies",{"light-editor":m,"light-disclosure":f}),i(o,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{o as a};
+//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-ZEPKKQ3R.js.map
