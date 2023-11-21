@@ -1,3 +1,8 @@
+## 2.1.0
+
+- Added `initialValue` to the `<light-editor>` to allow for resetting the form input.
+- Fixed a bug where `<light-pen>` was no resetting to initial values.
+
 ## 2.0.0
 
 - BREAKING_CHANGE: Renamed `inline-preview` to `preview-mode` for `<light-preview>` with options of `"iframe"` or `"shadow-dom"`
