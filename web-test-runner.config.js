@@ -4,7 +4,7 @@ import { playwrightLauncher } from '@web/test-runner-playwright';
 /** @type {import("@web/test-runner").TestRunnerConfig} */
 export default {
   rootDir: '.',
-  files: ['./__tests__/**/*.test.js'], // "default" group
+  files: ['./tests/**/*.test.js'], // "default" group
   concurrentBrowsers: 3,
   nodeResolve: true,
   testFramework: {

@@ -55,6 +55,9 @@ export default class LightPen extends BaseElement {
     cssCode: { attribute: false },
     htmlCode: { attribute: false },
     jsCode: { attribute: false },
+    // cssResetCode: { attribute: false },
+    // htmlResetCode: { attribute: false },
+    // jsResetCode: { attribute: false },
     htmlResizeObserver: { attribute: false },
     jsResizeObserver: { attribute: false },
     cssResizeObserver: { attribute: false },
@@ -68,12 +71,6 @@ export default class LightPen extends BaseElement {
    */
   constructor() {
     super()
-
-    this.languageMap = {
-      html: "xml",
-      css: "css",
-      js: "javascript"
-    }
 
     /**
      * @property
@@ -138,6 +135,10 @@ export default class LightPen extends BaseElement {
     this.cssCode = ""
     this.htmlCode = ""
     this.jsCode = ""
+
+    // this.cssResetCode = ""
+    // this.htmlResetCode = ""
+    // this.jsResetCode = ""
   }
 
 
@@ -295,6 +296,7 @@ export default class LightPen extends BaseElement {
     this.htmlCode = this.htmlEditor?.getAttribute("value") || ""
     this.cssCode = this.cssEditor?.getAttribute("value") || ""
     this.jsCode = this.jsEditor?.getAttribute("value") || ""
+
     this.requestUpdate()
 
   }
@@ -452,8 +454,6 @@ export default class LightPen extends BaseElement {
    * @param {SupportedLanguages} language
    */
   renderEditor (language) {
-    let highlightLang = this.languageMap[language]
-
     return html`
       <light-editor
         id=${`editor-${language}`}
@@ -464,9 +464,14 @@ export default class LightPen extends BaseElement {
           code:sandbox-editor__code,
           textarea:sandbox-editor__textarea
         "
-        language=${highlightLang}
-        @light-input=${(/** @type Event */ e) => this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value}
-        @light-change=${(/** @type Event */ e) => this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value}
+        language=${language}
+        .value=${this[`${language}Code`]}
+        @light-input=${(/** @type Event */ e) => {
+          this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
+        }}
+        @light-change=${(/** @type Event */ e) => {
+          this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
+        }}
       ><slot name=${language}></slot></light-editor>
     `
   }

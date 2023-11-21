@@ -48,7 +48,8 @@ export default class LightEditor extends BaseElement {
   // static formAssociated = true
 
   static properties = {
-    value: {},
+    value: {attribute: false},
+    initialValue: {attribute: "value"},
     language: {reflect: true},
     hasInteracted: { type: Boolean, attribute: "has-interacted", reflect: true },
     preserveWhitespace: { type: Boolean, reflect: true, attribute: "preserve-whitespace" }
@@ -64,11 +65,19 @@ export default class LightEditor extends BaseElement {
     this.language = 'html'
 
     /**
+     * The value to set for the text editor
      * @type {string}
      */
     this.value = ''
 
     /**
+     * This is the value attribute. This is used for resetting the form input.
+     * @type {string}
+     */
+    this.initialValue = ''
+
+    /**
+     * The underlying textarea
      * @type {null | HTMLTextAreaElement}
      */
     this.textarea = null
@@ -86,17 +95,46 @@ export default class LightEditor extends BaseElement {
     this.preserveWhitespace = false
   }
 
+  connectedCallback () {
+    super.connectedCallback()
+
+    this.value = this.getAttribute("value") || ""
+    this.initialValue = this.getAttribute("value") || ""
+  }
+
   /**
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (this.value === this.getAttribute("value") && this.preserveWhitespace !== true) {
-      // Remove only lines that are blank with spaces that are blank. trim() removes preceding white-space for the line with characters.
-      // https://stackoverflow.com/questions/14572413/remove-line-breaks-from-start-and-end-of-string#comment104290392_14572494
-      this.value = dedent(this.value.replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, "")).trim()
+    if (this.value) {
+      if (this.value === this.getAttribute("value") && this.preserveWhitespace !== true) {
+
+        // Remove only lines that are blank with spaces that are blank. trim() removes preceding white-space for the line with characters.
+        // https://stackoverflow.com/questions/14572413/remove-line-breaks-from-start-and-end-of-string#comment104290392_14572494
+        this.value = dedent(this.value.replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, "")).trim()
+      }
+
+      // Emit events on value updates
+      this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
+      this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
     }
 
     super.willUpdate(changedProperties)
+  }
+
+  click () {
+    if (this.textarea) {
+      this.textarea.click()
+    }
+  }
+
+  /**
+   * @param {FocusOptions} [options]
+   */
+  focus (options) {
+    if (this.textarea) {
+      this.textarea.focus(options)
+    }
   }
 
   render () {
@@ -147,6 +185,8 @@ export default class LightEditor extends BaseElement {
             autocorrect="off"
             autocapitalize="off"
             translate="no"
+            value=${this.initialValue}
+            .value=${this.value}
             ${ref(this.textareaChanged)}
             @keyup=${this.keyupHandler}
             @keydown=${this.keydownHandler}
@@ -242,7 +282,7 @@ export default class LightEditor extends BaseElement {
     /**
      * @type {undefined | null | HTMLTextAreaElement}
      */
-    const textarea = this.shadowRoot?.querySelector("textarea")
+    const textarea = this.textarea
 
     if (textarea == null) return
 
@@ -297,6 +337,8 @@ export default class LightEditor extends BaseElement {
 
     if (code) {
       this.value = code
+      this.initialValue = code
+      this.setAttribute("value", this.initialValue)
       setTimeout(() => this.textarea?.setSelectionRange(0, 0))
       this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
       this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))

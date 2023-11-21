@@ -4,12 +4,12 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.metadata.myvariable }}.
 
-title: Lightweight Components for doing complex things.
+title: Lightweight components editing and syntax highlighting.
 logo: "Light Pen"
-slogan: Lightweight components for doing complex things.
+slogan: Lightweight components editing and syntax highlighting.
 email: konnor5456@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  A collection of components that don't generally fit a design system, but that I wanted to build.
+  Lightweight components editing and syntax highlighting.
 github_url: https://github.com/konnorrogers/light-pen
 default_branch: main
 doc_location: docs/src

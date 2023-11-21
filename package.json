@@ -1,7 +1,7 @@
 {
   "name": "light-pen",
   "version": "2.0.0",
-  "description": "A variety of simple components that match an aria-role",
+  "description": "A lightweight component library for code editing and syntax highlighting",
   "main": "./exports/index.js",
   "module": "./exports/index.js",
   "types": "./exports/index.d.ts",
@@ -9,8 +9,7 @@
     ".": "./exports/index.js",
     "./package.json": "./package.json",
     "./exports/*.js": "./exports/*.js",
-    "./exports/*": "./exports/*",
-    "./types/*": "./types/*.d.ts"
+    "./exports/*": "./exports/*"
   },
   "type": "module",
   "files": [
@@ -37,7 +36,9 @@
   },
   "keywords": [
     "web-components",
-    "aria"
+    "codepen",
+    "syntax highlighting",
+    "editor"
   ],
   "license": "MIT",
   "repository": "git@github.com:KonnorRogers/light-pen.git",
@@ -51,20 +52,24 @@
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "0.8.4",
+    "@esm-bundle/chai": "4.3.4-fix.0",
+    "@open-wc/testing": "^4.0.0",
     "@open-wc/testing-helpers": "^2.3.0",
     "@types/node": "^20.8.0",
+    "@types/prismjs": "^1.26.3",
     "@web/test-runner": "^0.17.1",
+    "@web/test-runner-commands": "^0.9.0",
     "@web/test-runner-playwright": "^0.10.1",
     "cem-plugin-expanded-types": "^1.1.0",
     "gh-pages": "^6.0.0",
     "glob": "^10.3.10",
     "light-pen": "link:.",
+    "playwright": "^1.40.0",
     "rimraf": "^5.0.1",
     "typedoc": "^0.25.2",
     "typescript": "~5.2.0"
   },
   "dependencies": {
-    "@types/prismjs": "^1.26.3",
     "lit": "^2.8.0",
     "prismjs": "^1.29.0",
     "web-component-define": "^2.0.11"

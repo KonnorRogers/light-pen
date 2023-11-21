@@ -83,6 +83,9 @@ export function PrismHighlight(text, grammar, language, hooks = {}) {
 }
 
 // @TODO: Fork prism, make an ESM build that isn't a global UMD and attempts to immediately highlight everything.
-PrismJS.manual = true
+// If a user has explicitly set `Prism.manual = false}` we should respect that.
+if (PrismJS.manual !== false) {
+  PrismJS.manual = true
+}
 
 export { PrismJS }
