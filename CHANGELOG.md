@@ -1,6 +1,7 @@
 ## 2.1.0
 
 - Added `initialValue` to the `<light-editor>` to allow for resetting the form input.
+- Fixed a bug where we would have Prism running automatically.
 - Fixed a bug where `<light-pen>` was no resetting to initial values.
 
 ## 2.0.0
