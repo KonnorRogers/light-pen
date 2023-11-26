@@ -33,6 +33,7 @@ const newLineRegex = /\r\n?|\n/g
  * @event {Event} light-focus - Re-emits the textarea's "focus" event
  * @event {Event} light-blur - Re-emits the textarea's "blur" event
  * @event {Event} light-resize - Is emitting whenever the editor resizes.
+ * @event {Event} light-value-change - Emitted whenever the "value" attribute of the editor changes.
  *
  */
 export default class LightEditor extends BaseElement {
@@ -113,10 +114,9 @@ export default class LightEditor extends BaseElement {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (this.value) {
+    if (changedProperties.has("value")) {
       // Emit events on value updates
-      this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
-      this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
+      this.dispatchEvent(new Event("light-value-change", { bubbles: true, composed: true }))
     }
 
     super.willUpdate(changedProperties)
@@ -233,7 +233,7 @@ export default class LightEditor extends BaseElement {
               this.setCurrentLineHighlight()
               this.syncScroll()
             }}
-          >${this.value}</textarea>
+          ></textarea>
         </div> <!-- base-editor -->
 			</div> <!-- base -->
 

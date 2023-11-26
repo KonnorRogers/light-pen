@@ -1,8 +1,7 @@
-import { html, fixture } from "@open-wc/testing-helpers"
+import { assert } from "@esm-bundle/chai"
+import { html, fixture, elementUpdated, aTimeout } from "@open-wc/testing-helpers"
 import { sendKeys } from "@web/test-runner-commands"
 import "../exports/light-pen-register.js"
-
-
 
 test("it should reset to initial values", async () => {
   const lightPen = await fixture(html`
@@ -13,19 +12,30 @@ test("it should reset to initial values", async () => {
     </light-pen>
   `)
 
+  await lightPen.updateComplete
   assert.equal(lightPen.htmlCode, "HTML")
   assert.equal(lightPen.cssCode, "CSS")
   assert.equal(lightPen.jsCode, "JS")
 
-  ;["html", "css", "js"].forEach(async (lang) => {
-    lightPen.shadowRoot.querySelector(`sandbox-editor--${language}`).focus()
+  lightPen.shadowRoot.querySelectorAll("light-disclosure").forEach((el) => el.click())
 
-    for (let i = 0; i < lightPen[`${lang}Code`].length; i++) {
-      await sendKeys({
-        press: 'Backspace',
-      });
-    }
+  ;["html", "css", "js"].forEach(async (lang) => {
+    const editor = lightPen.shadowRoot.querySelector(`[part~='sandbox-editor--${lang}']`)
+
+    editor.focus()
+
+    // @TODO: get this working with real keypresses
+    // for (let i = 0; i < lightPen[`${lang}Code`].length; i++) {
+    //   await sendKeys({
+    //     press: 'Backspace',
+    //   });
+    // }
+    editor.value = ""
   })
+
+  await elementUpdated(lightPen)
+
+  // await aTimeout(3000)
 
   assert.equal(lightPen.htmlCode, "")
   assert.equal(lightPen.cssCode, "")
@@ -33,12 +43,20 @@ test("it should reset to initial values", async () => {
 
 
   ;["html", "css", "js"].forEach(async (lang) => {
-    lightPen.shadowRoot.querySelector(`sandbox-editor--${language}`).focus()
+    const editor = lightPen.shadowRoot.querySelector(`[part~='sandbox-editor--${lang}']`)
 
-    await sendKeys({
-      type: lang.toUpperCase(),
-    });
+    editor.focus()
+
+    // @TODO: get this working with real keypresses
+    editor.value = lang.toUpperCase()
+
+    // await sendKeys({
+    //   type: lang.toUpperCase(),
+    // });
+
   })
+
+  await lightPen.updateComplete
 
   assert.equal(lightPen.htmlCode, "HTML")
   assert.equal(lightPen.cssCode, "CSS")

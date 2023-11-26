@@ -466,10 +466,7 @@ export default class LightPen extends BaseElement {
         "
         language=${language}
         .value=${this[`${language}Code`]}
-        @light-input=${(/** @type Event */ e) => {
-          this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
-        }}
-        @light-change=${(/** @type Event */ e) => {
+        @light-value-change=${(/** @type Event */ e) => {
           this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
         }}
       ><slot name=${language}></slot></light-editor>

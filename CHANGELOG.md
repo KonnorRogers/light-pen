@@ -1,3 +1,8 @@
+## Next
+
+- Switch to a `Prism` fork to play nicely with ESM and allow testing.
+
+
 ## 2.1.0
 
 - Added `initialValue` to the `<light-editor>` to allow for resetting the form input.

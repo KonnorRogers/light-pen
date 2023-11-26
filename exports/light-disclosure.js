@@ -115,6 +115,18 @@ export class LightDisclosure extends BaseElement {
     }
   }
 
+  click () {
+    this.open = !this.open
+  }
+
+  /**
+   * @param {FocusOptions} [options]
+   */
+  focus (options) {
+    this.shadowRoot?.querySelector("summary")?.focus(options)
+  }
+
+
   render () {
     return html`
       <details

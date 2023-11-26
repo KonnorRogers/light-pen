@@ -18,7 +18,12 @@ export default {
 
   ],
   browsers: [
-    playwrightLauncher({ product: 'chromium' }),
+    playwrightLauncher({
+      product: 'chromium',
+      launchOptions: {
+        headless: false
+      }
+    }),
     playwrightLauncher({ product: 'firefox' }),
     playwrightLauncher({ product: 'webkit' })
   ],
