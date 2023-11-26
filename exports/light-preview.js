@@ -2,7 +2,7 @@
 
 import { theme } from './default-theme.styles.js'
 import LightPreviewBase from './light-preview-base.js';
-import { PrismHighlight, PrismJS } from '../internal/prism-highlight.js';
+import { PrismHighlight, prism } from '../internal/prism-highlight.js';
 
 /**
  * LightPreview is a very lightweight code previewer designed to load your code sample
@@ -20,6 +20,6 @@ export default class LightPreview extends LightPreviewBase {
    * @override
    */
   highlight (code = this.code) {
-    return PrismHighlight(code, PrismJS.languages[this.language], this.language)
+    return PrismHighlight(code, prism.languages[this.language], this.language)
   }
 }

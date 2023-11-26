@@ -8,9 +8,9 @@ dependencies:
   lit:
     specifier: ^2.8.0
     version: 2.8.0
-  prismjs:
-    specifier: ^1.29.0
-    version: 1.29.0
+  prism-esm:
+    specifier: ^1.29.0-fix.1
+    version: 1.29.0-fix.1
   web-component-define:
     specifier: ^2.0.11
     version: 2.0.11
@@ -31,9 +31,6 @@ devDependencies:
   '@types/node':
     specifier: ^20.8.0
     version: 20.8.0
-  '@types/prismjs':
-    specifier: ^1.26.3
-    version: 1.26.3
   '@web/test-runner':
     specifier: ^0.17.1
     version: 0.17.1(typescript@5.2.2)
@@ -476,10 +473,6 @@ packages:
 
   /@types/parse5@6.0.3:
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
-    dev: true
-
-  /@types/prismjs@1.26.3:
-    resolution: {integrity: sha512-A0D0aTXvjlqJ5ZILMz3rNfDBOx9hHxLZYv2by47Sm/pqW35zzjusrZTryatjN/Rf8Us2gZrJD+KeHbUSTux1Cw==}
     dev: true
 
   /@types/qs@6.9.8:
@@ -2575,8 +2568,8 @@ packages:
       - supports-color
     dev: true
 
-  /prismjs@1.29.0:
-    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+  /prism-esm@1.29.0-fix.1:
+    resolution: {integrity: sha512-idahluR+IIwNy7l+xSOrz17RDBlzrbtUcvCSxcDaQhxxiblXFH/gD419ZmDcrmKy4WJbcKphg22h7xfWjtWjmg==}
     engines: {node: '>=6'}
     dev: false
 

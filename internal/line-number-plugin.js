@@ -1,5 +1,5 @@
 // @ts-check
-import Prism, { Token, hooks } from 'prismjs';
+import { Token } from 'prism-esm';
 
 const newLineRegex = /\r\n|\r|\n/
 
@@ -20,7 +20,11 @@ export function LineNumberPlugin(
    */
   return function lineNumberPlugin (env) {
     env.tokens = splitLinesRec(env.tokens).map((ary) => {
-      return new Prism.Token("light-line", ary)
+      if (ary.length <= 0) {
+        ary.push(" ")
+      }
+
+      return new Token("light-line", ary)
     });
 
   }
@@ -89,7 +93,7 @@ function splitLinesRec(
 
           const line = split[j];
           if (line.length) {
-            const token1 = new Prism.Token(
+            const token1 = new Token(
               token.type,
               unwrapContent(line),
               token.alias,

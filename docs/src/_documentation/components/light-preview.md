@@ -75,9 +75,9 @@ component: light-preview
 
 ## Loading inline
 
-<light-preview inline-preview>
+<light-preview preview-mode="shadow-dom">
   <template slot="code">
-    <light-preview inline-preview>
+    <light-preview preview-mode="shadow-dom">
       <template slot="code">
         <style>
           button.button {

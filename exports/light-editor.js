@@ -12,9 +12,9 @@ import { dedent } from "../internal/dedent.js";
 import { LightResizeEvent } from "./events/light-resize-event.js";
 import { repeat } from "lit/directives/repeat.js";
 import { elementsToString } from "../internal/elements-to-strings.js";
-import { PrismHighlight, PrismJS } from "../internal/prism-highlight.js";
+import { PrismHighlight, prism } from "../internal/prism-highlight.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
-import { Token } from "prismjs";
+import { Token } from "prism-esm";
 
 const newLineRegex = /\r\n?|\n/g
 
@@ -100,6 +100,13 @@ export default class LightEditor extends BaseElement {
 
     this.value = this.getAttribute("value") || ""
     this.initialValue = this.getAttribute("value") || ""
+
+    if (this.value === this.getAttribute("value") && this.preserveWhitespace !== true) {
+
+      // Remove only lines that are blank with spaces that are blank. trim() removes preceding white-space for the line with characters.
+      // https://stackoverflow.com/questions/14572413/remove-line-breaks-from-start-and-end-of-string#comment104290392_14572494
+      this.value = dedent(this.value.replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, "")).trim()
+    }
   }
 
   /**
@@ -107,13 +114,6 @@ export default class LightEditor extends BaseElement {
    */
   willUpdate (changedProperties) {
     if (this.value) {
-      if (this.value === this.getAttribute("value") && this.preserveWhitespace !== true) {
-
-        // Remove only lines that are blank with spaces that are blank. trim() removes preceding white-space for the line with characters.
-        // https://stackoverflow.com/questions/14572413/remove-line-breaks-from-start-and-end-of-string#comment104290392_14572494
-        this.value = dedent(this.value.replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, "")).trim()
-      }
-
       // Emit events on value updates
       this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
       this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))
@@ -414,7 +414,7 @@ export default class LightEditor extends BaseElement {
     code = this.injectNewLine(code)
     code = this.unescapeTags(code)
 
-    code = PrismHighlight(code, PrismJS.languages[language], language, {
+    code = PrismHighlight(code, prism.languages[language], language, {
       afterTokenize: [
         LineNumberPlugin(),
         (env) => {
