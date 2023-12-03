@@ -1,4 +1,4 @@
-import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-KQGXJEY4.js";import{a as n,b as d,c as u,d as b,e as f}from"/light-pen/bridgetown/static/chunks/chunk-QIQKK4GJ.js";import{a as l,b as s,k as c,l as p,m as h}from"/light-pen/bridgetown/static/chunks/chunk-32AZ3G57.js";import{d as i}from"/light-pen/bridgetown/static/chunks/chunk-25GN2ENT.js";var x=l`
+import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-XDAAHKDI.js";import{a as n,b as d,c as u,d as b,e as f}from"/light-pen/bridgetown/static/chunks/chunk-YQYLBVQF.js";import{a as l,b as s,k as c,l as p,m as h}from"/light-pen/bridgetown/static/chunks/chunk-RYL6JHDL.js";import{d as i}from"/light-pen/bridgetown/static/chunks/chunk-25GN2ENT.js";var x=l`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
@@ -237,8 +237,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
         "
         language=${e}
         .value=${this[`${e}Code`]}
-        @light-input=${t=>{this[`${e}Code`]=t.currentTarget.value}}
-        @light-change=${t=>{this[`${e}Code`]=t.currentTarget.value}}
+        @light-value-change=${t=>{this[`${e}Code`]=t.currentTarget.value}}
       ><slot name=${e}></slot></light-editor>
     `}renderDetails(e){let t=e.toUpperCase();return s`
       <light-disclosure part="disclosure disclosure-${e}">
@@ -247,4 +246,4 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
         ${this.renderEditor(e)}
 			</light-disclosure>
 		`}};i(o,"baseName","light-pen"),i(o,"styles",[p,h,x]),i(o,"dependencies",{"light-editor":m,"light-disclosure":f}),i(o,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{o as a};
-//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-ZEPKKQ3R.js.map
+//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-T3SCXRPN.js.map
