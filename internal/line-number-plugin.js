@@ -84,6 +84,7 @@ function splitLinesRec(
         }
       }
     } else {
+      // @ts-expect-error
       const split = splitLinesRec(wrapContent(token.content));
       if (split.length > 1) {
         for (let j = 0; j < split.length; j++) {

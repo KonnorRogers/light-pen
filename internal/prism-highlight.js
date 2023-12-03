@@ -26,11 +26,9 @@ import { loader as tsLoader } from "prism-esm/components/prism-typescript.js"
 import { loader as tsxLoader } from "prism-esm/components/prism-tsx.js"
 
 /**
- * @typedef {import("prism-esm").hooks.TokenizeEnvironment & { tokens: Array<string | Token>}} Env
- * @typedef {import("prism-esm").hooks.HookCallback} HookCallback
+ * @typedef {{ code: string, grammar: import("prism-esm").Grammar, language: string } & { tokens: Array<string | Token>}} Env
+ * @typedef {import("prism-esm").HookCallback} HookCallback
  */
-
-
 
 /**
  * Custom hooks to run with our custom tokenizer.
@@ -87,6 +85,7 @@ export function PrismHighlight(text, grammar, language, hooks = {}) {
 	}
 
   // New tokenizer wrapping every new line
+  // @ts-expect-error
 	env.tokens = prism.tokenize(env.code, env.grammar)
 
 	hooks.afterTokenize?.forEach((hook) => {
@@ -94,6 +93,7 @@ export function PrismHighlight(text, grammar, language, hooks = {}) {
 	})
 	prism.hooks.run('after-tokenize', env);
 
+  // @ts-expect-error
 	return Token.stringify(prism.util.encode(env.tokens), env.language, prism);
 }
 

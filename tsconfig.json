@@ -15,6 +15,7 @@
     "emitDeclarationOnly": true,
     "allowJs": true,
     "checkJs": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
   }
 }
