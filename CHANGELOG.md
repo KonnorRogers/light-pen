@@ -1,7 +1,6 @@
-## Next
+## 2.2.0 12/03/2023
 
 - Switch to a `Prism` fork to play nicely with ESM and allow testing.
-
 
 ## 2.1.0
 
