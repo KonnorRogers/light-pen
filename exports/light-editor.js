@@ -1,6 +1,5 @@
 import { html, render } from "lit";
 
-
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
 
@@ -15,6 +14,7 @@ import { elementsToString } from "../internal/elements-to-strings.js";
 import { PrismHighlight, prism } from "../internal/prism-highlight.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { Token } from "prism-esm";
+import { FormAssociated } from "../internal/form-associated-mixin.js";
 
 const newLineRegex = /\r\n?|\n/g
 
@@ -36,7 +36,7 @@ const newLineRegex = /\r\n?|\n/g
  * @event {Event} light-value-change - Emitted whenever the "value" attribute of the editor changes.
  *
  */
-export default class LightEditor extends BaseElement {
+export default class LightEditor extends FormAssociated(BaseElement) {
   static baseName = "light-editor"
 
   static styles = [
@@ -44,9 +44,6 @@ export default class LightEditor extends BaseElement {
     styles,
     theme,
   ]
-
-  // We will need to decide if we want to formAssociate or just mirror to a light DOM textarea.
-  // static formAssociated = true
 
   static properties = {
     value: {attribute: false},
@@ -58,6 +55,11 @@ export default class LightEditor extends BaseElement {
 
   constructor () {
     super()
+
+    /**
+     * Form associated role
+     */
+    this.internals.role = "textbox"
 
     /**
      * The language used for highlighting. Default is "html". "css" and "js" also included by default.
@@ -315,7 +317,10 @@ export default class LightEditor extends BaseElement {
 
     this.textareaResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
     this.textareaResizeObserver.observe(textarea)
+  }
 
+  get formControl () {
+    return this.textarea
   }
 
   /**
