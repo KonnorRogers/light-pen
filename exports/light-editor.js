@@ -14,7 +14,7 @@ import { elementsToString } from "../internal/elements-to-strings.js";
 import { PrismHighlight, prism } from "../internal/prism-highlight.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { Token } from "prism-esm";
-import { FormAssociated } from "../internal/form-associated-mixin.js";
+import { OpinionatedFormAssociated } from "../internal/form-associated-mixin.js";
 
 const newLineRegex = /\r\n?|\n/g
 
@@ -36,7 +36,7 @@ const newLineRegex = /\r\n?|\n/g
  * @event {Event} light-value-change - Emitted whenever the "value" attribute of the editor changes.
  *
  */
-export default class LightEditor extends FormAssociated(BaseElement) {
+export default class LightEditor extends OpinionatedFormAssociated(BaseElement) {
   static baseName = "light-editor"
 
   static styles = [
