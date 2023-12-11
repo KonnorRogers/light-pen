@@ -14,7 +14,8 @@ import { elementsToString } from "../internal/elements-to-strings.js";
 import { PrismHighlight, prism } from "../internal/prism-highlight.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { Token } from "prism-esm";
-import { OpinionatedFormAssociated } from "../internal/form-associated-mixin.js";
+import { OpinionatedFormAssociated } from "../internal/mixins/form-associated-mixin.js";
+import { TextareaFormAssociatedMixin } from "../internal/mixins/textarea-form-associated-mixin.js";
 
 const newLineRegex = /\r\n?|\n/g
 
@@ -36,7 +37,7 @@ const newLineRegex = /\r\n?|\n/g
  * @event {Event} light-value-change - Emitted whenever the "value" attribute of the editor changes.
  *
  */
-export default class LightEditor extends OpinionatedFormAssociated(BaseElement) {
+export default class LightEditor extends TextareaFormAssociatedMixin(BaseElement) {
   static baseName = "light-editor"
 
   static styles = [
@@ -45,13 +46,11 @@ export default class LightEditor extends OpinionatedFormAssociated(BaseElement) 
     theme,
   ]
 
-  static properties = {
-    value: {attribute: false},
-    initialValue: {attribute: "value"},
+  static properties = Object.assign(TextareaFormAssociatedMixin.formProperties, {
     language: {reflect: true},
     hasInteracted: { type: Boolean, attribute: "has-interacted", reflect: true },
     preserveWhitespace: { type: Boolean, reflect: true, attribute: "preserve-whitespace" }
-  }
+  })
 
   constructor () {
     super()
@@ -59,7 +58,7 @@ export default class LightEditor extends OpinionatedFormAssociated(BaseElement) 
     /**
      * Form associated role
      */
-    this.internals.role = "textbox"
+    this.role = "textbox"
 
     /**
      * The language used for highlighting. Default is "html". "css" and "js" also included by default.
@@ -77,13 +76,19 @@ export default class LightEditor extends OpinionatedFormAssociated(BaseElement) 
      * This is the value attribute. This is used for resetting the form input.
      * @type {string}
      */
-    this.initialValue = ''
+    this.defaultValue = ''
 
     /**
      * The underlying textarea
      * @type {null | HTMLTextAreaElement}
      */
     this.textarea = null
+
+    /**
+     * The underlying textarea
+     * @type {null | HTMLTextAreaElement}
+     */
+    this.formControl = null
 
     /**
      * Tracks if the user has interacted with the `<textarea>`
@@ -102,7 +107,7 @@ export default class LightEditor extends OpinionatedFormAssociated(BaseElement) 
     super.connectedCallback()
 
     this.value = this.getAttribute("value") || ""
-    this.initialValue = this.getAttribute("value") || ""
+    this.defaultValue = this.getAttribute("value") || ""
 
     if (this.value === this.getAttribute("value") && this.preserveWhitespace !== true) {
 
@@ -187,7 +192,7 @@ export default class LightEditor extends OpinionatedFormAssociated(BaseElement) 
             autocorrect="off"
             autocapitalize="off"
             translate="no"
-            value=${this.initialValue}
+            .defaultValue=${this.defaultValue}
             .value=${this.value}
             ${ref(this.textareaChanged)}
             @keyup=${this.keyupHandler}
@@ -314,13 +319,10 @@ export default class LightEditor extends OpinionatedFormAssociated(BaseElement) 
 
     const textarea = element
     this.textarea = textarea
+    this.formControl = textarea
 
     this.textareaResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
     this.textareaResizeObserver.observe(textarea)
-  }
-
-  get formControl () {
-    return this.textarea
   }
 
   /**
@@ -342,8 +344,7 @@ export default class LightEditor extends OpinionatedFormAssociated(BaseElement) 
 
     if (code) {
       this.value = code
-      this.initialValue = code
-      this.setAttribute("value", this.initialValue)
+      this.defaultValue = code
       setTimeout(() => this.textarea?.setSelectionRange(0, 0))
       this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
       this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))

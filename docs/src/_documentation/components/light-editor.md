@@ -9,32 +9,34 @@ component: light-editor
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
-    <light-editor label="A small editor">
-      <!-- We use a `<script type="text/plain">` because there's a lot of caveats to using `<template>` -->
-      <script type="text/plain">
-        <!DOCTYPE html>
-        <html lang='en'>
-          <head>
-            <meta charset='UTF-8'>
-            <title>Hello World</title>
+    <form>
+      <light-editor label="A small editor">
+        <!-- We use a `<script type="text/plain">` because there's a lot of caveats to using `<template>` -->
+        <script type="text/plain">
+          <!DOCTYPE html>
+          <html lang='en'>
+            <head>
+              <meta charset='UTF-8'>
+              <title>Hello World</title>
 
-            <style>
-              h1 { font-size: 1.8rem; }
-            </style>
-          </head>
-          <body>
-            <main>
-              <h1>Hello World</h1>
-              Sup
-              <script>
-                const greeting = 'Hello World'
-                console.log(greeting)
-              &lt;/script>
-            </main>
-          </body>
-        </html>
-      </script>
-    </light-editor>
+              <style>
+                h1 { font-size: 1.8rem; }
+              </style>
+            </head>
+            <body>
+              <main>
+                <h1>Hello World</h1>
+                Sup
+                <script>
+                  const greeting = 'Hello World'
+                  console.log(greeting)
+                &lt;/script>
+              </main>
+            </body>
+          </html>
+        </script>
+      </light-editor>
+    </form>
   </template>
 </light-preview>
 
