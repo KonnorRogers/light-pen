@@ -21,8 +21,6 @@ export function TextareaFormAssociatedMixin(superclass) {
 
         const textarea = document.createElement("textarea")
 
-        this.role = "textbox"
-
         /**
          * @type {HTMLTextAreaElement["autocomplete"]}
          */
@@ -67,8 +65,6 @@ export function TextareaFormAssociatedMixin(superclass) {
          * @type {null | HTMLTextAreaElement}
          */
         this.formControl = textarea
-
-
 
         /**
          * @type {HTMLTextAreaElement["dirName"]}
@@ -148,16 +144,15 @@ export function TextareaFormAssociatedMixin(superclass) {
 TextareaFormAssociatedMixin.formProperties = Object.assign(
   OpinionatedFormAssociated.formProperties,
   {
-    autocomplete: {},
-    wrap: {},
-    readOnly: {attribute: "readonly", type: Boolean},
-    placeholder: {},
-    dirName: {attribute: "dirname"},
+    autocomplete: {reflect: true},
+    wrap: {reflect: true},
+    readOnly: {attribute: "readonly", type: Boolean, reflect: true},
+    placeholder: {reflect: true},
+    dirName: {reflect: true, attribute: "dirname"},
 
     // Validation
-    maxLength: {attribute: "maxlength", type: Number},
-    minLength: {attribute: "minlength", type: Number},
-    pattern: {},
-
+    maxLength: {attribute: "maxlength", type: Number, reflect: true},
+    minLength: {attribute: "minlength", type: Number, reflect: true},
+    pattern: {reflect: true},
   }
 )

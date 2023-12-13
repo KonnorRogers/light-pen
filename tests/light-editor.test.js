@@ -8,8 +8,8 @@ LightEditor.define()
 test("Should be role of textbox", async () => {
   const editor = await fixture(html`<light-editor name="yo" value="hi"></light-editor>`)
 
-  assert.equal(editor.role, "textbox")
-  assert.equal(editor.getAttribute("role"), "textbox")
+  assert.equal(editor.role, null)
+  assert.equal(editor.getAttribute("role"), null)
 
   editor.role = "combobox"
   await elementUpdated(editor)
@@ -17,6 +17,7 @@ test("Should be role of textbox", async () => {
   assert.equal(editor.getAttribute("role"), "combobox")
 
   editor.setAttribute("role", "textbox")
+  await elementUpdated(editor)
   assert.equal(editor.role, "textbox")
   assert.equal(editor.getAttribute("role"), "textbox")
 })

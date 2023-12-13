@@ -14,7 +14,6 @@ import { elementsToString } from "../internal/elements-to-strings.js";
 import { PrismHighlight, prism } from "../internal/prism-highlight.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { Token } from "prism-esm";
-import { OpinionatedFormAssociated } from "../internal/mixins/form-associated-mixin.js";
 import { TextareaFormAssociatedMixin } from "../internal/mixins/textarea-form-associated-mixin.js";
 
 const newLineRegex = /\r\n?|\n/g
@@ -54,11 +53,6 @@ export default class LightEditor extends TextareaFormAssociatedMixin(BaseElement
 
   constructor () {
     super()
-
-    /**
-     * Form associated role
-     */
-    this.role = "textbox"
 
     /**
      * The language used for highlighting. Default is "html". "css" and "js" also included by default.

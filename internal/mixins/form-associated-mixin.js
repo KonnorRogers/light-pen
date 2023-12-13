@@ -111,6 +111,14 @@ export function OpinionatedFormAssociated(superclass) {
         return this.internals.willValidate
       }
 
+      get setCustomValidity () {
+        const formControl = this.formControl
+
+        if (formControl) {
+          return /** @type {HTMLInputElement} */ (/** @type {unknown} */(formControl)).setCustomValidity
+        }
+      }
+
       /**
       * @param {import("lit").PropertyValues<this>} changedProperties
       */
@@ -220,12 +228,12 @@ export function OpinionatedFormAssociated(superclass) {
 }
 
 OpinionatedFormAssociated.formProperties = {
-  role: {},
-  name: {},
-  type: {},
-  disabled: {type: Boolean},
-  required: {type: Boolean},
+  role: {reflect: true},
+  name: {reflect: true},
+  type: {reflect: true},
+  disabled: {reflect: true, type: Boolean},
+  required: {reflect: true, type: Boolean},
   formControl: {attribute: false, state: true},
   value: {attribute: false, state: true},
-  defaultValue: {attribute: "value"},
+  defaultValue: {attribute: "value", reflect: true},
 }
