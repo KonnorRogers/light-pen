@@ -1,4 +1,3 @@
-// Make some mixins
 
 /**
  * A mixin to call `attachInternals()`
@@ -93,6 +92,24 @@ export function OpinionatedFormAssociated(superclass) {
          * @type {string | null}
          */
         this.type = this.localName
+
+        this.hasInteracted = this.hasInteracted ?? false
+        this.shouldTrackInteractions = this.shouldTrackInteractions ?? true
+
+        if (this.shouldTrackInteractions) {
+          this.addEventListener("focusin", this.handleInteraction)
+          this.addEventListener("focusout", this.handleInteraction)
+          this.addEventListener("click", this.handleInteraction)
+        }
+      }
+
+      handleInteraction = () => {
+        this.hasInteracted = true
+      }
+
+
+      get shouldShowValidationMessage () {
+        return this.hasInteracted === true
       }
 
       get labels () {
@@ -111,11 +128,14 @@ export function OpinionatedFormAssociated(superclass) {
         return this.internals.willValidate
       }
 
-      get setCustomValidity () {
+      /**
+       * @param {Parameters<HTMLInputElement["setCustomValidity"]>} args
+       */
+      setCustomValidity (...args) {
         const formControl = this.formControl
 
         if (formControl) {
-          return /** @type {HTMLInputElement} */ (/** @type {unknown} */(formControl)).setCustomValidity
+          return /** @type {HTMLInputElement} */ (/** @type {unknown} */(formControl)).setCustomValidity(...args)
         }
       }
 
@@ -139,6 +159,7 @@ export function OpinionatedFormAssociated(superclass) {
 
             formControl.value = this.value
             this.value = formControl.value
+            this.setFormValue(this.value, this.value)
           }
         }
 
@@ -156,6 +177,7 @@ export function OpinionatedFormAssociated(superclass) {
           this.value = this.defaultValue
         }
 
+        this.hasInteracted = false
         this.internals.setValidity({})
         this.internals.setFormValue(this.defaultValue, this.defaultValue)
       }
@@ -167,6 +189,8 @@ export function OpinionatedFormAssociated(superclass) {
       */
       formDisabledCallback(isDisabled) {
         this.disabled = isDisabled
+        this.internals.setValidity({})
+        this.hasInteracted = false
         this.formControl?.setAttribute("disabled", "")
       }
 
@@ -210,10 +234,10 @@ export function OpinionatedFormAssociated(superclass) {
       }
 
       /**
-        * @returns {ElementInternals["setFormValue"]}
+        * @param {Parameters<ElementInternals["setFormValue"]>} args
         */
-      get setFormValue () {
-        return this.internals.setFormValue
+      setFormValue (...args) {
+        return this.internals.setFormValue(...args)
       }
 
       /**

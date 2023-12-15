@@ -72,9 +72,11 @@ export function TextareaFormAssociatedMixin(superclass) {
         this.dirName = textarea.dirName
 
         // @TODO:
-        // selectionDirection,
         // setRangeText,
         // setSelectionRange
+
+        /** @type {HTMLTextAreaElement["selectionDirection"]} */
+        this.selectionDirection = textarea.selectionDirection
       }
 
       /**
