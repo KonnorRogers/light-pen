@@ -32,9 +32,14 @@ export function TextareaFormAssociatedMixin(superclass) {
         this.wrap = textarea.wrap
 
         /**
-         * @type {null | string}
+         * @type {string}
          */
         this.value = textarea.value
+
+        /**
+         * @type {string}
+         */
+        this.value = textarea.defaultValue
 
         /**
          * @type {HTMLTextAreaElement["maxLength"]}
@@ -77,6 +82,30 @@ export function TextareaFormAssociatedMixin(superclass) {
 
         /** @type {HTMLTextAreaElement["selectionDirection"]} */
         this.selectionDirection = textarea.selectionDirection
+
+      }
+
+      /**
+       * @param {Parameters<HTMLTextAreaElement["setSelectionRange"]>} args
+       */
+      setSelectionRange (...args) {
+        const formControl = this.formControl
+
+        if (formControl && "selectionRange" in formControl) {
+          /** @type {HTMLTextAreaElement} */ (/** @type {unknown} */ (formControl)).setSelectionRange(...args)
+        }
+      }
+
+      /**
+       * @param {[replacement: string, start: number, end: number, selectionMode?: SelectionMode] | [replacement: string]} args
+       */
+      setRangeText (...args) {
+        const formControl = this.formControl
+
+        if (formControl && "setRangeText" in formControl) {
+          // @ts-expect-error
+          /** @type {HTMLTextAreaElement} */ (/** @type {unknown} */ (formControl)).setRangeText(...args)
+        }
       }
 
       /**
@@ -85,7 +114,7 @@ export function TextareaFormAssociatedMixin(superclass) {
       setCustomValidity (...args) {
         const formControl = this.formControl
 
-        if (formControl) {
+        if (formControl && "setCustomValidity" in formControl) {
           /** @type {HTMLTextAreaElement} */ (formControl).setCustomValidity(...args)
         }
       }
@@ -96,7 +125,7 @@ export function TextareaFormAssociatedMixin(superclass) {
       get textLength () {
         const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
 
-        if (formControl) {
+        if (formControl && "textLength" in formControl) {
           return formControl.textLength
         }
 
@@ -109,7 +138,7 @@ export function TextareaFormAssociatedMixin(superclass) {
       get selectionStart () {
         const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
 
-        if (formControl) {
+        if (formControl && "selectionStart" in formControl) {
           return formControl.selectionStart
         }
 
@@ -122,8 +151,8 @@ export function TextareaFormAssociatedMixin(superclass) {
       get selectionEnd () {
         const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
 
-        if (formControl) {
-          return formControl.selectionStart
+        if (formControl && "selectionEnd" in formControl) {
+          return formControl.selectionEnd
         }
 
         return 0
@@ -136,7 +165,7 @@ export function TextareaFormAssociatedMixin(superclass) {
         const formControl = this.formControl
 
         if (formControl) {
-          /** @type {HTMLTextAreaElement} */ (formControl).select()
+          /** @type {HTMLTextAreaElement} */ (formControl).select?.()
         }
       }
     }

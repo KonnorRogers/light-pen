@@ -69,14 +69,14 @@ export function OpinionatedFormAssociated(superclass) {
         this.role = null
 
         /**
-         * @type {null | string | File | FormData}
+         * @type {string}
          */
-        this.value = null
+        this.value = ""
 
         /**
-         * @type {null | string}
+         * @type {string}
          */
-        this.defaultValue = null
+        this.defaultValue = ""
 
         /**
          * @type {HTMLInputElement["name"]}
@@ -89,11 +89,23 @@ export function OpinionatedFormAssociated(superclass) {
         this.formControl = null
 
         /**
-         * @type {string | null}
+         * @type {string}
          */
-        this.type = this.localName
+        this.type = this.localName || ""
 
+        /**
+         * @type {boolean}
+         */
+        this.disabled = false
+
+        /**
+         * @type {boolean}
+         */
         this.hasInteracted = this.hasInteracted ?? false
+
+        /**
+         * @type {boolean}
+         */
         this.shouldTrackInteractions = this.shouldTrackInteractions ?? true
 
         if (this.shouldTrackInteractions) {
@@ -103,17 +115,21 @@ export function OpinionatedFormAssociated(superclass) {
         }
       }
 
+      /**
+       * Sets `this.hasInteracted = true` to true when the users focus / clicks the element.
+       */
       handleInteraction = () => {
-        this.hasInteracted = true
+        if (this.disabled !== true) {
+          this.hasInteracted = true
+        }
       }
 
-
       get shouldShowValidationMessage () {
-        return this.hasInteracted === true
+        return this.disabled !== true && this.hasInteracted === true
       }
 
       get labels () {
-        return this.internals.labels
+        return /** @type {NodeListOf<HTMLLabelElement>} */ (this.internals.labels)
       }
 
       get validity () {
@@ -203,6 +219,7 @@ export function OpinionatedFormAssociated(superclass) {
       formStateRestoreCallback(state, reason) {
         if ("formControl" in this && this.formControl) {
           this.formControl.value = state
+          // @ts-expect-error
           this.value = state
         }
       }
