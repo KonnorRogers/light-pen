@@ -76,13 +76,8 @@ export function TextareaFormAssociatedMixin(superclass) {
          */
         this.dirName = textarea.dirName
 
-        // @TODO:
-        // setRangeText,
-        // setSelectionRange
-
         /** @type {HTMLTextAreaElement["selectionDirection"]} */
         this.selectionDirection = textarea.selectionDirection
-
       }
 
       /**
@@ -105,17 +100,6 @@ export function TextareaFormAssociatedMixin(superclass) {
         if (formControl && "setRangeText" in formControl) {
           // @ts-expect-error
           /** @type {HTMLTextAreaElement} */ (/** @type {unknown} */ (formControl)).setRangeText(...args)
-        }
-      }
-
-      /**
-       * @param {Parameters<HTMLTextAreaElement["setCustomValidity"]>} args
-       */
-      setCustomValidity (...args) {
-        const formControl = this.formControl
-
-        if (formControl && "setCustomValidity" in formControl) {
-          /** @type {HTMLTextAreaElement} */ (formControl).setCustomValidity(...args)
         }
       }
 

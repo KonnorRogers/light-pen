@@ -84,11 +84,6 @@ export default class LightEditor extends TextareaFormAssociatedMixin(BaseElement
      */
     this.formControl = null
 
-    /**
-     * Tracks if the user has interacted with the `<textarea>`
-     * @type {boolean}
-     */
-    this.hasInteracted = false
 
     /**
      * Whether to strip whitespace before first character, and after the last character.
@@ -198,6 +193,7 @@ export default class LightEditor extends TextareaFormAssociatedMixin(BaseElement
               this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
             }}
             @blur=${() => {
+              this.hasInteracted = true
               this.syncScroll()
               this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))

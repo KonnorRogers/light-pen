@@ -145,14 +145,15 @@ export function OpinionatedFormAssociated(superclass) {
       }
 
       /**
-       * @param {Parameters<HTMLInputElement["setCustomValidity"]>} args
+       * @param {string} message
        */
-      setCustomValidity (...args) {
-        const formControl = this.formControl
-
-        if (formControl) {
-          return /** @type {HTMLInputElement} */ (/** @type {unknown} */(formControl)).setCustomValidity(...args)
+      setCustomValidity (message) {
+        if (message) {
+          this.setValidity({customError: true}, message)
+          return
         }
+
+        this.setValidity({})
       }
 
       /**

@@ -4,6 +4,11 @@ permalink: /components/light-editor/
 component: light-editor
 ---
 
+<form>
+  <light-editor required pattern="blah"></light-editor>
+  <button>Submit</button>
+</form>
+
 <!-- Register it with the lazy loader -->
 <light-editor style="display: none;"></light-editor>
 
