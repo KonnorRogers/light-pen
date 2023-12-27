@@ -3,6 +3,7 @@ import { html, render } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
 
+import { LitElement } from "lit"
 import { BaseElement } from "../internal/base-element.js";
 import { baseStyles } from "./base-styles.js";
 import { styles } from "./light-editor.styles.js";
@@ -14,7 +15,7 @@ import { elementsToString } from "../internal/elements-to-strings.js";
 import { PrismHighlight, prism } from "../internal/prism-highlight.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { Token } from "prism-esm";
-import { TextareaFormAssociatedMixin } from "../internal/mixins/textarea-form-associated-mixin.js";
+import { TextareaMixin } from "form-associated-helpers/exports/mixins/textarea-mixin.js";
 
 const newLineRegex = /\r\n?|\n/g
 
@@ -36,18 +37,33 @@ const newLineRegex = /\r\n?|\n/g
  * @event {Event} light-value-change - Emitted whenever the "value" attribute of the editor changes.
  *
  */
-export default class LightEditor extends TextareaFormAssociatedMixin(BaseElement) {
+export default class LightEditor extends TextareaMixin(BaseElement) {
+  /**
+   * @override
+   */
   static baseName = "light-editor"
 
+  /**
+   * @override
+   * Without delegatesFocus, we get this fun message:
+   *  "The invalid form control with name=‘editor’ is not focusable."
+   */
+  static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
+  /**
+   * @override
+   */
   static styles = [
     baseStyles,
     styles,
     theme,
   ]
 
-  static properties = Object.assign(TextareaFormAssociatedMixin.formProperties, {
+  /**
+   * @override
+   */
+  static properties = Object.assign(TextareaMixin.formProperties, {
     language: {reflect: true},
-    hasInteracted: { type: Boolean, attribute: "has-interacted", reflect: true },
     preserveWhitespace: { type: Boolean, reflect: true, attribute: "preserve-whitespace" }
   })
 
@@ -92,6 +108,9 @@ export default class LightEditor extends TextareaFormAssociatedMixin(BaseElement
     this.preserveWhitespace = false
   }
 
+  /**
+   * @override
+   */
   connectedCallback () {
     super.connectedCallback()
 
@@ -107,6 +126,7 @@ export default class LightEditor extends TextareaFormAssociatedMixin(BaseElement
   }
 
   /**
+   * @override
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
@@ -118,21 +138,32 @@ export default class LightEditor extends TextareaFormAssociatedMixin(BaseElement
     super.willUpdate(changedProperties)
   }
 
+  /**
+   * @override
+   */
   click () {
     if (this.textarea) {
       this.textarea.click()
+    } else {
+      this.click()
     }
   }
 
   /**
+   * @override
    * @param {FocusOptions} [options]
    */
   focus (options) {
     if (this.textarea) {
       this.textarea.focus(options)
+    } else {
+      this.focus(options)
     }
   }
 
+  /**
+   * @override
+   */
   render () {
     const language = this.language
 
@@ -180,9 +211,15 @@ export default class LightEditor extends TextareaFormAssociatedMixin(BaseElement
             spellcheck="false"
             autocorrect="off"
             autocapitalize="off"
+            pattern=${this.pattern}
+            minlength=${this.minLength}
+            required=${this.required}
+            maxlength=${this.maxLength}
             translate="no"
             .defaultValue=${this.defaultValue}
             .value=${this.value}
+            ?disabled=${this.disabled}
+            placeholder=${this.placeholder}
             ${ref(this.textareaChanged)}
             @keyup=${this.keyupHandler}
             @keydown=${this.keydownHandler}

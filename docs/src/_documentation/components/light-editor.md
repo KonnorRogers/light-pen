@@ -4,11 +4,6 @@ permalink: /components/light-editor/
 component: light-editor
 ---
 
-<form>
-  <light-editor required pattern="blah"></light-editor>
-  <button>Submit</button>
-</form>
-
 <!-- Register it with the lazy loader -->
 <light-editor style="display: none;"></light-editor>
 
@@ -199,3 +194,62 @@ Using a `<textarea>` element for the default slot requires the following markup 
 `<xmp>` is deprecated and also has some issues around if you do something like: `<!DOCTYPE html >`
 `<!-- -->` isn't supported like with Prism's auto escape plugin could be used, but runs into issues if you want comments nested in comments.
 
+## Disabled Editor
+
+To disable the editor, provide a `disabled` attribute.
+
+<light-preview preview-mode="shadow-dom">
+  <light-editor disabled></light-editor>
+</light-preview>
+
+## Editor with a placeholder
+
+To provide a placeholder, use the `placeholder` attribute. Note, this does not support a `<slot>`
+because it's using the native `<textarea>` placeholder attribute.
+
+<light-preview preview-mode="shadow-dom">
+  <template slot="code">
+    <light-editor placeholder="Write something awesome"></light-editor>
+  </template>
+</light-preview>
+
+## Editor with validations
+
+Validations are handled using "Form Associated Custom Elements".
+
+`<light-editor>` supports `minlength`, `maxlength`, `required`, and `pattern` just like the
+native `<textarea>` element.
+
+### minlength, maxlength, required validations
+
+<light-preview preview-mode="shadow-dom">
+  <template slot="code">
+    <form>
+      <label>
+        minlength: 5, maxlength: 6, required.
+        <br>
+        <light-editor required minlength="5" maxlength="6" ></light-editor>
+      </label>
+      <button>Trigger Validations</button>
+    </form>
+    <!-- Prevent form submissions -->
+    <script>this.rootNode.addEventListener("submit", (e) => e.preventDefault())</script>
+  </template>
+</light-preview>
+
+### pattern validation
+
+<light-preview preview-mode="shadow-dom">
+  <template slot="code">
+    <form>
+      <label>
+        pattern="boo"
+        <br>
+        <light-editor pattern="boo"></light-editor>
+      </label>
+      <button>Trigger Validations</button>
+    </form>
+    <!-- Prevent form submissions -->
+    <script>this.rootNode.addEventListener("submit", (e) => e.preventDefault())</script>
+  </template>
+</light-preview>

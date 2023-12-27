@@ -82,3 +82,32 @@ test("Should prevent submission with custom validity and reset validity", async 
   assert.equal(editor.validity.valid, true)
   assert.equal(editor.getAttribute("value"), "sup dude")
 })
+
+test("Should fail validity check with required and no value", async () => {
+  const form = await fixture(html`
+    <form>
+      <light-editor required name="test"></light-editor>
+      <button>Submit</button>
+      <button type="reset">Reset</button>
+    </form>
+  `)
+
+  const editor = form.querySelector("light-editor")
+  const button = form.querySelector("button")
+
+  let called = 0
+
+  form.addEventListener("submit", () => {
+    called += 1
+  })
+
+  button.click()
+
+  await aTimeout(1)
+
+  assert.equal(called, 0)
+
+  assert.equal(editor.validationMessage, "Please fill out this field.")
+  assert.equal(editor.validity.valueMissing, true)
+  assert.equal(editor.validity.valid, false)
+})

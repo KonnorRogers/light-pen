@@ -85,7 +85,7 @@ component: light-preview
           }
         </style>
 
-        <button class="button">Displaying a super cool button not inside an iframe</button>
+        <button class="light-button">Displaying a super cool button not inside an iframe</button>
 
         <br>
         <p>
@@ -180,8 +180,8 @@ component: light-preview
         <div>Showing off more buttons</div>
       </template>
 
-      <button slot="actions">HTML</button>
-      <button slot="actions">Codepen</button>
+      <button class="light-button" slot="actions">HTML</button>
+      <button class="light-button" slot="actions">Codepen</button>
     </light-preview>
 
     <script type="module">

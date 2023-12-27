@@ -24,6 +24,7 @@ export const previewStyles = css`
 }
 
 [part~="panel-resizer"] {
+  border-color: transparent;
   border-radius: 0;
   border-inline-start: 1px solid var(--border-color);
 }
@@ -95,6 +96,7 @@ button[part~="source-code-toggle"] {
   grid-auto-flow: column;
   align-items: center;
   justify-content: center;
+  border-color: transparent;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   border-top: 1px solid var(--border-color);
