@@ -21,10 +21,21 @@ export default {
     playwrightLauncher({
       product: 'chromium',
       launchOptions: {
-        headless: false
+        headless: Boolean(process.env.CI)
       }
     }),
     playwrightLauncher({ product: 'firefox' }),
     playwrightLauncher({ product: 'webkit' })
   ],
+  testRunnerHtml: testFramework => `
+    <html lang="en-US">
+      <head></head>
+      <body>
+        <script>
+          window.process = {env: { NODE_ENV: "production" }}
+        </script>
+        <script type="module" src="${testFramework}"></script>
+      </body>
+    </html>
+  `,
 }

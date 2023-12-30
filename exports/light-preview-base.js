@@ -392,7 +392,7 @@ export default class LightPreviewBase extends BaseElement {
             @keydown=${this.handleResizerKeydown}
             @pointerdown=${this.handleDrag}
             @touchstart=${this.handleDrag}
-            class=${this.resizing ? "is-active" : ""}
+            class=${`light-button ${this.resizing ? "is-active" : ""}`}
           >
             <slot name="resize-icon">
               ${resizeIcon}
@@ -434,7 +434,7 @@ export default class LightPreviewBase extends BaseElement {
         </light-disclosure>
 
         <div part="actions">
-          <button part="source-code-toggle" aria-expanded=${this.open} aria-controls="details" @click=${() => this.open = !this.open} type="button">
+          <button class="light-button" part="source-code-toggle" aria-expanded=${this.open} aria-controls="details" @click=${() => this.open = !this.open} type="button">
             <slot name="summary">${this.summary || sourceCodeFallback}</slot>
             <slot name="source-code-toggle-icon">
               <svg part="source-code-toggle-icon" viewBox="0 0 24 24" height="24" width="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -13,7 +13,14 @@ import { PrismHighlight, prism } from '../internal/prism-highlight.js';
  * @extends LightPreviewBase
  */
 export default class LightPreview extends LightPreviewBase {
+  /**
+   * @override
+   */
   static baseName = "light-preview"
+
+  /**
+   * @override
+   */
   static styles = LightPreviewBase.styles.concat([theme])
 
   /**

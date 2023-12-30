@@ -1,9 +1,9 @@
 import { html, render } from "lit";
 
-
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
 
+import { LitElement } from "lit"
 import { BaseElement } from "../internal/base-element.js";
 import { baseStyles } from "./base-styles.js";
 import { styles } from "./light-editor.styles.js";
@@ -15,6 +15,7 @@ import { elementsToString } from "../internal/elements-to-strings.js";
 import { PrismHighlight, prism } from "../internal/prism-highlight.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { Token } from "prism-esm";
+import { TextareaMixin } from "form-associated-helpers/exports/mixins/textarea-mixin.js";
 
 const newLineRegex = /\r\n?|\n/g
 
@@ -36,25 +37,35 @@ const newLineRegex = /\r\n?|\n/g
  * @event {Event} light-value-change - Emitted whenever the "value" attribute of the editor changes.
  *
  */
-export default class LightEditor extends BaseElement {
+export default class LightEditor extends TextareaMixin(BaseElement) {
+  /**
+   * @override
+   */
   static baseName = "light-editor"
 
+  /**
+   * @override
+   * Without delegatesFocus, we get this fun message:
+   *  "The invalid form control with name=‘editor’ is not focusable."
+   */
+  static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
+  /**
+   * @override
+   */
   static styles = [
     baseStyles,
     styles,
     theme,
   ]
 
-  // We will need to decide if we want to formAssociate or just mirror to a light DOM textarea.
-  // static formAssociated = true
-
-  static properties = {
-    value: {attribute: false},
-    initialValue: {attribute: "value"},
+  /**
+   * @override
+   */
+  static properties = Object.assign({
     language: {reflect: true},
-    hasInteracted: { type: Boolean, attribute: "has-interacted", reflect: true },
     preserveWhitespace: { type: Boolean, reflect: true, attribute: "preserve-whitespace" }
-  }
+  }, TextareaMixin.formProperties)
 
   constructor () {
     super()
@@ -75,7 +86,7 @@ export default class LightEditor extends BaseElement {
      * This is the value attribute. This is used for resetting the form input.
      * @type {string}
      */
-    this.initialValue = ''
+    this.defaultValue = ''
 
     /**
      * The underlying textarea
@@ -84,10 +95,11 @@ export default class LightEditor extends BaseElement {
     this.textarea = null
 
     /**
-     * Tracks if the user has interacted with the `<textarea>`
-     * @type {boolean}
+     * The underlying textarea
+     * @type {null | HTMLTextAreaElement}
      */
-    this.hasInteracted = false
+    this.formControl = null
+
 
     /**
      * Whether to strip whitespace before first character, and after the last character.
@@ -96,11 +108,14 @@ export default class LightEditor extends BaseElement {
     this.preserveWhitespace = false
   }
 
+  /**
+   * @override
+   */
   connectedCallback () {
     super.connectedCallback()
 
     this.value = this.getAttribute("value") || ""
-    this.initialValue = this.getAttribute("value") || ""
+    this.defaultValue = this.getAttribute("value") || ""
 
     if (this.value === this.getAttribute("value") && this.preserveWhitespace !== true) {
 
@@ -111,7 +126,8 @@ export default class LightEditor extends BaseElement {
   }
 
   /**
-   * @param {import("lit").PropertyValues<this>} changedProperties
+   * @override
+   * @param {import("lit").PropertyValues<typeof this>} changedProperties
    */
   willUpdate (changedProperties) {
     if (changedProperties.has("value")) {
@@ -122,21 +138,32 @@ export default class LightEditor extends BaseElement {
     super.willUpdate(changedProperties)
   }
 
+  /**
+   * @override
+   */
   click () {
     if (this.textarea) {
       this.textarea.click()
+    } else {
+      this.click()
     }
   }
 
   /**
+   * @override
    * @param {FocusOptions} [options]
    */
   focus (options) {
     if (this.textarea) {
       this.textarea.focus(options)
+    } else {
+      this.focus(options)
     }
   }
 
+  /**
+   * @override
+   */
   render () {
     const language = this.language
 
@@ -184,9 +211,15 @@ export default class LightEditor extends BaseElement {
             spellcheck="false"
             autocorrect="off"
             autocapitalize="off"
+            pattern=${this.pattern}
+            minlength=${this.minLength}
+            required=${this.required}
+            maxlength=${this.maxLength}
             translate="no"
-            value=${this.initialValue}
+            .defaultValue=${this.defaultValue}
             .value=${this.value}
+            ?disabled=${this.disabled}
+            placeholder=${this.placeholder}
             ${ref(this.textareaChanged)}
             @keyup=${this.keyupHandler}
             @keydown=${this.keydownHandler}
@@ -197,6 +230,7 @@ export default class LightEditor extends BaseElement {
               this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
             }}
             @blur=${() => {
+              this.hasInteracted = true
               this.syncScroll()
               this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))
@@ -264,6 +298,7 @@ export default class LightEditor extends BaseElement {
   }
 
   /**
+   * @override
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   updated (changedProperties) {
@@ -312,10 +347,10 @@ export default class LightEditor extends BaseElement {
 
     const textarea = element
     this.textarea = textarea
+    this.formControl = textarea
 
     this.textareaResizeObserver = new ResizeObserver((entries) => this.handleTextAreaResize(entries))
     this.textareaResizeObserver.observe(textarea)
-
   }
 
   /**
@@ -337,8 +372,7 @@ export default class LightEditor extends BaseElement {
 
     if (code) {
       this.value = code
-      this.initialValue = code
-      this.setAttribute("value", this.initialValue)
+      this.defaultValue = code
       setTimeout(() => this.textarea?.setSelectionRange(0, 0))
       this.dispatchEvent(new Event("light-input", { bubbles: true, composed: true }))
       this.dispatchEvent(new Event("light-change", { bubbles: true, composed: true }))

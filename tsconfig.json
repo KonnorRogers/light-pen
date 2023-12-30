@@ -16,6 +16,7 @@
     "allowJs": true,
     "checkJs": true,
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noImplicitOverride": true
   }
 }

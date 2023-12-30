@@ -20,6 +20,7 @@ export const styles = css`
     display: grid;
     grid-template-columns: minmax(0, auto) minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr);
+    border: 1px solid gray;
   }
 
   /* Include "pre" if line numbers are disabled */
@@ -52,6 +53,7 @@ export const styles = css`
   }
 
   [part~="base"]:focus-within {
+    border-color: dodgerblue;
     outline: 2px solid dodgerblue;
   }
 
@@ -156,7 +158,11 @@ export const styles = css`
     margin: 0;
     border: none;
     overflow: auto;
-    border: 1px solid transparent;
+    border: none;
+  }
+
+  [part~="textarea"]::placeholder {
+    color: rgba(0,0,0,0.5);
   }
 
   [part~="pre"] {

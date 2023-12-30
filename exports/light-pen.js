@@ -349,7 +349,7 @@ export default class LightPen extends BaseElement {
             </slot>
 
 					  <span part="sandbox-controls">
-						  <button part="sandbox-controls-button sandbox-reset" @click=${this.resetValues}>
+						  <button class="light-button" part="sandbox-controls-button sandbox-reset" @click=${this.resetValues}>
                 Reset
               </button>
 
@@ -367,6 +367,7 @@ export default class LightPen extends BaseElement {
             id="panel-resizer"
             part="panel-resizer"
             role="separator"
+            class="light-button"
             aria-valuenow=${this.resizePosition}
             aria-valuemin="0"
             aria-valuemax="100"
