@@ -62,10 +62,10 @@ export default class LightEditor extends TextareaMixin(BaseElement) {
   /**
    * @override
    */
-  static properties = Object.assign(TextareaMixin.formProperties, {
+  static properties = Object.assign({
     language: {reflect: true},
     preserveWhitespace: { type: Boolean, reflect: true, attribute: "preserve-whitespace" }
-  })
+  }, TextareaMixin.formProperties)
 
   constructor () {
     super()
@@ -127,7 +127,7 @@ export default class LightEditor extends TextareaMixin(BaseElement) {
 
   /**
    * @override
-   * @param {import("lit").PropertyValues<this>} changedProperties
+   * @param {import("lit").PropertyValues<typeof this>} changedProperties
    */
   willUpdate (changedProperties) {
     if (changedProperties.has("value")) {
@@ -298,6 +298,7 @@ export default class LightEditor extends TextareaMixin(BaseElement) {
   }
 
   /**
+   * @override
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   updated (changedProperties) {

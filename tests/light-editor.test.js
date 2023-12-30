@@ -63,6 +63,10 @@ test("Should prevent submission with custom validity and reset validity", async 
 
   editor.setCustomValidity("Custom Error Message")
 
+  assert.equal(editor.validationMessage, "Custom Error Message")
+  assert.equal(editor.validity.customError, true)
+  assert.equal(editor.validity.valid, false)
+
   button.click()
 
   await aTimeout(1)
