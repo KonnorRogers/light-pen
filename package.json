@@ -72,7 +72,7 @@
     "lit": "^2.8.0",
     "prism-esm": "1.29.0-fix.4",
     "web-component-define": "^2.0.11",
-    "form-associated-helpers": "link:../form-associated-helpers"
+    "form-associated-helpers": "^0.0.2"
   },
   "customElements": "custom-elements.json"
 }

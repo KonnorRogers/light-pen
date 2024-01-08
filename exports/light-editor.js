@@ -15,7 +15,7 @@ import { elementsToString } from "../internal/elements-to-strings.js";
 import { PrismHighlight, prism } from "../internal/prism-highlight.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { Token } from "prism-esm";
-import { TextareaMixin } from "form-associated-helpers/exports/mixins/textarea-mixin.js";
+import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js";
 
 const newLineRegex = /\r\n?|\n/g
 
@@ -37,7 +37,7 @@ const newLineRegex = /\r\n?|\n/g
  * @event {Event} light-value-change - Emitted whenever the "value" attribute of the editor changes.
  *
  */
-export default class LightEditor extends TextareaMixin(BaseElement) {
+export default class LightEditor extends LitTextareaMixin(BaseElement) {
   /**
    * @override
    */
@@ -65,7 +65,7 @@ export default class LightEditor extends TextareaMixin(BaseElement) {
   static properties = Object.assign({
     language: {reflect: true},
     preserveWhitespace: { type: Boolean, reflect: true, attribute: "preserve-whitespace" }
-  }, TextareaMixin.formProperties)
+  }, LitTextareaMixin.formProperties)
 
   constructor () {
     super()

@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   form-associated-helpers:
-    specifier: link:../form-associated-helpers
-    version: link:../form-associated-helpers
+    specifier: ^0.0.2
+    version: 0.0.2
   lit:
     specifier: ^2.8.0
     version: 2.8.0
@@ -1618,6 +1618,10 @@ packages:
       cross-spawn: 7.0.3
       signal-exit: 4.1.0
     dev: true
+
+  /form-associated-helpers@0.0.2:
+    resolution: {integrity: sha512-+zEpwwoZTo2a9+LpEqJNb+RUgJaVvwBpnbziiiVWV6pvPerC+bMvFIkkV2PEXbjV7BVctsL3vEm1srukbo2sVA==}
+    dev: false
 
   /fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
