@@ -37,15 +37,27 @@ import { LightDisclosure } from "./light-disclosure.js";
  */
 export default class LightPen extends BaseElement {
   // Static
+  /**
+   * @override
+   */
   static baseName = "light-pen"
 
+  /**
+   * @override
+   */
   static styles = [baseStyles, buttonStyles, styles]
 
+  /**
+   * @override
+   */
   static dependencies = {
     'light-editor': LightEditor,
     'light-disclosure': LightDisclosure
   }
 
+  /**
+   * @override
+   */
   static properties = {
     openLanguages: { reflect: true, attribute: "open-languages" },
     resizePosition: { attribute: "resize-position", reflect: true, type: Number },
@@ -231,6 +243,7 @@ export default class LightPen extends BaseElement {
   }
 
   /**
+   * @override
    * @param {import("lit").PropertyValues} changedProperties
    */
   willUpdate (changedProperties) {
@@ -246,6 +259,9 @@ export default class LightPen extends BaseElement {
     super.willUpdate(changedProperties)
   }
 
+  /**
+   * @override
+   */
   disconnectedCallback() {
     super.disconnectedCallback()
     this.resizeObserver.disconnect()
@@ -367,14 +383,13 @@ export default class LightPen extends BaseElement {
             id="panel-resizer"
             part="panel-resizer"
             role="separator"
-            class="light-button"
             aria-valuenow=${this.resizePosition}
             aria-valuemin="0"
             aria-valuemax="100"
             @keydown=${this.handleResizerKeydown}
             @pointerdown=${this.handleDrag}
             @touchstart=${this.handleDrag}
-            class=${this._resizing ? "is-active" : ""}
+            class=${`light-button ${this._resizing ? `is-active` : ""}`}
           >
             <slot name="panel-resize-icon">
               ${resizeIcon}

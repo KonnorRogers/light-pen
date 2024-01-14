@@ -128,7 +128,7 @@ export const styles = css`
 }
 
 
-button:where([part~="panel-resizer"]) {
+button[part~="panel-resizer"] {
   height: calc(100% - 0.5em);
   cursor: col-resize;
   background-color: white;
