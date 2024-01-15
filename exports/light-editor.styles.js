@@ -77,9 +77,7 @@ export const styles = css`
     white-space: pre-wrap;
   }
 
-
   :host([wrap="none"]) :is([part~="pre"], [part~="textarea"], [part~="code"], [part~="gutter"]) {
-  [wrap="none"] {
     /* This would remove line-wrapping */
 	  word-break: break-all;
     white-space: pre;

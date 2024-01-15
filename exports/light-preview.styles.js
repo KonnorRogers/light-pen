@@ -63,7 +63,7 @@ export const previewStyles = css`
   white-space: pre;
 }
 
-:host([wrap="soft"]) {
+:host([wrap="soft"]) [part~="pre"] {
   /* this creates line-wrapping. */
 	word-break: break-word;
   white-space: pre-wrap;
