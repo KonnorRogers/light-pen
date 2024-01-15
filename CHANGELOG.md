@@ -1,3 +1,8 @@
+## Next
+
+- Added form association to `<light-editor>`
+- Added `wrap="soft | hard"` to `<light-preview>` and `<light-editor>`
+
 ## 2.2.0 12/03/2023
 
 - Switch to a `Prism` fork to play nicely with ESM and allow testing.

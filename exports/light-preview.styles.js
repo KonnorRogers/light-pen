@@ -3,6 +3,7 @@ import { css } from "lit"
 export const previewStyles = css`
 :host {
   --border-color: lightgray;
+  --white-space: pre;
 }
 
 :host,
@@ -19,8 +20,9 @@ export const previewStyles = css`
   border-radius: 3px;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
+  grid-template-rows: minmax(0, 1fr) minmax(0, auto) minmax(0, auto);
   height: 100%;
+  min-height: inherit;
 }
 
 [part~="panel-resizer"] {
@@ -46,7 +48,7 @@ export const previewStyles = css`
   padding: 1rem;
 }
 
-iframe {
+[part~="preview"] {
   min-height: 100%;
   max-height: 100%;
   width: 100%;
@@ -56,6 +58,13 @@ iframe {
   padding: 1rem;
   margin: 0;
   overflow: auto;
+  /* This removes line wrapping */
+	word-break: break-all;
+  white-space: pre;
+}
+
+:host([wrap="soft"]) {
+  /* this creates line-wrapping. */
 	word-break: break-word;
   white-space: pre-wrap;
 }

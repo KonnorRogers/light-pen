@@ -48,18 +48,30 @@ const sourceCodeFallback = "Show source code"
  * @slot code - Used to display both source code and to power your preview in the iframe. If you slot in "preview-code", then it will only be used to show / highlight your source code.
  */
 export default class LightPreviewBase extends BaseElement {
+  /**
+   * @override
+   */
   static baseName = "light-preview-base"
 
+  /**
+   * @override
+   */
   static dependencies = {
     "light-disclosure": LightDisclosure
   }
 
+  /**
+   * @override
+   */
   static styles = [
     baseStyles,
     buttonStyles,
     previewStyles
   ]
 
+  /**
+   * @override
+   */
   static properties = {
     summary: {},
     sandboxSettings: { reflect: true, attribute: "sandbox-settings" },
@@ -164,6 +176,13 @@ export default class LightPreviewBase extends BaseElement {
      * @type {() => void}
      */
     this.codeDebounce = debounce(() => this.handleMutation("code"), 20)
+
+    /**
+     * @property
+     * @type {"soft" | "hard"}
+     * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
+     */
+    this.wrap = "soft"
   }
 
   /**

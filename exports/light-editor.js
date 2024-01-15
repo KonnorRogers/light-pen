@@ -100,6 +100,12 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
      */
     this.formControl = null
 
+      /**
+     * @property
+     * @type {"soft" | "hard"}
+     * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
+     */
+    this.wrap = "hard"
 
     /**
      * Whether to strip whitespace before first character, and after the last character.
