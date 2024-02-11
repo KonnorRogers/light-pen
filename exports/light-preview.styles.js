@@ -3,7 +3,6 @@ import { css } from "lit"
 export const previewStyles = css`
 :host {
   --border-color: lightgray;
-  --white-space: pre;
 }
 
 :host,
@@ -20,7 +19,7 @@ export const previewStyles = css`
   border-radius: 3px;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr) minmax(0, auto) minmax(0, auto);
+  grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
   height: 100%;
   min-height: inherit;
 }
