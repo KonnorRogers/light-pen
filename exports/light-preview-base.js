@@ -388,15 +388,30 @@ export default class LightPreviewBase extends BaseElement {
     return code
   }
 
+  /**
+   * @private
+   * @param {HTMLElement | Element | ShadowRoot} root
+   */
+  addShadowRootToPreview (root) {
+    const previewDiv = root.querySelector("[part~='preview-div']")
+
+    if (!previewDiv) return
+
+    const previewShadowRoot = previewDiv.attachShadow({ mode: "open" })
+
+    previewShadowRoot.innerHTML = this.code || this.previewCode
+  }
+
   render () {
     const language = this.language
-    return html`
+
+    const finalHTML = html`
       <div part=${stringMap({
           "base": true,
         })}>
         <div part="preview">
           ${when(this.previewMode === "shadow-dom",
-              () => html`<div part="start-panel preview-div">${unsafeHTML(this.code || this.previewCode)}</div>`,
+              () => html`<div shadowrootmode="open" shadowroot="open" part="start-panel preview-div"></div>`,
               () => html`
                 <iframe part="start-panel iframe" height="auto" frameborder="0"></iframe>
               `
@@ -471,6 +486,12 @@ export default class LightPreviewBase extends BaseElement {
         <slot name="code" @slotchange=${this.handleTemplate}></slot>
       </div>
     `
+
+    if (this.shadowRoot) {
+      this.addShadowRootToPreview(this.shadowRoot)
+    }
+
+    return finalHTML
   }
 
 
@@ -487,7 +508,7 @@ export default class LightPreviewBase extends BaseElement {
    * @internal
    * @param {PointerEvent} event
    */
-	handleDrag (event) {
+  handleDrag (event) {
     // Prevent text selection when dragging
     if (event.cancelable) {
       event.preventDefault();

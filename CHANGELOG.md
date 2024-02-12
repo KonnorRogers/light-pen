@@ -2,6 +2,8 @@
 
 - Added form association to `<light-editor>`
 - Added `wrap="soft | hard"` to `<light-preview>` and `<light-editor>`
+- Added `preserve-whitespace` to the `<light-pen>` to pass down to `<light-editor>`
+- `<light-preview>` now properly creates a second level shadow dom so the preview's shadow dom styles don't leak.
 
 ## 2.2.0 12/03/2023
 

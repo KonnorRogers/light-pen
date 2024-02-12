@@ -124,7 +124,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     this.defaultValue = this.getAttribute("value") || ""
 
     if (this.value === this.getAttribute("value") && this.preserveWhitespace !== true) {
-
       // Remove only lines that are blank with spaces that are blank. trim() removes preceding white-space for the line with characters.
       // https://stackoverflow.com/questions/14572413/remove-line-breaks-from-start-and-end-of-string#comment104290392_14572494
       this.value = dedent(this.value.replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, "")).trim()
@@ -374,7 +373,11 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     const templates = slot.assignedElements({flatten: true})
 
     // We only unescape when passed into templates.
-    const code = dedent(this.unescapeTags(elementsToString(...templates)).trim())
+    let code = this.unescapeTags(elementsToString(...templates))
+
+    if (!this.preserveWhitespace) {
+      code = dedent(code.trim())
+    }
 
     if (code) {
       this.value = code

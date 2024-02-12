@@ -27,6 +27,7 @@
     "@hotwired/turbo": "^7.3.0",
     "@konnorr/bridgetown-quick-search": "^3.8.0",
     "@shoelace-style/shoelace": "^2.7.0",
+    "bridgetown-quick-search": "2.0.0",
     "lit": "^2.8.0",
     "web-component-lazy-loader": "^1.0.1"
   }

@@ -61,6 +61,7 @@ export default class LightPen extends BaseElement {
   static properties = {
     openLanguages: { reflect: true, attribute: "open-languages" },
     resizePosition: { attribute: "resize-position", reflect: true, type: Number },
+    preserveWhitespace: { attribute: "preserve-whitespace", type: Boolean, reflect: true },
     console: { reflect: true },
     // sandboxSettings: { reflect: true, attribute: "sandbox-settings"},
     languages: { attribute: false, type: Array },
@@ -148,6 +149,12 @@ export default class LightPen extends BaseElement {
     this.htmlCode = ""
     this.jsCode = ""
 
+
+    /**
+     * Passed down to the editors.
+     * @type {boolean}
+     */
+    this.preserveWhitespace = false
     // this.cssResetCode = ""
     // this.htmlResetCode = ""
     // this.jsResetCode = ""
@@ -482,6 +489,7 @@ export default class LightPen extends BaseElement {
         "
         language=${language}
         .value=${this[`${language}Code`]}
+        ?preserve-whitespace=${this.preserveWhitespace}
         @light-value-change=${(/** @type Event */ e) => {
           this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
         }}
