@@ -1,4 +1,4 @@
-import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-XDAAHKDI.js";import{a as n,b as d,c as u,d as b,e as f}from"/light-pen/bridgetown/static/chunks/chunk-YQYLBVQF.js";import{a as l,b as s,k as c,l as p,m as h}from"/light-pen/bridgetown/static/chunks/chunk-RYL6JHDL.js";import{d as i}from"/light-pen/bridgetown/static/chunks/chunk-25GN2ENT.js";var x=l`
+import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-VINJAFFR.js";import{a as n,b as d,c as u,d as b,e as f}from"/light-pen/bridgetown/static/chunks/chunk-HIQHELC6.js";import{a as l,b as s,l as p,m as c,n as h}from"/light-pen/bridgetown/static/chunks/chunk-RVUFNO3V.js";import{d as o}from"/light-pen/bridgetown/static/chunks/chunk-25GN2ENT.js";var x=l`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
@@ -127,7 +127,7 @@ import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-XDAAHKDI.js";import
 }
 
 
-button:where([part~="panel-resizer"]) {
+button[part~="panel-resizer"] {
   height: calc(100% - 0.5em);
   cursor: col-resize;
   background-color: white;
@@ -152,7 +152,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
   border-top:1px solid #1f252f;
   border-bottom-left-radius:0;
 }
-`;var o=class extends c{constructor(){super(),this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode=""}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
+`;var i=class extends p{constructor(){super(),this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode="",this.preserveWhitespace=!1}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),r=e+t;this.cachedWidth=r}handleResize(e){let{left:t,right:r}=e[0].contentRect,a=t+r;this.cachedWidth=a}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}</style>
@@ -164,7 +164,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
           <\/script>
         </body>
       </html>
-    `;e.contentWindow?.document.open(),e.contentWindow?.document.writeln(t),e.contentWindow?.document.close()}willUpdate(e){["cssCode","htmlCode","jsCode"].some(t=>e.has(t))&&(this._iframeDebounce!=null&&window.clearTimeout(this._iframeDebounce),this._iframeDebounce=setTimeout(()=>this.updateIframeContent(),300)),e.has("resizePosition")&&this.updateResizePosition(),super.willUpdate(e)}disconnectedCallback(){super.disconnectedCallback(),this.resizeObserver.disconnect()}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,r=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=r),e.key==="ArrowRight"&&(t+=r),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=d(t,0,100)}}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let r=100-t;this.style.setProperty("--start-panel-width",`${t}%`),this.style.setProperty("--end-panel-width",`${r}%`)}}resetValues(){this.htmlCode=this.htmlEditor?.getAttribute("value")||"",this.cssCode=this.cssEditor?.getAttribute("value")||"",this.jsCode=this.jsEditor?.getAttribute("value")||"",this.requestUpdate()}renderConsole(){return s`<div part="sandbox-console-log"></div>`}render(){return s`
+    `;e.srcdoc=t}willUpdate(e){["cssCode","htmlCode","jsCode"].some(t=>e.has(t))&&(this._iframeDebounce!=null&&window.clearTimeout(this._iframeDebounce),this._iframeDebounce=setTimeout(()=>this.updateIframeContent(),300)),e.has("resizePosition")&&this.updateResizePosition(),super.willUpdate(e)}disconnectedCallback(){super.disconnectedCallback(),this.resizeObserver.disconnect()}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,r=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=r),e.key==="ArrowRight"&&(t+=r),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=d(t,0,100)}}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let r=100-t;this.style.setProperty("--start-panel-width",`${t}%`),this.style.setProperty("--end-panel-width",`${r}%`)}}resetValues(){this.htmlCode=this.htmlEditor?.getAttribute("value")||"",this.cssCode=this.cssEditor?.getAttribute("value")||"",this.jsCode=this.jsEditor?.getAttribute("value")||"",this.requestUpdate()}renderConsole(){return s`<div part="sandbox-console-log"></div>`}render(){return s`
       <!-- Where users can declaratively provide templates -->
       <div part="base" ?resizing=${this._resizing}>
 			  <div part="sandbox">
@@ -176,7 +176,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
             </slot>
 
 					  <span part="sandbox-controls">
-						  <button part="sandbox-controls-button sandbox-reset" @click=${this.resetValues}>
+						  <button class="light-button" part="sandbox-controls-button sandbox-reset" @click=${this.resetValues}>
                 Reset
               </button>
 
@@ -200,7 +200,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
             @keydown=${this.handleResizerKeydown}
             @pointerdown=${this.handleDrag}
             @touchstart=${this.handleDrag}
-            class=${this._resizing?"is-active":""}
+            class=${`light-button ${this._resizing?"is-active":""}`}
           >
             <slot name="panel-resize-icon">
               ${b}
@@ -237,6 +237,7 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
         "
         language=${e}
         .value=${this[`${e}Code`]}
+        ?preserve-whitespace=${this.preserveWhitespace}
         @light-value-change=${t=>{this[`${e}Code`]=t.currentTarget.value}}
       ><slot name=${e}></slot></light-editor>
     `}renderDetails(e){let t=e.toUpperCase();return s`
@@ -245,5 +246,5 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
 
         ${this.renderEditor(e)}
 			</light-disclosure>
-		`}};i(o,"baseName","light-pen"),i(o,"styles",[p,h,x]),i(o,"dependencies",{"light-editor":m,"light-disclosure":f}),i(o,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{o as a};
-//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-T3SCXRPN.js.map
+		`}};o(i,"baseName","light-pen"),o(i,"styles",[c,h,x]),o(i,"dependencies",{"light-editor":m,"light-disclosure":f}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{i as a};
+//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-TQB3HZU7.js.map
