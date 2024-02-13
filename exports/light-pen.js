@@ -244,9 +244,7 @@ export default class LightPen extends BaseElement {
       </html>
     `
 
-    iframeElem.contentWindow?.document.open()
-    iframeElem.contentWindow?.document.writeln(page)
-    iframeElem.contentWindow?.document.close()
+    iframeElem.srcdoc = page
   }
 
   /**

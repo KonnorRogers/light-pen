@@ -302,9 +302,7 @@ export default class LightPreviewBase extends BaseElement {
         </body>
       </html>`
 
-    iframe.contentWindow?.document.open()
-    iframe.contentWindow?.document.writeln(content)
-    iframe.contentWindow?.document.close()
+    iframe.srcdoc = content
   }
 
   /**
@@ -329,6 +327,7 @@ export default class LightPreviewBase extends BaseElement {
   }
 
   /**
+   * @override
    * @internal
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
@@ -367,6 +366,9 @@ export default class LightPreviewBase extends BaseElement {
     this.cachedWidth = width
   }
 
+  /**
+   * @override
+   */
   connectedCallback () {
     super.connectedCallback()
 
@@ -402,6 +404,9 @@ export default class LightPreviewBase extends BaseElement {
     previewShadowRoot.innerHTML = this.code || this.previewCode
   }
 
+  /**
+   * @override
+   */
   render () {
     const language = this.language
 

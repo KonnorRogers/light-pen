@@ -12,7 +12,14 @@ function motionReduced () {
  * @tagName light-disclosure
  */
 export class LightDisclosure extends BaseElement {
+  /**
+   * @override
+   */
   static baseName = "light-disclosure"
+
+  /**
+   * @override
+   */
   static styles = [
     baseStyles,
     css`
@@ -50,6 +57,9 @@ export class LightDisclosure extends BaseElement {
     `
   ]
 
+  /**
+   * @override
+   */
   static properties = {
     summary: {},
     open: { type: Boolean }
@@ -78,6 +88,7 @@ export class LightDisclosure extends BaseElement {
   // TODO: Add a mutationObserver for when it connects
 
   /**
+   * @override
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
@@ -115,18 +126,24 @@ export class LightDisclosure extends BaseElement {
     }
   }
 
+  /**
+   * @override
+   */
   click () {
     this.open = !this.open
   }
 
   /**
+   * @override
    * @param {FocusOptions} [options]
    */
   focus (options) {
     this.shadowRoot?.querySelector("summary")?.focus(options)
   }
 
-
+  /**
+   * @override
+   */
   render () {
     return html`
       <details
