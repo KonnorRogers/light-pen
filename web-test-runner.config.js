@@ -21,7 +21,7 @@ export default {
     playwrightLauncher({
       product: 'chromium',
       launchOptions: {
-        headless: Boolean(process.env.DEBUG)
+        headless: !(["true", "1"].includes(process.env.DEBUG))
       }
     }),
     playwrightLauncher({ product: 'firefox' }),

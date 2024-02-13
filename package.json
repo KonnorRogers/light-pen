@@ -59,20 +59,20 @@
     "@web/test-runner": "^0.17.1",
     "@web/test-runner-commands": "^0.9.0",
     "@web/test-runner-playwright": "^0.10.1",
-    "cem-plugin-expanded-types": "^1.1.0",
-    "gh-pages": "^6.0.0",
+    "cem-plugin-expanded-types": "^1.1.6",
+    "gh-pages": "^6.1.1",
     "glob": "^10.3.10",
     "light-pen": "link:.",
     "playwright": "^1.40.1",
     "rimraf": "^5.0.1",
-    "typedoc": "^0.25.2",
+    "typedoc": "^0.25.8",
     "typescript": "~5.2.0"
   },
   "dependencies": {
+    "form-associated-helpers": "^0.0.3",
     "lit": "^2.8.0",
     "prism-esm": "1.29.0-fix.4",
-    "web-component-define": "^2.0.11",
-    "form-associated-helpers": "^0.0.2"
+    "web-component-define": "^2.0.11"
   },
   "customElements": "custom-elements.json"
 }
