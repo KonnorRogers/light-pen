@@ -1,4 +1,4 @@
-## Next
+## 2.3.0 02/13/2024
 
 - Added form association to `<light-editor>`
 - Added `wrap="soft | hard"` to `<light-preview>` and `<light-editor>`
