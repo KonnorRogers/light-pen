@@ -23,7 +23,7 @@
     "start": "web-dev-server --watch",
     "start:docs": "cd docs && bin/bridgetown start",
     "setup": "pnpm install && cd docs && pnpm install && bundle install",
-    "build:docs": "cd docs && pnpm run build && pnpm run build:api",
+    "build:docs": "cd docs && pnpm run build && cd - && pnpm run build:api",
     "build:api": "typedoc --out ./docs/output/references/api/ ./exports/**/*.js",
     "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
     "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
