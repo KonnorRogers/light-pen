@@ -217,7 +217,7 @@ because it's using the native `<textarea>` placeholder attribute.
 
 Validations are handled using "Form Associated Custom Elements".
 
-`<light-editor>` supports `minlength`, `maxlength`, `required`, and `pattern` just like the
+`<light-editor>` supports `minlength`, `maxlength`, and `required` just like the
 native `<textarea>` element.
 
 ### minlength, maxlength, required validations
@@ -229,23 +229,6 @@ native `<textarea>` element.
         minlength: 5, maxlength: 6, required.
         <br>
         <light-editor required minlength="5" maxlength="6" ></light-editor>
-      </label>
-      <button>Trigger Validations</button>
-    </form>
-    <!-- Prevent form submissions -->
-    <script>this.rootNode.addEventListener("submit", (e) => e.preventDefault())</script>
-  </template>
-</light-preview>
-
-### pattern validation
-
-<light-preview preview-mode="shadow-dom">
-  <template slot="code">
-    <form>
-      <label>
-        pattern="boo"
-        <br>
-        <light-editor pattern="boo"></light-editor>
       </label>
       <button>Trigger Validations</button>
     </form>
