@@ -6,12 +6,6 @@ component: light-preview
 
 ## Typical Usage
 
-<light-preview style="min-height: 600px;" preview-mode="shadow-dom">
-  <template slot="code">
-    <button>Displaying a super cool button</button>
-  </template>
-</light-preview>
-
 <light-preview>
   <template slot="preview-code">
     <button>Displaying a super cool button</button>
