@@ -1,3 +1,7 @@
+## 2.3.1 02/13/2024
+
+- Update form associated package
+
 ## 2.3.0 02/13/2024
 
 - Added form association to `<light-editor>`

@@ -69,7 +69,7 @@
     "typescript": "~5.2.0"
   },
   "dependencies": {
-    "form-associated-helpers": "^0.0.3",
+    "form-associated-helpers": "^0.0.4",
     "lit": "^2.8.0",
     "prism-esm": "1.29.0-fix.4",
     "web-component-define": "^2.0.11"

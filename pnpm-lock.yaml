@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   form-associated-helpers:
-    specifier: ^0.0.3
-    version: 0.0.3
+    specifier: ^0.0.4
+    version: 0.0.4
   lit:
     specifier: ^2.8.0
     version: 2.8.0
@@ -1619,8 +1619,8 @@ packages:
       signal-exit: 4.1.0
     dev: true
 
-  /form-associated-helpers@0.0.3:
-    resolution: {integrity: sha512-+k9VZMg+B+uAXqkKS6eD3faLo2LDdJy2QlCFP4HI8sHgyIuCUAtXBWdo1sXOipuGTrcSBmrED0ySvg6PozVERg==}
+  /form-associated-helpers@0.0.4:
+    resolution: {integrity: sha512-Fy3dCmzxbaB08nRIr8GVBo5duQSN/NouCU4JjQ/Pd3bipsKMsV2RhPb3uGujEYYk/OIMDf9EPwRI5pQq6PsZpw==}
     dev: false
 
   /fresh@0.5.2:
