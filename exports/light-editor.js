@@ -216,7 +216,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             spellcheck="false"
             autocorrect="off"
             autocapitalize="off"
-            pattern=${this.pattern}
             minlength=${this.minLength}
             required=${this.required}
             maxlength=${this.maxLength}
