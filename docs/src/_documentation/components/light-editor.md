@@ -39,7 +39,6 @@ component: light-editor
     </form>
   </template>
 </light-preview>
-
 ## Using the `value` attribute
 
 Using the `value` attribute is the generally recommended way to provide the most consistent experience. By default,

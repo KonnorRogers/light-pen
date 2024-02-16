@@ -94,12 +94,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
      */
     this.textarea = null
 
-    /**
-     * The underlying textarea
-     * @type {null | HTMLTextAreaElement}
-     */
-    this.formControl = null
-
       /**
      * @property
      * @type {"soft" | "hard"}
@@ -530,9 +524,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   // This gets tricky. We could do this, but it may be unexpected...
   unescapeTags (text) {
     // Replace usages of `&lt;/script>` with `</script>`. Match against
-    // `&lt;/` so that other usages of &lt; aren't replaced.
-    // return text.replace(/&lt;\//g, '</');
-
     return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
   }
 

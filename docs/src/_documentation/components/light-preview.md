@@ -73,7 +73,10 @@ component: light-preview
 </light-preview>
 
 
-## Loading inline
+## Loading inside a shadow DOM
+
+By default, previews are loaded inside an `<iframe>` for true "encapsulation". This may not always be desirable.
+For not as strict encapsulation you can use `preview-mode="shadow-dom"`
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
@@ -89,7 +92,7 @@ component: light-preview
 
         <br>
         <p>
-          Notice how the button has the same styling as the toggle! That's because its not scoped into an iFrame!
+          This button lives in a "Shadow DOM" and not inside an iframe!!
         </p>
       </template>
     </light-preview>

@@ -1,6 +1,7 @@
 // @ts-check
 import { html } from "lit";
 import { buttonStyles, baseStyles } from "./base-styles.js";
+import { codeStyles } from "./code-styles.js";
 
 import { when } from "lit/directives/when.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -12,7 +13,7 @@ import { stringMap } from "../internal/string-map.js";
 import { debounce } from "../internal/debounce.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 import { BaseElement } from "../internal/base-element.js";
-import { LightDisclosure } from "./light-disclosure.js";
+import LightDisclosure from "./light-disclosure.js";
 import { elementsToString } from "../internal/elements-to-strings.js";
 import { dedent } from "../internal/dedent.js";
 
@@ -66,7 +67,8 @@ export default class LightPreviewBase extends BaseElement {
   static styles = [
     baseStyles,
     buttonStyles,
-    previewStyles
+    codeStyles,
+    previewStyles,
   ]
 
   /**
@@ -266,7 +268,7 @@ export default class LightPreviewBase extends BaseElement {
 
     let elements = slot.assignedElements({flatten: true})
 
-    const code = dedent(this.unescapeTags(elementsToString(...elements)).trim())
+    const code = dedent(elementsToString(...elements).trim())
 
     if (name === "preview-code") {
       if (shouldReset) this.resetIframeCodeMutationObserver()
@@ -322,7 +324,7 @@ export default class LightPreviewBase extends BaseElement {
   unescapeTags (text) {
     // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
     // @TODO: Find a way to not need to unescape for the editor.
-    // return text.replace(/&lt;\//g, '</');
+    // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>");
     return text
   }
 
@@ -398,10 +400,12 @@ export default class LightPreviewBase extends BaseElement {
     const previewDiv = root.querySelector("[part~='preview-div']")
 
     if (!previewDiv) return
+    if (previewDiv.shadowRoot) {
+      previewDiv.shadowRoot.innerHTML = this.code || this.previewCode
+      return
+    }
 
-    const previewShadowRoot = previewDiv.attachShadow({ mode: "open" })
-
-    previewShadowRoot.innerHTML = this.code || this.previewCode
+    previewDiv.attachShadow({ mode: "open" }).innerHTML = this.code || this.previewCode
   }
 
   /**
@@ -416,7 +420,7 @@ export default class LightPreviewBase extends BaseElement {
         })}>
         <div part="preview">
           ${when(this.previewMode === "shadow-dom",
-              () => html`<div shadowrootmode="open" shadowroot="open" part="start-panel preview-div"></div>`,
+              () => html`<div part="start-panel preview-div"></div>`,
               () => html`
                 <iframe part="start-panel iframe" height="auto" frameborder="0"></iframe>
               `

@@ -13,7 +13,7 @@ import { drag } from "../internal/drag.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 import { BaseElement } from "../internal/base-element.js";
 import LightEditor from "./light-editor.js";
-import { LightDisclosure } from "./light-disclosure.js";
+import LightDisclosure from "./light-disclosure.js";
 
 /**
  * @typedef {"html" | "css" | "js"} SupportedLanguages

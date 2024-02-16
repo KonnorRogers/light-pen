@@ -45,6 +45,7 @@ export const previewStyles = css`
 
 [part~="start-panel"] {
   padding: 1rem;
+  min-width: 100%;
 }
 
 [part~="preview"] {
@@ -53,43 +54,12 @@ export const previewStyles = css`
   width: 100%;
 }
 
-[part~="pre"] {
-  padding: 1rem;
-  margin: 0;
-  overflow: auto;
-  /* This removes line wrapping */
-	word-break: break-all;
-  white-space: pre;
-}
-
-:host([wrap="soft"]) [part~="pre"] {
-  /* this creates line-wrapping. */
-	word-break: break-word;
-  white-space: pre-wrap;
-}
-
-.light-line {
-  display: inline-block;
-  width: 100%;
-}
-
-[part~="pre"],
-[part~="code"] {
-  line-height: 1.6;
-}
-
 [part~="end-panel"] {
   background-color: rgba(0,0,0,0.025);
 }
 
 [part~="code-wrapper"] {
   border-top: 1px solid var(--border-color);
-}
-
-[part~="pre"],
-[part~="code"] {
-	color: #272727;
-	background-color: #f7f7f7;
 }
 
 [part~="actions"] {

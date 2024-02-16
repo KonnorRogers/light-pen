@@ -1,3 +1,8 @@
+## 2.4.0 02/14/2024
+
+- Feature: Added `<light-code>` for displaying code.
+- Improvement: Use declarative shadow DOM and fallback to polyfill in `<light-preview>`
+
 ## 2.3.1 02/13/2024
 
 - Update form associated package
