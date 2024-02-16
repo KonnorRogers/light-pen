@@ -401,11 +401,11 @@ export default class LightPreviewBase extends BaseElement {
 
     if (!previewDiv) return
     if (previewDiv.shadowRoot) {
-      previewDiv.shadowRoot.innerHTML = this.code || this.previewCode
+      previewDiv.shadowRoot.innerHTML = this.unescapeTags(this.code || this.previewCode)
       return
     }
 
-    previewDiv.attachShadow({ mode: "open" }).innerHTML = this.code || this.previewCode
+    previewDiv.attachShadow({ mode: "open" }).innerHTML = this.unescapeTags(this.code || this.previewCode)
   }
 
   /**
