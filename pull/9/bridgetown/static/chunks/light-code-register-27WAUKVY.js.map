@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../exports/light-code-register.js"],
+  "sourcesContent": ["import LightCode from \"./light-code.js\";\n\nexport default LightCode\n\nLightCode.define()\n"],
+  "mappings": "0aAEA,IAAOA,EAAQC,EAEfA,EAAU,OAAO",
+  "names": ["light_code_register_default", "LightCode"]
+}
