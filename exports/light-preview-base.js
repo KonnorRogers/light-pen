@@ -83,6 +83,7 @@ export default class LightPreviewBase extends BaseElement {
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
     language: {},
+    unescapeBehavior: { reflect: true },
 
     // State
     code: { attribute: false },
@@ -185,6 +186,14 @@ export default class LightPreviewBase extends BaseElement {
      * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
      */
     this.wrap = "soft"
+
+
+    /**
+     * Whether or not to transform `&lt;/script>` into `<script>`
+     * If true, will run transform. If false, will leave the code as is.
+     * @type {"all" | "last" | "none"}
+     */
+    this.unescapeBehavior = "last"
   }
 
   /**
@@ -273,12 +282,14 @@ export default class LightPreviewBase extends BaseElement {
     if (name === "preview-code") {
       if (shouldReset) this.resetIframeCodeMutationObserver()
       this.previewCode = code
+      this.requestUpdate("previewCode")
       return
     }
 
     if (name === "code") {
       if (shouldReset) this.resetCodeMutationObserver()
       this.code = code
+      this.requestUpdate("code")
       return
     }
   }
@@ -321,10 +332,16 @@ export default class LightPreviewBase extends BaseElement {
    * @internal
    * @param {string} text
    */
-  unescapeTags (text) {
-    // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
-    // @TODO: Find a way to not need to unescape for the editor.
-    // return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>");
+  transformTags (text) {
+    const unescapeRegex = /&lt;\/([\w\d\.-_]+)>/g
+    if (this.unescapeBehavior === "last") {
+      return replaceLast(text, unescapeRegex)
+    }
+
+    if (this.unescapeBehavior === "all") {
+      return text.replaceAll(unescapeRegex, "</$1>");
+    }
+
     return text
   }
 
@@ -401,11 +418,11 @@ export default class LightPreviewBase extends BaseElement {
 
     if (!previewDiv) return
     if (previewDiv.shadowRoot) {
-      previewDiv.shadowRoot.innerHTML = this.unescapeTags(this.code || this.previewCode)
+      previewDiv.shadowRoot.innerHTML = this.transformTags(this.code || this.previewCode)
       return
     }
 
-    previewDiv.attachShadow({ mode: "open" }).innerHTML = this.unescapeTags(this.code || this.previewCode)
+    previewDiv.attachShadow({ mode: "open" }).innerHTML = this.transformTags(this.code || this.previewCode)
   }
 
   /**
@@ -470,7 +487,7 @@ export default class LightPreviewBase extends BaseElement {
                 ><code
                     part="code code-${language}"
                     class="language-${language}"
-                  >${unsafeHTML(this.highlight())}</code></pre>`,
+                  >${unsafeHTML(this.highlight(this.transformTags(this.code)))}</code></pre>`,
               () => html`${unsafeHTML(this.code)}`
             )}
           </div>
@@ -611,4 +628,34 @@ export default class LightPreviewBase extends BaseElement {
     // @ts-expect-error
     return (pixels / this.cachedWidth) * 100
   }
+}
+
+/**
+  * @param {string} s - The string to replace
+  * @param {number} start - The start index
+  * @param {number} end - The end index
+  * @param {string} substitute - the substituting string
+  */
+function replaceRange(s, start, end, substitute) {
+    return s.substring(0, start) + substitute + s.substring(end);
+}
+
+/**
+ * @param {string} text
+ * @param {RegExp} regex
+ */
+function replaceLast (text, regex) {
+  const matches = [...text.matchAll(regex)]
+
+  const lastMatch = matches[matches.length - 1]
+
+  if (!lastMatch) return text
+  if (lastMatch.index == null) return text
+
+  const { index } = lastMatch
+
+  const start = index
+  const end = index + lastMatch[0].length
+  const substitution = "</" + lastMatch[1] + ">"
+  return replaceRange(text, start, end, substitution)
 }

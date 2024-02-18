@@ -4,19 +4,28 @@ title: <light-code>
 
 <light-code style="display: none;"></light-code>
 
-<light-code>
-  <template slot="code">
-    <html>
-      <head></head>
-      <body>
-        Hello World
-        <script>
-          console.log("Hello World")
-        </script>
-      </body>
-    </html>
-  </template>
-</light-code>
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code>
+      <script type="text/plain" slot="code">
+        <html>
+          <head></head>
+          <body>
+            Hello World
+            <script>
+              console.log("Hello World")
+            &lt;/script>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+If you check the source code in the above example, you'll notice a `&lt;/script>`.
+
+For more on why script tags are used, check out [Why script tags](/references/why-script-tags/)
+for further reading.
 
 ## Using an attribute
 

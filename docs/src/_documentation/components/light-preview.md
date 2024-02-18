@@ -196,3 +196,30 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
   <button slot="actions">HTML</button>
   <button slot="actions">Codepen</button>
 </light-preview>
+
+## Escaping nested script tags
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code>
+      <script type="text/plain" slot="code">
+        <html>
+          <head></head>
+          <body>
+            Hello World
+            <script>
+              console.log("Hello World")
+            &lt;/script>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+If you check the source code in the above example, you'll notice a `&lt;/script>`.
+
+For more on why script tags are used, check out [Why script tags](/references/why-script-tags/)
+for further reading.
+
+

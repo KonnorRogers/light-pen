@@ -39,6 +39,12 @@ component: light-editor
     </form>
   </template>
 </light-preview>
+
+If you check the source code in the above example, you'll notice a `&lt;/script>`.
+
+For more on why script tags are used, check out [Why script tags](/references/why-script-tags/)
+for further reading.
+
 ## Using the `value` attribute
 
 Using the `value` attribute is the generally recommended way to provide the most consistent experience. By default,
