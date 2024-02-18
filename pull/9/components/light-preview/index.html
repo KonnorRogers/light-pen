@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/pull/9/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.LKJCBCPD.js">
+<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.NGM64NN4.js">
 <link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js">
 <link rel="preload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.LKJCBCPD.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.NGM64NN4.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js" type="module"></script>
 
 <!-- Favicons -->
@@ -230,6 +230,9 @@
           <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/pull/9/references/changelog/">Changelog</a>
   </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/pull/9/references/why-script-tags/">Why script tags</a>
+  </li>
 
       </ul>
   </ul>
@@ -270,6 +273,9 @@
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/pull/9/references">References</a></li>
           <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/pull/9/references/changelog/">Changelog</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/pull/9/references/why-script-tags/">Why script tags</a>
   </li>
 
       </ul>
@@ -355,7 +361,7 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.OB2SECJ7.js"
+      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.FBXEEZSG.js"
       LightPreview.define()
     </script>
   </template>
@@ -388,7 +394,7 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.OB2SECJ7.js"
+      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.FBXEEZSG.js"
       LightPreview.define()
     </script>
   </template>
@@ -478,7 +484,7 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.OB2SECJ7.js"
+      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.FBXEEZSG.js"
       LightPreview.define()
     </script>
   </template>
@@ -486,6 +492,34 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
   <button slot="actions">HTML</button>
   <button slot="actions">Codepen</button>
 </light-preview>
+
+<h2 id="escaping-nested-script-tags">
+          <a href="#escaping-nested-script-tags">Escaping nested script tags</a>
+        </h2>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code>
+      <script type="text/plain" slot="code">
+        <html>
+          <head></head>
+          <body>
+            Hello World
+            <script>
+              console.log("Hello World")
+            &lt;/script>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+<p>If you check the source code in the above example, you’ll notice a <code class="highlighter-rouge">&amp;lt;/script&gt;</code>.</p>
+
+<p>For more on why script tags are used, check out <a href="/references/why-script-tags/">Why script tags</a>
+for further reading.</p>
+
 <h2 id="imports">
           <a href="#imports">Imports</a>
         </h2>
@@ -498,12 +532,12 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
             HTML
           </div>
 
-          <clipboard-copy for="d16afa70-bcb4-4e8e-ad3f-bacfa9ea848d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="7943e3ec-e0c7-4bcd-802f-07d6304e1fb9" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="d16afa70-bcb4-4e8e-ad3f-bacfa9ea848d" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
+          <textarea id="7943e3ec-e0c7-4bcd-802f-07d6304e1fb9" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -519,12 +553,12 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
             HTML
           </div>
 
-          <clipboard-copy for="ac35942f-b9d9-4fc6-9981-516d56302a58" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="c7fd5c49-d752-45b9-a1e3-d321c4d093a6" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="ac35942f-b9d9-4fc6-9981-516d56302a58" hidden="">&lt;script type="module"&gt;
+          <textarea id="c7fd5c49-d752-45b9-a1e3-d321c4d093a6" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-preview&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"
 
@@ -554,12 +588,12 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
             JavaScript
           </div>
 
-          <clipboard-copy for="eec880a8-6166-42d9-b8a2-ec8328245e90" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="186d1bb2-1734-4dfa-8a21-6e8a0109f1f0" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="eec880a8-6166-42d9-b8a2-ec8328245e90" hidden="">// Auto registers as &lt;light-preview&gt;
+          <textarea id="186d1bb2-1734-4dfa-8a21-6e8a0109f1f0" hidden="">// Auto registers as &lt;light-preview&gt;
 import "light-pen/exports/light-preview.js/exports/light-preview-register.js"
 
 // Manual Register
@@ -772,6 +806,27 @@ LightPreview.define()
   </td>
 </tr>
 
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>unescapeBehavior</code>
+  </td>
+  <td>
+    Whether or not to transform `&amp;lt;/script&gt;` into `&lt;script&gt;`
+If true, will run transform. If false, will leave the code as is.
+  </td>
+  <td>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+  </td>
+  <td>
+    <code>"all" | "last" | "none"</code>
+  </td>
+  <td>
+    <code>"last"</code>
+  </td>
+</tr>
+
     </tbody>
   </table>
 </div>
@@ -856,6 +911,8 @@ LightPreview.define()
       </li><li class="side-nav__item">
         <a href="#additional-buttons" class="side-nav__link">Additional buttons</a>
       </li><li class="side-nav__item">
+        <a href="#escaping-nested-script-tags" class="side-nav__link">Escaping nested script tags</a>
+      </li><li class="side-nav__item">
         <a href="#imports" class="side-nav__link">Imports</a>
       </li><li class="side-nav__item">
         <a href="#attributes" class="side-nav__link">Attributes</a>
@@ -934,6 +991,9 @@ LightPreview.define()
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/pull/9/references">References</a></li>
           <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/pull/9/references/changelog/">Changelog</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/pull/9/references/why-script-tags/">Why script tags</a>
   </li>
 
       </ul>
