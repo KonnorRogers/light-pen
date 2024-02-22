@@ -189,14 +189,20 @@ export default class LightCode extends BaseElement {
     code = PrismHighlight(code, prism.languages[this.language], this.language, {
       afterTokenize: [
         LineNumberPlugin(),
-        // (env) => {
-        //   const currentToken = env.tokens[this.currentLineNumber]
-        //   if (!currentToken) return
-        //
-        //   if (currentToken instanceof Token) {
-        //     currentToken.type = currentToken.type + " is-active"
-        //   }
-        // }
+        (env) => {
+          const tokens = env.tokens
+          if (!Array.isArray(tokens)) return
+
+          let index = -1;
+          for (const token of tokens) {
+            index++;
+            if (typeof token === "string") continue
+
+            if (token.type === "light-line") {
+              token.type += " highlight-" + index.toString()
+            }
+          }
+        }
       ]
     })
     return code

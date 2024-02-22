@@ -31,7 +31,7 @@ for further reading.
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
-    <light-code deleted-lines="{1-3, 6, 7}" code="<html>
+    <light-code added-lines="{1-3, 6, 7}" code="<html>
         <head></head>
         <body>
           Hello World
@@ -45,6 +45,8 @@ for further reading.
 </light-preview>
 
 ## Writings diffs
+
+### Added lines
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
@@ -65,6 +67,8 @@ for further reading.
   </script>
 </light-preview>
 
+### Removed lines
+
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
     <light-code deleted-lines="{1-3, 6, 7}">
@@ -82,6 +86,8 @@ for further reading.
     </light-code>
   </script>
 </light-preview>
+
+## Highlighted Lines
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
