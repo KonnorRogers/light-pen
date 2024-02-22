@@ -475,14 +475,14 @@ export default class LightPreviewBase extends BaseElement {
           <div part="code-wrapper">
             ${when(!this.disableHighlight,
               () => html`
-					      <pre
+		<pre
                   id="pre-${language}"
                   data-code-lang=${language}
                   aria-hidden="true"
                   part="pre pre-${language}"
                   tabindex="0"
                   aria-labelledby="source-code-label"
-                  class="language-${language}"
+                  class="diff-highlight language-${language}"
                   role="region"
                 ><code
                     part="code code-${language}"

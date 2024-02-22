@@ -11,7 +11,7 @@
  *      range.numbers.add(7)
  *
  */
-export class Range {
+export class NumberRange {
 	constructor () {
 		const reset = () => {
 			/**
@@ -65,19 +65,19 @@ export class Range {
 
 		if (!str.includes("{")) {
 			this.errors.push(new Error("Unable to parse range. No `{` found."))
-			return
+			return this
 		}
 
 		if (!str.includes("}")) {
 			this.errors.push(new Error("Unable to parse range. No `}` found."))
-			return
+			return this
 		}
 
 		str = str.split(/{/)[1]
 
 		if (!str) {
 			this.errors.push(new Error("Invalid string provided for range."))
-			return
+			return this
 		}
 
 		str = str.split(/}/)[0]
@@ -99,5 +99,7 @@ export class Range {
 
 			this.ranges.push([min, max])
 		})
+
+		return this
 	}
 }

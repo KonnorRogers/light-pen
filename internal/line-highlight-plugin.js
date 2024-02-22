@@ -1,0 +1,39 @@
+/**
+ * @typedef {object} lineHighlightOptions
+ * @property {import("./number-range.js").NumberRange} highlightLinesRange
+ * @property {import("./number-range.js").NumberRange} insertedLinesRange
+ * @property {import("./number-range.js").NumberRange} deletedLinesRange
+ */
+
+/**
+ * @param {lineHighlightOptions} options
+ */
+export function LineHighlightPlugin (options) {
+  const { highlightLinesRange, insertedLinesRange, deletedLinesRange } = options
+  /**
+   * @param {import("./prism-highlight.js").Env} env
+   */
+  return function (env) {
+    // -1 for 0-index.
+    let index = 0
+    for (const token of env.tokens) {
+      index++;
+
+      if (typeof token === "string") continue
+      if (token.type !== "light-line") continue
+
+      if (highlightLinesRange.includes(index)) {
+        token.type += " line-highlight"
+        console.log("highlight: ", index)
+      }
+
+      if (insertedLinesRange.includes(index)) {
+        token.type += " inserted"
+      }
+
+      if (deletedLinesRange.includes(index)) {
+        token.type += " deleted"
+      }
+    }
+  }
+}

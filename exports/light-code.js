@@ -14,6 +14,8 @@ import { elementsToString } from "../internal/elements-to-strings.js";
 import { dedent } from "../internal/dedent.js";
 import { codeStyles } from "./code-styles.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
+import { NumberRange } from "../internal/number-range.js";
+import { LineHighlightPlugin } from "../internal/line-highlight-plugin.js";
 
 /**
  * LightCode is a minimal wrapper around Prism for displaying code highlighting
@@ -50,8 +52,8 @@ export default class LightCode extends BaseElement {
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
     preserveWhitespace: { type: Boolean, attribute: "preserveWhitespace" },
     highlightLines: { attribute: "highlight-lines" },
-    addedLines: { attribute: "added-lines" },
-    removedLines: { attribute: "removed-lines" },
+    insertedLines: { attribute: "inserted-lines" },
+    deletedLines: { attribute: "deleted-lines" },
     lineNumbers: { type: Boolean, attribute: "line-numbers" },
     wrap: { reflect: true, attribute: "wrap" },
     language: {},
@@ -95,7 +97,7 @@ export default class LightCode extends BaseElement {
 
     /**
      * @property
-     * @type {"soft" | "hard"}
+     * @type {"soft" | "none"}
      * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
      */
     this.wrap = "soft"
@@ -106,6 +108,26 @@ export default class LightCode extends BaseElement {
      * Whether or not to preserve white spaces from templates and attempt to dedent and chomp new lines.
      */
     this.preserveWhitespace = false
+
+    /**
+     * @type {string} - A string of possible lines to highlight. Example: "{1-9, 16, 18}"
+     */
+    this.highlightLines = ""
+
+    /**
+     * @type {string} - A string of lines that are inserted for diffs. Example: "{1-9, 16, 18}"
+     */
+    this.insertedLines = ""
+
+    /**
+     * @type {string} - A string of lines that are deleted for diffs. Example: "{1-9, 16, 18}"
+     */
+    this.deletedLines = ""
+
+    /**
+     * @type {boolean} whether or not to disable line numbers
+     */
+    this.disableLineNumbers = false
   }
 
   /**
@@ -160,14 +182,6 @@ export default class LightCode extends BaseElement {
   }
 
   /**
-   * @internal
-   * @param {string} text
-   */
-  escapeCharacters(text) {
-    return text
-  }
-
-  /**
    * Only used to unescape things like `&lt;/script>` from slotted content.
    * @internal
    * @param {string} text
@@ -178,7 +192,6 @@ export default class LightCode extends BaseElement {
     // return text.replace(/&lt;\//g, '</');
 
     return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
-    // return text
   }
 
   /**
@@ -186,24 +199,19 @@ export default class LightCode extends BaseElement {
    * Override this function to use your own highlighter
    */
   highlight (code = this.code) {
+    const plugins = []
+
+    if (!this.disableLineNumbers) {
+      plugins.push(LineNumberPlugin())
+      plugins.push(LineHighlightPlugin({
+        insertedLinesRange: new NumberRange().parse(this.insertedLines),
+        deletedLinesRange: new NumberRange().parse(this.deletedLines),
+        highlightLinesRange: new NumberRange().parse(this.highlightLines)
+      }))
+    }
+
     code = PrismHighlight(code, prism.languages[this.language], this.language, {
-      afterTokenize: [
-        LineNumberPlugin(),
-        (env) => {
-          const tokens = env.tokens
-          if (!Array.isArray(tokens)) return
-
-          let index = -1;
-          for (const token of tokens) {
-            index++;
-            if (typeof token === "string") continue
-
-            if (token.type === "light-line") {
-              token.type += " highlight-" + index.toString()
-            }
-          }
-        }
-      ]
+      afterTokenize: plugins,
     })
     return code
   }
@@ -220,14 +228,14 @@ export default class LightCode extends BaseElement {
         })}>
           ${when(!this.disableHighlight,
             () => html`
-					    <pre
+	      <pre
                 id="pre-${language}"
                 data-code-lang=${language}
                 aria-hidden="true"
                 part="pre pre-${language}"
                 tabindex="0"
                 aria-labelledby="source-code-label"
-                class="language-${language}"
+                class="diff-highlight language-${language}"
                 role="region"
               ><code
                   part="code code-${language}"
@@ -245,3 +253,4 @@ export default class LightCode extends BaseElement {
     return finalHTML
   }
 }
+

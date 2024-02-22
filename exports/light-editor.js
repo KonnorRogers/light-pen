@@ -64,7 +64,8 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    */
   static properties = Object.assign({
     language: {reflect: true},
-    preserveWhitespace: { type: Boolean, reflect: true, attribute: "preserve-whitespace" }
+    preserveWhitespace: { type: Boolean, reflect: true, attribute: "preserve-whitespace" },
+    hasInteracted: { type: Boolean, reflect: true, attribute: "data-has-interacted" }
   }, LitTextareaMixin.formProperties)
 
   constructor () {
@@ -222,13 +223,12 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             @keyup=${this.keyupHandler}
             @keydown=${this.keydownHandler}
             @focus=${() => {
-              this.hasInteracted = true
               this.syncScroll()
               this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-focus", { bubbles: true, composed: true }))
             }}
             @blur=${() => {
-              this.hasInteracted = true
+              this.setAttribute("data-has-interacted", "")
               this.syncScroll()
               this.setCurrentLineHighlight()
               this.dispatchEvent(new Event("light-blur", { bubbles: true, composed: true }))

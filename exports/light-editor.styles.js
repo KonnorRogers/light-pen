@@ -2,7 +2,7 @@ import { css } from "lit"
 
 export const styles = css`
   [part~="base"] {
-	  font-family: Menlo, Monaco, "Courier New", monospace;
+    font-family: Menlo, Monaco, "Courier New", monospace;
     font-size: 1rem;
     height: 15em;
     width: 100%;
@@ -136,7 +136,7 @@ export const styles = css`
   }
 
   /* We don't want to show the focus position if the user hasn't interacted with the textarea. */
-  :where(:host([has-interacted]) .light-line.is-active) {
+  :where(:host([data-has-interacted]) .light-line.is-active) {
     background-color: rgba(0,0,0,0.05);
   }
 
