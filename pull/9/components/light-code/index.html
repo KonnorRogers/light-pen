@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/pull/9/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.NGM64NN4.js">
+<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.WBQGPDOT.js">
 <link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js">
 <link rel="preload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.NGM64NN4.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.WBQGPDOT.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js" type="module"></script>
 
 <!-- Favicons -->
@@ -324,7 +324,7 @@ for further reading.</p>
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
-    <light-code deleted-lines="{1-3, 6, 7}" code="<html>
+    <light-code added-lines="{1-3, 6, 7}" code="<html>
         <head></head>
         <body>
           Hello World
@@ -339,6 +339,10 @@ for further reading.</p>
 <h2 id="writings-diffs">
           <a href="#writings-diffs">Writings diffs</a>
         </h2>
+
+<h3 id="added-lines">
+          <a href="#added-lines">Added lines</a>
+        </h3>
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
@@ -359,6 +363,10 @@ for further reading.</p>
   </script>
 </light-preview>
 
+<h3 id="removed-lines">
+          <a href="#removed-lines">Removed lines</a>
+        </h3>
+
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
     <light-code deleted-lines="{1-3, 6, 7}">
@@ -376,6 +384,10 @@ for further reading.</p>
     </light-code>
   </script>
 </light-preview>
+
+<h2 id="highlighted-lines">
+          <a href="#highlighted-lines">Highlighted Lines</a>
+        </h2>
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
@@ -406,12 +418,12 @@ for further reading.</p>
             HTML
           </div>
 
-          <clipboard-copy for="1bbdf7ad-ca0f-4acf-a5e2-192b4530d2f5" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="948e7725-55cd-4ea3-9f1f-88ccc79df3f3" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="1bbdf7ad-ca0f-4acf-a5e2-192b4530d2f5" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
+          <textarea id="948e7725-55cd-4ea3-9f1f-88ccc79df3f3" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -427,12 +439,12 @@ for further reading.</p>
             HTML
           </div>
 
-          <clipboard-copy for="38236b83-6196-468a-abec-06643a76e8d5" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="0787c412-b2e5-4c63-b714-1f560f8f991a" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="38236b83-6196-468a-abec-06643a76e8d5" hidden="">&lt;script type="module"&gt;
+          <textarea id="0787c412-b2e5-4c63-b714-1f560f8f991a" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-code&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"
 
@@ -462,12 +474,12 @@ for further reading.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="ffe2e47c-293a-4fb6-9cb1-f2f0d9592808" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="356e939b-5c9c-4081-9f10-68dfacde8930" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="ffe2e47c-293a-4fb6-9cb1-f2f0d9592808" hidden="">// Auto registers as &lt;light-code&gt;
+          <textarea id="356e939b-5c9c-4081-9f10-68dfacde8930" hidden="">// Auto registers as &lt;light-code&gt;
 import "light-pen/exports/light-code.js/exports/light-code-register.js"
 
 // Manual Register
@@ -862,6 +874,12 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
         <a href="#using-an-attribute" class="side-nav__link">Using an attribute</a>
       </li><li class="side-nav__item">
         <a href="#writings-diffs" class="side-nav__link">Writings diffs</a>
+      </li><li class="side-nav__item">
+        <a href="#added-lines" class="side-nav__link">Added lines</a>
+      </li><li class="side-nav__item">
+        <a href="#removed-lines" class="side-nav__link">Removed lines</a>
+      </li><li class="side-nav__item">
+        <a href="#highlighted-lines" class="side-nav__link">Highlighted Lines</a>
       </li><li class="side-nav__item">
         <a href="#imports" class="side-nav__link">Imports</a>
       </li><li class="side-nav__item">
