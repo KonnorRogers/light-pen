@@ -16,6 +16,7 @@ import { codeStyles } from "./code-styles.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { NumberRange } from "../internal/number-range.js";
 import { LineHighlightPlugin } from "../internal/line-highlight-plugin.js";
+import { Token } from "prism-esm";
 
 /**
  * LightCode is a minimal wrapper around Prism for displaying code highlighting
@@ -203,6 +204,24 @@ export default class LightCode extends BaseElement {
 
     if (!this.disableLineNumbers) {
       plugins.push(LineNumberPlugin())
+
+      plugins.push(
+      /**
+       * @param {import("../internal/prism-highlight.js").Env} env
+       */
+        (env) => {
+          let index = 0
+          for (const token of env.tokens) {
+            index++;
+            if (typeof token === "string") continue
+            if (!token.type.includes("light-line")) continue
+
+            if (typeof token.content === "string") continue
+
+            token.content = [new Token("light-content", token.content)]
+            token.content.unshift(new Token("light-gutter", index.toString()))
+          }
+      }),
       plugins.push(LineHighlightPlugin({
         insertedLinesRange: new NumberRange().parse(this.insertedLines),
         deletedLinesRange: new NumberRange().parse(this.deletedLines),

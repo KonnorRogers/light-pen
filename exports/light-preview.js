@@ -6,6 +6,7 @@ import { PrismHighlight, prism } from '../internal/prism-highlight.js';
 import { NumberRange } from '../internal/number-range.js';
 import { LineHighlightPlugin } from '../internal/line-highlight-plugin.js';
 import { LineNumberPlugin } from '../internal/line-number-plugin.js';
+import { css } from 'lit';
 
 /**
  * LightPreview is a very lightweight code previewer designed to load your code sample
@@ -24,7 +25,14 @@ export default class LightPreview extends LightPreviewBase {
   /**
    * @override
    */
-  static styles = LightPreviewBase.styles.concat([theme])
+  static styles = LightPreviewBase.styles.concat([
+    theme,
+    css`
+    /* Lines need to be "display: block;" when used inside a disclosure.  */
+    .light-line {
+      display: block;
+    }
+  `])
 
   /**
    * @override

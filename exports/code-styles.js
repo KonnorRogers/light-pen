@@ -5,9 +5,16 @@ export const codeStyles = css`
   padding: 1rem;
 }
 
+[part~="pre"],
+[part~="code"] {
+  color: #272727;
+  background-color: #f7f7f7;
+  line-height: 1.8;
+}
+
 [part~="pre"] {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  color: #272727;
+  background-color: #f7f7f7;
   margin: 0;
   overflow: auto;
   /* This removes line wrapping */
@@ -21,15 +28,11 @@ export const codeStyles = css`
   white-space: pre-wrap;
 }
 
-.light-line {
-  display: inline-block;
-  width: 100%;
-  padding-inline-start: 24px;
-  padding-inline-end: 24px;
-  position: relative;
+:host([disable-line-numbers]) .light-line {
+  grid-template-columns: minmax(0, 1fr);
 }
 
-.light-line:is(.deleted, .inserted, .line-highlight)::after {
+.light-content:is(.deleted, .inserted, .line-highlight)::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -41,23 +44,35 @@ export const codeStyles = css`
   transform: translate(50%, -50%);
 }
 
-.light-line.deleted::after {
+.light-content {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  padding-inline-start: 24px;
+  padding-inline-end: 24px;
+}
+
+.light-line {
+  display: inline-grid;
+  width: 100%;
+  position: relative;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: 8px;
+}
+
+.light-gutter {
+  display: inline-block;
+  border-inline-end: 1px solid gray;
+  padding-inline-end: 0.5em;
+  padding-inline-start: 0.75em;
+  user-select: none;
+}
+
+.light-content.deleted::after {
   content: "-"
 }
 
-.light-line.inserted::after {
+.light-content.inserted::after {
   content: "-"
-}
-
-[part~="pre"],
-[part~="code"] {
-  line-height: 1.8;
-}
-
-
-[part~="pre"],
-[part~="code"] {
-  color: #272727;
-  background-color: #f7f7f7;
 }
 `

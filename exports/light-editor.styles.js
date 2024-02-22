@@ -1,4 +1,4 @@
-import { css } from "lit"
+import { css } from "lit";
 
 export const styles = css`
   [part~="base"] {
@@ -24,7 +24,8 @@ export const styles = css`
   }
 
   /* Include "pre" if line numbers are disabled */
-  [part~="textarea"], .light-line {
+  [part~="textarea"],
+  .light-line {
     padding: 0px;
     padding-inline-start: 6px;
   }
@@ -61,7 +62,10 @@ export const styles = css`
     outline: transparent;
   }
 
-  [part~="pre"], [part~="textarea"], [part~="code"], [part~="gutter"] {
+  [part~="pre"],
+  [part~="textarea"],
+  [part~="code"],
+  [part~="gutter"] {
     /* I don't love this, but it fixes font size inconsistencies on mobile. The alternative is listen for font-size changes, which is...challenging. */
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
@@ -73,18 +77,20 @@ export const styles = css`
     tab-size: inherit;
 
     /* this creates line-wrapping. */
-	  word-break: break-word;
+    word-break: break-word;
     white-space: pre-wrap;
   }
 
-  :host([wrap="none"]) :is([part~="pre"], [part~="textarea"], [part~="code"], [part~="gutter"]) {
+  :host([wrap="none"])
+    :is([part~="pre"], [part~="textarea"], [part~="code"], [part~="gutter"]) {
     /* This would remove line-wrapping */
-	  word-break: break-all;
+    word-break: break-all;
     white-space: pre;
   }
 
   /** Hide scrollbars for the gutter */
-  [part~="gutter"]::-webkit-scrollbar { /* WebKit */
+  [part~="gutter"]::-webkit-scrollbar {
+    /* WebKit */
     width: 0;
     height: 0;
   }
@@ -95,8 +101,8 @@ export const styles = css`
   }
 
   [part~="gutter"] {
-    color: rgba(0,0,0,0.35);
-	  background-color: rgba(50,50,50,0.08);
+    color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(50, 50, 50, 0.08);
     font-variant-numeric: tabular-nums;
     border-inline-end: 1px solid darkgray;
     -webkit-text-size-adjust: 100%;
@@ -104,14 +110,14 @@ export const styles = css`
     text-size-adjust: 100%;
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
     font-size: inherit;
     font-family: inherit;
     line-height: inherit;
     tab-size: inherit;
 
     /* this creates line-wrapping. */
-	  word-break: break-word;
+    word-break: break-word;
     white-space: pre-wrap;
     text-align: end;
   }
@@ -126,24 +132,18 @@ export const styles = css`
     display: block;
   }
 
-  .light-line {
-    display: inline-block;
-    width: 100%;
-  }
-
   [part~="base"]:focus-within .light-line.is-active {
-    background-color: rgba(255,255,209,1);
+    background-color: rgba(255, 255, 209, 1);
   }
 
   /* We don't want to show the focus position if the user hasn't interacted with the textarea. */
   :where(:host([data-has-interacted]) .light-line.is-active) {
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
   }
 
   [part~="gutter-cell"][part~="gutter-cell--active"] {
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
   }
-
 
   [part~="base-editor"] {
     position: relative;
@@ -164,20 +164,11 @@ export const styles = css`
   }
 
   [part~="textarea"]::placeholder {
-    color: rgba(0,0,0,0.5);
-  }
-
-  [part~="pre"] {
-	  color: #272727;
-  }
-
-  [part~="gutter"],
-  [part~="pre"] {
-	  background-color: #f7f7f7;
+    color: rgba(0, 0, 0, 0.5);
   }
 
   [part~="textarea"]::selection {
     color: inherit;
-    background-color: rgba(0,0,0,0.15);
+    background-color: rgba(0, 0, 0, 0.15);
   }
-`
+`;

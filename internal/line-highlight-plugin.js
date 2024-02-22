@@ -20,7 +20,7 @@ export function LineHighlightPlugin (options) {
       index++;
 
       if (typeof token === "string") continue
-      if (token.type !== "light-line") continue
+      if (!token.type.includes("light-line")) continue
 
       if (highlightLinesRange.includes(index)) {
         token.type += " line-highlight"
