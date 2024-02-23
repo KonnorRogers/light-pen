@@ -204,34 +204,24 @@ export default class LightCode extends BaseElement {
 
     if (!this.disableLineNumbers) {
       plugins.push(LineNumberPlugin())
-
-      plugins.push(
-      /**
-       * @param {import("../internal/prism-highlight.js").Env} env
-       */
-        (env) => {
-          let index = 0
-          for (const token of env.tokens) {
-            index++;
-            if (typeof token === "string") continue
-            if (!token.type.includes("light-line")) continue
-
-            if (typeof token.content === "string") continue
-
-            token.content = [new Token("light-content", token.content)]
-            token.content.unshift(new Token("light-gutter", index.toString()))
-          }
-      }),
       plugins.push(LineHighlightPlugin({
         insertedLinesRange: new NumberRange().parse(this.insertedLines),
         deletedLinesRange: new NumberRange().parse(this.deletedLines),
         highlightLinesRange: new NumberRange().parse(this.highlightLines)
       }))
+      prism.hooks.add('wrap', function(env) {
+        console.log("WRAP")
+	      // if (env.token.type.includes('light-line')) {
+		      env.attributes['part'] = "line"
+	      // }
+      });
     }
 
+    console.log("HIGHLIGHT")
     code = PrismHighlight(code, prism.languages[this.language], this.language, {
       afterTokenize: plugins,
     })
+
     return code
   }
 
@@ -247,7 +237,7 @@ export default class LightCode extends BaseElement {
         })}>
           ${when(!this.disableHighlight,
             () => html`
-	      <pre
+	            <pre
                 id="pre-${language}"
                 data-code-lang=${language}
                 aria-hidden="true"

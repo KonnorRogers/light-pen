@@ -6,6 +6,7 @@ component: light-editor
 
 <!-- Register it with the lazy loader -->
 <light-editor style="display: none;"></light-editor>
+<light-code style="display: none;"></light-code>
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">

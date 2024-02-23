@@ -17,9 +17,6 @@ export const styles = css`
     tab-size: 2;
     caret-color: black;
     counter-reset: linenumber 0;
-    display: grid;
-    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr);
     border: 1px solid gray;
   }
 
@@ -48,7 +45,7 @@ export const styles = css`
     resize: none;
   }
 
-  [part~="pre"] {
+  light-code::part(pre) {
     border-color: transparent;
     position: relative;
   }
@@ -62,9 +59,9 @@ export const styles = css`
     outline: transparent;
   }
 
-  [part~="pre"],
+  light-code::part(pre),
   [part~="textarea"],
-  [part~="code"],
+  light-code::part(code),
   [part~="gutter"] {
     /* I don't love this, but it fixes font size inconsistencies on mobile. The alternative is listen for font-size changes, which is...challenging. */
     -webkit-text-size-adjust: 100%;
@@ -82,54 +79,10 @@ export const styles = css`
   }
 
   :host([wrap="none"])
-    :is([part~="pre"], [part~="textarea"], [part~="code"], [part~="gutter"]) {
+    :is(light-code::part(pre), [part~="textarea"], light-code::part(code), [part~="gutter"]) {
     /* This would remove line-wrapping */
     word-break: break-all;
     white-space: pre;
-  }
-
-  /** Hide scrollbars for the gutter */
-  [part~="gutter"]::-webkit-scrollbar {
-    /* WebKit */
-    width: 0;
-    height: 0;
-  }
-
-  [part~="gutter-cell"] {
-    padding-inline-end: 16px;
-    padding-inline-start: 12px;
-  }
-
-  [part~="gutter"] {
-    color: rgba(0, 0, 0, 0.35);
-    background-color: rgba(50, 50, 50, 0.08);
-    font-variant-numeric: tabular-nums;
-    border-inline-end: 1px solid darkgray;
-    -webkit-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    font-size: inherit;
-    font-family: inherit;
-    line-height: inherit;
-    tab-size: inherit;
-
-    /* this creates line-wrapping. */
-    word-break: break-word;
-    white-space: pre-wrap;
-    text-align: end;
-  }
-
-  [part~="gutter-cell"] {
-    font-size: 100%;
-    display: block;
-  }
-
-  [part~="gutter-cell"] {
-    font-size: 100%;
-    display: block;
   }
 
   [part~="base"]:focus-within .light-line.is-active {
@@ -141,10 +94,6 @@ export const styles = css`
     background-color: rgba(0, 0, 0, 0.05);
   }
 
-  [part~="gutter-cell"][part~="gutter-cell--active"] {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-
   [part~="base-editor"] {
     position: relative;
     display: grid;
@@ -152,7 +101,7 @@ export const styles = css`
     grid-template-rows: minmax(0, 1fr);
   }
 
-  [part~="pre"],
+  light-code,
   [part~="textarea"] {
     grid-area: 1/1/2/2;
     width: 100%;

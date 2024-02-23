@@ -24,7 +24,6 @@ export function LineHighlightPlugin (options) {
 
       if (highlightLinesRange.includes(index)) {
         token.type += " line-highlight"
-        console.log("highlight: ", index)
       }
 
       if (insertedLinesRange.includes(index)) {

@@ -20,6 +20,13 @@ export const codeStyles = css`
   /* This removes line wrapping */
   word-break: break-all;
   white-space: pre;
+  padding: 0;
+}
+
+[part~="code"] {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  column-gap: 8px;
 }
 
 :host([wrap="soft"]) [part~="pre"] {
@@ -32,7 +39,7 @@ export const codeStyles = css`
   grid-template-columns: minmax(0, 1fr);
 }
 
-.light-content:is(.deleted, .inserted, .line-highlight)::after {
+.light-line:is(.deleted, .inserted, .line-highlight)::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -44,35 +51,28 @@ export const codeStyles = css`
   transform: translate(50%, -50%);
 }
 
-.light-content {
+.light-line {
   display: inline-block;
   width: 100%;
-  position: relative;
-  padding-inline-start: 24px;
-  padding-inline-end: 24px;
-}
-
-.light-line {
-  display: inline-grid;
-  width: 100%;
-  position: relative;
-  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
-  gap: 8px;
 }
 
 .light-gutter {
   display: inline-block;
-  border-inline-end: 1px solid gray;
+  border-inline-end: 1px solid darkgray;
   padding-inline-end: 0.5em;
   padding-inline-start: 0.75em;
   user-select: none;
+  color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(50, 50, 50, 0.08);
+  font-variant-numeric: tabular-nums;
+  text-align: end;
 }
 
-.light-content.deleted::after {
+.light-line.deleted::after {
   content: "-"
 }
 
-.light-content.inserted::after {
-  content: "-"
+.light-line.inserted::after {
+  content: "+"
 }
 `

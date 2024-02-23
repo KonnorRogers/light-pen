@@ -19,13 +19,20 @@ export function LineNumberPlugin(
    * @type {import('./prism-highlight.js').Hook}
    */
   return function lineNumberPlugin (env) {
-    env.tokens = splitLinesRec(env.tokens).map((ary) => {
+    /**
+     * @type {Token[]}
+     */
+    const tokens = []
+    splitLinesRec(env.tokens).forEach((ary, index) => {
       if (ary.length <= 0) {
         ary.push(" ")
       }
 
-      return new Token("light-line", ary)
+      tokens.push(new Token("light-gutter", (index + 1).toString()))
+      tokens.push(new Token("light-line", ary))
     });
+
+    env.tokens = tokens
 
   }
 }

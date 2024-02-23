@@ -16,6 +16,7 @@ import { PrismHighlight, prism } from "../internal/prism-highlight.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { Token } from "prism-esm";
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js";
+import LightCode from "./light-code.js";
 
 const newLineRegex = /\r\n?|\n/g;
 
@@ -42,6 +43,11 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    * @override
    */
   static baseName = "light-editor";
+
+  /**
+   * @override
+   */
+  static dependencies = {"light-code": LightCode}
 
   /**
    * @override
@@ -183,45 +189,32 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    */
   render() {
     const language = this.language;
-
-    const highlightedCode = unsafeHTML(
-      this.highlightCode({ code: this.value, language }),
-    );
     this.syncScroll();
 
     return html`
       <div part="base">
-        <!-- Super important to not have white space here due to how white space is handled -->
-        <div
-          part="gutter"
-          @focus=${() => {
-            this.textarea?.focus();
-          }}
-          @click=${(/** @type {Event} */ e) => {
-            // Don't let a user focus on this area.
-            this.textarea?.focus();
-          }}
-        ></div>
         <!-- This is where the fancy syntax highlighting comes in -->
         <div part="base-editor">
-          <pre
-            id="pre-${language}"
-            data-code-lang=${language}
-            aria-hidden="true"
-            part="pre pre-${language}"
-            class="language-${language}"
+          <light-code
             tabindex="-1"
+            .language=${this.language}
+            .code=${this.value}
+            .wrap=${this.wrap}
+            .preserveWhitespace=${this.preserveWhitespace}
             @focus=${() => {
+              this.textarea?.focus();
+            }}
+            @touchstart=${(/** @type {Event} */ e) => {
+              // Don't let a user focus on this area.
               this.textarea?.focus();
             }}
             @click=${(/** @type {Event} */ e) => {
               // Don't let a user focus on this area.
               this.textarea?.focus();
             }}
-          ><code
-              part="code code-${language}"
-              class="language-${language}"
-            >${highlightedCode}</code></pre>
+          ></light-code>
+
+
           <!-- IMPORTANT! There must be no white-space above. -->
           <textarea
             aria-labelledby="label"
@@ -283,7 +276,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
                 this.value = /** @type {HTMLTextAreaElement} */ (
                   e.currentTarget
                 ).value;
-                this.injectGutterCells();
                 this.setCurrentLineHighlight();
                 this.dispatchEvent(
                   new Event("light-input", { bubbles: true, composed: true }),
@@ -296,7 +288,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
                 this.value = /** @type {HTMLTextAreaElement} */ (
                   e.currentTarget
                 ).value;
-                this.injectGutterCells();
                 this.setCurrentLineHighlight();
                 this.dispatchEvent(
                   new Event("light-change", { bubbles: true, composed: true }),
@@ -336,7 +327,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
      */
     this.dispatchEvent(new LightResizeEvent("light-resize", { height, width }));
     this.syncScroll();
-    this.injectGutterCells();
   }
 
   /**
@@ -347,7 +337,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     super.updated(changedProperties);
 
     this.syncScroll();
-    this.injectGutterCells();
     setTimeout(() => this.setCurrentLineHighlight());
   }
 
@@ -368,13 +357,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     if (pre) {
       pre.scrollTop = textarea.scrollTop;
       pre.scrollLeft = textarea.scrollLeft;
-    }
-
-    const gutter = this.shadowRoot?.querySelector("[part~='gutter']");
-
-    if (gutter) {
-      gutter.scrollTop = textarea.scrollTop;
-      gutter.scrollLeft = textarea.scrollLeft;
     }
   }
 
@@ -462,7 +444,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
 
   setCurrentLineHighlight() {
     const code = this.shadowRoot?.querySelector("code");
-    const gutter = this.shadowRoot?.querySelector("[part~='gutter']");
 
     const currentLineNumber = this.getCurrentLineNumber();
 
@@ -475,16 +456,10 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
 
     if (currentLineNumber != null && currentLineNumber >= 0) {
       const activeLineElement = code?.children[currentLineNumber];
-      const activeGutterElement = gutter?.children[currentLineNumber];
 
       if (activeLineElement) {
         code.children[prevLineNumber]?.classList?.remove("is-active");
         activeLineElement.classList.add("is-active");
-      }
-
-      if (activeGutterElement) {
-        gutter.children[prevLineNumber]?.part?.remove("gutter-cell--active");
-        activeGutterElement.part.add("gutter-cell--active");
       }
     }
   }
@@ -518,14 +493,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     return code;
   }
 
-  injectGutterCells() {
-    const gutter = this.shadowRoot?.querySelector("[part~='gutter']");
-
-    if (gutter) {
-      render(this.renderGutterCells(), /** @type {HTMLElement} */ (gutter));
-    }
-  }
-
   getCurrentLineNumber() {
     const textArea = this.textarea;
 
@@ -539,40 +506,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     // console.log("Current Line Number "+ currentLineNumber+" Current Column Index "+currentColumnIndex );
 
     return currentLineNumber;
-  }
-
-  renderGutterCells() {
-    const lines = this.shadowRoot?.querySelector("pre > code")?.children;
-
-    if (!lines) return ``;
-
-    const ary = Array.from(lines);
-
-    return repeat(
-      ary,
-      (el, index) => {
-        // @ts-expect-error
-        const height = /** @type {number} */ (el.offsetHeight);
-        const isCurrent = index === this.currentLineNumber;
-
-        return index + height + isCurrent.toString();
-      },
-      (el, index) => {
-        // @ts-expect-error
-        const height = /** @type {number} */ (el.offsetHeight);
-
-        const isCurrent = index === this.currentLineNumber;
-
-        const parts = `gutter-cell ${isCurrent ? "gutter-cell--active" : ""}`;
-        if (height) {
-          return html`<span part=${parts} style="${`height: ${height}px`}"
-            >${index}</span
-          >`;
-        }
-
-        return html`<span part=${parts}>${index}</span>`;
-      },
-    );
   }
 
   /**

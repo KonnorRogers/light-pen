@@ -13,7 +13,8 @@ title: <light-code>
           <body>
             HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
             <script>
-              console.log("Hello World")
+              const greeting = "Hello World"
+              console.log(greeting)
             &lt;/script>
           </body>
         </html>
