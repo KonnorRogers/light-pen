@@ -1,7 +1,10 @@
-## 2.4.0 02/14/2024
+## Next
 
 - Feature: Added `<light-code>` for displaying code.
+- Bug Fix: `<script>` tags now properly execute inside of `<light-preview>` and have the scope of their shadow dom bound.
+- Improvement: `<light-editor>`, `<light-code>`, and `<light-preview>` all use `<light-code>` internally now.
 - Improvement: Use declarative shadow DOM and fallback to polyfill in `<light-preview>`
+
 
 ## 2.3.1 02/13/2024
 

@@ -22,18 +22,9 @@ export const styles = css`
 
   /* Include "pre" if line numbers are disabled */
   [part~="textarea"],
-  .light-line {
-    padding: 0px;
-    padding-inline-start: 6px;
-  }
-
-  /** @TODO: If line numbers disabled */
-  :host([line-numbers="disabled"]) .light-line {
-    padding-inline-start: 0px;
-  }
-
-  :host([line-numbers="disabled"]) [part~="pre"] {
-    padding-inline-start: 6px;
+  light-code::part(line) {
+    padding-inline-start: 8px;
+    padding-inline-end: 8px;
   }
 
   [part~="textarea"] {
@@ -43,6 +34,9 @@ export const styles = css`
     caret-color: inherit;
     z-index: 1;
     resize: none;
+
+    /* Dynamically generated based on the size of the  gutter from "<light-code>" */
+    padding-inline-start: calc(var(--gutter-width, 40px) + 8px);
   }
 
   light-code::part(pre) {
@@ -59,10 +53,13 @@ export const styles = css`
     outline: transparent;
   }
 
+  light-code::part(line) {
+    padding-inline-start: 8px;
+  }
+
   light-code::part(pre),
   [part~="textarea"],
-  light-code::part(code),
-  [part~="gutter"] {
+  light-code::part(code) {
     /* I don't love this, but it fixes font size inconsistencies on mobile. The alternative is listen for font-size changes, which is...challenging. */
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
@@ -79,7 +76,7 @@ export const styles = css`
   }
 
   :host([wrap="none"])
-    :is(light-code::part(pre), [part~="textarea"], light-code::part(code), [part~="gutter"]) {
+    :is(light-code::part(pre), [part~="textarea"], light-code::part(code)) {
     /* This would remove line-wrapping */
     word-break: break-all;
     white-space: pre;
@@ -89,16 +86,13 @@ export const styles = css`
     background-color: rgba(255, 255, 209, 1);
   }
 
-  /* We don't want to show the focus position if the user hasn't interacted with the textarea. */
-  :where(:host([data-has-interacted]) .light-line.is-active) {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-
   [part~="base-editor"] {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr);
+    max-height: 100%;
+    min-height: 100%;
   }
 
   light-code,

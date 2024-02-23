@@ -185,11 +185,31 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   }
 
   /**
+   * @internal
+   */
+  __setGutterWidth () {
+    // @ts-expect-error
+    const gutterWidth = this.shadowRoot?.querySelector("light-code")?.shadowRoot?.querySelector("[part~='gutter']")?.offsetWidth
+
+    if (gutterWidth) {
+      this.style.setProperty("--gutter-width", `${gutterWidth}px`)
+      return
+    }
+
+    this.style.removeProperty("--gutter-width")
+  }
+
+  /**
    * @override
    */
   render() {
     const language = this.language;
     this.syncScroll();
+
+    setTimeout(async () => {
+      await this.updateComplete
+      this.__setGutterWidth()
+    })
 
     return html`
       <div part="base">
@@ -352,11 +372,11 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
 
     if (textarea == null) return;
 
-    const pre = this.shadowRoot?.querySelector(`pre`);
+    const lightCode = this.shadowRoot?.querySelector("light-code")?.shadowRoot?.querySelector("pre");
 
-    if (pre) {
-      pre.scrollTop = textarea.scrollTop;
-      pre.scrollLeft = textarea.scrollLeft;
+    if (lightCode) {
+      lightCode.scrollTop = textarea.scrollTop;
+      lightCode.scrollLeft = textarea.scrollLeft;
     }
   }
 

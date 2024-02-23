@@ -1,6 +1,7 @@
 import { css } from "lit";
 
 export const codeStyles = css`
+
 :host([disable-line-numbers]) [part~="pre"] {
   padding: 1rem;
 }
@@ -21,6 +22,7 @@ export const codeStyles = css`
   word-break: break-all;
   white-space: pre;
   padding: 0;
+  height: 100%;
 }
 
 [part~="code"] {
@@ -34,14 +36,14 @@ export const codeStyles = css`
   white-space: pre-wrap;
 }
 
-:host([disable-line-numbers]) .light-line {
+:host([disable-line-numbers]) [part~="line"] {
   grid-template-columns: minmax(0, 1fr);
 }
 
-.light-line:is(.deleted, .inserted, .line-highlight)::after {
+[part~="line"]:is(.deleted, .inserted, .line-highlight)::after {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 0.8em;
   left: 0%;
   font-size: 16px;
   line-height: 0;
@@ -50,30 +52,29 @@ export const codeStyles = css`
   transform: translate(50%, -50%);
 }
 
-.light-line {
+[part~='line'] {
   display: inline-block;
   width: 100%;
   padding-inline-start: 24px;
   position: relative;
 }
 
-.light-gutter {
+[part~='gutter-cell'] {
   display: inline-block;
-  border-inline-end: 1px solid darkgray;
   padding-inline-end: 0.5em;
   padding-inline-start: 0.75em;
   user-select: none;
   color: rgba(0, 0, 0, 0.35);
-  background-color: rgba(50, 50, 50, 0.08);
+  background-color: transparent;
   font-variant-numeric: tabular-nums;
   text-align: end;
 }
 
-.light-line.deleted::after {
+[part~="line"].deleted::after {
   content: "-"
 }
 
-.light-line.inserted::after {
+[part~="line"].inserted::after {
   content: "+"
 }
 `

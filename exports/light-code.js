@@ -1,5 +1,5 @@
 // @ts-check
-import { html } from "lit";
+import { css, html } from "lit";
 import { baseStyles } from "./base-styles.js";
 
 import { theme } from './default-theme.styles.js'
@@ -27,6 +27,8 @@ import { Token } from "prism-esm";
  * @csspart base - The base wrapping element
  * @csspart pre - The <pre> element wrapping the source code
  * @csspart code - The <code>  element wrapping the source code
+ * @csspart gutter - The gutter for line numbers. This is only for the overlay for when the lines dont correspond to size of the code.
+ * @csspart gutter-cell - The element that holds line numbers.
 
  * @slot default - The code to use for highlighting
  */
@@ -42,7 +44,25 @@ export default class LightCode extends BaseElement {
   static styles = [
     baseStyles,
     codeStyles,
-    theme
+    theme,
+    css`
+      [part~="base"] {
+        height: 100%;
+        position: relative;
+      }
+
+      [part~="gutter"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: var(--gutter-cell-width, 40px);
+        border-inline-end: 1px solid darkgray;
+        background-color: rgba(50, 50, 50, 0.08);
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+      }
+    `
   ]
 
   /**
@@ -63,8 +83,6 @@ export default class LightCode extends BaseElement {
 
   constructor () {
     super()
-
-    this.range = new NumberRange().parse("{1-3, 6, 7}")
 
     /**
      * The language to highlight for.
@@ -131,6 +149,24 @@ export default class LightCode extends BaseElement {
      * @type {boolean} whether or not to disable line numbers
      */
     this.disableLineNumbers = false
+
+    this.__resizeObserver = new ResizeObserver(() => this.__setGutterWidth())
+  }
+
+  /**
+   * @override
+   */
+  connectedCallback () {
+    super.connectedCallback()
+    this.__resizeObserver.observe(this)
+  }
+
+  /**
+   * @override
+   */
+  disconnectedCallback () {
+    super.disconnectedCallback()
+    this.__resizeObserver.unobserve(this)
   }
 
   /**
@@ -192,8 +228,6 @@ export default class LightCode extends BaseElement {
   unescapeTags (text) {
     // Replace usages of `&lt;/script>` with `</script>`. Match against
     // `&lt;/` so that other usages of &lt; aren't replaced.
-    // return text.replace(/&lt;\//g, '</');
-
     return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
   }
 
@@ -211,25 +245,49 @@ export default class LightCode extends BaseElement {
         deletedLinesRange: new NumberRange().parse(this.deletedLines),
         highlightLinesRange: new NumberRange().parse(this.highlightLines)
       }))
-      prism.hooks.add('wrap', function(env) {
-        if (!env.token) return
-        if (typeof env.token === "string") return
-
-	if (env.token.type.includes('light-line')) {
-	  env.attributes['part'] = "line"
-	}
-
-	if (env.token.type.includes("light-gutter")) {
-	  env.attributes['part'] = "gutter"
-        }
-      });
     }
+
+    /**
+     * @typedef {object} WrapEnv
+     * @property {string} type
+     * @property {string} content
+     * @property {Array<string>} classes
+     * @property {Record<string, string>} attributes
+     * @property {string} language
+     */
+
+    prism.hooks.add('wrap',
+      /**
+       * @param {WrapEnv} env
+       */
+      // @ts-expect-error
+      function(env) {
+        if (env.type.includes('light-line')) {
+	  env.attributes['part'] = "line"
+        }
+
+        if (env.type.includes("light-gutter-cell")) {
+	  env.attributes['part'] = "gutter-cell"
+        }
+    });
 
     code = PrismHighlight(code, prism.languages[this.language], this.language, {
       afterTokenize: plugins,
     })
 
     return code
+  }
+
+  /**
+   * @internal
+   */
+  __setGutterWidth () {
+    // @ts-expect-error
+    const gutterWidth = this.shadowRoot?.querySelector("[part~='gutter-cell']")?.offsetWidth
+
+    if (gutterWidth) {
+      this.style.setProperty("--gutter-cell-width", `${gutterWidth}px`)
+    }
   }
 
   /**
@@ -259,12 +317,20 @@ export default class LightCode extends BaseElement {
                 >${unsafeHTML(this.highlight(this.code))}</code></pre>`,
             () => html`${unsafeHTML(this.code)}`
           )}
+
+          <!-- This gutter is for showing when line numbers may not correspond to existing lines. -->
+          <div part="gutter"></div>
       </div>
 
       <div hidden>
         <slot name="code" @slotchange=${this.handleTemplate}></slot>
       </div>
     `
+
+    setTimeout(async () => {
+      await this.updateComplete
+      setTimeout(() => this.__setGutterWidth())
+    })
 
     return finalHTML
   }

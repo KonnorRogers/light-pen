@@ -86,12 +86,12 @@ Inserted lines can be highlighted via `inserted-lines` attribute.
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
-    <light-code inserted-lines="{1-3, 6, 7}">
+    <light-code inserted-lines="{1-4, 6, 7}">
       <script type="text/plain" slot="code">
         <html>
           <head></head>
           <body>
-            Hello World
+            HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
 
             <script>
               console.log("Hello World")
@@ -109,7 +109,7 @@ Deleted lines can be highlighted via `deleted-lines` attribute.
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
-    <light-code deleted-lines="{1-3, 6, 7}">
+    <light-code deleted-lines="{1-4, 6, 7}">
       <script type="text/plain" slot="code">
         <html>
           <head>

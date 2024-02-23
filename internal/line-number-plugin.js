@@ -28,7 +28,7 @@ export function LineNumberPlugin(
         ary.push(" ")
       }
 
-      tokens.push(new Token("light-gutter", (index + 1).toString()))
+      tokens.push(new Token("light-gutter-cell", (index + 1).toString()))
       tokens.push(new Token("light-line", ary))
     });
 

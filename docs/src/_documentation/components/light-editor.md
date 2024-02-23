@@ -8,8 +8,8 @@ component: light-editor
 <light-editor style="display: none;"></light-editor>
 <light-code style="display: none;"></light-code>
 
-<light-preview preview-mode="shadow-dom">
-  <template slot="code">
+<light-preview preview-mode="shadow-dom" >
+  <script type="text/plain" slot="code">
     <form>
       <light-editor label="A small editor">
         <!-- We use a `<script type="text/plain">` because there's a lot of caveats to using `<template>` -->
@@ -35,10 +35,10 @@ component: light-editor
               </main>
             </body>
           </html>
-        </script>
+        &lt;/script>
       </light-editor>
     </form>
-  </template>
+  </script>
 </light-preview>
 
 If you check the source code in the above example, you'll notice a `&lt;/script>`.
@@ -205,7 +205,9 @@ Using a `<textarea>` element for the default slot requires the following markup 
 To disable the editor, provide a `disabled` attribute.
 
 <light-preview preview-mode="shadow-dom">
-  <light-editor disabled></light-editor>
+  <script type="text/html" slot="code">
+    <light-editor disabled value="You can't edit me!"></light-editor>
+  </script>
 </light-preview>
 
 ## Editor with a placeholder
@@ -229,16 +231,18 @@ native `<textarea>` element.
 ### minlength, maxlength, required validations
 
 <light-preview preview-mode="shadow-dom">
-  <template slot="code">
+  <script type="text/plain" slot="code">
     <form>
       <label>
         minlength: 5, maxlength: 6, required.
         <br>
-        <light-editor required minlength="5" maxlength="6" ></light-editor>
+        <light-editor required minlength="5" maxlength="6"></light-editor>
       </label>
       <button>Trigger Validations</button>
     </form>
     <!-- Prevent form submissions -->
-    <script>this.rootNode.addEventListener("submit", (e) => e.preventDefault())</script>
-  </template>
+    <script>
+      document.addEventListener("submit", (e) => e.preventDefault())
+    &lt;/script>
+  </script>
 </light-preview>
