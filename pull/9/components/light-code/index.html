@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/pull/9/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.WBQGPDOT.js">
+<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.GUQ3ISY3.js">
 <link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js">
 <link rel="preload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.WBQGPDOT.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.GUQ3ISY3.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js" type="module"></script>
 
 <!-- Favicons -->
@@ -302,9 +302,10 @@
         <html>
           <head></head>
           <body>
-            Hello World
+            HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
             <script>
-              console.log("Hello World")
+              const greeting = "Hello World"
+              console.log(greeting)
             &lt;/script>
           </body>
         </html>
@@ -318,13 +319,15 @@
 <p>For more on why script tags are used, check out <a href="/references/why-script-tags/">Why script tags</a>
 for further reading.</p>
 
-<h2 id="using-an-attribute">
-          <a href="#using-an-attribute">Using an attribute</a>
+<h2 id="using-the-code-attribute">
+          <a href="#using-the-code-attribute">Using the “code” attribute</a>
         </h2>
+
+<p>By setting the <code class="highlighter-rouge">code</code> attribute, we can achieve the same as slotting elements.</p>
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
-    <light-code added-lines="{1-3, 6, 7}" code="<html>
+    <light-code code="<html>
         <head></head>
         <body>
           Hello World
@@ -336,17 +339,64 @@ for further reading.</p>
   </template>
 </light-preview>
 
+<h2 id="highlight-lines">
+          <a href="#highlight-lines">Highlight Lines</a>
+        </h2>
+
+<p>Line highlighting accepts 2 syntaxes, the number itself:</p>
+
+<p><code class="highlighter-rouge">highlight-lines="{1}"</code> or using a range: <code class="highlighter-rouge">highlight-lines="{1-3}"</code> and you
+can combine ranges and numbers like so:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="31b7f8fb-1d43-4ea0-a51a-32e540e78ce3" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="31b7f8fb-1d43-4ea0-a51a-32e540e78ce3" hidden="">&lt;light-code highlight-lines="{1, 4-8, 12}"&gt;&lt;/light-code&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-code</span> <span class="na">highlight-lines=</span><span class="s">"{1, 4-8, 12}"</span><span class="nt">&gt;&lt;/light-code&gt;</span>
+</code></pre></div></div></div>
+
+<p>Line ranges are <strong>inclusive</strong>. Line numbers are also 1-indexed.</p>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code highlight-lines="{1-3, 6, 7}">
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
 <h2 id="writings-diffs">
           <a href="#writings-diffs">Writings diffs</a>
         </h2>
 
-<h3 id="added-lines">
-          <a href="#added-lines">Added lines</a>
+<h3 id="inserted-lines">
+          <a href="#inserted-lines">Inserted lines</a>
         </h3>
+
+<p>Inserted lines can be highlighted via <code class="highlighter-rouge">inserted-lines</code> attribute.</p>
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
-    <light-code deleted-lines="{1-3, 6, 7}">
+    <light-code inserted-lines="{1-3, 6, 7}">
       <script type="text/plain" slot="code">
         <html>
           <head></head>
@@ -363,9 +413,11 @@ for further reading.</p>
   </script>
 </light-preview>
 
-<h3 id="removed-lines">
-          <a href="#removed-lines">Removed lines</a>
+<h3 id="deleted-lines">
+          <a href="#deleted-lines">Deleted lines</a>
         </h3>
+
+<p>Deleted lines can be highlighted via <code class="highlighter-rouge">deleted-lines</code> attribute.</p>
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
@@ -385,27 +437,6 @@ for further reading.</p>
   </script>
 </light-preview>
 
-<h2 id="highlighted-lines">
-          <a href="#highlighted-lines">Highlighted Lines</a>
-        </h2>
-
-<light-preview preview-mode="shadow-dom">
-  <script type="text/plain" slot="code">
-    <light-code highlighted-lines="{1-3, 6, 7}">
-      <script type="text/plain" slot="code">
-        <html>
-          <head>
-          </head>
-          <body>
-            <h1>
-              Hello World
-            </h1>
-          </body>
-        </html>
-      &lt;/script>
-    </light-code>
-  </script>
-</light-preview>
 <h2 id="imports">
           <a href="#imports">Imports</a>
         </h2>
@@ -418,12 +449,12 @@ for further reading.</p>
             HTML
           </div>
 
-          <clipboard-copy for="948e7725-55cd-4ea3-9f1f-88ccc79df3f3" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="fe2b1496-2d84-412a-a56d-4c3f0ab18e01" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="948e7725-55cd-4ea3-9f1f-88ccc79df3f3" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
+          <textarea id="fe2b1496-2d84-412a-a56d-4c3f0ab18e01" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -439,12 +470,12 @@ for further reading.</p>
             HTML
           </div>
 
-          <clipboard-copy for="0787c412-b2e5-4c63-b714-1f560f8f991a" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="7e52e414-2263-4522-b895-b892b2182600" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="0787c412-b2e5-4c63-b714-1f560f8f991a" hidden="">&lt;script type="module"&gt;
+          <textarea id="7e52e414-2263-4522-b895-b892b2182600" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-code&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"
 
@@ -474,12 +505,12 @@ for further reading.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="356e939b-5c9c-4081-9f10-68dfacde8930" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="9e501230-dbbb-483f-83a4-b5f3860a296f" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="356e939b-5c9c-4081-9f10-68dfacde8930" hidden="">// Auto registers as &lt;light-code&gt;
+          <textarea id="9e501230-dbbb-483f-83a4-b5f3860a296f" hidden="">// Auto registers as &lt;light-code&gt;
 import "light-pen/exports/light-code.js/exports/light-code-register.js"
 
 // Manual Register
@@ -621,7 +652,7 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
     <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
   </td>
   <td>
-    <code>"soft" | "hard"</code>
+    <code>"soft" | "none"</code>
   </td>
   <td>
     <code>"soft"</code>
@@ -650,26 +681,6 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
 
 <tr>
   <td>
-      <small>[Attribute + Property]</small>
-      <br>
-      <code>summary</code>
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
-  </td>
-</tr>
-
-<tr>
-  <td>
       <small>[Attribute]</small>
       <br>
       <code>highlight-lines</code>
@@ -679,16 +690,16 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
       <code>highlightLines</code>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    A string of possible lines to highlight. Example: "{1-9, 16, 18}"
   </td>
   <td>
     <div style="text-align: center;">-</div>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <code>string</code>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <code>""</code>
   </td>
 </tr>
 
@@ -696,23 +707,23 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
   <td>
       <small>[Attribute]</small>
       <br>
-      <code>added-lines</code>
+      <code>inserted-lines</code>
       <br><br>
       <small>[Property]</small>
       <br>
-      <code>addedLines</code>
+      <code>insertedLines</code>
+  </td>
+  <td>
+    A string of lines that are inserted for diffs. Example: "{1-9, 16, 18}"
   </td>
   <td>
     <div style="text-align: center;">-</div>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <code>string</code>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
-  </td>
-  <td>
-    <div style="text-align: center;">-</div>
+    <code>""</code>
   </td>
 </tr>
 
@@ -720,11 +731,31 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
   <td>
       <small>[Attribute]</small>
       <br>
-      <code>removed-lines</code>
+      <code>deleted-lines</code>
       <br><br>
       <small>[Property]</small>
       <br>
-      <code>removedLines</code>
+      <code>deletedLines</code>
+  </td>
+  <td>
+    A string of lines that are deleted for diffs. Example: "{1-9, 16, 18}"
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>summary</code>
   </td>
   <td>
     <div style="text-align: center;">-</div>
@@ -871,15 +902,15 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
   </h2>
   <ol class="table-of-contents__list">
   <li class="side-nav__item">
-        <a href="#using-an-attribute" class="side-nav__link">Using an attribute</a>
+        <a href="#using-the-code-attribute" class="side-nav__link">Using the “code” attribute</a>
+      </li><li class="side-nav__item">
+        <a href="#highlight-lines" class="side-nav__link">Highlight Lines</a>
       </li><li class="side-nav__item">
         <a href="#writings-diffs" class="side-nav__link">Writings diffs</a>
       </li><li class="side-nav__item">
-        <a href="#added-lines" class="side-nav__link">Added lines</a>
+        <a href="#inserted-lines" class="side-nav__link">Inserted lines</a>
       </li><li class="side-nav__item">
-        <a href="#removed-lines" class="side-nav__link">Removed lines</a>
-      </li><li class="side-nav__item">
-        <a href="#highlighted-lines" class="side-nav__link">Highlighted Lines</a>
+        <a href="#deleted-lines" class="side-nav__link">Deleted lines</a>
       </li><li class="side-nav__item">
         <a href="#imports" class="side-nav__link">Imports</a>
       </li><li class="side-nav__item">
