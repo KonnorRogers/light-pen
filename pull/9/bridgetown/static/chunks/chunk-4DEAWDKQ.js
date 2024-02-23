@@ -502,7 +502,7 @@ pre > code.diff-highlight .token.token.inserted:not(.prefix) *::selection {
   position: absolute;
   top: 50%;
   left: 0%;
-  font-size: 0.8em;
+  font-size: 16px;
   line-height: 0;
   mix-blend-mode: difference;
   filter: invert(1);
@@ -604,4 +604,4 @@ lit-html/directives/unsafe-html.js:
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 */
-//# sourceMappingURL=/light-pen/pull/9/bridgetown/static/chunks/chunk-4KLBCUMO.js.map
+//# sourceMappingURL=/light-pen/pull/9/bridgetown/static/chunks/chunk-4DEAWDKQ.js.map
