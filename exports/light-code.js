@@ -210,14 +210,19 @@ export default class LightCode extends BaseElement {
         highlightLinesRange: new NumberRange().parse(this.highlightLines)
       }))
       prism.hooks.add('wrap', function(env) {
-        console.log("WRAP")
-	      // if (env.token.type.includes('light-line')) {
-		      env.attributes['part'] = "line"
-	      // }
+        if (!env.token) return
+        if (typeof env.token === "string") return
+
+	if (env.token.type.includes('light-line')) {
+	  env.attributes['part'] = "line"
+	}
+
+	if (env.token.type.includes("light-gutter")) {
+	  env.attributes['part'] = "gutter"
+        }
       });
     }
 
-    console.log("HIGHLIGHT")
     code = PrismHighlight(code, prism.languages[this.language], this.language, {
       afterTokenize: plugins,
     })

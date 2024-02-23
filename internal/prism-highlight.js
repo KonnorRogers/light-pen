@@ -43,7 +43,7 @@ import { loader as tsxLoader } from "prism-esm/components/prism-tsx.js"
  */
 
 
-export const prism = new PrismJS()
+const prism = new PrismJS()
 markupLoader(prism)
 markupTemplatingLoader(prism)
 cssLoader(prism)

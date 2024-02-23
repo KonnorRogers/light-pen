@@ -26,7 +26,6 @@ export const codeStyles = css`
 [part~="code"] {
   display: grid;
   grid-template-columns: minmax(0, auto) minmax(0, 1fr);
-  column-gap: 8px;
 }
 
 :host([wrap="soft"]) [part~="pre"] {
@@ -44,7 +43,7 @@ export const codeStyles = css`
   position: absolute;
   top: 50%;
   left: 0%;
-  font-size: 1em;
+  font-size: 0.8em;
   line-height: 0;
   mix-blend-mode: difference;
   filter: invert(1);
@@ -54,6 +53,8 @@ export const codeStyles = css`
 .light-line {
   display: inline-block;
   width: 100%;
+  padding-inline-start: 16px;
+  position: relative;
 }
 
 .light-gutter {

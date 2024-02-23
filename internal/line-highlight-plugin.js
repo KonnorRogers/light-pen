@@ -15,9 +15,9 @@ export function LineHighlightPlugin (options) {
    */
   return function (env) {
     // -1 for 0-index.
-    let index = 0
+    let index = -1
     for (const token of env.tokens) {
-      index++;
+      index += 2;
 
       if (typeof token === "string") continue
       if (!token.type.includes("light-line")) continue

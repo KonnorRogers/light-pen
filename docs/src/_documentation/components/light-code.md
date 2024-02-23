@@ -54,8 +54,8 @@ Line highlighting accepts 2 syntaxes, the number itself:
 `highlight-lines="{1}"` or using a range: `highlight-lines="{1-3}"` and you
 can combine ranges and numbers like so:
 
-```
-highlight-lines="{1, 4-8, 12}"
+```html
+<light-code highlight-lines="{1, 4-8, 12}"></light-code>
 ```
 
 Line ranges are **inclusive**. Line numbers are also 1-indexed.
@@ -86,7 +86,7 @@ Inserted lines can be highlighted via `inserted-lines` attribute.
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
-    <light-code deleted-lines="{1-3, 6, 7}">
+    <light-code inserted-lines="{1-3, 6, 7}">
       <script type="text/plain" slot="code">
         <html>
           <head></head>
