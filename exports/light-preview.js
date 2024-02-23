@@ -38,7 +38,7 @@ export default class LightPreview extends LightPreviewBase {
    * @override
    */
   static properties = {
-    ...LightPreviewBase,
+    ...LightPreviewBase.properties,
     disableLineNumbers: {type: Boolean, reflect: true},
     highlightLines: {},
     insertedLines: {},
