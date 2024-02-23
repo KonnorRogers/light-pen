@@ -43,7 +43,7 @@ export const codeStyles = css`
   position: absolute;
   top: 50%;
   left: 0%;
-  font-size: 0.8em;
+  font-size: 16px;
   line-height: 0;
   mix-blend-mode: difference;
   filter: invert(1);
