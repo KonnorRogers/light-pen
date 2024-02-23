@@ -64,6 +64,8 @@ export default class LightCode extends BaseElement {
   constructor () {
     super()
 
+    this.range = new NumberRange().parse("{1-3, 6, 7}")
+
     /**
      * The language to highlight for.
      * @type {string}

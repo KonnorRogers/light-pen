@@ -82,7 +82,7 @@ export class NumberRange {
 
 		str = str.split(/}/)[0]
 
-		str.split(/\s+/).forEach((val) => {
+		str.split(/,\s*/).forEach((val) => {
 			// Turn them all into tuples.
 			const [minStr, maxStr] = val.split(/-/)
 

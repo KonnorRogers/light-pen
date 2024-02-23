@@ -53,7 +53,7 @@ export const codeStyles = css`
 .light-line {
   display: inline-block;
   width: 100%;
-  padding-inline-start: 16px;
+  padding-inline-start: 24px;
   position: relative;
 }
 
