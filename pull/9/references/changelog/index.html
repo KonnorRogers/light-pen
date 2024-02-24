@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/pull/9/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.RPNCF3B6.js">
+<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.BHDKHCE6.js">
 <link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js">
 <link rel="preload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.RPNCF3B6.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.BHDKHCE6.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js" type="module"></script>
 
 <!-- Favicons -->
@@ -292,12 +292,15 @@
   </h1>
 
 
-  <h2 id="240-02142024">
-          <a href="#240-02142024">2.4.0 02/14/2024</a>
+  <h2 id="next">
+          <a href="#next">Next</a>
         </h2>
 
 <ul>
   <li>Feature: Added <code class="highlighter-rouge">&lt;light-code&gt;</code> for displaying code.</li>
+  <li>Feature: Added line numbers to all code displays.</li>
+  <li>Bug Fix: <code class="highlighter-rouge">&lt;script&gt;</code> tags now properly execute inside of <code class="highlighter-rouge">&lt;light-preview&gt;</code> and have the scope of their shadow dom bound.</li>
+  <li>Improvement: <code class="highlighter-rouge">&lt;light-editor&gt;</code>, <code class="highlighter-rouge">&lt;light-code&gt;</code>, and <code class="highlighter-rouge">&lt;light-preview&gt;</code> all use <code class="highlighter-rouge">&lt;light-code&gt;</code> internally now.</li>
   <li>Improvement: Use declarative shadow DOM and fallback to polyfill in <code class="highlighter-rouge">&lt;light-preview&gt;</code></li>
 </ul>
 
@@ -421,7 +424,7 @@ some CORS bugs.</li>
   </h2>
   <ol class="table-of-contents__list">
   <li class="side-nav__item">
-        <a href="#240-02142024" class="side-nav__link">2.4.0 02/14/2024</a>
+        <a href="#next" class="side-nav__link">Next</a>
       </li><li class="side-nav__item">
         <a href="#231-02132024" class="side-nav__link">2.3.1 02/13/2024</a>
       </li><li class="side-nav__item">
