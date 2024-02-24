@@ -1,3 +1,4 @@
+import "element-internals-polyfill"
 import "../styles/index.css"
 import { Application } from "@hotwired/stimulus"
 
