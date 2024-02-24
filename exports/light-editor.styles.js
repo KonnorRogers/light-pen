@@ -39,6 +39,10 @@ export const styles = css`
     padding-inline-start: calc(var(--gutter-width, 40px) + 8px);
   }
 
+  light-code {
+    pointer-events: none;
+  }
+
   light-code::part(pre) {
     border-color: transparent;
     position: relative;
@@ -82,7 +86,7 @@ export const styles = css`
     white-space: pre;
   }
 
-  [part~="base"]:focus-within .light-line.is-active {
+  [part~="base"]:focus-within light-code::part(line-highlight) {
     background-color: rgba(255, 255, 209, 1);
   }
 

@@ -1,6 +1,7 @@
 ## Next
 
 - Feature: Added `<light-code>` for displaying code.
+- Feature: Added line numbers to all code displays.
 - Bug Fix: `<script>` tags now properly execute inside of `<light-preview>` and have the scope of their shadow dom bound.
 - Improvement: `<light-editor>`, `<light-code>`, and `<light-preview>` all use `<light-code>` internally now.
 - Improvement: Use declarative shadow DOM and fallback to polyfill in `<light-preview>`

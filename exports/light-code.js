@@ -15,7 +15,7 @@ import { dedent } from "../internal/dedent.js";
 import { codeStyles } from "./code-styles.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { NumberRange } from "../internal/number-range.js";
-import { LineHighlightPlugin } from "../internal/line-highlight-plugin.js";
+import { LineHighlightPlugin, LineHighlightWrapPlugin } from "../internal/line-highlight-plugin.js";
 import { Token } from "prism-esm";
 
 /**
@@ -245,31 +245,8 @@ export default class LightCode extends BaseElement {
         deletedLinesRange: new NumberRange().parse(this.deletedLines),
         highlightLinesRange: new NumberRange().parse(this.highlightLines)
       }))
+      prism.hooks.add("wrap", LineHighlightWrapPlugin())
     }
-
-    /**
-     * @typedef {object} WrapEnv
-     * @property {string} type
-     * @property {string} content
-     * @property {Array<string>} classes
-     * @property {Record<string, string>} attributes
-     * @property {string} language
-     */
-
-    prism.hooks.add('wrap',
-      /**
-       * @param {WrapEnv} env
-       */
-      // @ts-expect-error
-      function(env) {
-        if (env.type.includes('light-line')) {
-	  env.attributes['part'] = "line"
-        }
-
-        if (env.type.includes("light-gutter-cell")) {
-	  env.attributes['part'] = "gutter-cell"
-        }
-    });
 
     code = PrismHighlight(code, prism.languages[this.language], this.language, {
       afterTokenize: plugins,

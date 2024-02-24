@@ -70,6 +70,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   static properties = Object.assign(
     {
       language: { reflect: true },
+      disableLineNumbers: { type: Boolean, reflect: true },
       preserveWhitespace: {
         type: Boolean,
         reflect: true,
@@ -80,6 +81,16 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
         reflect: true,
         attribute: "data-has-interacted",
       },
+      hasFocused: {
+        type: Boolean,
+        reflect: true,
+        attribute: "data-has-focused",
+      },
+      currentLineNumber: {
+        attribute: false,
+        state: true,
+        type: Number
+      }
     },
     LitTextareaMixin.formProperties,
   );
@@ -123,6 +134,13 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
      * @type {boolean}
      */
     this.preserveWhitespace = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.disableLineNumbers = false
+
+    this.currentLineNumber = 1
   }
 
   /**
@@ -155,6 +173,10 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
       // Emit events on value updates
       this.dispatchEvent(
         new Event("light-value-change", { bubbles: true, composed: true }),
+      );
+
+      this.dispatchEvent(
+        new Event("change", { bubbles: true, composed: true }),
       );
     }
 
@@ -220,7 +242,9 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             .language=${this.language}
             .code=${this.value}
             .wrap=${this.wrap}
+            .disableLineNumbers=${this.disableLineNumbers}
             .preserveWhitespace=${this.preserveWhitespace}
+            .highlightLines=${`{${this.hasFocused ? this.currentLineNumber : ""}}`}
             @focus=${() => {
               this.textarea?.focus();
             }}
@@ -237,7 +261,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
 
           <!-- IMPORTANT! There must be no white-space above. -->
           <textarea
-            aria-labelledby="label"
             id="textarea-${language}"
             data-code-lang=${language}
             part="textarea textarea-${language}"
@@ -256,6 +279,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             @keyup=${this.keyupHandler}
             @keydown=${this.keydownHandler}
             @focus=${() => {
+              this.hasFocused = true
               this.syncScroll();
               this.setCurrentLineHighlight();
               this.dispatchEvent(
@@ -285,6 +309,12 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             @click=${() => {
               this.setCurrentLineHighlight();
             }}
+            @touchstart=${() => {
+              this.setCurrentLineHighlight();
+            }}
+            @touchend=${() => {
+              this.setCurrentLineHighlight();
+            }}
             @pointerdown=${() => {
               this.setCurrentLineHighlight();
             }}
@@ -300,6 +330,9 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
                 this.dispatchEvent(
                   new Event("light-input", { bubbles: true, composed: true }),
                 );
+                this.dispatchEvent(
+                  new Event("input", { bubbles: true, composed: true }),
+                );
                 this.syncScroll();
               }
             }
@@ -309,9 +342,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
                   e.currentTarget
                 ).value;
                 this.setCurrentLineHighlight();
-                this.dispatchEvent(
-                  new Event("light-change", { bubbles: true, composed: true }),
-                );
                 this.syncScroll();
               }
             }
@@ -463,24 +493,10 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   }
 
   setCurrentLineHighlight() {
-    const code = this.shadowRoot?.querySelector("code");
-
     const currentLineNumber = this.getCurrentLineNumber();
 
-    if (this.currentLineNumber === currentLineNumber) return;
-
-    const prevLineNumber = this.currentLineNumber;
-
-    // @ts-expect-error
-    this.currentLineNumber = currentLineNumber;
-
-    if (currentLineNumber != null && currentLineNumber >= 0) {
-      const activeLineElement = code?.children[currentLineNumber];
-
-      if (activeLineElement) {
-        code.children[prevLineNumber]?.classList?.remove("is-active");
-        activeLineElement.classList.add("is-active");
-      }
+    if (currentLineNumber != null) {
+      this.currentLineNumber = currentLineNumber + 1;
     }
   }
 
