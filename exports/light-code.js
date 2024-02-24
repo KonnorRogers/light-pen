@@ -245,6 +245,8 @@ export default class LightCode extends BaseElement {
         deletedLinesRange: new NumberRange().parse(this.deletedLines),
         highlightLinesRange: new NumberRange().parse(this.highlightLines)
       }))
+
+      // @ts-expect-error
       prism.hooks.add("wrap", LineHighlightWrapPlugin())
     }
 

@@ -473,6 +473,7 @@ export default class LightPreview extends BaseElement {
         // https://github.com/WICG/webcomponents/issues/717#issuecomment-1126786185
         const host = previewDiv;
         const shadowRoot = previewDiv.shadowRoot
+        /** @param {string} script */
         const scopedEval = (script) => Function('document', script).bind(host, shadowRoot, script)();
         scopedEval(newScript.innerHTML)
       }
