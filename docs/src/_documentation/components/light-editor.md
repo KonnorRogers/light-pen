@@ -230,7 +230,7 @@ native `<textarea>` element.
 
 ### minlength, maxlength, required validations
 
-<light-preview preview-mode="shadow-dom">
+<light-preview preview-mode="shadow-dom" script-scope="shadow-dom">
   <script type="text/plain" slot="code">
     <form>
       <label>

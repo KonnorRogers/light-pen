@@ -23,12 +23,14 @@ title: <light-code>
   </script>
 </light-preview>
 
+## Examples
+
 If you check the source code in the above example, you'll notice a `&lt;/script>`.
 
 For more on why script tags are used, check out [Why script tags](/references/why-script-tags/)
 for further reading.
 
-## Using the "code" attribute
+### Using the "code" attribute
 
 By setting the `code` attribute, we can achieve the same as slotting elements.
 

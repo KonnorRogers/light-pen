@@ -1,5 +1,6 @@
 ## Next
 
+- Feature: `code` and `preview-code` attributes are now supported on `<light-preview>`
 - Feature: Added `<light-code>` for displaying code.
 - Feature: Added line numbers to all code displays.
 - Bug Fix: `<script>` tags now properly execute inside of `<light-preview>` and have the scope of their shadow dom bound.

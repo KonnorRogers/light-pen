@@ -78,16 +78,16 @@ export default class LightPreview extends BaseElement {
     open: { reflect: true, type: Boolean },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
-    language: {},
-    unescapeBehavior: { reflect: true },
-    disableLineNumbers: {type: Boolean, reflect: true},
-    highlightLines: {},
-    insertedLines: {},
-    deletedLines: {},
+    language: { reflect: true },
+    unescapeBehavior: { attribute: "unescapeBehavior", reflect: true },
+    disableLineNumbers: {type: Boolean, reflect: true, attribute: "disable-line-numbers"},
+    highlightLines: {attribute: "highlight-lines"},
+    insertedLines: {attribute: "inserted-lines"},
+    deletedLines: {attribute: "deleted-lines"},
+    scriptScope: {attribute: "script-scope"},
 
-    // State
-    code: { attribute: false },
-    previewCode: { attribute: false },
+    code: {},
+    previewCode: { attribute: "preview-code" },
   }
 
   constructor () {
@@ -215,6 +215,18 @@ export default class LightPreview extends BaseElement {
      * @type {"all" | "last" | "none"}
      */
     this.unescapeBehavior = "last"
+
+    /**
+     * When using `preview-mode="shadow-dom"`,
+     * There's a funky issue with previews where if you want the location of the shadowRoot
+     * you are, you can't get it. As a result, `<light-preview>` supports the idea of a "scriptScope"
+     * where `document` is bound to the current shadowRoot instead of the actual top level `document`
+     * For more info, check out this GitHub issue:
+     * @link {https://github.com/WICG/webcomponents/issues/717#issuecomment-1126786185}
+     *
+     * @type {"document" | "shadow-dom"}
+     */
+    this.scriptScope = "document"
   }
 
   /**
@@ -467,6 +479,11 @@ export default class LightPreview extends BaseElement {
         newScript.innerHTML = script.innerHTML
 
         cloneAttributes(newScript, script)
+
+        if (this.scriptScope !== "shadow-dom") {
+          script.replaceWith(newScript)
+          return
+        }
 
         script.remove()
 
