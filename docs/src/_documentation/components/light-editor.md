@@ -246,3 +246,38 @@ native `<textarea>` element.
     &lt;/script>
   </script>
 </light-preview>
+
+## Removing line numbers
+
+Removing line numbers can be done with the boolean attribute `disable-line-numbers`
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-editor disable-line-numbers>
+      <!-- We use a `<script type="text/plain">` because there's a lot of caveats to using `<template>` -->
+      <script type="text/plain">
+        <!DOCTYPE html>
+        <html lang='en'>
+          <head>
+            <meta charset='UTF-8'>
+            <title>Hello World</title>
+
+            <style>
+              h1 { font-size: 1.8rem; }
+            </style>
+          </head>
+          <body>
+            <main>
+              <h1>Hello World</h1>
+              Sup
+              <script>
+                const greeting = 'Hello World'
+                console.log(greeting)
+              &lt;/script>
+            </main>
+          </body>
+        </html>
+      &lt;/script>
+    </light-editor>
+  </script>
+</light-preview>

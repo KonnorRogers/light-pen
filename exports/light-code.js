@@ -75,7 +75,7 @@ export default class LightCode extends BaseElement {
     highlightLines: { attribute: "highlight-lines" },
     insertedLines: { attribute: "inserted-lines" },
     deletedLines: { attribute: "deleted-lines" },
-    lineNumbers: { type: Boolean, attribute: "line-numbers" },
+    disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
     wrap: { reflect: true, attribute: "wrap" },
     language: {},
     code: {},
@@ -238,17 +238,18 @@ export default class LightCode extends BaseElement {
   highlight (code = this.code) {
     const plugins = []
 
-    if (!this.disableLineNumbers) {
-      plugins.push(LineNumberPlugin())
-      plugins.push(LineHighlightPlugin({
-        insertedLinesRange: new NumberRange().parse(this.insertedLines),
-        deletedLinesRange: new NumberRange().parse(this.deletedLines),
-        highlightLinesRange: new NumberRange().parse(this.highlightLines)
-      }))
+    plugins.push(LineNumberPlugin({
+      disableLineNumbers: this.disableLineNumbers
+    }))
 
-      // @ts-expect-error
-      prism.hooks.add("wrap", LineHighlightWrapPlugin())
-    }
+    plugins.push(LineHighlightPlugin({
+      insertedLinesRange: new NumberRange().parse(this.insertedLines),
+      deletedLinesRange: new NumberRange().parse(this.deletedLines),
+      highlightLinesRange: new NumberRange().parse(this.highlightLines)
+    }))
+
+    // @ts-expect-error
+    prism.hooks.add("wrap", LineHighlightWrapPlugin())
 
     code = PrismHighlight(code, prism.languages[this.language], this.language, {
       afterTokenize: plugins,
@@ -298,7 +299,10 @@ export default class LightCode extends BaseElement {
           )}
 
           <!-- This gutter is for showing when line numbers may not correspond to existing lines. -->
-          <div part="gutter"></div>
+          ${when(this.disableLineNumbers,
+            () => html``,
+            () => html`<div part="gutter"></div>`
+          )}
       </div>
 
       <div hidden>

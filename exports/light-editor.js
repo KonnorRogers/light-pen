@@ -70,7 +70,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   static properties = Object.assign(
     {
       language: { reflect: true },
-      disableLineNumbers: { type: Boolean, reflect: true },
+      disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
       preserveWhitespace: {
         type: Boolean,
         reflect: true,

@@ -2,10 +2,6 @@ import { css } from "lit";
 
 export const codeStyles = css`
 
-:host([disable-line-numbers]) [part~="pre"] {
-  padding: 1rem;
-}
-
 [part~="pre"],
 [part~="code"] {
   color: #272727;
@@ -36,7 +32,7 @@ export const codeStyles = css`
   white-space: pre-wrap;
 }
 
-:host([disable-line-numbers]) [part~="line"] {
+:host([disable-line-numbers]) [part~="code"] {
   grid-template-columns: minmax(0, 1fr);
 }
 

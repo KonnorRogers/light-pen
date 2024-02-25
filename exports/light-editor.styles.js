@@ -21,6 +21,7 @@ export const styles = css`
   }
 
   /* Include "pre" if line numbers are disabled */
+  :host([disable-line-numbers]) [part~="textarea"],
   [part~="textarea"],
   light-code::part(line) {
     padding-inline-start: 8px;

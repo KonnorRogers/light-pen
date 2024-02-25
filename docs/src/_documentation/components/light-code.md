@@ -127,3 +127,23 @@ Deleted lines can be highlighted via `deleted-lines` attribute.
   </script>
 </light-preview>
 
+
+### Disable Line Numbers
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code disable-line-numbers>
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
