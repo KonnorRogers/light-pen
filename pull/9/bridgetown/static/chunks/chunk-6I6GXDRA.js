@@ -89,7 +89,7 @@ button[part~="source-code-toggle"] {
   border-top-right-radius: 0px;
   border-top: 1px solid var(--border-color);
   min-height: 100%;
-  font-size: 1rem;
+  font-size: 1em;
   padding: 0.75rem;
 }
 
@@ -184,4 +184,4 @@ button[part~="source-code-toggle"] {
         <slot name="code" @slotchange=${this.handleTemplate}></slot>
       </div>
     `;return this.shadowRoot&&this.addShadowRootToPreview(this.shadowRoot),e}get panelResizer(){return this.shadowRoot?.querySelector("[part~='panel-resizer']")}handleDrag(e){e.cancelable&&e.preventDefault();let t=this.shadowRoot?.querySelector("iframe");t&&(t.style.pointerEvents="none"),this.resizing=!0;let s=(e.currentTarget?.offsetWidth||0)/2;S(this,{onMove:(r,o)=>{let n=r+s;this.resizePosition=p(0,this.pixelsToPercentage(n),100),this.updateResizePosition(),this.resizing=!0},onStop:()=>{let r=this.shadowRoot?.querySelector("iframe");r&&(r.style.pointerEvents="auto"),this.resizing=!1},initialEvent:e})}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let i=100-t;this.style.setProperty("--start-panel-width",`clamp(100px, ${t}%, 100%)`),this.style.setProperty("--end-panel-width",`${i}%`)}}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,i=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=i),e.key==="ArrowRight"&&(t+=i),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=p(0,t,100)}}pixelsToPercentage(e){return e/this.cachedWidth*100}};d(l,"baseName","light-preview"),d(l,"dependencies",{"light-disclosure":M,"light-code":x}),d(l,"styles",[g,f,H]),d(l,"properties",{summary:{},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},previewMode:{reflect:!0,attribute:"preview-mode"},disableHighlight:{type:Boolean,attribute:"disable-highlight"},open:{reflect:!0,type:Boolean},resizePosition:{reflect:!0,type:Number,attribute:"resize-position"},resizing:{reflect:!0,type:Boolean},language:{reflect:!0},unescapeBehavior:{attribute:"unescapeBehavior",reflect:!0},disableLineNumbers:{type:Boolean,reflect:!0,attribute:"disable-line-numbers"},highlightLines:{attribute:"highlight-lines"},insertedLines:{attribute:"inserted-lines"},deletedLines:{attribute:"deleted-lines"},lineNumberStart:{type:Number,attribute:"line-number-start"},scriptScope:{attribute:"script-scope"},code:{},previewHtml:{attribute:"preview-html"}});function O(a,e,t,i){return a.substring(0,e)+i+a.substring(t)}function C(a,e){let t=[...a.matchAll(e)],i=t[t.length-1];if(!i||i.index==null)return a;let{index:s}=i,r=s,o=s+i[0].length,n="</"+i[1]+">";return O(a,r,o,n)}export{l as a};
-//# sourceMappingURL=/light-pen/pull/9/bridgetown/static/chunks/chunk-U4IG7Z4S.js.map
+//# sourceMappingURL=/light-pen/pull/9/bridgetown/static/chunks/chunk-6I6GXDRA.js.map
