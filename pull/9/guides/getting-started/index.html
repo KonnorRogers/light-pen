@@ -301,19 +301,25 @@
             shell
           </div>
 
-          <clipboard-copy for="7889ea02-f02a-42fc-a32f-4e32e6d48937" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="78df4de5-f5be-4905-b126-280197259cd7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="7889ea02-f02a-42fc-a32f-4e32e6d48937" hidden="">npm install light-pen
+          <textarea id="78df4de5-f5be-4905-b126-280197259cd7" hidden="">npm install light-pen
+
+# If supporting older browsers
+npm install element-internals-polyfill
 </textarea>
         </div>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>light-pen
+
+<span class="c"># If supporting older browsers</span>
+npm <span class="nb">install </span>element-internals-polyfill
 </code></pre></div></div></div>
 
-<h2 id="usage">
-          <a href="#usage">Usage</a>
+<h2 id="npm-usage">
+          <a href="#npm-usage">NPM Usage</a>
         </h2>
 
 <div class="syntax-block">        <div class="syntax-block__actions">
@@ -321,17 +327,57 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="3df2ff66-c162-420b-8137-ed605efe53b5" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="ace3350c-f48b-4160-851d-a9de5623f3f9" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="3df2ff66-c162-420b-8137-ed605efe53b5" hidden="">// entrypoint.js
+          <textarea id="ace3350c-f48b-4160-851d-a9de5623f3f9" hidden="">// entrypoint.js
+import "element-internals-polyfill" // Optional polyfill for ElementInternals() for older browsers.
 import "light-pen"
 </textarea>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// entrypoint.js</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">element-internals-polyfill</span><span class="dl">"</span> <span class="c1">// Optional polyfill for ElementInternals() for older browsers.</span>
 <span class="k">import</span> <span class="dl">"</span><span class="s2">light-pen</span><span class="dl">"</span>
+</code></pre></div></div></div>
+
+<h2 id="cdn-usage">
+          <a href="#cdn-usage">CDN usage</a>
+        </h2>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="c58cd84d-3f3c-40b3-8e6d-cab3846fdb11" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="c58cd84d-3f3c-40b3-8e6d-cab3846fdb11" hidden="">&lt;script type="module"&gt;
+  import "https://esm.run/element-internals-polyfill"
+  import "https://esm.run/light-pen"
+
+  // Loading a version range. This will load the latest &gt;= 3 and &lt; 4 of light-pen.
+  import "https://esm.run/light-pen@^3.0.0"
+
+  // Loading a specific version. This will only load v3.0.0
+  import "https://esm.run/light-pen@3.0.0"
+&lt;/script&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span><span class="nt">&gt;</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://esm.run/element-internals-polyfill</span><span class="dl">"</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://esm.run/light-pen</span><span class="dl">"</span>
+
+  <span class="c1">// Loading a version range. This will load the latest &gt;= 3 and </span><span class="o">&lt;</span> <span class="mi">4</span> <span class="k">of</span> <span class="nx">light</span><span class="o">-</span><span class="nx">pen</span><span class="p">.</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://esm.run/light-pen@^3.0.0</span><span class="dl">"</span>
+
+  <span class="c1">// Loading a specific version. This will only load v3.0.0</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://esm.run/light-pen@3.0.0</span><span class="dl">"</span>
+<span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div></div>
 
 <div class="syntax-block">        <div class="syntax-block__actions">
@@ -339,40 +385,40 @@ import "light-pen"
             HTML
           </div>
 
-          <clipboard-copy for="9715ba06-b45b-4936-bd31-af32cb735936" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="72b25c99-44f4-44e8-b961-46d673fb4bff" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="9715ba06-b45b-4936-bd31-af32cb735936" hidden="">&lt;!-- Your HTML file --&gt;
+          <textarea id="72b25c99-44f4-44e8-b961-46d673fb4bff" hidden="">&lt;!-- Your HTML file --&gt;
 &lt;light-pen&gt;
-  &lt;template slot="html"&gt;
+  &lt;script type="text/plain" slot="html"&gt;
     &lt;!-- HTML --&gt;
-  &lt;/template&gt;
+  &lt;/script&gt;
 
-  &lt;template slot="css"&gt;
+  &lt;script type="text/plain" slot="css"&gt;
     &lt;!-- CSS --&gt;
-  &lt;/template&gt;
+  &lt;/script&gt;
 
-  &lt;template slot="js"&gt;
+  &lt;script type="text/plain" slot="js"&gt;
     &lt;!-- JS --&gt;
-  &lt;/template&gt;
+  &lt;/script&gt;
 &lt;/light-pen&gt;
 </textarea>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Your HTML file --&gt;</span>
 <span class="nt">&lt;light-pen&gt;</span>
-  <span class="nt">&lt;template</span> <span class="na">slot=</span><span class="s">"html"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- HTML --&gt;</span>
-  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/plain"</span> <span class="na">slot=</span><span class="s">"html"</span><span class="nt">&gt;</span>
+    <span class="o">&lt;</span><span class="gs">!-- HTML --&gt;
+</span>  <span class="nt">&lt;/script&gt;</span>
 
-  <span class="nt">&lt;template</span> <span class="na">slot=</span><span class="s">"css"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- CSS --&gt;</span>
-  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/plain"</span> <span class="na">slot=</span><span class="s">"css"</span><span class="nt">&gt;</span>
+    <span class="o">&lt;</span><span class="gs">!-- CSS --&gt;
+</span>  <span class="nt">&lt;/script&gt;</span>
 
-  <span class="nt">&lt;template</span> <span class="na">slot=</span><span class="s">"js"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- JS --&gt;</span>
-  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/plain"</span> <span class="na">slot=</span><span class="s">"js"</span><span class="nt">&gt;</span>
+    <span class="o">&lt;</span><span class="gs">!-- JS --&gt;
+</span>  <span class="nt">&lt;/script&gt;</span>
 <span class="nt">&lt;/light-pen&gt;</span>
 </code></pre></div></div></div>
 
@@ -412,7 +458,9 @@ for “Form Association”. If you support older browsers, it’s recommended yo
   <li class="side-nav__item">
         <a href="#installation" class="side-nav__link">Installation</a>
       </li><li class="side-nav__item">
-        <a href="#usage" class="side-nav__link">Usage</a>
+        <a href="#npm-usage" class="side-nav__link">NPM Usage</a>
+      </li><li class="side-nav__item">
+        <a href="#cdn-usage" class="side-nav__link">CDN usage</a>
       </li><li class="side-nav__item">
         <a href="#polyfills" class="side-nav__link">Polyfills</a>
       </li></ol>
