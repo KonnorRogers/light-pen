@@ -79,7 +79,7 @@ button[part~="source-code-toggle"] {
   border-top-right-radius: 0px;
   border-top: 1px solid var(--border-color);
   min-height: 100%;
-  font-size: 1rem;
+  font-size: 1em;
   padding: 0.75rem;
 }
 

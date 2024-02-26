@@ -11,18 +11,18 @@
 - Improvement: Use declarative shadow DOM and fallback to polyfill in `<light-preview>`
 
 
-## v2.3.1 02/13/2024
+## v2.3.1 - 02/13/2024
 
 - Update form associated package
 
-## v2.3.0 02/13/2024
+## v2.3.0 - 02/13/2024
 
 - Added form association to `<light-editor>`
 - Added `wrap="soft | hard"` to `<light-preview>` and `<light-editor>`
 - Added `preserve-whitespace` to the `<light-pen>` to pass down to `<light-editor>`
 - `<light-preview>` now properly creates a second level shadow dom so the preview's shadow dom styles don't leak.
 
-## v2.2.0 12/03/2023
+## v2.2.0 - 12/03/2023
 
 - Switch to a `Prism` fork to play nicely with ESM and allow testing.
 
