@@ -16,6 +16,11 @@ class Builders::ComponentGenerator < SiteBuilder
   end
 
   def build
+    # hook :resources, :post_init do
+    #   root = File.expand_path("../../../", __dir__)
+    #   `cd #{root} && npm run build`
+    # end
+
     generator do
       custom_elements_manifest_path = File.read(File.expand_path("../../../custom-elements.json", __dir__))
       manifest = JSON.parse(custom_elements_manifest_path)

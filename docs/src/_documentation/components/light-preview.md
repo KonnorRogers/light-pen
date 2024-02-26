@@ -7,10 +7,10 @@ component: light-preview
 ## Typical Usage
 
 <light-preview>
-  <template slot="preview-code">
+  <script type="text/plain" slot="preview-html">
     <button>Displaying a super cool button</button>
-  </template>
-  <template slot="code">
+  </script>
+  <script type="text/plain" slot="code">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -26,8 +26,8 @@ component: light-preview
     <script type="module">
       import LightPreview from "./exports/light-preview.js";
       LightPreview.define()
-    </script>
-  </template>
+    &lt;/script>
+  </script>
 </light-preview>
 
 ## Nesting a light-pen inside of a light-pen
@@ -52,7 +52,7 @@ component: light-preview
     </script>
   </template>
 
-  <template slot="preview-code">
+  <template slot="preview-html">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -73,7 +73,10 @@ component: light-preview
 </light-preview>
 
 
-## Loading inline
+## Loading inside a shadow DOM
+
+By default, previews are loaded inside an `<iframe>` for true "encapsulation". This may not always be desirable.
+For not as strict encapsulation you can use `preview-mode="shadow-dom"`
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
@@ -89,7 +92,7 @@ component: light-preview
 
         <br>
         <p>
-          Notice how the button has the same styling as the toggle! That's because its not scoped into an iFrame!
+          This button lives in a "Shadow DOM" and not inside an iframe!!
         </p>
       </template>
     </light-preview>
@@ -193,3 +196,47 @@ component: light-preview
   <button slot="actions">HTML</button>
   <button slot="actions">Codepen</button>
 </light-preview>
+
+## Escaping nested script tags
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code>
+      <script type="text/plain" slot="code">
+        <html>
+          <head></head>
+          <body>
+            Hello World
+            <script>
+              console.log("Hello World")
+            &lt;/script>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+## Highlight Lines
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-preview preview-mode="shadow-dom" highlight-lines="{1}">
+      <script type="text/plain" slot="preview-html">
+        View Source code for more.
+      </script>
+      <script type="text/plain" slot="code">
+        const foo = "bar"
+        console.log(foo)
+      &lt;/script>
+    </light-preview>
+  </script>
+</light-preview>
+
+
+If you check the source code in the above example, you'll notice a `&lt;/script>`.
+
+For more on why script tags are used, check out [Why script tags](/references/why-script-tags/)
+for further reading.
+
+

@@ -32,6 +32,7 @@ const esbuildOptions = {
     "light-pen/exports/light-pen": "../exports/light-pen.js",
     "light-pen/exports/light-preview": "../exports/light-preview.js",
     "light-pen/exports/light-editor": "../exports/light-editor.js",
+    "light-pen/exports/light-code": "../exports/light-code.js",
   },
   define: {
     "process.env.BASE_PATH": `"${process.env.BASE_PATH}"`

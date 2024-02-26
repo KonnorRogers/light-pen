@@ -8,10 +8,13 @@ function motionReduced () {
 
 /**
  * A `<details>` element packaged nicely to animate like a disclosure.
+ *
  * @customElement
- * @tagName light-disclosure
+ * @tagname light-disclosure
+ *
+ * @slot default - The code to use for highlighting
  */
-export class LightDisclosure extends BaseElement {
+export default class LightDisclosure extends BaseElement {
   /**
    * @override
    */

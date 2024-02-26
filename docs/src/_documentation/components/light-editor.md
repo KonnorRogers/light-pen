@@ -6,9 +6,10 @@ component: light-editor
 
 <!-- Register it with the lazy loader -->
 <light-editor style="display: none;"></light-editor>
+<light-code style="display: none;"></light-code>
 
-<light-preview preview-mode="shadow-dom">
-  <template slot="code">
+<light-preview preview-mode="shadow-dom" >
+  <script type="text/plain" slot="code">
     <form>
       <light-editor label="A small editor">
         <!-- We use a `<script type="text/plain">` because there's a lot of caveats to using `<template>` -->
@@ -34,11 +35,16 @@ component: light-editor
               </main>
             </body>
           </html>
-        </script>
+        &lt;/script>
       </light-editor>
     </form>
-  </template>
+  </script>
 </light-preview>
+
+If you check the source code in the above example, you'll notice a `&lt;/script>`.
+
+For more on why script tags are used, check out [Why script tags](/references/why-script-tags/)
+for further reading.
 
 ## Using the `value` attribute
 
@@ -199,7 +205,9 @@ Using a `<textarea>` element for the default slot requires the following markup 
 To disable the editor, provide a `disabled` attribute.
 
 <light-preview preview-mode="shadow-dom">
-  <light-editor disabled></light-editor>
+  <script type="text/html" slot="code">
+    <light-editor disabled value="You can't edit me!"></light-editor>
+  </script>
 </light-preview>
 
 ## Editor with a placeholder
@@ -222,17 +230,54 @@ native `<textarea>` element.
 
 ### minlength, maxlength, required validations
 
-<light-preview preview-mode="shadow-dom">
-  <template slot="code">
+<light-preview preview-mode="shadow-dom" script-scope="shadow-dom">
+  <script type="text/plain" slot="code">
     <form>
       <label>
         minlength: 5, maxlength: 6, required.
         <br>
-        <light-editor required minlength="5" maxlength="6" ></light-editor>
+        <light-editor required minlength="5" maxlength="6"></light-editor>
       </label>
       <button>Trigger Validations</button>
     </form>
     <!-- Prevent form submissions -->
-    <script>this.rootNode.addEventListener("submit", (e) => e.preventDefault())</script>
-  </template>
+    <script>
+      document.addEventListener("submit", (e) => e.preventDefault())
+    &lt;/script>
+  </script>
+</light-preview>
+
+## Removing line numbers
+
+Removing line numbers can be done with the boolean attribute `disable-line-numbers`
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-editor disable-line-numbers>
+      <!-- We use a `<script type="text/plain">` because there's a lot of caveats to using `<template>` -->
+      <script type="text/plain">
+        <!DOCTYPE html>
+        <html lang='en'>
+          <head>
+            <meta charset='UTF-8'>
+            <title>Hello World</title>
+
+            <style>
+              h1 { font-size: 1.8rem; }
+            </style>
+          </head>
+          <body>
+            <main>
+              <h1>Hello World</h1>
+              Sup
+              <script>
+                const greeting = 'Hello World'
+                console.log(greeting)
+              &lt;/script>
+            </main>
+          </body>
+        </html>
+      &lt;/script>
+    </light-editor>
+  </script>
 </light-preview>

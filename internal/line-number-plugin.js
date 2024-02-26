@@ -6,6 +6,8 @@ const newLineRegex = /\r\n|\r|\n/
 /**
  * Options for the LineNumberPlugin. Currently nothing.
  * @typedef {object} Options
+ * @property {boolean} [disableLineNumbers] - Toggle line numbers off.
+ * @property {number} [lineNumberStart=1] - Where to start counting from. Default is 1.
  */
 
 /**
@@ -15,17 +17,31 @@ const newLineRegex = /\r\n|\r|\n/
 export function LineNumberPlugin(
   options = {}
 ) {
+
+  const disableLineNumbers = options.disableLineNumbers ?? false
+  const lineNumberStart = options.lineNumberStart ?? 1
+
   /**
    * @type {import('./prism-highlight.js').Hook}
    */
   return function lineNumberPlugin (env) {
-    env.tokens = splitLinesRec(env.tokens).map((ary) => {
+    /**
+     * @type {Token[]}
+     */
+    const tokens = []
+    splitLinesRec(env.tokens).forEach((ary, index) => {
       if (ary.length <= 0) {
         ary.push(" ")
       }
 
-      return new Token("light-line", ary)
+      if (options.disableLineNumbers !== true) {
+        tokens.push(new Token("light-gutter-cell", (index + lineNumberStart).toString()))
+      }
+
+      tokens.push(new Token("light-line", ary))
     });
+
+    env.tokens = tokens
 
   }
 }

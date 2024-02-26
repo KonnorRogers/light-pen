@@ -1,8 +1,8 @@
-import { css } from "lit"
+import { css } from "lit";
 
 export const styles = css`
   [part~="base"] {
-	  font-family: Menlo, Monaco, "Courier New", monospace;
+    font-family: Menlo, Monaco, "Courier New", monospace;
     font-size: 1rem;
     height: 15em;
     width: 100%;
@@ -17,25 +17,15 @@ export const styles = css`
     tab-size: 2;
     caret-color: black;
     counter-reset: linenumber 0;
-    display: grid;
-    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr);
     border: 1px solid gray;
   }
 
   /* Include "pre" if line numbers are disabled */
-  [part~="textarea"], .light-line {
-    padding: 0px;
-    padding-inline-start: 6px;
-  }
-
-  /** @TODO: If line numbers disabled */
-  :host([line-numbers="disabled"]) .light-line {
-    padding-inline-start: 0px;
-  }
-
-  :host([line-numbers="disabled"]) [part~="pre"] {
-    padding-inline-start: 6px;
+  :host([disable-line-numbers]) [part~="textarea"],
+  [part~="textarea"],
+  light-code::part(line) {
+    padding-inline-start: 8px;
+    padding-inline-end: 8px;
   }
 
   [part~="textarea"] {
@@ -45,9 +35,16 @@ export const styles = css`
     caret-color: inherit;
     z-index: 1;
     resize: none;
+
+    /* Dynamically generated based on the size of the  gutter from "<light-code>" */
+    padding-inline-start: calc(var(--gutter-width, 40px) + 8px);
   }
 
-  [part~="pre"] {
+  light-code {
+    pointer-events: none;
+  }
+
+  light-code::part(pre) {
     border-color: transparent;
     position: relative;
   }
@@ -61,7 +58,13 @@ export const styles = css`
     outline: transparent;
   }
 
-  [part~="pre"], [part~="textarea"], [part~="code"], [part~="gutter"] {
+  light-code::part(line) {
+    padding-inline-start: 8px;
+  }
+
+  light-code::part(pre),
+  [part~="textarea"],
+  light-code::part(code) {
     /* I don't love this, but it fixes font size inconsistencies on mobile. The alternative is listen for font-size changes, which is...challenging. */
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
@@ -73,86 +76,31 @@ export const styles = css`
     tab-size: inherit;
 
     /* this creates line-wrapping. */
-	  word-break: break-word;
+    word-break: break-word;
     white-space: pre-wrap;
   }
 
-  :host([wrap="none"]) :is([part~="pre"], [part~="textarea"], [part~="code"], [part~="gutter"]) {
+  :host([wrap="none"])
+    :is(light-code::part(pre), [part~="textarea"], light-code::part(code)) {
     /* This would remove line-wrapping */
-	  word-break: break-all;
+    word-break: break-all;
     white-space: pre;
   }
 
-  /** Hide scrollbars for the gutter */
-  [part~="gutter"]::-webkit-scrollbar { /* WebKit */
-    width: 0;
-    height: 0;
+  [part~="base"]:focus-within light-code::part(line-highlight) {
+    background-color: rgba(255, 255, 209, 1);
   }
-
-  [part~="gutter-cell"] {
-    padding-inline-end: 16px;
-    padding-inline-start: 12px;
-  }
-
-  [part~="gutter"] {
-    color: rgba(0,0,0,0.35);
-	  background-color: rgba(50,50,50,0.08);
-    font-variant-numeric: tabular-nums;
-    border-inline-end: 1px solid darkgray;
-    -webkit-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    font-size: inherit;
-    font-family: inherit;
-    line-height: inherit;
-    tab-size: inherit;
-
-    /* this creates line-wrapping. */
-	  word-break: break-word;
-    white-space: pre-wrap;
-    text-align: end;
-  }
-
-  [part~="gutter-cell"] {
-    font-size: 100%;
-    display: block;
-  }
-
-  [part~="gutter-cell"] {
-    font-size: 100%;
-    display: block;
-  }
-
-  .light-line {
-    display: inline-block;
-    width: 100%;
-  }
-
-  [part~="base"]:focus-within .light-line.is-active {
-    background-color: rgba(255,255,209,1);
-  }
-
-  /* We don't want to show the focus position if the user hasn't interacted with the textarea. */
-  :where(:host([has-interacted]) .light-line.is-active) {
-    background-color: rgba(0,0,0,0.05);
-  }
-
-  [part~="gutter-cell"][part~="gutter-cell--active"] {
-    background-color: rgba(0,0,0,0.05);
-  }
-
 
   [part~="base-editor"] {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr);
+    max-height: 100%;
+    min-height: 100%;
   }
 
-  [part~="pre"],
+  light-code,
   [part~="textarea"] {
     grid-area: 1/1/2/2;
     width: 100%;
@@ -164,20 +112,11 @@ export const styles = css`
   }
 
   [part~="textarea"]::placeholder {
-    color: rgba(0,0,0,0.5);
-  }
-
-  [part~="pre"] {
-	  color: #272727;
-  }
-
-  [part~="gutter"],
-  [part~="pre"] {
-	  background-color: #f7f7f7;
+    color: rgba(0, 0, 0, 0.5);
   }
 
   [part~="textarea"]::selection {
     color: inherit;
-    background-color: rgba(0,0,0,0.15);
+    background-color: rgba(0, 0, 0, 0.15);
   }
-`
+`;
