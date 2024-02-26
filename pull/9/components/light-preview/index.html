@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/pull/9/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.4NKXZD6W.js">
+<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.ZZHOQKZM.js">
 <link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js">
 <link rel="preload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.4NKXZD6W.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.ZZHOQKZM.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js" type="module"></script>
 
 <!-- Favicons -->
@@ -299,10 +299,10 @@
         </h2>
 
 <light-preview>
-  <template slot="preview-code">
+  <script type="text/plain" slot="preview-html">
     <button>Displaying a super cool button</button>
-  </template>
-  <template slot="code">
+  </script>
+  <script type="text/plain" slot="code">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -318,8 +318,8 @@
     <script type="module">
       import LightPreview from "./exports/light-preview.js";
       LightPreview.define()
-    </script>
-  </template>
+    &lt;/script>
+  </script>
 </light-preview>
 
 <h2 id="nesting-a-light-pen-inside-of-a-light-pen">
@@ -346,7 +346,7 @@
     </script>
   </template>
 
-  <template slot="preview-code">
+  <template slot="preview-html">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -360,7 +360,7 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.DSKGMKGK.js"
+      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.ACNGGWAO.js"
       LightPreview.define()
     </script>
   </template>
@@ -393,7 +393,7 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.DSKGMKGK.js"
+      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.ACNGGWAO.js"
       LightPreview.define()
     </script>
   </template>
@@ -483,7 +483,7 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.DSKGMKGK.js"
+      import LightPreview from "/light-pen/pull/9/bridgetown/static/light-pen/exports/light-preview.ACNGGWAO.js"
       LightPreview.define()
     </script>
   </template>
@@ -514,6 +514,24 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
   </script>
 </light-preview>
 
+<h2 id="highlight-lines">
+          <a href="#highlight-lines">Highlight Lines</a>
+        </h2>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-preview preview-mode="shadow-dom" highlight-lines="{1}">
+      <script type="text/plain" slot="preview-html">
+        View Source code for more.
+      </script>
+      <script type="text/plain" slot="code">
+        const foo = "bar"
+        console.log(foo)
+      &lt;/script>
+    </light-preview>
+  </script>
+</light-preview>
+
 <p>If you check the source code in the above example, you’ll notice a <code class="highlighter-rouge">&amp;lt;/script&gt;</code>.</p>
 
 <p>For more on why script tags are used, check out <a href="/references/why-script-tags/">Why script tags</a>
@@ -531,12 +549,12 @@ for further reading.</p>
             HTML
           </div>
 
-          <clipboard-copy for="81d2517a-677d-4c11-b845-6f7941a0eed4" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="ec3f74dd-9d2f-4fb1-952b-52750b963590" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="81d2517a-677d-4c11-b845-6f7941a0eed4" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
+          <textarea id="ec3f74dd-9d2f-4fb1-952b-52750b963590" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -552,12 +570,12 @@ for further reading.</p>
             HTML
           </div>
 
-          <clipboard-copy for="a8bdd729-5669-4cfb-ae6b-427fc1f2ebaa" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="d34fca8d-bcbd-46e7-9f08-2ce85a5bd6f9" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="a8bdd729-5669-4cfb-ae6b-427fc1f2ebaa" hidden="">&lt;script type="module"&gt;
+          <textarea id="d34fca8d-bcbd-46e7-9f08-2ce85a5bd6f9" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-preview&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"
 
@@ -587,12 +605,12 @@ for further reading.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="55969ea3-f989-47dc-8656-e83413cc7356" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="f340e19a-9eb2-40df-a4dd-1eed5ed18f62" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="55969ea3-f989-47dc-8656-e83413cc7356" hidden="">// Auto registers as &lt;light-preview&gt;
+          <textarea id="f340e19a-9eb2-40df-a4dd-1eed5ed18f62" hidden="">// Auto registers as &lt;light-preview&gt;
 import "light-pen/exports/light-preview.js/exports/light-preview-register.js"
 
 // Manual Register
@@ -664,10 +682,10 @@ LightPreview.define()
 
 <tr>
   <td>
-    <code>preview-code</code>
+    <code>preview-html</code>
   </td>
   <td>
-    If you want to run code that is slightly different from the source code you want to display, slot it into "preview-code"
+    If you want to run code that is slightly different from the source code you want to display, slot it into "preview-html"
   </td>
 </tr>
 
@@ -676,7 +694,7 @@ LightPreview.define()
     <code>code</code>
   </td>
   <td>
-    Used to display both source code and to power your preview in the iframe. If you slot in "preview-code", then it will only be used to show / highlight your source code.
+    Used to display both source code and to power your preview in the iframe. If you slot in "preview-html", then it will only be used to show / highlight your source code.
   </td>
 </tr>
 
@@ -930,6 +948,30 @@ LightPreview.define()
 
 <tr>
   <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>line-number-start</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>lineNumberStart</code>
+  </td>
+  <td>
+    Where to start counting indexes in the gutter. Note, this is purely for display purposes.
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>number</code>
+  </td>
+  <td>
+    <code>1</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
       <small>[Attribute + Property]</small>
       <br>
       <code>code</code>
@@ -954,14 +996,14 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
   <td>
       <small>[Attribute]</small>
       <br>
-      <code>preview-code</code>
+      <code>preview-html</code>
       <br><br>
       <small>[Property]</small>
       <br>
-      <code>previewCode</code>
+      <code>previewHtml</code>
   </td>
   <td>
-    If `disableHighlight` is true, then you must pass in an element into `previewCode` to be able to get
+    If `disableHighlight` is true, then you must pass in an element into `previewHtml` to be able to get
   the code to run in the previewer.
   </td>
   <td>
@@ -1295,6 +1337,8 @@ For more info, check out this GitHub issue:
         <a href="#additional-buttons" class="side-nav__link">Additional buttons</a>
       </li><li class="side-nav__item">
         <a href="#escaping-nested-script-tags" class="side-nav__link">Escaping nested script tags</a>
+      </li><li class="side-nav__item">
+        <a href="#highlight-lines" class="side-nav__link">Highlight Lines</a>
       </li><li class="side-nav__item">
         <a href="#imports" class="side-nav__link">Imports</a>
       </li><li class="side-nav__item">

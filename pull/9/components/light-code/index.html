@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/pull/9/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.4NKXZD6W.js">
+<link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/index.ZZHOQKZM.js">
 <link rel="modulepreload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js">
 <link rel="preload" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/pull/9/bridgetown/static/javascript/defer.YH7YSN6W.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.4NKXZD6W.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/index.ZZHOQKZM.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/pull/9/bridgetown/static/javascript/defer.OYFR3QB3.js" type="module"></script>
 
 <!-- Favicons -->
@@ -357,12 +357,12 @@ can combine ranges and numbers like so:</p>
             HTML
           </div>
 
-          <clipboard-copy for="519f2ace-866a-4d9b-9386-aea98c719308" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="b2da1f28-76d9-4081-a1a0-fa5f63f1852e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="519f2ace-866a-4d9b-9386-aea98c719308" hidden="">&lt;light-code highlight-lines="{1, 4-8, 12}"&gt;&lt;/light-code&gt;
+          <textarea id="b2da1f28-76d9-4081-a1a0-fa5f63f1852e" hidden="">&lt;light-code highlight-lines="{1, 4-8, 12}"&gt;&lt;/light-code&gt;
 </textarea>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-code</span> <span class="na">highlight-lines=</span><span class="s">"{1, 4-8, 12}"</span><span class="nt">&gt;&lt;/light-code&gt;</span>
@@ -441,6 +441,30 @@ can combine ranges and numbers like so:</p>
   </script>
 </light-preview>
 
+<h3 id="combining-inserted-and-deleted-lines">
+          <a href="#combining-inserted-and-deleted-lines">Combining inserted and deleted lines</a>
+        </h3>
+
+<p>Deleted lines can be highlighted via <code class="highlighter-rouge">deleted-lines</code> attribute.</p>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code deleted-lines="{1-2, 6, 7}" inserted-lines="{3, 4, 5}">
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
 <h3 id="disable-line-numbers">
           <a href="#disable-line-numbers">Disable Line Numbers</a>
         </h3>
@@ -448,6 +472,31 @@ can combine ranges and numbers like so:</p>
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
     <light-code disable-line-numbers>
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+<h3 id="starting-counting-lines-at-a-specific-index">
+          <a href="#starting-counting-lines-at-a-specific-index">Starting counting lines at a specific index</a>
+        </h3>
+
+<p>Sometimes you may not want to start counting lines at <code class="highlighter-rouge">1</code>, for example, we can start
+counting lines at <code class="highlighter-rouge">10</code> in the following snippet:</p>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code line-number-start="10">
       <script type="text/plain" slot="code">
         <html>
           <head>
@@ -474,12 +523,12 @@ can combine ranges and numbers like so:</p>
             HTML
           </div>
 
-          <clipboard-copy for="a2d2b290-f18b-446c-a763-889f5c08deb2" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="0ccdb647-931c-4203-bf91-a359072d3538" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="a2d2b290-f18b-446c-a763-889f5c08deb2" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
+          <textarea id="0ccdb647-931c-4203-bf91-a359072d3538" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -495,12 +544,12 @@ can combine ranges and numbers like so:</p>
             HTML
           </div>
 
-          <clipboard-copy for="a7d195ae-ab95-4967-ab83-16fc6d80b24d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="b88cd840-d9c7-458a-b620-c398c48f8c2c" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="a7d195ae-ab95-4967-ab83-16fc6d80b24d" hidden="">&lt;script type="module"&gt;
+          <textarea id="b88cd840-d9c7-458a-b620-c398c48f8c2c" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-code&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"
 
@@ -530,12 +579,12 @@ can combine ranges and numbers like so:</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="1863f749-985b-42fb-b36d-0331595ab098" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="3e3ae075-82b4-47f1-92b1-b797deb7178b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="1863f749-985b-42fb-b36d-0331595ab098" hidden="">// Auto registers as &lt;light-code&gt;
+          <textarea id="3e3ae075-82b4-47f1-92b1-b797deb7178b" hidden="">// Auto registers as &lt;light-code&gt;
 import "light-pen/exports/light-code.js/exports/light-code-register.js"
 
 // Manual Register
@@ -802,6 +851,30 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
 
 <tr>
   <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>line-number-start</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>lineNumberStart</code>
+  </td>
+  <td>
+    Where to start counting from indexes. Note, this is only for display purposes in the gutter.
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>number</code>
+  </td>
+  <td>
+    <code>1</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
       <small>[Attribute + Property]</small>
       <br>
       <code>summary</code>
@@ -957,7 +1030,11 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
       </li><li class="side-nav__item">
         <a href="#deleted-lines" class="side-nav__link">Deleted lines</a>
       </li><li class="side-nav__item">
+        <a href="#combining-inserted-and-deleted-lines" class="side-nav__link">Combining inserted and deleted lines</a>
+      </li><li class="side-nav__item">
         <a href="#disable-line-numbers" class="side-nav__link">Disable Line Numbers</a>
+      </li><li class="side-nav__item">
+        <a href="#starting-counting-lines-at-a-specific-index" class="side-nav__link">Starting counting lines at a specific index</a>
       </li><li class="side-nav__item">
         <a href="#imports" class="side-nav__link">Imports</a>
       </li><li class="side-nav__item">

@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["../../../../../exports/light-pen-register.js"],
   "sourcesContent": ["import LightPen from \"./light-pen.js\";\n\nexport default LightPen\n\nLightPen.define()\n"],
-  "mappings": "0aAEA,IAAOA,EAAQC,EAEfA,EAAS,OAAO",
+  "mappings": "qWAEA,IAAOA,EAAQC,EAEfA,EAAS,OAAO",
   "names": ["light_pen_register_default", "LightPen"]
 }
