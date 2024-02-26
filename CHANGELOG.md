@@ -1,5 +1,6 @@
 ## Next
 
+- BREAKING_CHANGE: The default entrypoint now registers all elements.
 - BREAKING_CHANGE: `previewCode` has changed to `previewHtml` property and `preview-html` attribute for `<light-preview>`.
 - Feature: Added `lineNumberStart` for counting indexes starting at a specific number.
 - Feature: `code` and `preview-code` attributes are now supported on `<light-preview>`
