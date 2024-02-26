@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="sl-theme-light" lang="en"><head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>References</title>
+<title></title>
 
 <!-- <base href="/light-pen/"> -->
 
@@ -82,7 +82,7 @@
 
 
   </head>
-  <body class="index " data-controller="search">
+  <body class="doc " data-controller="search">
     <kr-layout main-id="main">
       <header class="nav-header" slot="header">
   <nav class="top-nav" aria-labelledby="top-nav-label">
@@ -208,7 +208,7 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/components/light-code/">&lt;light-code&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -252,7 +252,7 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/components/light-code/">&lt;light-code&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -285,37 +285,728 @@
 
 
 <main id="main" class="documentation-content flow">
-  <h1 id="references">
-    <a href="#references">
-      References
+  <h1 id="<light-code>">
+    <a href="#<light-code>">
+      &lt;Light Code&gt;
     </a>
   </h1>
 
+    <p>LightCode is a minimal wrapper around Prism for displaying code highlighting</p>
 
-  <ul class="list">
-    <li class=" ">
-    <a class="" href="/light-pen/references/changelog/">Changelog</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/light-pen/references/why-script-tags/">Why script tags</a>
-  </li>
+  <light-code style="display: none;"></light-code>
 
-</ul>
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code>
+      <script type="text/plain" slot="code">
+        <html>
+          <head></head>
+          <body>
+            HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
+            <script>
+              const greeting = "Hello World"
+              console.log(greeting)
+            &lt;/script>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
 
-<sl-alert variant="warning" open="">
-  <sl-icon slot="icon" name="cone-striped"></sl-icon>
-  
-  <p>Coming Soon…</p>
-</sl-alert>
+<h2 id="examples">
+          <a href="#examples">Examples</a>
+        </h2>
 
+<p>If you check the source code in the above example, you’ll notice a <code class="highlighter-rouge">&amp;lt;/script&gt;</code>.</p>
 
+<p>For more on why script tags are used, check out <a href="/references/why-script-tags/">Why script tags</a>
+for further reading.</p>
+
+<h3 id="using-the-code-attribute">
+          <a href="#using-the-code-attribute">Using the “code” attribute</a>
+        </h3>
+
+<p>By setting the <code class="highlighter-rouge">code</code> attribute, we can achieve the same as slotting elements.</p>
+
+<light-preview preview-mode="shadow-dom">
+  <template slot="code">
+    <light-code code="<html>
+        <head></head>
+        <body>
+          Hello World
+          <script>
+            console.log('Hello World')
+          </script>
+        </body>
+      </html>"></light-code>
+  </template>
+</light-preview>
+
+<h2 id="highlight-lines">
+          <a href="#highlight-lines">Highlight Lines</a>
+        </h2>
+
+<p>Line highlighting accepts 2 syntaxes, the number itself:</p>
+
+<p><code class="highlighter-rouge">highlight-lines="{1}"</code> or using a range: <code class="highlighter-rouge">highlight-lines="{1-3}"</code> and you
+can combine ranges and numbers like so:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="0a6baa31-baff-42d9-9a22-6136e48d6fd5" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="0a6baa31-baff-42d9-9a22-6136e48d6fd5" hidden="">&lt;light-code highlight-lines="{1, 4-8, 12}"&gt;&lt;/light-code&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-code</span> <span class="na">highlight-lines=</span><span class="s">"{1, 4-8, 12}"</span><span class="nt">&gt;&lt;/light-code&gt;</span>
+</code></pre></div></div></div>
+
+<p>Line ranges are <strong>inclusive</strong>. Line numbers are also 1-indexed.</p>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code highlight-lines="{1-3, 6, 7}">
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+<h2 id="writings-diffs">
+          <a href="#writings-diffs">Writings diffs</a>
+        </h2>
+
+<h3 id="inserted-lines">
+          <a href="#inserted-lines">Inserted lines</a>
+        </h3>
+
+<p>Inserted lines can be highlighted via <code class="highlighter-rouge">inserted-lines</code> attribute.</p>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code inserted-lines="{1-4, 6, 7}">
+      <script type="text/plain" slot="code">
+        <html>
+          <head></head>
+          <body>
+            HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
+
+            <script>
+              console.log("Hello World")
+            &lt;/script>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+<h3 id="deleted-lines">
+          <a href="#deleted-lines">Deleted lines</a>
+        </h3>
+
+<p>Deleted lines can be highlighted via <code class="highlighter-rouge">deleted-lines</code> attribute.</p>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code deleted-lines="{1-4, 6, 7}">
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+<h3 id="combining-inserted-and-deleted-lines">
+          <a href="#combining-inserted-and-deleted-lines">Combining inserted and deleted lines</a>
+        </h3>
+
+<p>Deleted lines can be highlighted via <code class="highlighter-rouge">deleted-lines</code> attribute.</p>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code deleted-lines="{1-2, 6, 7}" inserted-lines="{3, 4, 5}">
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+<h3 id="disable-line-numbers">
+          <a href="#disable-line-numbers">Disable Line Numbers</a>
+        </h3>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code disable-line-numbers>
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+<h3 id="starting-counting-lines-at-a-specific-index">
+          <a href="#starting-counting-lines-at-a-specific-index">Starting counting lines at a specific index</a>
+        </h3>
+
+<p>Sometimes you may not want to start counting lines at <code class="highlighter-rouge">1</code>, for example, we can start
+counting lines at <code class="highlighter-rouge">10</code> in the following snippet:</p>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code line-number-start="10">
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+<h2 id="imports">
+          <a href="#imports">Imports</a>
+        </h2>
+
+<sl-tab-group>
+<sl-tab slot="nav" panel="Script">Script</sl-tab>
+<sl-tab-panel name="Script">
+  <div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="54fb5101-d739-4ea7-ac3e-6ae8cbe5c563" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="54fb5101-d739-4ea7-ac3e-6ae8cbe5c563" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"&gt;&lt;/script&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span> <span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div></div></div>
+</sl-tab-panel>
+
+<sl-tab slot="nav" panel="CDN">CDN</sl-tab>
+<sl-tab-panel name="CDN">
+  <div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="18f533aa-18c5-4e44-9e86-d1c853693e88" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="18f533aa-18c5-4e44-9e86-d1c853693e88" hidden="">&lt;script type="module"&gt;
+  // Auto registers as &lt;light-code&gt;
+  import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"
+
+  // Manual Register
+  import LightCode from "https://cdn.jsdelivr.net/npm/light-pen/exports/light-code.js/exports/light-code.js"
+  LightCode.define()
+  // =&gt; Registers as &lt;light-code&gt;
+&lt;/script&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span><span class="nt">&gt;</span>
+  <span class="c1">// Auto registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">code</span><span class="o">&gt;</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js</span><span class="dl">"</span>
+
+  <span class="c1">// Manual Register</span>
+  <span class="k">import</span> <span class="nx">LightCode</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-code.js/exports/light-code.js</span><span class="dl">"</span>
+  <span class="nx">LightCode</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
+  <span class="c1">// =&gt; Registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">code</span><span class="o">&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div></div>
+</sl-tab-panel>
+
+<sl-tab slot="nav" panel="Bundler">Bundler</sl-tab>
+<sl-tab-panel name="Bundler">
+  <div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            JavaScript
+          </div>
+
+          <clipboard-copy for="8d0c8cac-b696-4ac9-8c21-729311d34037" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="8d0c8cac-b696-4ac9-8c21-729311d34037" hidden="">// Auto registers as &lt;light-code&gt;
+import "light-pen/exports/light-code.js/exports/light-code-register.js"
+
+// Manual Register
+import LightCode "light-pen/exports/light-code.js/exports/light-code.js"
+LightCode.define()
+// =&gt; Registers as &lt;light-code&gt;
+</textarea>
+        </div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Auto registers as &lt;light-code&gt;</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-code.js/exports/light-code-register.js</span><span class="dl">"</span>
+
+<span class="c1">// Manual Register</span>
+<span class="k">import</span> <span class="nx">LightCode</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-code.js/exports/light-code.js</span><span class="dl">"</span>
+<span class="nx">LightCode</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
+<span class="c1">// =&gt; Registers as &lt;light-code&gt;</span>
+</code></pre></div></div></div>
+</sl-tab-panel>
+
+</sl-tab-group>
+
+<h2 id="slots">
+          <a href="#slots">Slots</a>
+        </h2>
+
+<div class="table-container">
+  <table class="table--component">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+    <code>default</code>
+  </td>
+  <td>
+    The code to use for highlighting
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+<h2 id="attributes">
+          <a href="#attributes">Attributes</a>
+        </h2>
+
+<div class="table-container">
+  <table class="table--component">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Reflects</th>
+        <th>Type</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>language</code>
+  </td>
+  <td>
+    The language to highlight for.
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>"html"</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>disable-highlight</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>disableHighlight</code>
+  </td>
+  <td>
+    If disabled, its on you to provide `&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;`
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>boolean</code>
+  </td>
+  <td>
+    <code>false</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>code</code>
+  </td>
+  <td>
+    We will take the code, wrap it in `&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;` and run it through
+Highlight.js.
+If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>wrap</code>
+  </td>
+  <td>
+    If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
+  </td>
+  <td>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+  </td>
+  <td>
+    <code>"soft" | "none"</code>
+  </td>
+  <td>
+    <code>"soft"</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>preserveWhitespace</code>
+  </td>
+  <td>
+    Whether or not to preserve white spaces from templates and attempt to dedent and chomp new lines.
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>Boolean</code>
+  </td>
+  <td>
+    <code>false</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>highlight-lines</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>highlightLines</code>
+  </td>
+  <td>
+    A string of possible lines to highlight. Example: "{1-9, 16, 18}"
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>inserted-lines</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>insertedLines</code>
+  </td>
+  <td>
+    A string of lines that are inserted for diffs. Example: "{1-9, 16, 18}"
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>deleted-lines</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>deletedLines</code>
+  </td>
+  <td>
+    A string of lines that are deleted for diffs. Example: "{1-9, 16, 18}"
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>disable-line-numbers</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>disableLineNumbers</code>
+  </td>
+  <td>
+    whether or not to disable line numbers
+  </td>
+  <td>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+  </td>
+  <td>
+    <code>boolean</code>
+  </td>
+  <td>
+    <code>false</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>line-number-start</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>lineNumberStart</code>
+  </td>
+  <td>
+    Where to start counting from indexes. Note, this is only for display purposes in the gutter.
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>number</code>
+  </td>
+  <td>
+    <code>1</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>summary</code>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+<h2 id="functions">
+          <a href="#functions">Functions</a>
+        </h2>
+
+<div class="table-container">
+  <table class="table--component">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Parameters</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+    <code>highlight()</code>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>code</code>
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+<h2 id="parts">
+          <a href="#parts">Parts</a>
+        </h2>
+
+<div class="table-container">
+  <table class="table--component">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+    <code>base</code>
+  </td>
+  <td>
+    The base wrapping element
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>pre</code>
+  </td>
+  <td>
+    The &lt;pre&gt; element wrapping the source code
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>code</code>
+  </td>
+  <td>
+    The &lt;code&gt;  element wrapping the source code
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>gutter</code>
+  </td>
+  <td>
+    The gutter for line numbers. This is only for the overlay for when the lines dont correspond to size of the code.
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>gutter-cell</code>
+  </td>
+  <td>
+    The element that holds line numbers.
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
 
 
     <div class="pagination-footer">
 
       <div></div>
 
-      <div></div>
+      <sl-button class="next-page" href="/light-pen/components/light-disclosure/">
+        <span style="text-align: start; display: block;">
+          <span style="display: block; color: var(--sl-color-neutral-500); font-size: 0.85rem;">Next Page</span>
+          <pagination-title>
+            &lt;light-disclosure&gt;
+          </pagination-title>
+        </span>
+
+        <span slot="suffix">
+          <sl-icon name="arrow-right" style="font-size: 1.5rem; display: block;"></sl-icon>
+        </span>
+
+      </sl-button>
   </div>
 
 
@@ -323,10 +1014,38 @@
 
 <nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
   <h2 class="table-of-contents__header">
-    References
+    &lt;Light Code&gt;
   </h2>
   <ol class="table-of-contents__list">
-  </ol>
+  <li class="side-nav__item">
+        <a href="#examples" class="side-nav__link">Examples</a>
+      </li><li class="side-nav__item">
+        <a href="#using-the-code-attribute" class="side-nav__link">Using the “code” attribute</a>
+      </li><li class="side-nav__item">
+        <a href="#highlight-lines" class="side-nav__link">Highlight Lines</a>
+      </li><li class="side-nav__item">
+        <a href="#writings-diffs" class="side-nav__link">Writings diffs</a>
+      </li><li class="side-nav__item">
+        <a href="#inserted-lines" class="side-nav__link">Inserted lines</a>
+      </li><li class="side-nav__item">
+        <a href="#deleted-lines" class="side-nav__link">Deleted lines</a>
+      </li><li class="side-nav__item">
+        <a href="#combining-inserted-and-deleted-lines" class="side-nav__link">Combining inserted and deleted lines</a>
+      </li><li class="side-nav__item">
+        <a href="#disable-line-numbers" class="side-nav__link">Disable Line Numbers</a>
+      </li><li class="side-nav__item">
+        <a href="#starting-counting-lines-at-a-specific-index" class="side-nav__link">Starting counting lines at a specific index</a>
+      </li><li class="side-nav__item">
+        <a href="#imports" class="side-nav__link">Imports</a>
+      </li><li class="side-nav__item">
+        <a href="#slots" class="side-nav__link">Slots</a>
+      </li><li class="side-nav__item">
+        <a href="#attributes" class="side-nav__link">Attributes</a>
+      </li><li class="side-nav__item">
+        <a href="#functions" class="side-nav__link">Functions</a>
+      </li><li class="side-nav__item">
+        <a href="#parts" class="side-nav__link">Parts</a>
+      </li></ol>
 </nav>
 
 
@@ -334,7 +1053,7 @@
       <footer slot="main-footer">
   <div class="footer">
     Found a mistake? Want to contribute?
-    <a href="https://github.com/konnorrogers/light-pen/tree/main/docs/src/_documentation/references/index.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
+    <a href="https://github.com/konnorrogers/light-pen/tree/main/docs/src/_documentation/components/light-code.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
 
     <div style="margin: 1.5rem 0;"></div>
 
@@ -378,7 +1097,7 @@
       </ul>
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
-          <li class="side-nav__item ">
+          <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/light-pen/components/light-code/">&lt;light-code&gt;</a>
   </li>
   <li class="side-nav__item ">

@@ -6,17 +6,17 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.GFUXZOIH.js">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.Y2F5KNM5.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.VEA2U3CU.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.3WQG57J3.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.ZP4UZ26L.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.35UQGAJ6.css">
 <!-- Deferred CSS -->
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.GFUXZOIH.js" type="module"></script>
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.Y2F5KNM5.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.VEA2U3CU.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.3WQG57J3.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/light-pen/apple-touch-icon.png">
@@ -209,6 +209,9 @@
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
           <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-code/">&lt;light-code&gt;</a>
+  </li>
+  <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -226,6 +229,9 @@
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/references">References</a></li>
           <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/references/changelog/">Changelog</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/references/why-script-tags/">Why script tags</a>
   </li>
 
       </ul>
@@ -247,6 +253,9 @@
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
           <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-code/">&lt;light-code&gt;</a>
+  </li>
+  <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -264,6 +273,9 @@
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/references">References</a></li>
           <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/references/changelog/">Changelog</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/references/why-script-tags/">Why script tags</a>
   </li>
 
       </ul>
@@ -289,19 +301,25 @@
             shell
           </div>
 
-          <clipboard-copy for="c1628e54-64bb-45e2-a8af-3f25da69c4b1" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="7424378f-45e7-4fb9-af99-0dd6b42f0e06" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="c1628e54-64bb-45e2-a8af-3f25da69c4b1" hidden="">npm install light-pen
+          <textarea id="7424378f-45e7-4fb9-af99-0dd6b42f0e06" hidden="">npm install light-pen
+
+# If supporting older browsers
+npm install element-internals-polyfill
 </textarea>
         </div>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>light-pen
+
+<span class="c"># If supporting older browsers</span>
+npm <span class="nb">install </span>element-internals-polyfill
 </code></pre></div></div></div>
 
-<h2 id="usage">
-          <a href="#usage">Usage</a>
+<h2 id="npm-usage">
+          <a href="#npm-usage">NPM Usage</a>
         </h2>
 
 <div class="syntax-block">        <div class="syntax-block__actions">
@@ -309,17 +327,57 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="900a1780-f233-41b4-b04c-b1216e3b4990" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="8752a711-4d88-4945-aae9-061a34fc3dec" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="900a1780-f233-41b4-b04c-b1216e3b4990" hidden="">// entrypoint.js
+          <textarea id="8752a711-4d88-4945-aae9-061a34fc3dec" hidden="">// entrypoint.js
+import "element-internals-polyfill" // Optional polyfill for ElementInternals() for older browsers.
 import "light-pen"
 </textarea>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// entrypoint.js</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">element-internals-polyfill</span><span class="dl">"</span> <span class="c1">// Optional polyfill for ElementInternals() for older browsers.</span>
 <span class="k">import</span> <span class="dl">"</span><span class="s2">light-pen</span><span class="dl">"</span>
+</code></pre></div></div></div>
+
+<h2 id="cdn-usage">
+          <a href="#cdn-usage">CDN usage</a>
+        </h2>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="47ed9cbf-584f-408b-ba14-068a339f9262" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="47ed9cbf-584f-408b-ba14-068a339f9262" hidden="">&lt;script type="module"&gt;
+  import "https://esm.run/element-internals-polyfill"
+  import "https://esm.run/light-pen"
+
+  // Loading a version range. This will load the latest &gt;= 3 and &lt; 4 of light-pen.
+  import "https://esm.run/light-pen@^3.0.0"
+
+  // Loading a specific version. This will only load v3.0.0
+  import "https://esm.run/light-pen@3.0.0"
+&lt;/script&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span><span class="nt">&gt;</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://esm.run/element-internals-polyfill</span><span class="dl">"</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://esm.run/light-pen</span><span class="dl">"</span>
+
+  <span class="c1">// Loading a version range. This will load the latest &gt;= 3 and </span><span class="o">&lt;</span> <span class="mi">4</span> <span class="k">of</span> <span class="nx">light</span><span class="o">-</span><span class="nx">pen</span><span class="p">.</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://esm.run/light-pen@^3.0.0</span><span class="dl">"</span>
+
+  <span class="c1">// Loading a specific version. This will only load v3.0.0</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://esm.run/light-pen@3.0.0</span><span class="dl">"</span>
+<span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div></div>
 
 <div class="syntax-block">        <div class="syntax-block__actions">
@@ -327,42 +385,55 @@ import "light-pen"
             HTML
           </div>
 
-          <clipboard-copy for="6f3eec0d-221a-4e15-8cf6-21be7fb84725" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="679f7d23-dec1-4c50-b6c5-26de06bb529c" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="6f3eec0d-221a-4e15-8cf6-21be7fb84725" hidden="">&lt;!-- Your HTML file --&gt;
+          <textarea id="679f7d23-dec1-4c50-b6c5-26de06bb529c" hidden="">&lt;!-- Your HTML file --&gt;
 &lt;light-pen&gt;
-  &lt;template slot="html"&gt;
+  &lt;script type="text/plain" slot="html"&gt;
     &lt;!-- HTML --&gt;
-  &lt;/template&gt;
+  &lt;/script&gt;
 
-  &lt;template slot="css"&gt;
+  &lt;script type="text/plain" slot="css"&gt;
     &lt;!-- CSS --&gt;
-  &lt;/template&gt;
+  &lt;/script&gt;
 
-  &lt;template slot="js"&gt;
+  &lt;script type="text/plain" slot="js"&gt;
     &lt;!-- JS --&gt;
-  &lt;/template&gt;
+  &lt;/script&gt;
 &lt;/light-pen&gt;
 </textarea>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Your HTML file --&gt;</span>
 <span class="nt">&lt;light-pen&gt;</span>
-  <span class="nt">&lt;template</span> <span class="na">slot=</span><span class="s">"html"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- HTML --&gt;</span>
-  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/plain"</span> <span class="na">slot=</span><span class="s">"html"</span><span class="nt">&gt;</span>
+    <span class="o">&lt;</span><span class="gs">!-- HTML --&gt;
+</span>  <span class="nt">&lt;/script&gt;</span>
 
-  <span class="nt">&lt;template</span> <span class="na">slot=</span><span class="s">"css"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- CSS --&gt;</span>
-  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/plain"</span> <span class="na">slot=</span><span class="s">"css"</span><span class="nt">&gt;</span>
+    <span class="o">&lt;</span><span class="gs">!-- CSS --&gt;
+</span>  <span class="nt">&lt;/script&gt;</span>
 
-  <span class="nt">&lt;template</span> <span class="na">slot=</span><span class="s">"js"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- JS --&gt;</span>
-  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/plain"</span> <span class="na">slot=</span><span class="s">"js"</span><span class="nt">&gt;</span>
+    <span class="o">&lt;</span><span class="gs">!-- JS --&gt;
+</span>  <span class="nt">&lt;/script&gt;</span>
 <span class="nt">&lt;/light-pen&gt;</span>
 </code></pre></div></div></div>
+
+<h2 id="polyfills">
+          <a href="#polyfills">Polyfills</a>
+        </h2>
+
+<sl-alert variant="danger" open="">
+  <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+  
+  <p>This library makes use of <a href="https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals" target="_blank" rel="nofollow noopener noreferrer">ElementInternals <external-icon></external-icon></a>
+for “Form Association”. If you support older browsers, it’s recommended you download the <a href="https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals" target="_blank" rel="nofollow noopener noreferrer">element-internals-polyfill <external-icon></external-icon></a>.</p>
+
+<p><a href="https://caniuse.com/?search=element%20internals" target="_blank" rel="nofollow noopener noreferrer">https://caniuse.com/?search=element%20internals <external-icon></external-icon></a></p>
+</sl-alert>
 
 <p>For additional components and how to use them, check out their component pages.</p>
 
@@ -387,7 +458,11 @@ import "light-pen"
   <li class="side-nav__item">
         <a href="#installation" class="side-nav__link">Installation</a>
       </li><li class="side-nav__item">
-        <a href="#usage" class="side-nav__link">Usage</a>
+        <a href="#npm-usage" class="side-nav__link">NPM Usage</a>
+      </li><li class="side-nav__item">
+        <a href="#cdn-usage" class="side-nav__link">CDN usage</a>
+      </li><li class="side-nav__item">
+        <a href="#polyfills" class="side-nav__link">Polyfills</a>
       </li></ol>
 </nav>
 
@@ -441,6 +516,9 @@ import "light-pen"
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
           <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-code/">&lt;light-code&gt;</a>
+  </li>
+  <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -458,6 +536,9 @@ import "light-pen"
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/references">References</a></li>
           <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/references/changelog/">Changelog</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/references/why-script-tags/">Why script tags</a>
   </li>
 
       </ul>

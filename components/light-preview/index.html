@@ -6,17 +6,17 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.GFUXZOIH.js">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.Y2F5KNM5.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.VEA2U3CU.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.3WQG57J3.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.ZP4UZ26L.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.35UQGAJ6.css">
 <!-- Deferred CSS -->
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.GFUXZOIH.js" type="module"></script>
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.Y2F5KNM5.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.VEA2U3CU.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.3WQG57J3.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/light-pen/apple-touch-icon.png">
@@ -209,6 +209,9 @@
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
           <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-code/">&lt;light-code&gt;</a>
+  </li>
+  <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -226,6 +229,9 @@
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/references">References</a></li>
           <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/references/changelog/">Changelog</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/references/why-script-tags/">Why script tags</a>
   </li>
 
       </ul>
@@ -247,6 +253,9 @@
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
           <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-code/">&lt;light-code&gt;</a>
+  </li>
+  <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -265,6 +274,9 @@
           <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/references/changelog/">Changelog</a>
   </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/references/why-script-tags/">Why script tags</a>
+  </li>
 
       </ul>
   </ul>
@@ -280,18 +292,17 @@
   </h1>
 
     <p>LightPreview is a very lightweight code previewer designed to load your code sample
-  inside of an iFrame for encapsulated viewing. <code class="highlighter-rouge">&lt;light-preview&gt;</code> uses PrismJS as it’s
-  default highlighter, but has a base class intended for extending.</p>
+  inside of an iFrame for encapsulated viewing. <code class="highlighter-rouge">&lt;light-preview&gt;</code> uses PrismJS as it’s</p>
 
   <h2 id="typical-usage">
           <a href="#typical-usage">Typical Usage</a>
         </h2>
 
 <light-preview>
-  <template slot="preview-code">
+  <script type="text/plain" slot="preview-html">
     <button>Displaying a super cool button</button>
-  </template>
-  <template slot="code">
+  </script>
+  <script type="text/plain" slot="code">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -307,8 +318,8 @@
     <script type="module">
       import LightPreview from "./exports/light-preview.js";
       LightPreview.define()
-    </script>
-  </template>
+    &lt;/script>
+  </script>
 </light-preview>
 
 <h2 id="nesting-a-light-pen-inside-of-a-light-pen">
@@ -335,7 +346,7 @@
     </script>
   </template>
 
-  <template slot="preview-code">
+  <template slot="preview-html">
     <style>
       light-preview::part(iframe) {
         height: 80px;
@@ -349,15 +360,18 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.7CUT4WF4.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.66OI4WNW.js"
       LightPreview.define()
     </script>
   </template>
 </light-preview>
 
-<h2 id="loading-inline">
-          <a href="#loading-inline">Loading inline</a>
+<h2 id="loading-inside-a-shadow-dom">
+          <a href="#loading-inside-a-shadow-dom">Loading inside a shadow DOM</a>
         </h2>
+
+<p>By default, previews are loaded inside an <code class="highlighter-rouge">&lt;iframe&gt;</code> for true “encapsulation”. This may not always be desirable.
+For not as strict encapsulation you can use <code class="highlighter-rouge">preview-mode="shadow-dom"</code></p>
 
 <light-preview preview-mode="shadow-dom">
   <template slot="code">
@@ -373,13 +387,13 @@
 
         <br>
         <p>
-          Notice how the button has the same styling as the toggle! That's because its not scoped into an iFrame!
+          This button lives in a "Shadow DOM" and not inside an iframe!!
         </p>
       </template>
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.7CUT4WF4.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.66OI4WNW.js"
       LightPreview.define()
     </script>
   </template>
@@ -469,7 +483,7 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.7CUT4WF4.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.66OI4WNW.js"
       LightPreview.define()
     </script>
   </template>
@@ -477,6 +491,52 @@
   <button slot="actions">HTML</button>
   <button slot="actions">Codepen</button>
 </light-preview>
+
+<h2 id="escaping-nested-script-tags">
+          <a href="#escaping-nested-script-tags">Escaping nested script tags</a>
+        </h2>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code>
+      <script type="text/plain" slot="code">
+        <html>
+          <head></head>
+          <body>
+            Hello World
+            <script>
+              console.log("Hello World")
+            &lt;/script>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+<h2 id="highlight-lines">
+          <a href="#highlight-lines">Highlight Lines</a>
+        </h2>
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-preview preview-mode="shadow-dom" highlight-lines="{1}">
+      <script type="text/plain" slot="preview-html">
+        View Source code for more.
+      </script>
+      <script type="text/plain" slot="code">
+        const foo = "bar"
+        console.log(foo)
+      &lt;/script>
+    </light-preview>
+  </script>
+</light-preview>
+
+<p>If you check the source code in the above example, you’ll notice a <code class="highlighter-rouge">&amp;lt;/script&gt;</code>.</p>
+
+<p>For more on why script tags are used, check out <a href="/references/why-script-tags/">Why script tags</a>
+for further reading.</p>
+
 <h2 id="imports">
           <a href="#imports">Imports</a>
         </h2>
@@ -489,12 +549,12 @@
             HTML
           </div>
 
-          <clipboard-copy for="f018c847-bf44-4692-a96c-7ce91d265c3b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="74914470-ff1e-40ad-acd7-a95df93ad862" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="f018c847-bf44-4692-a96c-7ce91d265c3b" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
+          <textarea id="74914470-ff1e-40ad-acd7-a95df93ad862" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -510,12 +570,12 @@
             HTML
           </div>
 
-          <clipboard-copy for="0e430daa-f37f-48ca-9be0-c7edef4ffa97" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="2c9b0702-6018-4bc9-9ea9-ab0a2a18a762" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="0e430daa-f37f-48ca-9be0-c7edef4ffa97" hidden="">&lt;script type="module"&gt;
+          <textarea id="2c9b0702-6018-4bc9-9ea9-ab0a2a18a762" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-preview&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"
 
@@ -545,12 +605,12 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="d783bf93-f7e9-46ae-a576-c73b93f03c68" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="e4b349b5-bba4-4b79-9dcc-cdae255d0770" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="d783bf93-f7e9-46ae-a576-c73b93f03c68" hidden="">// Auto registers as &lt;light-preview&gt;
+          <textarea id="e4b349b5-bba4-4b79-9dcc-cdae255d0770" hidden="">// Auto registers as &lt;light-preview&gt;
 import "light-pen/exports/light-preview.js/exports/light-preview-register.js"
 
 // Manual Register
@@ -570,6 +630,77 @@ LightPreview.define()
 </sl-tab-panel>
 
 </sl-tab-group>
+
+<h2 id="slots">
+          <a href="#slots">Slots</a>
+        </h2>
+
+<div class="table-container">
+  <table class="table--component">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+    <code>resize-icon</code>
+  </td>
+  <td>
+    The icon to display in the resizer button. Override this to provide your own icon.
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>summary</code>
+  </td>
+  <td>
+    What to display in source code expander
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>source-code-toggle-icon</code>
+  </td>
+  <td>
+    Slot in your own icon to override the default caret.
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>actions</code>
+  </td>
+  <td>
+    Slot in buttons / links to allow for additional actions in the bottom bar.
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>preview-html</code>
+  </td>
+  <td>
+    If you want to run code that is slightly different from the source code you want to display, slot it into "preview-html"
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>code</code>
+  </td>
+  <td>
+    Used to display both source code and to power your preview in the iframe. If you slot in "preview-html", then it will only be used to show / highlight your source code.
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
 
 <h2 id="attributes">
           <a href="#attributes">Attributes</a>
@@ -641,7 +772,7 @@ LightPreview.define()
     The language to highlight for.
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -721,6 +852,173 @@ LightPreview.define()
 
 <tr>
   <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>highlight-lines</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>highlightLines</code>
+  </td>
+  <td>
+    A string of possible lines to highlight. Example: "{1-9, 16, 18}"
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>inserted-lines</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>insertedLines</code>
+  </td>
+  <td>
+    A string of lines that are inserted for diffs. Example: "{1-9, 16, 18}"
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>deleted-lines</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>deletedLines</code>
+  </td>
+  <td>
+    A string of lines that are deleted for diffs. Example: "{1-9, 16, 18}"
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>disable-line-numbers</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>disableLineNumbers</code>
+  </td>
+  <td>
+    whether or not to disable line numbers
+  </td>
+  <td>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+  </td>
+  <td>
+    <code>boolean</code>
+  </td>
+  <td>
+    <code>false</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>line-number-start</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>lineNumberStart</code>
+  </td>
+  <td>
+    Where to start counting indexes in the gutter. Note, this is purely for display purposes.
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>number</code>
+  </td>
+  <td>
+    <code>1</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>code</code>
+  </td>
+  <td>
+    We will take the code, wrap it in `&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;` and run it through
+Prism.js.
+If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>preview-html</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>previewHtml</code>
+  </td>
+  <td>
+    If `disableHighlight` is true, then you must pass in an element into `previewHtml` to be able to get
+  the code to run in the previewer.
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
       <small>[Attribute + Property]</small>
       <br>
       <code>open</code>
@@ -760,6 +1058,55 @@ LightPreview.define()
   </td>
   <td>
     <code>100</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>unescapeBehavior</code>
+  </td>
+  <td>
+    Whether or not to transform `&amp;lt;/script&gt;` into `&lt;script&gt;`
+If true, will run transform. If false, will leave the code as is.
+  </td>
+  <td>
+    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+  </td>
+  <td>
+    <code>"all" | "last" | "none"</code>
+  </td>
+  <td>
+    <code>"last"</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>script-scope</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>scriptScope</code>
+  </td>
+  <td>
+    When using `preview-mode="shadow-dom"`,
+There's a funky issue with previews where if you want the location of the shadowRoot
+you are, you can't get it. As a result, `&lt;light-preview&gt;` supports the idea of a "scriptScope"
+where `document` is bound to the current shadowRoot instead of the actual top level `document`
+For more info, check out this GitHub issue:
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <code>"document" | "shadow-dom"</code>
+  </td>
+  <td>
+    <code>"document"</code>
   </td>
 </tr>
 
@@ -809,6 +1156,148 @@ LightPreview.define()
   </table>
 </div>
 
+<h2 id="parts">
+          <a href="#parts">Parts</a>
+        </h2>
+
+<div class="table-container">
+  <table class="table--component">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>
+    <code>base</code>
+  </td>
+  <td>
+    The base wrapping element
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>preview</code>
+  </td>
+  <td>
+    The wrapper around the iframe / div preview showing your code being run in the browser.
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>start-panel</code>
+  </td>
+  <td>
+    The iframe or preview-div
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>preview-div</code>
+  </td>
+  <td>
+    used for inline previews
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>iframe</code>
+  </td>
+  <td>
+    used for iframe based previews (default)
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>panel-resizer</code>
+  </td>
+  <td>
+    The button that resizes the panel
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>end-panel</code>
+  </td>
+  <td>
+    The white space when dragging the resizer
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>source-details</code>
+  </td>
+  <td>
+    The details element that shows the source code
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>code-wrapper</code>
+  </td>
+  <td>
+    The div that wraps the &lt;pre&gt; + &lt;code&gt; elements containing your highlighted code
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>pre</code>
+  </td>
+  <td>
+    The &lt;pre&gt; element wrapping the source code
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>code</code>
+  </td>
+  <td>
+    The &lt;code&gt;  element wrapping the source code
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>actions</code>
+  </td>
+  <td>
+    The buttons at the bottom of the code previewer
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>source-code-toggle</code>
+  </td>
+  <td>
+    The button to show the source code
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>source-code-toggle-icon</code>
+  </td>
+  <td>
+    The caret icon in the source code toggle
+  </td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
 
 
     <div class="pagination-footer">
@@ -843,15 +1332,23 @@ LightPreview.define()
       </li><li class="side-nav__item">
         <a href="#nesting-a-light-pen-inside-of-a-light-pen" class="side-nav__link">Nesting a light-pen inside of a light-pen</a>
       </li><li class="side-nav__item">
-        <a href="#loading-inline" class="side-nav__link">Loading inline</a>
+        <a href="#loading-inside-a-shadow-dom" class="side-nav__link">Loading inside a shadow DOM</a>
       </li><li class="side-nav__item">
         <a href="#additional-buttons" class="side-nav__link">Additional buttons</a>
       </li><li class="side-nav__item">
+        <a href="#escaping-nested-script-tags" class="side-nav__link">Escaping nested script tags</a>
+      </li><li class="side-nav__item">
+        <a href="#highlight-lines" class="side-nav__link">Highlight Lines</a>
+      </li><li class="side-nav__item">
         <a href="#imports" class="side-nav__link">Imports</a>
+      </li><li class="side-nav__item">
+        <a href="#slots" class="side-nav__link">Slots</a>
       </li><li class="side-nav__item">
         <a href="#attributes" class="side-nav__link">Attributes</a>
       </li><li class="side-nav__item">
         <a href="#functions" class="side-nav__link">Functions</a>
+      </li><li class="side-nav__item">
+        <a href="#parts" class="side-nav__link">Parts</a>
       </li></ol>
 </nav>
 
@@ -905,6 +1402,9 @@ LightPreview.define()
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/components">Components</a></li>
           <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/components/light-code/">&lt;light-code&gt;</a>
+  </li>
+  <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/components/light-disclosure/">&lt;light-disclosure&gt;</a>
   </li>
   <li class="side-nav__item ">
@@ -922,6 +1422,9 @@ LightPreview.define()
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/light-pen/references">References</a></li>
           <li class="side-nav__item ">
     <a class="side-nav__link" href="/light-pen/references/changelog/">Changelog</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/light-pen/references/why-script-tags/">Why script tags</a>
   </li>
 
       </ul>
