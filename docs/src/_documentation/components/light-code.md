@@ -127,12 +127,57 @@ Deleted lines can be highlighted via `deleted-lines` attribute.
   </script>
 </light-preview>
 
+### Combining inserted and deleted lines
+
+Deleted lines can be highlighted via `deleted-lines` attribute.
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code deleted-lines="{1-2, 6, 7}" inserted-lines="{3, 4, 5}">
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
 
 ### Disable Line Numbers
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
     <light-code disable-line-numbers>
+      <script type="text/plain" slot="code">
+        <html>
+          <head>
+          </head>
+          <body>
+            <h1>
+              Hello World
+            </h1>
+          </body>
+        </html>
+      &lt;/script>
+    </light-code>
+  </script>
+</light-preview>
+
+### Starting counting lines at a specific index
+
+Sometimes you may not want to start counting lines at `1`, for example, we can start
+counting lines at `10` in the following snippet:
+
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <light-code line-number-start="10">
       <script type="text/plain" slot="code">
         <html>
           <head>

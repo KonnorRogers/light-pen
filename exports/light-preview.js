@@ -14,6 +14,7 @@ import { BaseElement } from "../internal/base-element.js";
 import LightDisclosure from "./light-disclosure.js";
 import { elementsToString } from "../internal/elements-to-strings.js";
 import { dedent } from "../internal/dedent.js";
+import LightCode from "./light-code.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -42,8 +43,8 @@ const sourceCodeFallback = "Show source code"
  * @slot summary - What to display in source code expander
  * @slot source-code-toggle-icon - Slot in your own icon to override the default caret.
  * @slot actions - Slot in buttons / links to allow for additional actions in the bottom bar.
- * @slot preview-code - If you want to run code that is slightly different from the source code you want to display, slot it into "preview-code"
- * @slot code - Used to display both source code and to power your preview in the iframe. If you slot in "preview-code", then it will only be used to show / highlight your source code.
+ * @slot preview-html - If you want to run code that is slightly different from the source code you want to display, slot it into "preview-html"
+ * @slot code - Used to display both source code and to power your preview in the iframe. If you slot in "preview-html", then it will only be used to show / highlight your source code.
  */
 export default class LightPreview extends BaseElement {
   /**
@@ -55,7 +56,8 @@ export default class LightPreview extends BaseElement {
    * @override
    */
   static dependencies = {
-    "light-disclosure": LightDisclosure
+    "light-disclosure": LightDisclosure,
+    "light-code": LightCode
   }
 
   /**
@@ -84,10 +86,11 @@ export default class LightPreview extends BaseElement {
     highlightLines: {attribute: "highlight-lines"},
     insertedLines: {attribute: "inserted-lines"},
     deletedLines: {attribute: "deleted-lines"},
+    lineNumberStart: {type: Number, attribute: "line-number-start"},
     scriptScope: {attribute: "script-scope"},
 
     code: {},
-    previewCode: { attribute: "preview-code" },
+    previewHtml: { attribute: "preview-html" },
   }
 
   constructor () {
@@ -151,6 +154,12 @@ export default class LightPreview extends BaseElement {
     this.disableLineNumbers = false
 
     /**
+     * Where to start counting indexes in the gutter. Note, this is purely for display purposes.
+     * @type {number}
+     */
+    this.lineNumberStart = 1
+
+    /**
      * We will take the code, wrap it in `<pre><code></code></pre>` and run it through
      * Prism.js.
      * If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
@@ -159,11 +168,11 @@ export default class LightPreview extends BaseElement {
     this.code = ""
 
     /**
-     * If `disableHighlight` is true, then you must pass in an element into `previewCode` to be able to get
+     * If `disableHighlight` is true, then you must pass in an element into `previewHtml` to be able to get
      *   the code to run in the previewer.
      * @type {string}
      */
-    this.previewCode = ""
+    this.previewHtml = ""
 
     /**
      * Whether or not the source code is being shown
@@ -193,7 +202,7 @@ export default class LightPreview extends BaseElement {
      * @internal
      * @type {() => void}
      */
-    this.previewCodeDebounce = debounce(() => this.handleMutation("preview-code"), 20)
+    this.previewHtmlDebounce = debounce(() => this.handleMutation("preview-html"), 20)
 
     /**
      * @internal
@@ -231,18 +240,18 @@ export default class LightPreview extends BaseElement {
 
   /**
    * @internal
-   * Reinstalls the mutation on slotted preview-code
+   * Reinstalls the mutation on slotted preview-html
    */
   resetIframeCodeMutationObserver () {
-    if (this.previewCodeMutationObserver) {
-      this.previewCodeMutationObserver.disconnect()
+    if (this.previewHtmlMutationObserver) {
+      this.previewHtmlMutationObserver.disconnect()
     }
-    this.previewCodeMutationObserver = new MutationObserver((..._args) => this.previewCodeDebounce())
+    this.previewHtmlMutationObserver = new MutationObserver((..._args) => this.previewHtmlDebounce())
 
-    const targets = this.findSlot("preview-code")?.assignedElements({ flatten: true }) || []
+    const targets = this.findSlot("preview-html")?.assignedElements({ flatten: true }) || []
 
     for (const target of targets) {
-      this.previewCodeMutationObserver.observe(target, this.__mutationObserverConfig)
+      this.previewHtmlMutationObserver.observe(target, this.__mutationObserverConfig)
     }
   }
 
@@ -266,11 +275,11 @@ export default class LightPreview extends BaseElement {
 
   /**
    * @internal
-   * @param {"preview-code" | "code"} variable
+   * @param {"preview-html" | "code"} variable
    */
   handleMutation (variable) {
-    if (variable === "preview-code") {
-      this.handleTemplate({ target: this.findSlot("preview-code") })
+    if (variable === "preview-html") {
+      this.handleTemplate({ target: this.findSlot("preview-html") })
       return
     }
 
@@ -304,7 +313,7 @@ export default class LightPreview extends BaseElement {
 
     const name = slot.getAttribute("name")
 
-    if (["preview-code", "code"].includes(name || "") === false) return
+    if (["preview-html", "code"].includes(name || "") === false) return
 
     let shouldReset = "type" in e && e.type === "slotchange"
 
@@ -312,10 +321,10 @@ export default class LightPreview extends BaseElement {
 
     const code = dedent(elementsToString(...elements).trim())
 
-    if (name === "preview-code") {
+    if (name === "preview-html") {
       if (shouldReset) this.resetIframeCodeMutationObserver()
-      this.previewCode = code
-      this.requestUpdate("previewCode")
+      this.previewHtml = code
+      this.requestUpdate("previewHtml")
       return
     }
 
@@ -331,7 +340,7 @@ export default class LightPreview extends BaseElement {
    * @internal
    */
   updateIframeContent () {
-    const code = this.previewCode || this.code
+    const code = this.previewHtml || this.code
 
     const iframe = this.shadowRoot?.querySelector("iframe")
 
@@ -384,7 +393,7 @@ export default class LightPreview extends BaseElement {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (/** @type {Array<"previewCode" | "code">} */ (["previewCode", "code"]).some((str) => changedProperties.has((str)))) {
+    if (/** @type {Array<"previewHtml" | "code">} */ (["previewHtml", "code"]).some((str) => changedProperties.has((str)))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
     }
@@ -451,8 +460,7 @@ export default class LightPreview extends BaseElement {
 
     if (!previewDiv) return
 
-
-    const transformedTags = this.transformTags(this.code || this.previewCode)
+    const transformedTags = this.transformTags(this.code || this.previewHtml)
 
     if (!previewDiv.shadowRoot) {
       previewDiv.attachShadow({ mode: "open" })
@@ -545,10 +553,14 @@ export default class LightPreview extends BaseElement {
           <div part="code-wrapper">
             <light-code
               .language=${this.language}
-              .code=${this.code}
+              .code=${this.transformTags(this.code)}
               wrap=${this.wrap}
               ?disableHighlight=${this.disableHighlight}
               ?disableLineNumbers=${this.disableLineNumbers}
+              .highlightLines=${this.highlightLines}
+              .insertedLines=${this.insertedLines}
+              .deletedLines=${this.deletedLines}
+              .lineNumberStart=${this.lineNumberStart}
             ></light-code>
           </div>
         </light-disclosure>
@@ -568,7 +580,7 @@ export default class LightPreview extends BaseElement {
       </div>
 
       <div hidden>
-        <slot name="preview-code" @slotchange=${this.handleTemplate}></slot>
+        <slot name="preview-html" @slotchange=${this.handleTemplate}></slot>
         <slot name="code" @slotchange=${this.handleTemplate}></slot>
       </div>
     `

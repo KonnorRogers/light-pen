@@ -1,5 +1,7 @@
 ## Next
 
+- BREAKING_CHANGE: `previewCode` has changed to `previewHtml` property and `preview-html` attribute for `<light-preview>`.
+- Feature: Added `lineNumberStart` for counting indexes starting at a specific number.
 - Feature: `code` and `preview-code` attributes are now supported on `<light-preview>`
 - Feature: Added `<light-code>` for displaying code.
 - Feature: Added line numbers to all code displays.

@@ -36,23 +36,31 @@ export const codeStyles = css`
   grid-template-columns: minmax(0, 1fr);
 }
 
-[part~="line"]:is(.deleted, .inserted, .line-highlight)::after {
-  content: "";
-  position: absolute;
-  top: 0.8em;
-  left: 0%;
-  font-size: 16px;
-  line-height: 0;
-  mix-blend-mode: difference;
-  filter: invert(1);
-  transform: translate(50%, -50%);
-}
-
 [part~='line'] {
   display: inline-block;
   width: 100%;
-  padding-inline-start: 24px;
+  padding-inline-start: 18px;
   position: relative;
+}
+
+[part~="line"]:is(.deleted, .inserted, .line-highlight)::after {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  line-height: inherit;
+  mix-blend-mode: difference;
+  filter: invert(1);
+  padding-inline-start: 2px;
+}
+
+
+[part~="line"].deleted::after {
+  content: "-"
+}
+
+[part~="line"].inserted::after {
+  content: "+"
 }
 
 [part~='gutter-cell'] {
@@ -66,11 +74,4 @@ export const codeStyles = css`
   text-align: end;
 }
 
-[part~="line"].deleted::after {
-  content: "-"
-}
-
-[part~="line"].inserted::after {
-  content: "+"
-}
 `

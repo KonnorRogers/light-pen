@@ -16,7 +16,6 @@ import { codeStyles } from "./code-styles.js";
 import { LineNumberPlugin } from "../internal/line-number-plugin.js";
 import { NumberRange } from "../internal/number-range.js";
 import { LineHighlightPlugin, LineHighlightWrapPlugin } from "../internal/line-highlight-plugin.js";
-import { Token } from "prism-esm";
 
 /**
  * LightCode is a minimal wrapper around Prism for displaying code highlighting
@@ -76,6 +75,7 @@ export default class LightCode extends BaseElement {
     insertedLines: { attribute: "inserted-lines" },
     deletedLines: { attribute: "deleted-lines" },
     disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
+    lineNumberStart: { type: Number, attribute: "line-number-start" },
     wrap: { reflect: true, attribute: "wrap" },
     language: {},
     code: {},
@@ -149,6 +149,12 @@ export default class LightCode extends BaseElement {
      * @type {boolean} whether or not to disable line numbers
      */
     this.disableLineNumbers = false
+
+    /**
+     * Where to start counting from indexes. Note, this is only for display purposes in the gutter.
+     * @type {number}
+     */
+    this.lineNumberStart = 1
 
     this.__resizeObserver = new ResizeObserver(() => this.__setGutterWidth())
   }
@@ -239,6 +245,7 @@ export default class LightCode extends BaseElement {
     const plugins = []
 
     plugins.push(LineNumberPlugin({
+      lineNumberStart: this.lineNumberStart,
       disableLineNumbers: this.disableLineNumbers
     }))
 
