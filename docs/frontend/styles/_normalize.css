@@ -2,6 +2,7 @@ html {
   box-sizing: border-box;
   height: 100%;
   font-size: 16px;
+  font-family: var(--sl-font-sans);
   /* letter-spacing: 0.025em; */
 }
 
