@@ -3,7 +3,6 @@ import { html } from "lit";
 import { buttonStyles, baseStyles } from "./base-styles.js";
 
 import { when } from "lit/directives/when.js";
-import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
 import { previewStyles } from "./light-preview.styles.js";
 import { drag } from "../internal/drag.js";
 import { clamp } from "../internal/clamp.js";
@@ -15,6 +14,7 @@ import LightDisclosure from "./light-disclosure.js";
 import { elementsToString } from "../internal/elements-to-strings.js";
 import { dedent } from "../internal/dedent.js";
 import LightCode from "./light-code.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -100,7 +100,7 @@ export default class LightPreview extends BaseElement {
      * The sandbox settings to provide to the <iframe>
      * @type {string}
      */
-    this.sandboxSettings = defaultSandboxSettings
+    this.sandboxSettings = ""
 
     /**
      * The text to provide in the <details> toggle button
@@ -517,7 +517,7 @@ export default class LightPreview extends BaseElement {
           ${when(this.previewMode === "shadow-dom",
               () => html`<div part="start-panel preview-div"></div>`,
               () => html`
-                <iframe part="start-panel iframe" height="auto" frameborder="0"></iframe>
+                <iframe part="start-panel iframe" height="auto" frameborder="0" sandbox=${ifDefined(this.sandboxSettings ? this.sandboxSettings : null)}></iframe>
               `
            )}
           <button
