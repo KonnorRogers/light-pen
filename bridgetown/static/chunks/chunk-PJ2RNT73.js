@@ -1,4 +1,4 @@
-import{a as d,b as u,c as b,d as f}from"/light-pen/bridgetown/static/chunks/chunk-RDWGBHTD.js";import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-6O3D6HOX.js";import{a as l,b as s,g as p,h as c,m as n,s as h}from"/light-pen/bridgetown/static/chunks/chunk-ATCJKMAH.js";import{d as o}from"/light-pen/bridgetown/static/chunks/chunk-25GN2ENT.js";var x=l`
+import{a as d,b as u,c as b,d as f,e as x}from"/light-pen/bridgetown/static/chunks/chunk-3IGLV6WG.js";import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-6O3D6HOX.js";import{a as l,b as s,g as p,h as c,m as n,s as h}from"/light-pen/bridgetown/static/chunks/chunk-ATCJKMAH.js";import{d as o}from"/light-pen/bridgetown/static/chunks/chunk-25GN2ENT.js";var g=l`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
@@ -164,68 +164,67 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
           <\/script>
         </body>
       </html>
-    `;e.srcdoc=t}willUpdate(e){["cssCode","htmlCode","jsCode"].some(t=>e.has(t))&&(this._iframeDebounce!=null&&window.clearTimeout(this._iframeDebounce),this._iframeDebounce=setTimeout(()=>this.updateIframeContent(),300)),e.has("resizePosition")&&this.updateResizePosition(),super.willUpdate(e)}disconnectedCallback(){super.disconnectedCallback(),this.resizeObserver.disconnect()}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,r=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=r),e.key==="ArrowRight"&&(t+=r),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=d(t,0,100)}}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let r=100-t;this.style.setProperty("--start-panel-width",`${t}%`),this.style.setProperty("--end-panel-width",`${r}%`)}}resetValues(){this.htmlCode=this.htmlEditor?.getAttribute("value")||"",this.cssCode=this.cssEditor?.getAttribute("value")||"",this.jsCode=this.jsEditor?.getAttribute("value")||"",this.requestUpdate()}renderConsole(){return s`<div part="sandbox-console-log"></div>`}render(){return s`
-      <!-- Where users can declaratively provide templates -->
+    `;e.srcdoc=t}willUpdate(e){["cssCode","htmlCode","jsCode"].some(t=>e.has(t))&&(this._iframeDebounce!=null&&window.clearTimeout(this._iframeDebounce),this._iframeDebounce=setTimeout(()=>this.updateIframeContent(),300)),e.has("resizePosition")&&this.updateResizePosition(),super.willUpdate(e)}disconnectedCallback(){super.disconnectedCallback(),this.resizeObserver.disconnect()}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,r=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=r),e.key==="ArrowRight"&&(t+=r),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=d(t,0,100)}}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let r=100-t;this.style.setProperty("--start-panel-width",`${t}%`),this.style.setProperty("--end-panel-width",`${r}%`)}}resetValues(){this.htmlCode=this.htmlEditor?.getAttribute("value")||"",this.cssCode=this.cssEditor?.getAttribute("value")||"",this.jsCode=this.jsEditor?.getAttribute("value")||"",this.requestUpdate()}renderConsole(){return s`<div part="sandbox-console-log"></div>`}render(){return s` <!-- Where users can declaratively provide templates -->
       <div part="base" ?resizing=${this._resizing}>
-			  <div part="sandbox">
-				  <div part="sandbox-header">
+        <div part="sandbox">
+          <div part="sandbox-header">
             <slot name="title">
-					    <strong>
-                Code Editor
-              </strong>
+              <strong> Code Editor </strong>
             </slot>
 
-					  <span part="sandbox-controls">
-						  <button class="light-button" part="sandbox-controls-button sandbox-reset" @click=${this.resetValues}>
+            <span part="sandbox-controls">
+              <button
+                class="light-button"
+                part="sandbox-controls-button sandbox-reset"
+                @click=${this.resetValues}
+              >
                 Reset
               </button>
 
-						  ${n(this.console==="enabled",()=>s`<button @click={}>Clear Console</button>`)}
-					  </span>
-				</div>
-				<div part="sandbox-content">
-					<div part="sandbox-code">
-            ${this.renderDetails("html")}
-            ${this.renderDetails("css")}
-            ${this.renderDetails("js")}
-					</div>
+              ${n(this.console==="enabled",()=>s`<button @click="{}">Clear Console</button>`)}
+            </span>
+          </div>
+          <div part="sandbox-content">
+            <div part="sandbox-code">
+              ${this.renderDetails("html")} ${this.renderDetails("css")}
+              ${this.renderDetails("js")}
+            </div>
 
-          <button
-            id="panel-resizer"
-            part="panel-resizer"
-            role="separator"
-            aria-valuenow=${this.resizePosition}
-            aria-valuemin="0"
-            aria-valuemax="100"
-            @keydown=${this.handleResizerKeydown}
-            @pointerdown=${this.handleDrag}
-            @touchstart=${this.handleDrag}
-            class=${`light-button ${this._resizing?"is-active":""}`}
-          >
-            <slot name="panel-resize-icon">
-              ${b}
-            </slot>
-            <span class="visually-hidden">Resize Panel. Pull to left or right to resize.</span>
-          </button>
+            <button
+              id="panel-resizer"
+              part="panel-resizer"
+              role="separator"
+              aria-valuenow=${this.resizePosition}
+              aria-valuemin="0"
+              aria-valuemax="100"
+              @keydown=${this.handleResizerKeydown}
+              @pointerdown=${this.handleDrag}
+              @touchstart=${this.handleDrag}
+              class=${`light-button ${this._resizing?"is-active":""}`}
+            >
+              <slot name="panel-resize-icon"> ${b} </slot>
+              <span class="visually-hidden"
+                >Resize Panel. Pull to left or right to resize.</span
+              >
+            </button>
 
-					<div part="sandbox-iframe-wrapper">
-						<iframe
-              part="sandbox-iframe"
-              frameborder="0"
-             ></iframe>
-					</div>
-				</div>
+            <div part="sandbox-iframe-wrapper">
+              <iframe part="sandbox-iframe" frameborder="0" sandbox=${x(this.sandboxSettings?this.sandboxSettings:null)}></iframe>
+            </div>
+          </div>
 
-        <!--
+          <!--
         ${n(this.console==="enabled",()=>s`
               <details class="sandbox-console" ?open=${console}>
-                <summary part="summary summary-console" tabindex="0">Console</summary>
+                <summary part="summary summary-console" tabindex="0">
+                  Console
+                </summary>
                 ${this.consoleText}
               </details>
             `)}
         -->
-			</div>
-		</div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,u(this,{onMove:(t,r)=>{this._resizing=!0;let a=t;this.resizePosition=d(0,this.pixelsToPercentage(a),100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){return s`
+        </div>
+      </div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,u(this,{onMove:(t,r)=>{this._resizing=!0;let a=t;this.resizePosition=d(0,this.pixelsToPercentage(a),100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){return s`
       <light-editor
         id=${`editor-${e}`}
         part=${`sandbox-editor sandbox-editor--${e}`}
@@ -239,12 +238,15 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
         .value=${this[`${e}Code`]}
         ?preserve-whitespace=${this.preserveWhitespace}
         @light-value-change=${t=>{this[`${e}Code`]=t.currentTarget.value}}
-      ><slot name=${e}></slot></light-editor>
+        ><slot name=${e}></slot
+      ></light-editor>
     `}renderDetails(e){let t=e.toUpperCase();return s`
       <light-disclosure part="disclosure disclosure-${e}">
-        <span part="summary" slot="summary"><slot name=${`summary-${e}`}>${t}</slot></span>
+        <span part="summary" slot="summary"
+          ><slot name=${`summary-${e}`}>${t}</slot></span
+        >
 
         ${this.renderEditor(e)}
-			</light-disclosure>
-		`}};o(i,"baseName","light-pen"),o(i,"styles",[p,c,x]),o(i,"dependencies",{"light-editor":m,"light-disclosure":f}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{i as a};
-//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-ABDIDDAJ.js.map
+      </light-disclosure>
+    `}};o(i,"baseName","light-pen"),o(i,"styles",[p,c,g]),o(i,"dependencies",{"light-editor":m,"light-disclosure":f}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{i as a};
+//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-PJ2RNT73.js.map
