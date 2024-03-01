@@ -1,25 +1,23 @@
 // @ts-check
 
-import { html } from "lit"
-import { styles } from "./light-pen.styles.js"
+import { html } from "lit";
+import { styles } from "./light-pen.styles.js";
 import { when } from "lit/directives/when.js";
 
 import { baseStyles, buttonStyles } from "./base-styles.js";
 
-import { clamp } from '../internal/clamp.js'
-import { dedent } from "../internal/dedent.js";
+import { clamp } from "../internal/clamp.js";
 import { drag } from "../internal/drag.js";
-// import { defaultSandboxSettings } from "../internal/default-sandbox-settings.js";
 import { resizeIcon } from "../internal/resize-icon.js";
 import { BaseElement } from "../internal/base-element.js";
 import LightEditor from "./light-editor.js";
 import LightDisclosure from "./light-disclosure.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 
 /**
  * @typedef {"html" | "css" | "js"} SupportedLanguages
  * @typedef {HTMLTextAreaElement | HTMLScriptElement | HTMLTemplateElement} SafeTemplateElements
  */
-
 
 /**
  * A lightweight codepen-like editor. `<light-pen>` is `~15kb` in size. Compared to `~90kb` from CodeMirror and `~160kb` from CodeSandbox. LightPen purposely is small and lightweight and is not intended to replace these tools. But rather
@@ -40,30 +38,38 @@ export default class LightPen extends BaseElement {
   /**
    * @override
    */
-  static baseName = "light-pen"
+  static baseName = "light-pen";
 
   /**
    * @override
    */
-  static styles = [baseStyles, buttonStyles, styles]
+  static styles = [baseStyles, buttonStyles, styles];
 
   /**
    * @override
    */
   static dependencies = {
-    'light-editor': LightEditor,
-    'light-disclosure': LightDisclosure
-  }
+    "light-editor": LightEditor,
+    "light-disclosure": LightDisclosure,
+  };
 
   /**
    * @override
    */
   static properties = {
     openLanguages: { reflect: true, attribute: "open-languages" },
-    resizePosition: { attribute: "resize-position", reflect: true, type: Number },
-    preserveWhitespace: { attribute: "preserve-whitespace", type: Boolean, reflect: true },
+    resizePosition: {
+      attribute: "resize-position",
+      reflect: true,
+      type: Number,
+    },
+    preserveWhitespace: {
+      attribute: "preserve-whitespace",
+      type: Boolean,
+      reflect: true,
+    },
     console: { reflect: true },
-    // sandboxSettings: { reflect: true, attribute: "sandbox-settings"},
+    sandboxSettings: { reflect: true, attribute: "sandbox-settings" },
     languages: { attribute: false, type: Array },
     cssCode: { attribute: false },
     htmlCode: { attribute: false },
@@ -75,7 +81,7 @@ export default class LightPen extends BaseElement {
     jsResizeObserver: { attribute: false },
     cssResizeObserver: { attribute: false },
     _resizing: { attribute: false },
-  }
+  };
 
   // Overrides
 
@@ -83,20 +89,22 @@ export default class LightPen extends BaseElement {
    * @override
    */
   constructor() {
-    super()
+    super();
 
     /**
      * @property
      * @type {ResizeObserver}
      */
-    this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
+    this.resizeObserver = new ResizeObserver((entries) =>
+      this.handleResize(entries),
+    );
 
     /**
      * @attribute
      * @reflect
      * @type {number}
      */
-    this.resizePosition = 50
+    this.resizePosition = 50;
 
     /**
      * Languages to have open on initial render
@@ -105,114 +113,112 @@ export default class LightPen extends BaseElement {
      * @reflect
      * @type {string}
      */
-    this.openLanguages = ""
+    this.openLanguages = "";
 
     /**
      * @type {Array<SupportedLanguages>}
      * @property
      */
-    this.languages = ["html", "css", "js"]
+    this.languages = ["html", "css", "js"];
 
     /**
      * Not implemented.
      * @property
      * @type {"enabled" | "disabled"}
      */
-    this.console = "disabled"
+    this.console = "disabled";
 
     /**
      * Not implemented.
      * @property
      * @type {string}
      */
-    this.consoleText = ""
+    this.consoleText = "";
 
     /**
      * @property
      * @internal
      * @type {number}
      */
-    this.cachedWidth = 0
+    this.cachedWidth = 0;
 
     /**
      * @property
      * @type {string}
      */
-    this.sandboxSettings = ""
+    this.sandboxSettings = "";
 
     /**
      * @internal
      */
-    this._resizing = false
+    this._resizing = false;
 
-    this.cssCode = ""
-    this.htmlCode = ""
-    this.jsCode = ""
-
+    this.cssCode = "";
+    this.htmlCode = "";
+    this.jsCode = "";
 
     /**
      * Passed down to the editors.
      * @type {boolean}
      */
-    this.preserveWhitespace = false
+    this.preserveWhitespace = false;
     // this.cssResetCode = ""
     // this.htmlResetCode = ""
     // this.jsResetCode = ""
   }
 
-
   /**
    * @type {undefined | null | LightEditor}
    */
-  get jsEditor () {
-    return this.shadowRoot?.querySelector("#editor-js")
+  get jsEditor() {
+    return this.shadowRoot?.querySelector("#editor-js");
   }
 
   /**
    * @type {undefined | null | LightEditor}
    */
-  get cssEditor () {
-    return this.shadowRoot?.querySelector("#editor-css")
+  get cssEditor() {
+    return this.shadowRoot?.querySelector("#editor-css");
   }
 
   /**
    * @type {undefined | null | LightEditor}
    */
-  get htmlEditor () {
-    return this.shadowRoot?.querySelector("#editor-html")
+  get htmlEditor() {
+    return this.shadowRoot?.querySelector("#editor-html");
   }
 
   /**
    * @override
    */
-  connectedCallback () {
-    super.connectedCallback()
+  connectedCallback() {
+    super.connectedCallback();
 
-    this.updateCachedWidth()
+    this.updateCachedWidth();
 
     this.updateComplete.then(() => {
-      this.resizeObserver.observe(this)
+      this.resizeObserver.observe(this);
     });
   }
 
   /**
    * Sets an initial width so we dont need to keep computing getBoundingClientRect
    */
-  updateCachedWidth () {
-    const { left, right } = this.getBoundingClientRect()
-    const width = left + right
-    this.cachedWidth = width
+  updateCachedWidth() {
+    const { left, right } = this.getBoundingClientRect();
+    const width = left + right;
+    this.cachedWidth = width;
   }
 
   /**
    * @param {ResizeObserverEntry[]} entries
    */
-  handleResize (entries) {
+  handleResize(entries) {
     const { left, right } = entries[0].contentRect;
 
-    const width = left + right
+    const width = left + right;
     // Resize when a primary panel is set
-    this.cachedWidth = width
+    this.cachedWidth = width;
   }
 
   /** Getters / Setters */
@@ -220,13 +226,13 @@ export default class LightPen extends BaseElement {
   /**
    * @returns {null | undefined | HTMLIFrameElement}
    */
-  get iframeElem () {
-    return this.shadowRoot?.querySelector("iframe")
+  get iframeElem() {
+    return this.shadowRoot?.querySelector("iframe");
   }
 
-  updateIframeContent () {
-    const iframeElem = this.iframeElem
-    if (iframeElem == null) return
+  updateIframeContent() {
+    const iframeElem = this.iframeElem;
+    if (iframeElem == null) return;
 
     // this.setupIframeLogging();
 
@@ -242,59 +248,73 @@ export default class LightPen extends BaseElement {
           </script>
         </body>
       </html>
-    `
+    `;
 
-    iframeElem.srcdoc = page
+    iframeElem.srcdoc = page;
   }
 
   /**
    * @override
    * @param {import("lit").PropertyValues} changedProperties
    */
-  willUpdate (changedProperties) {
-    if (["cssCode", "htmlCode", "jsCode"].some((str) => changedProperties.has(str))) {
-      if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
-      this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
+  willUpdate(changedProperties) {
+    if (
+      ["cssCode", "htmlCode", "jsCode"].some((str) =>
+        changedProperties.has(str),
+      )
+    ) {
+      if (this._iframeDebounce != null)
+        window.clearTimeout(this._iframeDebounce);
+      this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300);
     }
 
     if (changedProperties.has("resizePosition")) {
-      this.updateResizePosition()
+      this.updateResizePosition();
     }
 
-    super.willUpdate(changedProperties)
+    super.willUpdate(changedProperties);
   }
 
   /**
    * @override
    */
   disconnectedCallback() {
-    super.disconnectedCallback()
-    this.resizeObserver.disconnect()
+    super.disconnectedCallback();
+    this.resizeObserver.disconnect();
   }
 
   /**
    * @param {KeyboardEvent} event
    */
-  handleResizerKeydown (event) {
-    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+  handleResizerKeydown(event) {
+    if (
+      [
+        "ArrowLeft",
+        "ArrowRight",
+        "ArrowUp",
+        "ArrowDown",
+        "Home",
+        "End",
+      ].includes(event.key)
+    ) {
       let newPosition = this.resizePosition;
-      const incr = (event.shiftKey ? 10 : 1) * (1);
+      const incr = (event.shiftKey ? 10 : 1) * 1;
 
       event.preventDefault();
 
-      if (event.key === 'ArrowLeft') {
+      if (event.key === "ArrowLeft") {
         newPosition -= incr;
       }
 
-      if (event.key === 'ArrowRight') {
+      if (event.key === "ArrowRight") {
         newPosition += incr;
       }
 
-      if (event.key === 'Home') {
+      if (event.key === "Home") {
         newPosition = 100;
       }
 
-      if (event.key === 'End') {
+      if (event.key === "End") {
         newPosition = 0;
       }
 
@@ -302,24 +322,22 @@ export default class LightPen extends BaseElement {
     }
   }
 
-  updateResizePosition (resizePosition = this.resizePosition) {
-    const startWidth = resizePosition
+  updateResizePosition(resizePosition = this.resizePosition) {
+    const startWidth = resizePosition;
 
     if (startWidth != null) {
-      const endWidth = 100 - startWidth
-      this.style.setProperty("--start-panel-width", `${startWidth}%`)
-      this.style.setProperty("--end-panel-width", `${endWidth}%`)
+      const endWidth = 100 - startWidth;
+      this.style.setProperty("--start-panel-width", `${startWidth}%`);
+      this.style.setProperty("--end-panel-width", `${endWidth}%`);
     }
   }
 
+  resetValues() {
+    this.htmlCode = this.htmlEditor?.getAttribute("value") || "";
+    this.cssCode = this.cssEditor?.getAttribute("value") || "";
+    this.jsCode = this.jsEditor?.getAttribute("value") || "";
 
-  resetValues () {
-    this.htmlCode = this.htmlEditor?.getAttribute("value") || ""
-    this.cssCode = this.cssEditor?.getAttribute("value") || ""
-    this.jsCode = this.jsEditor?.getAttribute("value") || ""
-
-    this.requestUpdate()
-
+    this.requestUpdate();
   }
 
   // setupIframeLogging() {
@@ -350,85 +368,87 @@ export default class LightPen extends BaseElement {
   // }
 
   // Rendering
-  renderConsole () {
-    return html`<div part="sandbox-console-log"></div>`
+  renderConsole() {
+    return html`<div part="sandbox-console-log"></div>`;
   }
 
   /**
    * @override
    */
-  render () {
-		return html`
-      <!-- Where users can declaratively provide templates -->
+  render() {
+    return html` <!-- Where users can declaratively provide templates -->
       <div part="base" ?resizing=${this._resizing}>
-			  <div part="sandbox">
-				  <div part="sandbox-header">
+        <div part="sandbox">
+          <div part="sandbox-header">
             <slot name="title">
-					    <strong>
-                Code Editor
-              </strong>
+              <strong> Code Editor </strong>
             </slot>
 
-					  <span part="sandbox-controls">
-						  <button class="light-button" part="sandbox-controls-button sandbox-reset" @click=${this.resetValues}>
+            <span part="sandbox-controls">
+              <button
+                class="light-button"
+                part="sandbox-controls-button sandbox-reset"
+                @click=${this.resetValues}
+              >
                 Reset
               </button>
 
-						  ${when(this.console === "enabled", () => html`<button @click={}>Clear Console</button>`)}
-					  </span>
-				</div>
-				<div part="sandbox-content">
-					<div part="sandbox-code">
-            ${this.renderDetails('html')}
-            ${this.renderDetails('css')}
-            ${this.renderDetails('js')}
-					</div>
+              ${when(
+                this.console === "enabled",
+                () => html`<button @click="{}">Clear Console</button>`,
+              )}
+            </span>
+          </div>
+          <div part="sandbox-content">
+            <div part="sandbox-code">
+              ${this.renderDetails("html")} ${this.renderDetails("css")}
+              ${this.renderDetails("js")}
+            </div>
 
-          <button
-            id="panel-resizer"
-            part="panel-resizer"
-            role="separator"
-            aria-valuenow=${this.resizePosition}
-            aria-valuemin="0"
-            aria-valuemax="100"
-            @keydown=${this.handleResizerKeydown}
-            @pointerdown=${this.handleDrag}
-            @touchstart=${this.handleDrag}
-            class=${`light-button ${this._resizing ? `is-active` : ""}`}
-          >
-            <slot name="panel-resize-icon">
-              ${resizeIcon}
-            </slot>
-            <span class="visually-hidden">Resize Panel. Pull to left or right to resize.</span>
-          </button>
+            <button
+              id="panel-resizer"
+              part="panel-resizer"
+              role="separator"
+              aria-valuenow=${this.resizePosition}
+              aria-valuemin="0"
+              aria-valuemax="100"
+              @keydown=${this.handleResizerKeydown}
+              @pointerdown=${this.handleDrag}
+              @touchstart=${this.handleDrag}
+              class=${`light-button ${this._resizing ? `is-active` : ""}`}
+            >
+              <slot name="panel-resize-icon"> ${resizeIcon} </slot>
+              <span class="visually-hidden"
+                >Resize Panel. Pull to left or right to resize.</span
+              >
+            </button>
 
-					<div part="sandbox-iframe-wrapper">
-						<iframe
-              part="sandbox-iframe"
-              frameborder="0"
-             ></iframe>
-					</div>
-				</div>
+            <div part="sandbox-iframe-wrapper">
+              <iframe part="sandbox-iframe" frameborder="0" sandbox=${ifDefined(this.sandboxSettings ? this.sandboxSettings : null)}></iframe>
+            </div>
+          </div>
 
-        <!--
+          <!--
         ${when(
             this.console === "enabled",
             () => html`
               <details class="sandbox-console" ?open=${console}>
-                <summary part="summary summary-console" tabindex="0">Console</summary>
+                <summary part="summary summary-console" tabindex="0">
+                  Console
+                </summary>
                 ${this.consoleText}
               </details>
-            `
-        )}
+            `,
+          )}
         -->
-			</div>
-		</div>`
-	}
+        </div>
+      </div>`;
+  }
 
   /**
    * @param {PointerEvent} event
    */
-	handleDrag (event) {
+  handleDrag(event) {
     // Prevent text selection when dragging
     if (event.cancelable) {
       event.preventDefault();
@@ -436,28 +456,32 @@ export default class LightPen extends BaseElement {
 
     if (this.iframeElem) {
       // We need to disable pointerevents on the iframe to listen for mousemove over the top of it.
-      this.iframeElem.style.pointerEvents = "none"
+      this.iframeElem.style.pointerEvents = "none";
     }
 
-    this._resizing = true
+    this._resizing = true;
 
     drag(this, {
       onMove: (x, _y) => {
-        this._resizing = true
+        this._resizing = true;
         let newPositionInPixels = x;
 
-        this.resizePosition = clamp(0, this.pixelsToPercentage(newPositionInPixels), 100);
-        this.updateResizePosition()
+        this.resizePosition = clamp(
+          0,
+          this.pixelsToPercentage(newPositionInPixels),
+          100,
+        );
+        this.updateResizePosition();
       },
       onStop: () => {
         if (this.iframeElem) {
-        // Re-enable pointerevents so you can use tab keys etc.
-          this.iframeElem.style.pointerEvents = "auto"
+          // Re-enable pointerevents so you can use tab keys etc.
+          this.iframeElem.style.pointerEvents = "auto";
         }
 
-        this._resizing = false
+        this._resizing = false;
       },
-      initialEvent: event
+      initialEvent: event,
     });
   }
 
@@ -466,15 +490,15 @@ export default class LightPen extends BaseElement {
    * @param {number} pixels
    * @return {number}
    */
-  pixelsToPercentage (pixels) {
-    return (pixels / this.cachedWidth) * 100
+  pixelsToPercentage(pixels) {
+    return (pixels / this.cachedWidth) * 100;
   }
 
   /**
    * @internal
    * @param {SupportedLanguages} language
    */
-  renderEditor (language) {
+  renderEditor(language) {
     return html`
       <light-editor
         id=${`editor-${language}`}
@@ -489,28 +513,32 @@ export default class LightPen extends BaseElement {
         .value=${this[`${language}Code`]}
         ?preserve-whitespace=${this.preserveWhitespace}
         @light-value-change=${(/** @type Event */ e) => {
-          this[`${language}Code`] = /** @type {LightEditor} */ (e.currentTarget).value
+          this[`${language}Code`] = /** @type {LightEditor} */ (
+            e.currentTarget
+          ).value;
         }}
-      ><slot name=${language}></slot></light-editor>
-    `
+        ><slot name=${language}></slot
+      ></light-editor>
+    `;
   }
 
   /**
    * @internal
    * @param {SupportedLanguages} language
    */
-  renderDetails (language) {
-    let fullLanguage = language.toUpperCase()
+  renderDetails(language) {
+    let fullLanguage = language.toUpperCase();
 
     // const open = this.openLanguages.split(",").includes(language)
 
-		return html`
+    return html`
       <light-disclosure part="disclosure disclosure-${language}">
-        <span part="summary" slot="summary"><slot name=${`summary-${language}`}>${fullLanguage}</slot></span>
+        <span part="summary" slot="summary"
+          ><slot name=${`summary-${language}`}>${fullLanguage}</slot></span
+        >
 
         ${this.renderEditor(language)}
-			</light-disclosure>
-		`
+      </light-disclosure>
+    `;
   }
 }
-

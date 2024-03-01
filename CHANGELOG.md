@@ -1,4 +1,8 @@
-## Next
+## v3.0.1 - 02/27/2024
+
+- Bug Fix: Properly add `sandbox-settings` for `<light-preview>` and `<light-pen>`
+
+## v3.0.0 - 02/26/2024
 
 Bug Fix: `<light-preview>` now correctly passes the `wrap` property down to `<light-code>`
 
