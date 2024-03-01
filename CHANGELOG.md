@@ -1,5 +1,9 @@
 ## Next
 
+Bug Fix: `<light-preview>` now correctly passes the `wrap` property down to `<light-code>`
+
+## v3.0.0 - 02/27/2024
+
 - BREAKING_CHANGE: The default entrypoint now registers all elements.
 - BREAKING_CHANGE: `previewCode` has changed to `previewHtml` property and `preview-html` attribute for `<light-preview>`.
 - Feature: Added `lineNumberStart` for counting indexes starting at a specific number.
