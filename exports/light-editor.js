@@ -69,18 +69,13 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    */
   static properties = {
     ...LitTextareaMixin.formProperties,
-    wrap: { reflect: true },
+    wrap: { reflect: true, state: false },
     language: { reflect: true },
     disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
     preserveWhitespace: {
       type: Boolean,
       reflect: true,
       attribute: "preserve-whitespace",
-    },
-    hasInteracted: {
-      type: Boolean,
-      reflect: true,
-      attribute: "data-has-interacted",
     },
     hasFocused: {
       type: Boolean,
