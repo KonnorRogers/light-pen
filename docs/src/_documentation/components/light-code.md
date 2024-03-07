@@ -222,7 +222,7 @@ Here's a preview of soft wrapping vs hard wrapping.
       </section>
       <section>
         <h2>With "hard" wrapping</h2>
-        <light-code wrap="hard">
+        <light-code wrap="hard" highlight-lines="{4}">
           <script type="text/plain" slot="code">
             <html>
               <head></head>
