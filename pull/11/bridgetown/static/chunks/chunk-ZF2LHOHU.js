@@ -462,8 +462,8 @@ pre > code.diff-highlight .token.token.inserted:not(.prefix) *::selection {
 `)}r[0]=r[0].replace(/^\r?\n/,"");let i=r[0];for(let o=0;o<e.length;o++)i+=e[o]+r[o+1];return i}var Mt=j`
 [part~="pre"],
 [part~="code"] {
-	background: hsl(230, 1%, 98%);
-	color: hsl(230, 8%, 24%);
+  background: hsl(230, 1%, 98%);
+  color: hsl(230, 8%, 24%);
   line-height: 1.8;
 }
 
@@ -642,4 +642,4 @@ lit-html/directives/unsafe-html.js:
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 */
-//# sourceMappingURL=/light-pen/pull/11/bridgetown/static/chunks/chunk-HO5YNFEU.js.map
+//# sourceMappingURL=/light-pen/pull/11/bridgetown/static/chunks/chunk-ZF2LHOHU.js.map
