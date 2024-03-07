@@ -462,14 +462,12 @@ pre > code.diff-highlight .token.token.inserted:not(.prefix) *::selection {
 `)}r[0]=r[0].replace(/^\r?\n/,"");let i=r[0];for(let o=0;o<e.length;o++)i+=e[o]+r[o+1];return i}var Mt=j`
 [part~="pre"],
 [part~="code"] {
-  color: #272727;
-  background-color: #f7f7f7;
+	background: hsl(230, 1%, 98%);
+	color: hsl(230, 8%, 24%);
   line-height: 1.8;
 }
 
 [part~="pre"] {
-  color: #272727;
-  background-color: #f7f7f7;
   margin: 0;
   /* This removes line wrapping */
   word-break: break-all;
@@ -480,7 +478,7 @@ pre > code.diff-highlight .token.token.inserted:not(.prefix) *::selection {
 
 [part~="code"] {
   display: grid;
-  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  grid-template-columns: max-content auto;
 }
 
 :host([wrap="soft"]) [part~="pre"] {
@@ -497,6 +495,7 @@ pre > code.diff-highlight .token.token.inserted:not(.prefix) *::selection {
   display: inline-block;
   width: 100%;
   padding-inline-start: 18px;
+  padding-inline-end: 6px;
   position: relative;
 }
 
@@ -558,7 +557,8 @@ pre > code.diff-highlight .token.token.inserted:not(.prefix) *::selection {
       [part~="base"] {
         height: 100%;
         position: relative;
-        background-color: #f7f7f7;
+	background: hsl(230, 1%, 98%);
+	color: hsl(230, 8%, 24%);
         overflow: auto;
       }
 
@@ -642,4 +642,4 @@ lit-html/directives/unsafe-html.js:
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 */
-//# sourceMappingURL=/light-pen/pull/11/bridgetown/static/chunks/chunk-W35OYF3H.js.map
+//# sourceMappingURL=/light-pen/pull/11/bridgetown/static/chunks/chunk-HO5YNFEU.js.map
