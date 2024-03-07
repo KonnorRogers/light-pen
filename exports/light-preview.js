@@ -88,7 +88,7 @@ export default class LightPreview extends BaseElement {
     deletedLines: {attribute: "deleted-lines"},
     lineNumberStart: {type: Number, attribute: "line-number-start"},
     scriptScope: {attribute: "script-scope"},
-    wrap: {},
+    wrap: {reflect: true},
     code: {},
     previewHtml: { attribute: "preview-html" },
   }

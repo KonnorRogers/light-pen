@@ -1,3 +1,8 @@
+## v3.0.2 - 03/07/2024
+
+- Bug Fix: `<light-preview>` fixes `unescapeBehavior` attribute to `unescape-behavior`
+- Bug Fix: `<light-code>` now properly supports `wrap="hard"`.
+
 ## v3.0.1 - 02/27/2024
 
 - Bug Fix: Properly add `sandbox-settings` for `<light-preview>` and `<light-pen>`

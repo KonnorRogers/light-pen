@@ -3,8 +3,8 @@ import { css } from "lit";
 export const codeStyles = css`
 [part~="pre"],
 [part~="code"] {
-	background: hsl(230, 1%, 98%);
-	color: hsl(230, 8%, 24%);
+  background: hsl(230, 1%, 98%);
+  color: hsl(230, 8%, 24%);
   line-height: 1.8;
 }
 
