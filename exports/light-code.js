@@ -48,6 +48,8 @@ export default class LightCode extends BaseElement {
       [part~="base"] {
         height: 100%;
         position: relative;
+        background-color: #f7f7f7;
+        overflow: auto;
       }
 
       [part~="gutter"] {

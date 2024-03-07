@@ -1,7 +1,6 @@
 import { css } from "lit";
 
 export const codeStyles = css`
-
 [part~="pre"],
 [part~="code"] {
   color: #272727;
@@ -13,7 +12,6 @@ export const codeStyles = css`
   color: #272727;
   background-color: #f7f7f7;
   margin: 0;
-  overflow: auto;
   /* This removes line wrapping */
   word-break: break-all;
   white-space: pre;
@@ -73,5 +71,4 @@ export const codeStyles = css`
   font-variant-numeric: tabular-nums;
   text-align: end;
 }
-
 `

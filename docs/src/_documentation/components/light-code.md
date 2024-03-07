@@ -192,3 +192,51 @@ counting lines at `10` in the following snippet:
     </light-code>
   </script>
 </light-preview>
+
+## Line Wrapping
+
+By default `<light-preview>` will "soft wrap" lines for you. Meaning, code will wrap and not overflow
+the container. If this is undesirable, you can pass `wrap="hard"` and lines will not wrap.
+
+Here's a preview of soft wrapping vs hard wrapping.
+
+<light-preview preview-mode="shadow-dom" unescape-behavior="none">
+  <template slot="code">
+    <div style="display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <section>
+        <h2>With "soft" wrapping</h2>
+        <light-code>
+          <script type="text/plain" slot="code">
+            <html>
+              <head></head>
+              <body>
+                HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
+                <script>
+                  const greeting = "Hello World"
+                  console.log(greeting)
+                &lt;/script>
+              </body>
+            </html>
+          </script>
+        </light-code>
+      </section>
+      <section>
+        <h2>With "hard" wrapping</h2>
+        <light-code wrap="hard">
+          <script type="text/plain" slot="code">
+            <html>
+              <head></head>
+              <body>
+                HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
+                <script>
+                  const greeting = "Hello World"
+                  console.log(greeting)
+                &lt;/script>
+              </body>
+            </html>
+          </script>
+        </light-code>
+      </section>
+    </div>
+  </template>
+</light-preview>

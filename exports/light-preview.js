@@ -81,7 +81,7 @@ export default class LightPreview extends BaseElement {
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
     language: { reflect: true },
-    unescapeBehavior: { attribute: "unescapeBehavior", reflect: true },
+    unescapeBehavior: { attribute: "unescape-behavior", reflect: true },
     disableLineNumbers: {type: Boolean, reflect: true, attribute: "disable-line-numbers"},
     highlightLines: {attribute: "highlight-lines"},
     insertedLines: {attribute: "inserted-lines"},
