@@ -555,8 +555,8 @@ export default class LightPreview extends BaseElement {
               .language=${this.language}
               .code=${this.transformTags(this.code)}
               wrap=${this.wrap}
-              ?disableHighlight=${this.disableHighlight}
-              ?disableLineNumbers=${this.disableLineNumbers}
+              ?disable-highlight=${this.disableHighlight}
+              ?disable-line-numbers=${this.disableLineNumbers}
               .highlightLines=${this.highlightLines}
               .insertedLines=${this.insertedLines}
               .deletedLines=${this.deletedLines}
