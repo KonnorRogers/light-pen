@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.M3HEJOFF.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.74ZO6AUC.js">
 <link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.3WQG57J3.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.ULZCVXI6.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.M3HEJOFF.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.74ZO6AUC.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.3WQG57J3.js" type="module"></script>
 
 <!-- Favicons -->
@@ -357,12 +357,12 @@ can combine ranges and numbers like so:</p>
             HTML
           </div>
 
-          <clipboard-copy for="7d9a4815-afa7-488a-a4fa-f0e97cabbba7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="5471bb61-610d-43fe-9670-59637ca58e54" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="7d9a4815-afa7-488a-a4fa-f0e97cabbba7" hidden="">&lt;light-code highlight-lines="{1, 4-8, 12}"&gt;&lt;/light-code&gt;
+          <textarea id="5471bb61-610d-43fe-9670-59637ca58e54" hidden="">&lt;light-code highlight-lines="{1, 4-8, 12}"&gt;&lt;/light-code&gt;
 </textarea>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-code</span> <span class="na">highlight-lines=</span><span class="s">"{1, 4-8, 12}"</span><span class="nt">&gt;&lt;/light-code&gt;</span>
@@ -511,6 +511,56 @@ counting lines at <code class="highlighter-rouge">10</code> in the following sni
     </light-code>
   </script>
 </light-preview>
+
+<h2 id="line-wrapping">
+          <a href="#line-wrapping">Line Wrapping</a>
+        </h2>
+
+<p>By default <code class="highlighter-rouge">&lt;light-preview&gt;</code> will “soft wrap” lines for you. Meaning, code will wrap and not overflow
+the container. If this is undesirable, you can pass <code class="highlighter-rouge">wrap="hard"</code> and lines will not wrap.</p>
+
+<p>Here’s a preview of soft wrapping vs hard wrapping.</p>
+
+<light-preview preview-mode="shadow-dom" unescape-behavior="none">
+  <template slot="code">
+    <div style="display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <section>
+        <h2>With "soft" wrapping</h2>
+        <light-code>
+          <script type="text/plain" slot="code">
+            <html>
+              <head></head>
+              <body>
+                HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
+                <script>
+                  const greeting = "Hello World"
+                  console.log(greeting)
+                &lt;/script>
+              </body>
+            </html>
+          </script>
+        </light-code>
+      </section>
+      <section>
+        <h2>With "hard" wrapping</h2>
+        <light-code wrap="hard" highlight-lines="{4}">
+          <script type="text/plain" slot="code">
+            <html>
+              <head></head>
+              <body>
+                HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
+                <script>
+                  const greeting = "Hello World"
+                  console.log(greeting)
+                &lt;/script>
+              </body>
+            </html>
+          </script>
+        </light-code>
+      </section>
+    </div>
+  </template>
+</light-preview>
 <h2 id="imports">
           <a href="#imports">Imports</a>
         </h2>
@@ -523,12 +573,12 @@ counting lines at <code class="highlighter-rouge">10</code> in the following sni
             HTML
           </div>
 
-          <clipboard-copy for="bff80bdb-b1be-4e00-af37-b1867e7efe80" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="dea82283-2d39-4515-a116-affa0e3e54d2" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="bff80bdb-b1be-4e00-af37-b1867e7efe80" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
+          <textarea id="dea82283-2d39-4515-a116-affa0e3e54d2" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -544,17 +594,17 @@ counting lines at <code class="highlighter-rouge">10</code> in the following sni
             HTML
           </div>
 
-          <clipboard-copy for="9dc641e3-121d-4cf5-9a59-b11e1ae7393c" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="8e37bbc7-d8df-42e8-b846-3ba6a56d1b1d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="9dc641e3-121d-4cf5-9a59-b11e1ae7393c" hidden="">&lt;script type="module"&gt;
+          <textarea id="8e37bbc7-d8df-42e8-b846-3ba6a56d1b1d" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-code&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"
 
   // Manual Register
-  import LightCode from "https://cdn.jsdelivr.net/npm/light-pen/exports/light-code.js/exports/light-code.js"
+  import LightCode from "https://cdn.jsdelivr.net/npm/light-pen/exports/light-code.js"
   LightCode.define()
   // =&gt; Registers as &lt;light-code&gt;
 &lt;/script&gt;
@@ -565,7 +615,7 @@ counting lines at <code class="highlighter-rouge">10</code> in the following sni
   <span class="k">import</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js</span><span class="dl">"</span>
 
   <span class="c1">// Manual Register</span>
-  <span class="k">import</span> <span class="nx">LightCode</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-code.js/exports/light-code.js</span><span class="dl">"</span>
+  <span class="k">import</span> <span class="nx">LightCode</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-code.js</span><span class="dl">"</span>
   <span class="nx">LightCode</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
   <span class="c1">// =&gt; Registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">code</span><span class="o">&gt;</span>
 <span class="nt">&lt;/script&gt;</span>
@@ -579,25 +629,25 @@ counting lines at <code class="highlighter-rouge">10</code> in the following sni
             JavaScript
           </div>
 
-          <clipboard-copy for="0a8954d6-c593-4edd-8211-c76893096c29" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="ca34e348-5e89-408c-9631-fe9db3eaefb2" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="0a8954d6-c593-4edd-8211-c76893096c29" hidden="">// Auto registers as &lt;light-code&gt;
-import "light-pen/exports/light-code.js/exports/light-code-register.js"
+          <textarea id="ca34e348-5e89-408c-9631-fe9db3eaefb2" hidden="">// Auto registers as &lt;light-code&gt;
+import "light-pen/exports/light-code-register.js"
 
 // Manual Register
-import LightCode "light-pen/exports/light-code.js/exports/light-code.js"
+import LightCode "light-pen/exports/light-code.js"
 LightCode.define()
 // =&gt; Registers as &lt;light-code&gt;
 </textarea>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Auto registers as &lt;light-code&gt;</span>
-<span class="k">import</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-code.js/exports/light-code-register.js</span><span class="dl">"</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-code-register.js</span><span class="dl">"</span>
 
 <span class="c1">// Manual Register</span>
-<span class="k">import</span> <span class="nx">LightCode</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-code.js/exports/light-code.js</span><span class="dl">"</span>
+<span class="k">import</span> <span class="nx">LightCode</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-code.js</span><span class="dl">"</span>
 <span class="nx">LightCode</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
 <span class="c1">// =&gt; Registers as &lt;light-code&gt;</span>
 </code></pre></div></div></div>
@@ -1035,6 +1085,8 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
         <a href="#disable-line-numbers" class="side-nav__link">Disable Line Numbers</a>
       </li><li class="side-nav__item">
         <a href="#starting-counting-lines-at-a-specific-index" class="side-nav__link">Starting counting lines at a specific index</a>
+      </li><li class="side-nav__item">
+        <a href="#line-wrapping" class="side-nav__link">Line Wrapping</a>
       </li><li class="side-nav__item">
         <a href="#imports" class="side-nav__link">Imports</a>
       </li><li class="side-nav__item">
