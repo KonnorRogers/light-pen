@@ -1,19 +1,15 @@
 import { css } from "lit";
 
 export const codeStyles = css`
-
 [part~="pre"],
 [part~="code"] {
-  color: #272727;
-  background-color: #f7f7f7;
+  background: hsl(230, 1%, 98%);
+  color: hsl(230, 8%, 24%);
   line-height: 1.8;
 }
 
 [part~="pre"] {
-  color: #272727;
-  background-color: #f7f7f7;
   margin: 0;
-  overflow: auto;
   /* This removes line wrapping */
   word-break: break-all;
   white-space: pre;
@@ -23,7 +19,7 @@ export const codeStyles = css`
 
 [part~="code"] {
   display: grid;
-  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  grid-template-columns: max-content auto;
 }
 
 :host([wrap="soft"]) [part~="pre"] {
@@ -40,6 +36,7 @@ export const codeStyles = css`
   display: inline-block;
   width: 100%;
   padding-inline-start: 18px;
+  padding-inline-end: 6px;
   position: relative;
 }
 
@@ -73,5 +70,4 @@ export const codeStyles = css`
   font-variant-numeric: tabular-nums;
   text-align: end;
 }
-
 `

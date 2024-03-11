@@ -81,14 +81,14 @@ export default class LightPreview extends BaseElement {
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
     language: { reflect: true },
-    unescapeBehavior: { attribute: "unescapeBehavior", reflect: true },
+    unescapeBehavior: { attribute: "unescape-behavior", reflect: true },
     disableLineNumbers: {type: Boolean, reflect: true, attribute: "disable-line-numbers"},
     highlightLines: {attribute: "highlight-lines"},
     insertedLines: {attribute: "inserted-lines"},
     deletedLines: {attribute: "deleted-lines"},
     lineNumberStart: {type: Number, attribute: "line-number-start"},
     scriptScope: {attribute: "script-scope"},
-    wrap: {},
+    wrap: {reflect: true},
     code: {},
     previewHtml: { attribute: "preview-html" },
   }
@@ -555,8 +555,8 @@ export default class LightPreview extends BaseElement {
               .language=${this.language}
               .code=${this.transformTags(this.code)}
               wrap=${this.wrap}
-              ?disableHighlight=${this.disableHighlight}
-              ?disableLineNumbers=${this.disableLineNumbers}
+              ?disable-highlight=${this.disableHighlight}
+              ?disable-line-numbers=${this.disableLineNumbers}
               .highlightLines=${this.highlightLines}
               .insertedLines=${this.insertedLines}
               .deletedLines=${this.deletedLines}

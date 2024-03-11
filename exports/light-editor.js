@@ -67,33 +67,27 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   /**
    * @override
    */
-  static properties = Object.assign(
-    {
-      language: { reflect: true },
-      disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
-      preserveWhitespace: {
-        type: Boolean,
-        reflect: true,
-        attribute: "preserve-whitespace",
-      },
-      hasInteracted: {
-        type: Boolean,
-        reflect: true,
-        attribute: "data-has-interacted",
-      },
-      hasFocused: {
-        type: Boolean,
-        reflect: true,
-        attribute: "data-has-focused",
-      },
-      currentLineNumber: {
-        attribute: false,
-        state: true,
-        type: Number
-      }
+  static properties = {
+    ...LitTextareaMixin.formProperties,
+    wrap: { reflect: true, state: false },
+    language: { reflect: true },
+    disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
+    preserveWhitespace: {
+      type: Boolean,
+      reflect: true,
+      attribute: "preserve-whitespace",
     },
-    LitTextareaMixin.formProperties,
-  );
+    hasFocused: {
+      type: Boolean,
+      reflect: true,
+      attribute: "data-has-focused",
+    },
+    currentLineNumber: {
+      attribute: false,
+      state: true,
+      type: Number
+    }
+  }
 
   constructor() {
     super();
@@ -127,7 +121,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
      * @type {"soft" | "hard"}
      * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
      */
-    this.wrap = "hard";
+    this.wrap = "soft";
 
     /**
      * Whether to strip whitespace before first character, and after the last character.
@@ -402,7 +396,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
 
     if (textarea == null) return;
 
-    const lightCode = this.shadowRoot?.querySelector("light-code")?.shadowRoot?.querySelector("pre");
+    const lightCode = this.shadowRoot?.querySelector("light-code")?.shadowRoot?.querySelector("[part~='base']");
 
     if (lightCode) {
       lightCode.scrollTop = textarea.scrollTop;

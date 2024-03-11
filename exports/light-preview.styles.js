@@ -25,6 +25,8 @@ export const previewStyles = css`
 }
 
 [part~="panel-resizer"] {
+  display: grid;
+  align-content: center;
   border-color: transparent;
   border-radius: 0;
   border-inline-start: 1px solid var(--border-color);
