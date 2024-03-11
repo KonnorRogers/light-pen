@@ -1,4 +1,4 @@
-## v3.0.2 - 03/07/2024
+## v3.0.2 - 03/11/2024
 
 - Styles: `overflow: auto;` moved to `[part~="base"]` in `<light-preview>`
 - Bug Fix: `disable-highlight` and `disable-line-numbers` now works as expected in `<light-preview>`
