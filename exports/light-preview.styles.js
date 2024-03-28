@@ -40,20 +40,17 @@ export const previewStyles = css`
   display: grid;
   grid-template-columns: minmax(0, var(--start-panel-width, 1fr)) minmax(0, auto) minmax(0, var(--end-panel-width, auto));
   overflow: auto;
-  max-height: 100%;
   resize: vertical;
-
+  min-height: 100%;
+  max-height: 100%;
+  width: 100%;
+  max-width: 100%;
 }
 
 [part~="start-panel"] {
   padding: 1rem;
   min-width: 100%;
-}
-
-[part~="preview"] {
-  min-height: 100%;
-  max-height: 100%;
-  width: 100%;
+  max-width: 100%;
 }
 
 [part~="end-panel"] {

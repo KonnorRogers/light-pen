@@ -1,6 +1,7 @@
 ## v3.0.3 03/28/2024
 
 - Bug Fix: Fixed `gutter` in `<light-code>` not extending the entire height of the element.
+- Bug Fix: Make `<iframe>` max-width: 100%; so it doesn't overflow preview container.
 
 ## v3.0.2 - 03/11/2024
 
