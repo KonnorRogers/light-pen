@@ -1,3 +1,7 @@
+## v3.0.3 03/28/2024
+
+- Bug Fix: Fixed `gutter` in `<light-code>` not extending the entire height of the element.
+
 ## v3.0.2 - 03/11/2024
 
 - Styles: `overflow: auto;` moved to `[part~="base"]` in `<light-preview>`
