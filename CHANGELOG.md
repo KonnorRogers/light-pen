@@ -1,3 +1,7 @@
+## v3.0.3 - 03/31/2024
+
+- Bug Fix: No longer wipe away state when resizing a `<light-preview>` [#13](https://github.com/KonnorRogers/light-pen/pull/13/files)
+
 ## v3.0.2 - 03/11/2024
 
 - Styles: `overflow: auto;` moved to `[part~="base"]` in `<light-preview>`
