@@ -396,7 +396,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
 
     if (textarea == null) return;
 
-    const lightCode = this.shadowRoot?.querySelector("light-code")?.shadowRoot?.querySelector("[part~='base']");
+    const lightCode = this.shadowRoot?.querySelector("light-code")?.shadowRoot?.querySelector("[part~='pre']");
 
     if (lightCode) {
       lightCode.scrollTop = textarea.scrollTop;

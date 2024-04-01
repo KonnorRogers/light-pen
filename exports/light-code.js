@@ -48,8 +48,12 @@ export default class LightCode extends BaseElement {
       [part~="base"] {
         height: 100%;
         position: relative;
-	background: hsl(230, 1%, 98%);
-	color: hsl(230, 8%, 24%);
+	      background: hsl(230, 1%, 98%);
+	      color: hsl(230, 8%, 24%);
+      }
+
+      [part~="pre"] {
+        height: 100%;
         overflow: auto;
       }
 
@@ -287,32 +291,30 @@ export default class LightCode extends BaseElement {
     const language = this.language
 
     const finalHTML = html`
-      <div part=${stringMap({
-          "base": true,
-        })}>
-          ${when(!this.disableHighlight,
-            () => html`
-	            <pre
-                id="pre-${language}"
-                data-code-lang=${language}
-                aria-hidden="true"
-                part="pre pre-${language}"
-                tabindex="0"
-                aria-labelledby="source-code-label"
-                class="diff-highlight language-${language}"
-                role="region"
-              ><code
-                  part="code code-${language}"
-                  class="language-${language}"
-                >${unsafeHTML(this.highlight(this.code))}</code></pre>`,
-            () => html`${unsafeHTML(this.code)}`
-          )}
+      <div part="base">
+        ${when(!this.disableHighlight,
+          () => html`
+            <pre
+              id="pre-${language}"
+              data-code-lang=${language}
+              aria-hidden="true"
+              part="pre pre-${language}"
+              tabindex="0"
+              aria-labelledby="source-code-label"
+              class="diff-highlight language-${language}"
+              role="region"
+            ><code
+                part="code code-${language}"
+                class="language-${language}"
+              >${unsafeHTML(this.highlight(this.code))}</code></pre>`,
+          () => html`${unsafeHTML(this.code)}`
+        )}
 
-          <!-- This gutter is for showing when line numbers may not correspond to existing lines. -->
-          ${when(this.disableLineNumbers,
-            () => html``,
-            () => html`<div part="gutter"></div>`
-          )}
+        <!-- This gutter is for showing when line numbers may not correspond to existing lines. -->
+        ${when(this.disableLineNumbers,
+          () => html``,
+          () => html`<div part="gutter"></div>`
+        )}
       </div>
 
       <div hidden>
