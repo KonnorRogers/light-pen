@@ -396,6 +396,11 @@ export default class LightPreview extends BaseElement {
     if (/** @type {Array<"previewHtml" | "code">} */ (["previewHtml", "code"]).some((str) => changedProperties.has((str)))) {
       if (this._iframeDebounce != null) window.clearTimeout(this._iframeDebounce)
       this._iframeDebounce = setTimeout(() => this.updateIframeContent(), 300)
+
+
+      if (this.shadowRoot) {
+        this.addShadowRootToPreview(this.shadowRoot)
+      }
     }
 
     if (changedProperties.has("resizePosition")) {
@@ -584,10 +589,6 @@ export default class LightPreview extends BaseElement {
         <slot name="code" @slotchange=${this.handleTemplate}></slot>
       </div>
     `
-
-    if (this.shadowRoot) {
-      this.addShadowRootToPreview(this.shadowRoot)
-    }
 
     return finalHTML
   }
