@@ -256,17 +256,7 @@ div.code-toolbar > .toolbar.toolbar > .toolbar-item > span:focus {
 /* Line Highlight plugin overrides */
 /* The highlighted line itself */
 .line-highlight.line-highlight {
-	background: hsla(230, 8%, 24%, 0.05);
-}
-
-/* Default line numbers in Line Highlight plugin */
-.line-highlight.line-highlight:before,
-.line-highlight.line-highlight[data-end]:after {
-	background: hsl(230, 1%, 90%);
-	color: hsl(230, 8%, 24%);
-	padding: 0.1em 0.6em;
-	border-radius: 0.3em;
-	box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2); /* same as Toolbar plugin default */
+  background: hsl(232, 3%, 94%);
 }
 
 /* Hovering over a linkable line number (in the gutter area) */
@@ -318,7 +308,7 @@ pre[id].linkable-line-numbers.linkable-line-numbers span.line-numbers-rows > spa
 /* Taken from https://github.com/atom/github/blob/master/styles/variables.less */
 pre.diff-highlight > code .token.token.deleted:not(.prefix),
 pre > code.diff-highlight .token.token.deleted:not(.prefix) {
-	background-color: hsla(353, 100%, 66%, 0.15);
+	background-color: hsla(353, 100%, 96%, 1);
 }
 
 pre.diff-highlight > code .token.token.deleted:not(.prefix)::-moz-selection,
@@ -337,7 +327,7 @@ pre > code.diff-highlight .token.token.deleted:not(.prefix) *::selection {
 
 pre.diff-highlight > code .token.token.inserted:not(.prefix),
 pre > code.diff-highlight .token.token.inserted:not(.prefix) {
-	background-color: hsla(137, 100%, 55%, 0.15);
+	background-color: hsla(137, 100%, 95%);
 }
 
 pre.diff-highlight > code .token.token.inserted:not(.prefix)::-moz-selection,

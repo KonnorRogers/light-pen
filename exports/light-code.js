@@ -54,6 +54,9 @@ export default class LightCode extends BaseElement {
 
       [part~="pre"] {
         height: 100%;
+      }
+
+      [part~="code"] {
         overflow: auto;
       }
 
@@ -61,12 +64,12 @@ export default class LightCode extends BaseElement {
         position: absolute;
         top: 0;
         left: 0;
-        width: var(--gutter-cell-width, 40px);
+        width: calc(var(--gutter-cell-width, 40px) + 1px);
         border-inline-end: 1px solid darkgray;
-        background-color: rgba(50, 50, 50, 0.08);
         height: 100%;
         max-height: 100%;
         overflow: hidden;
+        pointer-events: none;
       }
     `
   ]
@@ -299,11 +302,11 @@ export default class LightCode extends BaseElement {
               data-code-lang=${language}
               aria-hidden="true"
               part="pre pre-${language}"
-              tabindex="0"
-              aria-labelledby="source-code-label"
               class="diff-highlight language-${language}"
-              role="region"
             ><code
+                tabindex="0"
+                aria-labelledby="source-code-label"
+                role="region"
                 part="code code-${language}"
                 class="language-${language}"
               >${unsafeHTML(this.highlight(this.code))}</code></pre>`,
