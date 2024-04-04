@@ -30,7 +30,7 @@ export const styles = css`
 
   [part~="textarea"] {
     color: transparent;
-    /* color: rgba(255,0,0,0.2); */
+    color: rgba(255,0,0,0.2);
     background-color: transparent;
     caret-color: inherit;
     z-index: 1;
@@ -47,6 +47,12 @@ export const styles = css`
   light-code::part(pre) {
     border-color: transparent;
     position: relative;
+  }
+
+  light-code::part(line)::before {
+    content: "";
+    line-height: inherit;
+    padding-inline-end: 0px;
   }
 
   [part~="base"]:focus-within {
