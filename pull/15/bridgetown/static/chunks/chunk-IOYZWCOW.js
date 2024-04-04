@@ -28,7 +28,7 @@ import{a as P,b as F,c as q,d as E,e as B,f as G,g as D,i as O,j as W,k as j,l a
 
   [part~="textarea"] {
     color: transparent;
-    color: rgba(255,0,0,0.2);
+    /* color: rgba(255,0,0,0.2); */
     background-color: transparent;
     caret-color: inherit;
     z-index: 1;
@@ -212,4 +212,4 @@ lit-html/directives/repeat.js:
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 */
-//# sourceMappingURL=/light-pen/pull/15/bridgetown/static/chunks/chunk-BZ2E4SI4.js.map
+//# sourceMappingURL=/light-pen/pull/15/bridgetown/static/chunks/chunk-IOYZWCOW.js.map

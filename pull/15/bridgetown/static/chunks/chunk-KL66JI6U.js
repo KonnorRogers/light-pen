@@ -1,4 +1,4 @@
-import{a as d,b as u,c as b,d as f,e as x}from"/light-pen/pull/15/bridgetown/static/chunks/chunk-PZCXDQ4I.js";import{a as m}from"/light-pen/pull/15/bridgetown/static/chunks/chunk-BZ2E4SI4.js";import{a as l,b as s,g as p,h as c,m as n,s as h}from"/light-pen/pull/15/bridgetown/static/chunks/chunk-BE55QC7D.js";import{d as o}from"/light-pen/pull/15/bridgetown/static/chunks/chunk-SVRPBOJC.js";var g=l`
+import{a as d,b as u,c as b,d as f,e as x}from"/light-pen/pull/15/bridgetown/static/chunks/chunk-PZCXDQ4I.js";import{a as m}from"/light-pen/pull/15/bridgetown/static/chunks/chunk-IOYZWCOW.js";import{a as l,b as s,g as p,h as c,m as n,s as h}from"/light-pen/pull/15/bridgetown/static/chunks/chunk-BE55QC7D.js";import{d as o}from"/light-pen/pull/15/bridgetown/static/chunks/chunk-SVRPBOJC.js";var g=l`
 [part~="sandbox-iframe"] {
   width: 100%;
   height: 100%;
@@ -249,4 +249,4 @@ button[part~="panel-resizer"]:is(:active, :hover, .is-active) {
         ${this.renderEditor(e)}
       </light-disclosure>
     `}};o(i,"baseName","light-pen"),o(i,"styles",[p,c,g]),o(i,"dependencies",{"light-editor":m,"light-disclosure":f}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{i as a};
-//# sourceMappingURL=/light-pen/pull/15/bridgetown/static/chunks/chunk-RPYOFFM7.js.map
+//# sourceMappingURL=/light-pen/pull/15/bridgetown/static/chunks/chunk-KL66JI6U.js.map
