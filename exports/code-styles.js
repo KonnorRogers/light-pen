@@ -35,28 +35,22 @@ export const codeStyles = css`
 [part~='line'] {
   display: inline-block;
   width: 100%;
-  padding-inline-start: 18px;
+  padding-inline-start: 6px;
   padding-inline-end: 6px;
-  position: relative;
 }
 
-[part~="line"]:is(.deleted, .inserted, .line-highlight)::after {
-  content: "";
-  position: absolute;
-  top: 0%;
-  left: 0%;
+[part~="line"]::before {
+  content: " ";
   line-height: inherit;
-  mix-blend-mode: difference;
-  filter: invert(1);
-  padding-inline-start: 2px;
+  padding-inline-end: 6px;
 }
 
 
-[part~="line"].deleted::after {
+[part~="line"].deleted::before {
   content: "-"
 }
 
-[part~="line"].inserted::after {
+[part~="line"].inserted::before {
   content: "+"
 }
 
@@ -66,8 +60,11 @@ export const codeStyles = css`
   padding-inline-start: 0.75em;
   user-select: none;
   color: rgba(0, 0, 0, 0.35);
-  background-color: transparent;
+  background-color: rgba(230, 230, 230, 1);
   font-variant-numeric: tabular-nums;
   text-align: end;
+  position: sticky;
+  z-index: 1;
+  left: 0px;
 }
 `
