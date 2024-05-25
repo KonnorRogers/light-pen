@@ -49,6 +49,12 @@ export const styles = css`
     position: relative;
   }
 
+  light-code::part(line)::before {
+    content: "";
+    line-height: inherit;
+    padding-inline-end: 0px;
+  }
+
   [part~="base"]:focus-within {
     border-color: dodgerblue;
     outline: 2px solid dodgerblue;

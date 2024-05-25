@@ -1,3 +1,11 @@
+## v3.0.6 - 04/04/2024
+
+- Bug Fix: `<light-editor>` now properly scrolls. [#15](https://github.com/KonnorRogers/light-pen/pull/15)
+
+## v3.0.5 - 04/04/2024
+
+- Bug Fix: gutter now behaves appropriately when scrolling on `wrap="hard"` [#14](https://github.com/KonnorRogers/light-pen/pull/14)
+
 ## v3.0.4 - 03/31/2024
 
 - Bug Fix: No longer wipe away state when resizing a `<light-preview>` [#13](https://github.com/KonnorRogers/light-pen/pull/13/files)
