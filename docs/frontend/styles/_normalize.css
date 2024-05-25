@@ -1,7 +1,7 @@
 html {
   box-sizing: border-box;
   height: 100%;
-  font-size: 16px;
+  scrollbar-gutter: stable;
   font-family: var(--sl-font-sans);
   /* letter-spacing: 0.025em; */
 }
@@ -15,7 +15,6 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeSpeed;
-  scrollbar-gutter: stable;
   background-color: var(--body-color);
   color: var(--text-color);
   display: grid;
