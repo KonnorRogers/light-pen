@@ -219,15 +219,14 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
 
 ## Highlight Lines
 
-<light-preview preview-mode="shadow-dom">
+<light-preview preview-mode="shadow-dom" highlight-lines="{2}">
+  <script type="text/plain" slot="preview-html">
+    View Source code for more.
+  </script>
   <script type="text/plain" slot="code">
-    <light-preview preview-mode="shadow-dom" highlight-lines="{1}">
+    <light-preview preview-mode="shadow-dom" highlight-lines="{2}">
       <script type="text/plain" slot="preview-html">
         View Source code for more.
-      </script>
-      <script type="text/plain" slot="code">
-        const foo = "bar"
-        console.log(foo)
       &lt;/script>
     </light-preview>
   </script>

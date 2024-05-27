@@ -221,6 +221,7 @@ export default class LightPreview extends BaseElement {
     /**
      * Whether or not to transform `&lt;/script>` into `<script>`
      * If true, will run transform. If false, will leave the code as is.
+     *
      * @type {"all" | "last" | "none"}
      */
     this.unescapeBehavior = "last"
@@ -465,7 +466,7 @@ export default class LightPreview extends BaseElement {
 
     if (!previewDiv) return
 
-    const transformedTags = this.transformTags(this.code || this.previewHtml)
+    const transformedTags = this.transformTags(this.previewHtml || this.code)
 
     if (!previewDiv.shadowRoot) {
       previewDiv.attachShadow({ mode: "open" })

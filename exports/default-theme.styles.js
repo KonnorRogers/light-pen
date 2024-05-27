@@ -255,7 +255,7 @@ div.code-toolbar > .toolbar.toolbar > .toolbar-item > span:focus {
 
 /* Line Highlight plugin overrides */
 /* The highlighted line itself */
-.line-highlight.line-highlight {
+:not(.light-gutter-cell).line-highlight.line-highlight {
   background: hsl(232, 3%, 94%);
 }
 

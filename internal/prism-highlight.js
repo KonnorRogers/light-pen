@@ -77,15 +77,15 @@ export function PrismHighlight(text, grammar, language, hooks = {}) {
 	prism.hooks.run('before-tokenize', env);
 
 	hooks.beforeTokenize?.forEach((hook) => {
-    hook(env)
+    	    hook(env)
 	})
 
 	if (!env.grammar) {
 		throw new Error('The language "' + env.language + '" has no grammar.');
 	}
 
-  // New tokenizer wrapping every new line
-  // @ts-expect-error
+    	// New tokenizer wrapping every new line
+    	// @ts-expect-error
 	env.tokens = prism.tokenize(env.code, env.grammar)
 
 	hooks.afterTokenize?.forEach((hook) => {
