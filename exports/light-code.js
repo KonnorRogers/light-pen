@@ -3,11 +3,10 @@ import { css, html } from "lit";
 import { baseStyles } from "./base-styles.js";
 
 import { theme } from './default-theme.styles.js'
-import { PrismHighlight, prism } from '../internal/prism-highlight.js';
+import { PrismHighlight, createPrismInstance } from '../internal/prism-highlight.js';
 
 import { when } from "lit/directives/when.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { stringMap } from "../internal/string-map.js";
 import { debounce } from "../internal/debounce.js";
 import { BaseElement } from "../internal/base-element.js";
 import { elementsToString } from "../internal/elements-to-strings.js";
@@ -48,8 +47,8 @@ export default class LightCode extends BaseElement {
       [part~="base"] {
         height: 100%;
         position: relative;
-	      background: hsl(230, 1%, 98%);
-	      color: hsl(230, 8%, 24%);
+	background: hsl(230, 1%, 98%);
+	color: hsl(230, 8%, 24%);
       }
 
       [part~="pre"] {
@@ -64,8 +63,8 @@ export default class LightCode extends BaseElement {
         position: absolute;
         top: 0;
         left: 0;
-        width: calc(var(--gutter-cell-width, 40px) + 1px);
-        border-inline-end: 1px solid darkgray;
+        width: calc(var(--gutter-cell-width, 40px));
+        border-inline-end: var(--syntax-gutter-border);
         height: 100%;
         max-height: 100%;
         overflow: hidden;
@@ -89,6 +88,7 @@ export default class LightCode extends BaseElement {
     wrap: { reflect: true, attribute: "wrap" },
     language: {},
     code: {},
+    highlighter: {attribute: false, state: true},
   }
 
   constructor () {
@@ -165,6 +165,11 @@ export default class LightCode extends BaseElement {
      * @type {number}
      */
     this.lineNumberStart = 1
+
+    /**
+     * Highlighter to use for highlighting code. Default is Prism.
+     */
+    this.highlighter = createPrismInstance()
 
     this.__resizeObserver = new ResizeObserver(() => this.__setGutterWidth())
   }
@@ -249,27 +254,25 @@ export default class LightCode extends BaseElement {
 
   /**
    * @public
-   * Override this function to use your own highlighter
+   * Override this function to use your own highlight function
    */
   highlight (code = this.code) {
-    const plugins = []
+    const afterTokenizePlugins = [
+      LineNumberPlugin({
+        lineNumberStart: this.lineNumberStart,
+        disableLineNumbers: this.disableLineNumbers
+      }),
+      LineHighlightPlugin({
+        insertedLinesRange: new NumberRange().parse(this.insertedLines),
+        deletedLinesRange: new NumberRange().parse(this.deletedLines),
+        highlightLinesRange: new NumberRange().parse(this.highlightLines)
+      })
+    ]
 
-    plugins.push(LineNumberPlugin({
-      lineNumberStart: this.lineNumberStart,
-      disableLineNumbers: this.disableLineNumbers
-    }))
+    this.highlighter.hooks.add("wrap", /** @type {any} */ (LineHighlightWrapPlugin()))
 
-    plugins.push(LineHighlightPlugin({
-      insertedLinesRange: new NumberRange().parse(this.insertedLines),
-      deletedLinesRange: new NumberRange().parse(this.deletedLines),
-      highlightLinesRange: new NumberRange().parse(this.highlightLines)
-    }))
-
-    // @ts-expect-error
-    prism.hooks.add("wrap", LineHighlightWrapPlugin())
-
-    code = PrismHighlight(code, prism.languages[this.language], this.language, {
-      afterTokenize: plugins,
+    code = PrismHighlight(code, this.highlighter.languages[this.language], this.language, this.highlighter, {
+      afterTokenize: afterTokenizePlugins,
     })
 
     return code

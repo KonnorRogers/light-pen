@@ -43,17 +43,30 @@ import { loader as tsxLoader } from "prism-esm/components/prism-tsx.js"
  */
 
 
-const prism = new PrismJS()
-markupLoader(prism)
-markupTemplatingLoader(prism)
-cssLoader(prism)
-cssExtrasLoader(prism)
-javascriptLoader(prism)
-javascriptExtrasLoader(prism)
-javascriptTemplatesLoader(prism)
-jsxLoader(prism)
-tsLoader(prism)
-tsxLoader(prism)
+export function createPrismInstance () {
+	const prism = new PrismJS()
+	markupLoader(prism)
+	markupTemplatingLoader(prism)
+	cssLoader(prism)
+	cssExtrasLoader(prism)
+	javascriptLoader(prism)
+	javascriptExtrasLoader(prism)
+	javascriptTemplatesLoader(prism)
+	jsxLoader(prism)
+	tsLoader(prism)
+	tsxLoader(prism)
+	return prism
+}
+
+class PrismSingleton {
+	static get instance () {
+		if (!this.__singleton__) {
+			this.__singleton__ = createPrismInstance()
+		}
+
+		return this.__singleton__
+	}
+}
 
 /**
  * @see https://github.com/PrismJS/prism/blob/59e5a3471377057de1f401ba38337aca27b80e03/prism.js#L660
@@ -61,9 +74,13 @@ tsxLoader(prism)
  * @param {string} text - The code to highlight
  * @param {import("prism-esm").Grammar} grammar - The grammar to use
  * @param {string} language - The language to detect
+ * @param {typeof PrismSingleton["instance"]} highlighter
  * @param {Hooks} hooks
  */
-export function PrismHighlight(text, grammar, language, hooks = {}) {
+export function PrismHighlight(text, grammar, language, highlighter, hooks = {}) {
+  if (!highlighter) {
+  	  highlighter = PrismSingleton.instance
+  }
   /**
    * @type {Env}
    */
@@ -74,27 +91,23 @@ export function PrismHighlight(text, grammar, language, hooks = {}) {
 		tokens: []
 	};
 
-	prism.hooks.run('before-tokenize', env);
+	highlighter.hooks.run('before-tokenize', env);
 
 	hooks.beforeTokenize?.forEach((hook) => {
-    hook(env)
+    	    hook(env)
 	})
 
 	if (!env.grammar) {
 		throw new Error('The language "' + env.language + '" has no grammar.');
 	}
 
-  // New tokenizer wrapping every new line
-  // @ts-expect-error
-	env.tokens = prism.tokenize(env.code, env.grammar)
+    	// New tokenizer wrapping every new line
+	env.tokens = /** @type {Array<Token>} */ (highlighter.tokenize(env.code, env.grammar))
 
 	hooks.afterTokenize?.forEach((hook) => {
-    hook(env)
+    		hook(env)
 	})
-	prism.hooks.run('after-tokenize', env);
+	highlighter.hooks.run('after-tokenize', env);
 
-  // @ts-expect-error
-	return Token.stringify(prism.util.encode(env.tokens), env.language, prism);
+	return Token.stringify(highlighter.util.encode(/** @type {Array<Token>} */ (env.tokens)), env.language, highlighter);
 }
-
-export { prism }

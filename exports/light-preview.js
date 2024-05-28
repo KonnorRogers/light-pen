@@ -15,6 +15,7 @@ import { elementsToString } from "../internal/elements-to-strings.js";
 import { dedent } from "../internal/dedent.js";
 import LightCode from "./light-code.js";
 import { ifDefined } from "lit/directives/if-defined.js";
+import { createPrismInstance } from "../internal/prism-highlight.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -91,6 +92,7 @@ export default class LightPreview extends BaseElement {
     wrap: {reflect: true},
     code: {},
     previewHtml: { attribute: "preview-html" },
+    highlighter: {attribute: false, state: true},
   }
 
   constructor () {
@@ -167,6 +169,7 @@ export default class LightPreview extends BaseElement {
      */
     this.code = ""
 
+
     /**
      * If `disableHighlight` is true, then you must pass in an element into `previewHtml` to be able to get
      *   the code to run in the previewer.
@@ -185,6 +188,12 @@ export default class LightPreview extends BaseElement {
      * @type {number}
      */
     this.resizePosition = 100
+
+    /**
+     * Points to an instance of Prism from "prism-esm" for adjusting highlighting, adding plugins, etc.
+     * @type {ReturnType<typeof createPrismInstance>}
+     */
+    this.highlighter = createPrismInstance()
 
     /**
      * @internal
@@ -221,6 +230,7 @@ export default class LightPreview extends BaseElement {
     /**
      * Whether or not to transform `&lt;/script>` into `<script>`
      * If true, will run transform. If false, will leave the code as is.
+     *
      * @type {"all" | "last" | "none"}
      */
     this.unescapeBehavior = "last"
@@ -465,7 +475,7 @@ export default class LightPreview extends BaseElement {
 
     if (!previewDiv) return
 
-    const transformedTags = this.transformTags(this.code || this.previewHtml)
+    const transformedTags = this.transformTags(this.previewHtml || this.code)
 
     if (!previewDiv.shadowRoot) {
       previewDiv.attachShadow({ mode: "open" })
@@ -562,6 +572,7 @@ export default class LightPreview extends BaseElement {
               wrap=${this.wrap}
               ?disable-highlight=${this.disableHighlight}
               ?disable-line-numbers=${this.disableLineNumbers}
+              .highlighter=${this.highlighter}
               .highlightLines=${this.highlightLines}
               .insertedLines=${this.insertedLines}
               .deletedLines=${this.deletedLines}

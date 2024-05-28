@@ -1,6 +1,6 @@
-import { html, render } from "lit";
+// @ts-check
+import { html } from "lit";
 
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
 
 import { LitElement } from "lit";
@@ -10,11 +10,8 @@ import { styles } from "./light-editor.styles.js";
 import { theme } from "./default-theme.styles.js";
 import { dedent } from "../internal/dedent.js";
 import { LightResizeEvent } from "./events/light-resize-event.js";
-import { repeat } from "lit/directives/repeat.js";
 import { elementsToString } from "../internal/elements-to-strings.js";
-import { PrismHighlight, prism } from "../internal/prism-highlight.js";
-import { LineNumberPlugin } from "../internal/line-number-plugin.js";
-import { Token } from "prism-esm";
+import { createPrismInstance } from "../internal/prism-highlight.js";
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js";
 import LightCode from "./light-code.js";
 
@@ -71,6 +68,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     ...LitTextareaMixin.formProperties,
     wrap: { reflect: true, state: false },
     language: { reflect: true },
+    src: {},
     disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
     preserveWhitespace: {
       type: Boolean,
@@ -86,6 +84,10 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
       attribute: false,
       state: true,
       type: Number
+    },
+    highlighter: {
+      attribute: false,
+      state: true,
     }
   }
 
@@ -117,6 +119,12 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     this.textarea = null;
 
     /**
+     * Points to a remote file source that should be accessible via `fetch()`
+     * @type {string | null}
+     */
+    this.src = null
+
+    /**
      * @property
      * @type {"soft" | "hard"}
      * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
@@ -134,6 +142,15 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
      */
     this.disableLineNumbers = false
 
+    /**
+     * Points to an instance of Prism from "prism-esm" for adjusting highlighting, adding plugins, etc.
+     * @type {ReturnType<typeof createPrismInstance>}
+     */
+    this.highlighter = createPrismInstance()
+
+    /**
+     * @type {number}
+     */
     this.currentLineNumber = 1
   }
 
@@ -172,6 +189,20 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
       this.dispatchEvent(
         new Event("change", { bubbles: true, composed: true }),
       );
+    }
+
+    if (changedProperties.has("src") && this.src) {
+      fetch(this.src).then(async (response) => {
+        let finalValue = await response.text()
+
+        if (this.preserveWhitespace !== true) {
+          finalValue = dedent(
+            finalValue.replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, ""),
+          ).trim();
+        }
+
+        return finalValue
+      })
     }
 
     super.willUpdate(changedProperties);
@@ -236,6 +267,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             .language=${this.language}
             .code=${this.value}
             .wrap=${this.wrap}
+            .highlighter=${this.highlighter}
             .disableLineNumbers=${this.disableLineNumbers}
             .preserveWhitespace=${this.preserveWhitespace}
             .highlightLines=${`{${this.hasFocused ? this.currentLineNumber : ""}}`}
@@ -256,20 +288,20 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
           <!-- IMPORTANT! There must be no white-space above. -->
           <textarea
             id="textarea-${language}"
+            ${ref(this.textareaChanged)}
             data-code-lang=${language}
             part="textarea textarea-${language}"
             spellcheck="false"
             autocorrect="off"
             autocapitalize="off"
             minlength=${this.minLength}
-            required=${this.required}
             maxlength=${this.maxLength}
             translate="no"
             .defaultValue=${this.defaultValue}
             .value=${this.value}
             ?disabled=${this.disabled}
+            ?required=${this.required}
             placeholder=${this.placeholder}
-            ${ref(this.textareaChanged)}
             @keyup=${this.keyupHandler}
             @keydown=${this.keydownHandler}
             @focus=${() => {
@@ -397,11 +429,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     if (textarea == null) return;
 
     const lightCode = this.shadowRoot?.querySelector("light-code")
-    // if (this.wrap === "hard") {
-      // lightCode = this.shadowRoot?.querySelector("light-code")?.shadowRoot?.querySelector("[part~='code']");
-    // } else {
-    //   lightCode = this.shadowRoot?.querySelector("light-code")
-    // }
 
     if (lightCode) {
       lightCode.scrollTop = textarea.scrollTop;
@@ -497,35 +524,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     if (currentLineNumber != null) {
       this.currentLineNumber = currentLineNumber + 1;
     }
-  }
-
-  /**
-   * @ignore
-   * Override this to use a highlighter of your choice.
-   * @param {{code: string, language: string}} options
-   */
-  highlightCode(options) {
-    let { code, language } = options;
-
-    code = this.injectNewLine(code);
-    code = this.unescapeTags(code);
-
-    code = PrismHighlight(code, prism.languages[language], language, {
-      afterTokenize: [
-        LineNumberPlugin(),
-        (env) => {
-          const currentToken = env.tokens[this.currentLineNumber];
-          if (!currentToken) return;
-
-          if (currentToken instanceof Token) {
-            currentToken.type = currentToken.type + " is-active";
-          }
-        },
-      ],
-    });
-
-    /** We use this to wrap every line to perform line counting operations. */
-    return code;
   }
 
   getCurrentLineNumber() {
