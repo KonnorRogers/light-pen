@@ -35,6 +35,7 @@ export const styles = css`
     caret-color: inherit;
     z-index: 1;
     resize: none;
+    padding: 0;
 
     /* Dynamically generated based on the size of the  gutter from "<light-code>" */
     padding-inline-start: calc(var(--gutter-width, 40px) + 8px);

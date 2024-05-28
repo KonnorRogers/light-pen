@@ -1,3 +1,14 @@
+## Next
+
+- Feature: Add `src` attribute for loading remote content into `<light-editor>`
+- Feature: Added `highlighter` property to `<light-code>`, `<light-preview>`, and `<light-editor>` for customizing the Prism instance.
+
+- Bug Fix: `required` is not a proper boolean on `<light-editor>`
+
+- Styles(light-code): `<light-code>` (and `<light-preview>` / `<light-editor>`) got updates to their default theme and now have a number of syntax tokens to use for easy themeing.
+
+- Docs: Added documentation on how to extend the Prism instance.
+
 ## v3.0.6 - 04/04/2024
 
 - Bug Fix: `<light-editor>` now properly scrolls. [#15](https://github.com/KonnorRogers/light-pen/pull/15)

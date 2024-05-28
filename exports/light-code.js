@@ -3,7 +3,7 @@ import { css, html } from "lit";
 import { baseStyles } from "./base-styles.js";
 
 import { theme } from './default-theme.styles.js'
-import { PrismHighlight, prism } from '../internal/prism-highlight.js';
+import { PrismHighlight, createPrismInstance } from '../internal/prism-highlight.js';
 
 import { when } from "lit/directives/when.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -47,8 +47,8 @@ export default class LightCode extends BaseElement {
       [part~="base"] {
         height: 100%;
         position: relative;
-	      background: hsl(230, 1%, 98%);
-	      color: hsl(230, 8%, 24%);
+	background: hsl(230, 1%, 98%);
+	color: hsl(230, 8%, 24%);
       }
 
       [part~="pre"] {
@@ -63,8 +63,8 @@ export default class LightCode extends BaseElement {
         position: absolute;
         top: 0;
         left: 0;
-        width: calc(var(--gutter-cell-width, 40px) + 1px);
-        border-inline-end: 1px solid darkgray;
+        width: calc(var(--gutter-cell-width, 40px));
+        border-inline-end: var(--syntax-gutter-border);
         height: 100%;
         max-height: 100%;
         overflow: hidden;
@@ -169,7 +169,7 @@ export default class LightCode extends BaseElement {
     /**
      * Highlighter to use for highlighting code. Default is Prism.
      */
-    this.highlighter = prism
+    this.highlighter = createPrismInstance()
 
     this.__resizeObserver = new ResizeObserver(() => this.__setGutterWidth())
   }
@@ -269,10 +269,9 @@ export default class LightCode extends BaseElement {
       })
     ]
 
-    // @ts-expect-error
-    this.highlighter.hooks.add("wrap", LineHighlightWrapPlugin())
+    this.highlighter.hooks.add("wrap", /** @type {any} */ (LineHighlightWrapPlugin()))
 
-    code = PrismHighlight(code, this.highlighter.languages[this.language], this.language, {
+    code = PrismHighlight(code, this.highlighter.languages[this.language], this.language, this.highlighter, {
       afterTokenize: afterTokenizePlugins,
     })
 

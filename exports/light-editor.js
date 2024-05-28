@@ -1,6 +1,6 @@
-import { html, render } from "lit";
+// @ts-check
+import { html } from "lit";
 
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ref } from "lit/directives/ref.js";
 
 import { LitElement } from "lit";
@@ -11,7 +11,7 @@ import { theme } from "./default-theme.styles.js";
 import { dedent } from "../internal/dedent.js";
 import { LightResizeEvent } from "./events/light-resize-event.js";
 import { elementsToString } from "../internal/elements-to-strings.js";
-import { prism } from "../internal/prism-highlight.js";
+import { createPrismInstance } from "../internal/prism-highlight.js";
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js";
 import LightCode from "./light-code.js";
 
@@ -143,9 +143,10 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     this.disableLineNumbers = false
 
     /**
-     * The highlighter to use. In our case, Prism. Do note, we use a special ESM fork of prism.
+     * Points to an instance of Prism from "prism-esm" for adjusting highlighting, adding plugins, etc.
+     * @type {ReturnType<typeof createPrismInstance>}
      */
-    this.highlighter = prism
+    this.highlighter = createPrismInstance()
 
     /**
      * @type {number}
@@ -287,20 +288,20 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
           <!-- IMPORTANT! There must be no white-space above. -->
           <textarea
             id="textarea-${language}"
+            ${ref(this.textareaChanged)}
             data-code-lang=${language}
             part="textarea textarea-${language}"
             spellcheck="false"
             autocorrect="off"
             autocapitalize="off"
             minlength=${this.minLength}
-            required=${this.required}
             maxlength=${this.maxLength}
             translate="no"
             .defaultValue=${this.defaultValue}
             .value=${this.value}
             ?disabled=${this.disabled}
+            ?required=${this.required}
             placeholder=${this.placeholder}
-            ${ref(this.textareaChanged)}
             @keyup=${this.keyupHandler}
             @keydown=${this.keydownHandler}
             @focus=${() => {

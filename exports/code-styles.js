@@ -60,7 +60,8 @@ export const codeStyles = css`
   padding-inline-start: 0.75em;
   user-select: none;
   color: rgba(0, 0, 0, 0.35);
-  background-color: rgba(230, 230, 230, 1);
+  background-color: var(--syntax-guide: hsla(230, 8%, 24%, 0.2));
+  border-inline-end: var(--syntax-gutter-border);
   font-variant-numeric: tabular-nums;
   text-align: end;
   position: sticky;
