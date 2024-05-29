@@ -100,6 +100,10 @@ function splitLinesRec(
         }
       }
     } else {
+      if (typeof token.content === "string" && !token.content.match(newLineRegex)) {
+        currentLine.push(token);
+        continue
+      }
       // @ts-expect-error
       const split = splitLinesRec(wrapContent(token.content));
       if (split.length > 1) {

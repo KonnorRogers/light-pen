@@ -257,22 +257,28 @@ export default class LightCode extends BaseElement {
    * Override this function to use your own highlight function
    */
   highlight (code = this.code) {
+    if (!this.highlighter) {
+      this.highlighter = createPrismInstance()
+    }
     const afterTokenizePlugins = [
       LineNumberPlugin({
         lineNumberStart: this.lineNumberStart,
         disableLineNumbers: this.disableLineNumbers
       }),
-      LineHighlightPlugin({
-        insertedLinesRange: new NumberRange().parse(this.insertedLines),
-        deletedLinesRange: new NumberRange().parse(this.deletedLines),
-        highlightLinesRange: new NumberRange().parse(this.highlightLines)
-      })
+      // LineHighlightPlugin({
+      //   insertedLinesRange: new NumberRange().parse(this.insertedLines),
+      //   deletedLinesRange: new NumberRange().parse(this.deletedLines),
+      //   highlightLinesRange: new NumberRange().parse(this.highlightLines)
+      // })
     ]
 
+    afterTokenizePlugins.forEach((plugin) => {
+      this.highlighter.hooks.add("after-tokenize", plugin)
+    })
     this.highlighter.hooks.add("wrap", /** @type {any} */ (LineHighlightWrapPlugin()))
 
     code = PrismHighlight(code, this.highlighter.languages[this.language], this.language, this.highlighter, {
-      afterTokenize: afterTokenizePlugins,
+      // afterTokenize: afterTokenizePlugins
     })
 
     return code

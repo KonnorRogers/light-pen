@@ -19,17 +19,21 @@ Let's for example create a `<light-editor>` component, add the `markdown` loader
 
 <light-preview preview-mode="shadow-dom" script-scope="shadow-dom">
   <script type="text/plain" slot="code">
-    <light-editor></light-editor>
+    <light-editor value="```js
+const x = 'y'
+```
+">
+    </light-editor>
     <script>
       ;(async () => {
-        const MarkdownLoader = (await import("https://cdn.jsdelivr.net/npm/prism-esm/components/prism-markdown.js")).loader
+        // const MarkdownLoader = (await import("https://cdn.jsdelivr.net/npm/prism-esm/components/prism-markdown.js")).loader
         const lightEditor = document.querySelector("light-editor")
 
         // Get the Prism highlighter instance
         const highlighter = lightEditor.highlighter
 
         // Add the markdown "grammar"
-        MarkdownLoader(highlighter)
+        // MarkdownLoader(highlighter)
 
         // Force an update
         lightEditor.highlighter = highlighter

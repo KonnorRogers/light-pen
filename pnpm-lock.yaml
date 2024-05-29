@@ -16,7 +16,7 @@ importers:
         version: 2.8.0
       prism-esm:
         specifier: 1.29.0-fix.4
-        version: 1.29.0-fix.4
+        version: link:../../prism
       web-component-define:
         specifier: ^2.0.11
         version: 2.0.11
@@ -1392,10 +1392,6 @@ packages:
   portfinder@1.0.32:
     resolution: {integrity: sha512-on2ZJVVDXRADWE6jnQaX0ioEylzgBpQk8r55NE4wjXW1ZxO+BgDlY6DXwj20i0V8eB4SenDQ00WEaxfiIQPcxg==}
     engines: {node: '>= 0.12.0'}
-
-  prism-esm@1.29.0-fix.4:
-    resolution: {integrity: sha512-7/xHdroa6z9BhaGIpHA8SWIpefUz5l2eg2KT8pczFatyBiuni89q0jnKrScJbtFt1QkLwCRw36J1x8zUEGc5HA==}
-    engines: {node: '>=6'}
 
   progress@2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
@@ -3339,8 +3335,6 @@ snapshots:
       mkdirp: 0.5.6
     transitivePeerDependencies:
       - supports-color
-
-  prism-esm@1.29.0-fix.4: {}
 
   progress@2.0.3: {}
 
