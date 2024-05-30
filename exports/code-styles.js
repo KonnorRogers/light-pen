@@ -19,7 +19,7 @@ export const codeStyles = css`
 
 [part~="code"] {
   display: grid;
-  grid-template-columns: max-content auto;
+  grid-template-columns: max-content minmax(0, 1fr);
 }
 
 :host([wrap="soft"]) [part~="pre"] {
@@ -60,8 +60,7 @@ export const codeStyles = css`
   padding-inline-start: 0.75em;
   user-select: none;
   color: rgba(0, 0, 0, 0.35);
-  background-color: var(--syntax-guide: hsla(230, 8%, 24%, 0.2));
-  border-inline-end: var(--syntax-gutter-border);
+  background-color: var(--syntax-bg);
   font-variant-numeric: tabular-nums;
   text-align: end;
   position: sticky;

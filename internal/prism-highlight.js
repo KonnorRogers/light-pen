@@ -111,10 +111,12 @@ export function PrismHighlight(text, grammar, language, highlighter, hooks = {})
     	// New tokenizer wrapping every new line
 	env.tokens = /** @type {Array<Token>} */ (highlighter.tokenize(env.code, env.grammar))
 
-	hooks.afterTokenize?.forEach((hook) => {
-    		hook(env)
-	})
 	highlighter.hooks.run('after-tokenize', env);
+
+	/** Make sure these run after the real after-tokenize for line number plugins. */
+	hooks.afterTokenize?.forEach((hook) => {
+		hook(env)
+	})
 
 	return Token.stringify(highlighter.util.encode(/** @type {Array<Token>} */ (env.tokens)), env.language, highlighter);
 }
