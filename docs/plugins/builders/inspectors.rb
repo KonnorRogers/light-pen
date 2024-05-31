@@ -65,6 +65,8 @@ class Builders::Inspectors < SiteBuilder
     document.css("main").css("h2[id],h3[id],h4[id],h5[id],h6[id]").each do |heading|
       text = heading.inner_text
 
+      level = heading.name.split(/h/)[1]
+
       unless heading.css("a")[0]
         heading.content = ""
         anchor = %(
@@ -74,12 +76,11 @@ class Builders::Inspectors < SiteBuilder
         heading << anchor
       end
 
-
       side_anchor = %(
-        <a href='##{heading[:id]}' class='side-nav__link'>#{text}</a>
+        <a href='##{heading[:id]}' class='side-nav__link' style="">#{text}</a>
       )
 
-      item = document.create_element("li", "", class: "side-nav__item")
+      item = document.create_element("li", "", class: "side-nav__item", "data-level": level.to_s)
       item << side_anchor
 
       table_of_contents << item

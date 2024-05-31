@@ -20,7 +20,6 @@ body {
   display: grid;
   grid-template-rows: minmax(0, 1fr);
   min-height: 100%;
-  font-size: 18px;
   min-height: 100%;
   margin: 0;
   padding: 0;

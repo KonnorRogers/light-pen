@@ -46,7 +46,9 @@ If you check the source code in the above example, you'll notice a `&lt;/script>
 For more on why script tags are used, check out [Why script tags](/references/why-script-tags/)
 for further reading.
 
-## Using the `value` attribute
+## Examples
+
+### Using the `value` attribute
 
 Using the `value` attribute is the generally recommended way to provide the most consistent experience. By default,
 leading and trailing newlines / whitespace will be stripped.
@@ -77,7 +79,7 @@ leading and trailing newlines / whitespace will be stripped.
   </script>
 </light-preview>
 
-## Preserve white space with `value` attribute
+### Preserve white space with `value` attribute
 
 By default, extra white space before the first character and after the last character will be stripped.
 If you want to leave extra white-space, pass the `preserve-whitespace` boolean attribute to the editor.
@@ -108,7 +110,7 @@ If you want to leave extra white-space, pass the `preserve-whitespace` boolean a
   </template>
 </light-preview>
 
-## With a template tag
+### With a template tag
 
 We can use a `<template>` tag to be able to "slot" in the default `value`
 
@@ -131,7 +133,7 @@ We can use a `<template>` tag to be able to "slot" in the default `value`
   </template>
 </light-preview>
 
-## Changing the highlight language to CSS
+### Changing the highlight language to CSS
 
 By default, the highlighter from Highlight.js only supports HTML / CSS / JS.
 This is intentional to keep the bundle size low. Supported languages are `html`, `css`, and `js`.
@@ -155,34 +157,6 @@ This is intentional to keep the bundle size low. Supported languages are `html`,
   </template>
 </light-preview>
 
-## Caveats to the initial editor value
-
-Declarative slots are hard. The most "consistent" way to provide a default value for the editor
-is to use `value` attribute. Like so:
-
-```html
-<light-editor value="<html></html>"></light-editor>
-```
-
-### Problems with declarative slotting
-
-If you really *want* declarative slotting, it's best to use a `<textarea>` in the default slot.
-The editor is really a `<textarea>` at it's core, so its recommended to use the `<textarea>` element to slot in elements.
-It has 1 drawback which is around not being able to slot in a `<textarea>` directly.
-And showing `&lt;` and `&gt;` literals is challenging. `&amp;lt;html&amp;gt;` is equivalent to `&gt;html&lt;>`
-This limitation only exists for slotting.
-
-Using a `<textarea>` element for the default slot requires the following markup to nest a
-`<textarea>` string literal inside of it:
-
-```html
-<light-editor>
-  <textarea>
-    &lt;textarea&gt;&lt;/textarea&gt;
-  </textarea>
-</light-editor>
-```
-
 ### Using a `script` tag
 
 ```html
@@ -194,13 +168,7 @@ Using a `<textarea>` element for the default slot requires the following markup 
 </light-editor>
 ```
 
-### Other slottable tags
-
-`<template>` formats the HTML and strips improper HTML. It's also not suitable for non-HTML strings. You can do it, but you've been warned.
-`<xmp>` is deprecated and also has some issues around if you do something like: `<!DOCTYPE html >`
-`<!-- -->` isn't supported like with Prism's auto escape plugin could be used, but runs into issues if you want comments nested in comments.
-
-## Disabled Editor
+### Disabled Editor
 
 To disable the editor, provide a `disabled` attribute.
 
@@ -210,7 +178,7 @@ To disable the editor, provide a `disabled` attribute.
   </script>
 </light-preview>
 
-## Editor with a placeholder
+### Editor with a placeholder
 
 To provide a placeholder, use the `placeholder` attribute. Note, this does not support a `<slot>`
 because it's using the native `<textarea>` placeholder attribute.
@@ -221,14 +189,14 @@ because it's using the native `<textarea>` placeholder attribute.
   </template>
 </light-preview>
 
-## Editor with validations
+### Editor with validations
 
 Validations are handled using "Form Associated Custom Elements".
 
 `<light-editor>` supports `minlength`, `maxlength`, and `required` just like the
 native `<textarea>` element.
 
-### minlength, maxlength, required validations
+<strong>minlength, maxlength, required validations</strong>
 
 <light-preview preview-mode="shadow-dom" script-scope="shadow-dom">
   <script type="text/plain" slot="code">
@@ -247,7 +215,7 @@ native `<textarea>` element.
   </script>
 </light-preview>
 
-## Removing line numbers
+### Removing line numbers
 
 Removing line numbers can be done with the boolean attribute `disable-line-numbers`
 
@@ -281,3 +249,40 @@ Removing line numbers can be done with the boolean attribute `disable-line-numbe
     </light-editor>
   </script>
 </light-preview>
+
+## Additional Notes
+
+### Caveats to the initial editor value
+
+Declarative slots are hard. The most "consistent" way to provide a default value for the editor
+is to use `value` attribute. Like so:
+
+```html
+<light-editor value="<html></html>"></light-editor>
+```
+
+### Problems with declarative slotting
+
+If you really *want* declarative slotting, it's best to use a `<textarea>` in the default slot.
+The editor is really a `<textarea>` at it's core, so its recommended to use the `<textarea>` element to slot in elements.
+It has 1 drawback which is around not being able to slot in a `<textarea>` directly.
+And showing `&lt;` and `&gt;` literals is challenging. `&amp;lt;html&amp;gt;` is equivalent to `&gt;html&lt;>`
+This limitation only exists for slotting.
+
+Using a `<textarea>` element for the default slot requires the following markup to nest a
+`<textarea>` string literal inside of it:
+
+```html
+<light-editor>
+  <textarea>
+    &lt;textarea&gt;&lt;/textarea&gt;
+  </textarea>
+</light-editor>
+```
+
+### Other slottable tags
+
+`<template>` formats the HTML and strips improper HTML. It's also not suitable for non-HTML strings. You can do it, but you've been warned.
+`<xmp>` is deprecated and also has some issues around if you do something like: `<!DOCTYPE html >`
+`<!-- -->` isn't supported like with Prism's auto escape plugin could be used, but runs into issues if you want comments nested in comments.
+

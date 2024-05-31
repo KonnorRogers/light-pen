@@ -1,5 +1,7 @@
 .table-of-contents {
-  margin-inline-start: 1rem;
+  margin: 0;
+  margin-inline-start: 0.25rem;
+  margin-inline-end: 0.75rem;
   min-width: 275px;
   max-width: 275px;
 }
@@ -14,7 +16,7 @@
   padding-top: 1rem;
   font-weight: normal;
   color: var(--sl-color-neutral-800);
-  font-size: 1.05rem;
+  font-size: 1.3em;
 }
 
 .table-of-contents__list {
@@ -23,17 +25,3 @@
   margin-top: 1rem;
   list-style: none;
 }
-
-.table-of-contents__list a {
-  text-decoration: none;
-}
-
-.table-of-contents__list li {
-  border-inline-start: 4px solid var(--sl-color-neutral-400);
-  padding-inline-start: 1rem;
-}
-
-.table-of-contents__list li {
-  padding: 0.5rem;
-}
-

@@ -1,4 +1,4 @@
-## 3.1.0 - 05/28/2024
+## v3.1.0 - 05/28/2024
 
 - Feature: Add `src` attribute for loading remote content into `<light-editor>`
 - Feature: Added `highlighter` property to `<light-code>`, `<light-preview>`, and `<light-editor>` for customizing the Prism instance.

@@ -120,7 +120,7 @@ export default class LightCode extends BaseElement {
 
     /**
      * We will take the code, wrap it in `<pre><code></code></pre>` and run it through
-     * Highlight.js.
+     * PrismJS.
      * If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
      * @type {string}
      */
@@ -228,8 +228,7 @@ export default class LightCode extends BaseElement {
         || changedProperties.has("highlightLines")
       ) && !changedProperties.has("code")
     ) {
-      const lines = this.shadowRoot?.querySelectorAll(".light-line")
-      console.log("highlighting lines")
+      const lines = this.shadowRoot?.querySelectorAll(".light-gutter-cell, .light-line")
 
       if (lines?.length) {
         const highlightLinesRange = new NumberRange().parse(this.highlightLines)
@@ -237,12 +236,18 @@ export default class LightCode extends BaseElement {
         const deletedLinesRange = new NumberRange().parse(this.deletedLines)
 
         lines.forEach((el, index) => {
-          const lineNumber = index + 1
+          // We have twice as many lines as line numbers.
+          const divisor = index % 2 === 0 ? index : index - 1
+          const lineNumber = (divisor / 2) + 1
+
           el.classList.toggle("line-highlight", highlightLinesRange.includes(lineNumber))
+          el.part.toggle("line-highlight", highlightLinesRange.includes(lineNumber))
 
           el.classList.toggle("inserted", insertedLinesRange.includes(lineNumber))
+          el.part.toggle("inserted", insertedLinesRange.includes(lineNumber))
 
           el.classList.toggle("deleted", deletedLinesRange.includes(lineNumber))
+          el.part.toggle("deleted", deletedLinesRange.includes(lineNumber))
 
         })
       }
@@ -319,7 +324,6 @@ export default class LightCode extends BaseElement {
    * Override this function to use your own highlight function
    */
   highlight (code = this.code) {
-    console.log("highlight")
     // const newLineRegex = /\r\n|\r|\n/
     // const CELL_START = `<span class="token light-gutter-cell" part="gutter-cell">`
     // const LINE_START = `</span><span class="token light-line" part="line">`
@@ -340,8 +344,7 @@ export default class LightCode extends BaseElement {
     // }
 
     // code = code.split(newLineRegex).map((line, index) => {
-    //   console.log(escapeString(line))
-    //   return CELL_START + index + LINE_START + escapeString(line) + LINE_END
+    //   return CELL_START + (index + 1) + LINE_START + escapeString(line) + LINE_END
     // }).join("\n")
 
     if (!this.highlighter) {
