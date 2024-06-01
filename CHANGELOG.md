@@ -1,4 +1,4 @@
-## Next
+## v3.1.1 - 06/01/2024
 
 - Bug Fix(light-code): Fixed a bug that caused LineNumberPlugin to run before the Prism `afterTokenize` hooks.
 
