@@ -4,7 +4,11 @@ class Builders::ChangelogGenerator < SiteBuilder
       generate_changelog
     end
 
-    hook :site, :post_reload do
+    hook :site, :after_reset do
+      generate_changelog
+    end
+
+    hook :site, :after_soft_reset do
       generate_changelog
     end
   end
