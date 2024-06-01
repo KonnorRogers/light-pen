@@ -56,6 +56,7 @@ class Builders::ComponentGenerator < SiteBuilder
         parts = metadata.cssParts
 
         resource.content += [
+          "## API Reference\n\n".html_safe,
           import_tabs(path, import_name, tag_name).html_safe,
           slots_table(slots).html_safe,
           attributes_table(attributes).html_safe,
@@ -75,13 +76,17 @@ class Builders::ComponentGenerator < SiteBuilder
     "<div style='text-align: center;'>-</div>"
   end
 
+  def unchecked_property
+    "<sl-icon name='x-lg' style='text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);'></sl-icon>"
+  end
+
   def checked_property
-    "<sl-icon name='check-lg' style='text-align: center; display: flex; margin: 0 auto;'></sl-icon>"
+    "<sl-icon name='check-lg' style='font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);'></sl-icon>"
   end
 
   def import_tabs(path, import_name, tag_name)
     str = <<~MD
-      ## Imports
+      ### Imports
 
       <sl-tab-group>
     MD
@@ -152,14 +157,14 @@ class Builders::ComponentGenerator < SiteBuilder
             <code>#{slot.name}</code>
           </td>
           <td>
-            #{slot.description.to_s.empty? ? empty_property : escape(slot.description)}
+            #{slot.description.to_s.empty? ? empty_property : markdownify(slot.description)}
           </td>
         </tr>
       HTML
     end.join("\n")
 
     <<~HTML
-      ## Slots
+      ### Slots
 
       <div class="table-container">
         <table class="table--component">
@@ -207,10 +212,10 @@ class Builders::ComponentGenerator < SiteBuilder
             <% end %>
           </td>
           <td>
-            #{member.description.to_s.empty? ? empty_property : escape(member.description)}
+            #{member.description.to_s.empty? ? empty_property : markdownify(member.description)}
           </td>
           <td>
-            #{member.reflects ? checked_property : empty_property}
+            #{member.reflects ? checked_property : unchecked_property}
           </td>
           <td>
             #{type_text.blank? ? empty_property : "<code>#{escape(type_text)}</code>"}
@@ -223,7 +228,7 @@ class Builders::ComponentGenerator < SiteBuilder
     end.join("\n")
 
     <<~HTML
-      ## Attributes
+      ### Attributes
 
       <div class="table-container">
         <table class="table--component">
@@ -254,14 +259,14 @@ class Builders::ComponentGenerator < SiteBuilder
             <code>#{event.name}</code>
           </td>
           <td>
-            #{event.description.to_s.empty? ? empty_property : escape(event.description.to_s)}
+            #{event.description.to_s.empty? ? empty_property : markdownify(event.description.to_s)}
           </td>
         </tr>
       HTML
     end.join("\n")
 
     <<~HTML
-      ## Events
+      ### Events
 
       <div class="table-container">
         <table class="table--component">
@@ -303,7 +308,7 @@ class Builders::ComponentGenerator < SiteBuilder
             <code>#{function.name}()</code>
           </td>
           <td>
-            #{function.description.to_s.empty? ? empty_property : escape(function.description.to_s)}
+            #{function.description.to_s.empty? ? empty_property : markdownify(function.description.to_s)}
           </td>
           <td>
             #{parameters}
@@ -313,7 +318,7 @@ class Builders::ComponentGenerator < SiteBuilder
     end.join("\n")
 
     <<~HTML
-      ## Functions
+      ### Functions
 
       <div class="table-container">
         <table class="table--component">
@@ -342,14 +347,14 @@ class Builders::ComponentGenerator < SiteBuilder
             <code>#{part.name}</code>
           </td>
           <td>
-            #{part.description.to_s.empty? ? empty_property : escape(part.description)}
+            #{part.description.to_s.empty? ? empty_property : markdownify(part.description)}
           </td>
         </tr>
       HTML
     end.join("\n")
 
     <<~HTML
-      ## Parts
+      ### Parts
 
       <div class="table-container">
         <table class="table--component">

@@ -49,7 +49,7 @@ By setting the `code` attribute, we can achieve the same as slotting elements.
   </template>
 </light-preview>
 
-## Highlight Lines
+### Highlighting Lines
 
 Line highlighting accepts 2 syntaxes, the number itself:
 
@@ -80,7 +80,7 @@ Line ranges are **inclusive**. Line numbers are also 1-indexed.
   </script>
 </light-preview>
 
-## Writings diffs
+### Writings diffs
 
 ### Inserted lines
 
@@ -193,7 +193,7 @@ counting lines at `10` in the following snippet:
   </script>
 </light-preview>
 
-## Line Wrapping
+### Line Wrapping
 
 By default `<light-preview>` will "soft wrap" lines for you. Meaning, code will wrap and not overflow
 the container. If this is undesirable, you can pass `wrap="hard"` and lines will not wrap.

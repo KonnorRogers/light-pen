@@ -4,6 +4,7 @@
 import { Prism as PrismJS, Token } from "prism-esm"
 
 // HTML
+// import { loader as markdownLoader } from "prism-esm/components/prism-markdown.js"
 import { loader as markupLoader } from "prism-esm/components/prism-markup.js"
 import { loader as markupTemplatingLoader } from "prism-esm/components/prism-markup-templating.js"
 
@@ -55,6 +56,7 @@ export function createPrismInstance () {
 	jsxLoader(prism)
 	tsLoader(prism)
 	tsxLoader(prism)
+	// markdownLoader(prism)
 	return prism
 }
 
@@ -78,9 +80,14 @@ class PrismSingleton {
  * @param {Hooks} hooks
  */
 export function PrismHighlight(text, grammar, language, highlighter, hooks = {}) {
-  if (!highlighter) {
+    if (!highlighter) {
   	  highlighter = PrismSingleton.instance
-  }
+    }
+
+	if (!grammar) {
+		grammar = highlighter.languages["markup"]
+	}
+
   /**
    * @type {Env}
    */
@@ -104,10 +111,12 @@ export function PrismHighlight(text, grammar, language, highlighter, hooks = {})
     	// New tokenizer wrapping every new line
 	env.tokens = /** @type {Array<Token>} */ (highlighter.tokenize(env.code, env.grammar))
 
-	hooks.afterTokenize?.forEach((hook) => {
-    		hook(env)
-	})
 	highlighter.hooks.run('after-tokenize', env);
+
+	/** Make sure these run after the real after-tokenize for line number plugins. */
+	hooks.afterTokenize?.forEach((hook) => {
+		hook(env)
+	})
 
 	return Token.stringify(highlighter.util.encode(/** @type {Array<Token>} */ (env.tokens)), env.language, highlighter);
 }

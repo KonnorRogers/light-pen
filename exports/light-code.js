@@ -44,18 +44,28 @@ export default class LightCode extends BaseElement {
     codeStyles,
     theme,
     css`
+      :host {
+	display: grid;
+      }
       [part~="base"] {
         height: 100%;
         position: relative;
+        z-index: 0;
 	background: hsl(230, 1%, 98%);
 	color: hsl(230, 8%, 24%);
+	display: grid;
       }
 
       [part~="pre"] {
         height: 100%;
+	display: grid;
+	place-items: start;
       }
 
       [part~="code"] {
+        width: 100%;
+        height: 100%;
+        place-content: start;
         overflow: auto;
       }
 
@@ -65,10 +75,11 @@ export default class LightCode extends BaseElement {
         left: 0;
         width: calc(var(--gutter-cell-width, 40px));
         border-inline-end: var(--syntax-gutter-border);
-        height: 100%;
+        height: calc(100% - var(--scrollbar-height, 0px));
         max-height: 100%;
         overflow: hidden;
         pointer-events: none;
+        z-index: 2;
       }
     `
   ]
@@ -89,6 +100,7 @@ export default class LightCode extends BaseElement {
     language: {},
     code: {},
     highlighter: {attribute: false, state: true},
+    __highlightedCode__: {attribute: false, state: true}
   }
 
   constructor () {
@@ -108,7 +120,7 @@ export default class LightCode extends BaseElement {
 
     /**
      * We will take the code, wrap it in `<pre><code></code></pre>` and run it through
-     * Highlight.js.
+     * PrismJS.
      * If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
      * @type {string}
      */
@@ -171,7 +183,9 @@ export default class LightCode extends BaseElement {
      */
     this.highlighter = createPrismInstance()
 
-    this.__resizeObserver = new ResizeObserver(() => this.__setGutterWidth())
+    this.__resizeObserver = new ResizeObserver(() => this.__setGutterMeasurements())
+
+    this.__highlightedCode__ = ""
   }
 
   /**
@@ -189,6 +203,64 @@ export default class LightCode extends BaseElement {
     super.disconnectedCallback()
     this.__resizeObserver.unobserve(this)
   }
+
+  /**
+   * @override
+   * @param {import("lit").PropertyValues<this>} changedProperties
+   */
+  willUpdate (changedProperties) {
+    if (
+      changedProperties.has("highlighter") ||
+      changedProperties.has("language") ||
+      changedProperties.has("code")
+      // We purposely don't re-highlight on line number changes for performance reasons.
+    ) {
+      this.__highlightedCode__ = this.highlight(this.code)
+    }
+
+    super.willUpdate(changedProperties)
+  }
+
+  /**
+   * @override
+   * @param {import("lit").PropertyValues<this>} changedProperties
+   */
+  updated (changedProperties) {
+    if (
+      (
+        changedProperties.has("insertedLines")
+        || changedProperties.has("deletedLines")
+        || changedProperties.has("highlightLines")
+      ) && !changedProperties.has("code")
+    ) {
+      const lines = this.shadowRoot?.querySelectorAll(".light-gutter-cell, .light-line")
+
+      if (lines?.length) {
+        const highlightLinesRange = new NumberRange().parse(this.highlightLines)
+        const insertedLinesRange = new NumberRange().parse(this.insertedLines)
+        const deletedLinesRange = new NumberRange().parse(this.deletedLines)
+
+        lines.forEach((el, index) => {
+          // We have twice as many lines as line numbers.
+          const divisor = index % 2 === 0 ? index : index - 1
+          const lineNumber = (divisor / 2) + 1
+
+          el.classList.toggle("line-highlight", highlightLinesRange.includes(lineNumber))
+          el.part.toggle("line-highlight", highlightLinesRange.includes(lineNumber))
+
+          el.classList.toggle("inserted", insertedLinesRange.includes(lineNumber))
+          el.part.toggle("inserted", insertedLinesRange.includes(lineNumber))
+
+          el.classList.toggle("deleted", deletedLinesRange.includes(lineNumber))
+          el.part.toggle("deleted", deletedLinesRange.includes(lineNumber))
+
+        })
+      }
+    }
+
+    super.updated(changedProperties)
+  }
+
 
   /**
    * @internal
@@ -257,6 +329,32 @@ export default class LightCode extends BaseElement {
    * Override this function to use your own highlight function
    */
   highlight (code = this.code) {
+    // const newLineRegex = /\r\n|\r|\n/
+    // const CELL_START = `<span class="token light-gutter-cell" part="gutter-cell">`
+    // const LINE_START = `</span><span class="token light-line" part="line">`
+    // const LINE_END = `</span>`
+
+    // const ESCAPE_STRING_HASH = {
+    //   "&": "&amp;",
+    //   "<": "&lt;",
+    //   ">": "&gt;",
+    //   '"': "&quot;",
+    //   "'": "&#x27;"
+    // }
+
+    // const escapeString = (str) => {
+    //   return str
+    //     .replaceAll(/&/g, "&amp;")
+    //     .replaceAll(/[<>"']/g, (match) => ESCAPE_STRING_HASH[match])
+    // }
+
+    // code = code.split(newLineRegex).map((line, index) => {
+    //   return CELL_START + (index + 1) + LINE_START + escapeString(line) + LINE_END
+    // }).join("\n")
+
+    if (!this.highlighter) {
+      this.highlighter = createPrismInstance()
+    }
     const afterTokenizePlugins = [
       LineNumberPlugin({
         lineNumberStart: this.lineNumberStart,
@@ -272,7 +370,7 @@ export default class LightCode extends BaseElement {
     this.highlighter.hooks.add("wrap", /** @type {any} */ (LineHighlightWrapPlugin()))
 
     code = PrismHighlight(code, this.highlighter.languages[this.language], this.language, this.highlighter, {
-      afterTokenize: afterTokenizePlugins,
+      afterTokenize: afterTokenizePlugins
     })
 
     return code
@@ -281,12 +379,20 @@ export default class LightCode extends BaseElement {
   /**
    * @internal
    */
-  __setGutterWidth () {
+  __setGutterMeasurements () {
     // @ts-expect-error
     const gutterWidth = this.shadowRoot?.querySelector("[part~='gutter-cell']")?.offsetWidth
 
     if (gutterWidth) {
       this.style.setProperty("--gutter-cell-width", `${gutterWidth}px`)
+    }
+
+    const codeEl = this.shadowRoot?.querySelector("[part~='code']")
+
+    if (codeEl) {
+      const { offsetHeight, clientHeight } = /** @type {HTMLElement} */ (codeEl)
+      const scrollbarHeight = offsetHeight - clientHeight
+      this.style.setProperty("--scrollbar-height", `${scrollbarHeight}px`)
     }
   }
 
@@ -312,10 +418,10 @@ export default class LightCode extends BaseElement {
                 role="region"
                 part="code code-${language}"
                 class="language-${language}"
-              >${unsafeHTML(this.highlight(this.code))}</code></pre>`,
+                .innerHTML=${this.__highlightedCode__}
+              ></code></pre>`,
           () => html`${unsafeHTML(this.code)}`
         )}
-
         <!-- This gutter is for showing when line numbers may not correspond to existing lines. -->
         ${when(this.disableLineNumbers,
           () => html``,
@@ -330,7 +436,7 @@ export default class LightCode extends BaseElement {
 
     setTimeout(async () => {
       await this.updateComplete
-      setTimeout(() => this.__setGutterWidth())
+      setTimeout(() => this.__setGutterMeasurements())
     })
 
     return finalHTML

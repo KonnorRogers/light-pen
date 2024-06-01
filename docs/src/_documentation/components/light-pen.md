@@ -4,7 +4,9 @@ permalink: /components/light-pen/
 component: light-pen
 ---
 
-## Typical Usage
+## Examples
+
+### Default Usage
 
 <light-pen style="padding: 8px; height: 75vh; max-height: 75vh;" resize-position="30" open-languages="js,html,css">
   <template slot="html">

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       form-associated-helpers:
-        specifier: ^0.0.4
-        version: 0.0.4
+        specifier: ^0.0.9
+        version: 0.0.9
       lit:
         specifier: ^2.8.0
         version: 2.8.0
@@ -842,8 +842,8 @@ packages:
     resolution: {integrity: sha512-TMKDUnIte6bfb5nWv7V/caI169OHgvwjb7V4WkeUvbQQdjr5rWKqHFiKWb/fcOwB+CzBT+qbWjvj+DVwRskpIg==}
     engines: {node: '>=14'}
 
-  form-associated-helpers@0.0.4:
-    resolution: {integrity: sha512-Fy3dCmzxbaB08nRIr8GVBo5duQSN/NouCU4JjQ/Pd3bipsKMsV2RhPb3uGujEYYk/OIMDf9EPwRI5pQq6PsZpw==}
+  form-associated-helpers@0.0.9:
+    resolution: {integrity: sha512-jysvaOE1YEoFEDqcHdV43rk57Q37z4MDl/nYJGAt1iwIpIafH9viJLHfEvVNxoUuGiQ14AZYvPLP7pfi6BEKWQ==}
 
   fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
@@ -1922,9 +1922,10 @@ snapshots:
       progress: 2.0.3
       proxy-agent: 6.3.0
       tar-fs: 3.0.4
-      typescript: 5.2.2
       unbzip2-stream: 1.4.3
       yargs: 17.7.1
+    optionalDependencies:
+      typescript: 5.2.2
     transitivePeerDependencies:
       - supports-color
 
@@ -1936,6 +1937,7 @@ snapshots:
       is-builtin-module: 3.2.1
       is-module: 1.0.0
       resolve: 1.22.4
+    optionalDependencies:
       rollup: 3.29.0
 
   '@rollup/pluginutils@5.0.4(rollup@3.29.0)':
@@ -1943,6 +1945,7 @@ snapshots:
       '@types/estree': 1.0.1
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    optionalDependencies:
       rollup: 3.29.0
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
@@ -2772,7 +2775,7 @@ snapshots:
       cross-spawn: 7.0.3
       signal-exit: 4.1.0
 
-  form-associated-helpers@0.0.4: {}
+  form-associated-helpers@0.0.9: {}
 
   fresh@0.5.2: {}
 
@@ -3373,8 +3376,9 @@ snapshots:
       cross-fetch: 4.0.0
       debug: 4.3.4
       devtools-protocol: 0.0.1147663
-      typescript: 5.2.2
       ws: 8.13.0
+    optionalDependencies:
+      typescript: 5.2.2
     transitivePeerDependencies:
       - bufferutil
       - encoding

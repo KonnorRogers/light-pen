@@ -4,7 +4,7 @@ permalink: /components/light-preview/
 component: light-preview
 ---
 
-## Typical Usage
+## Examples
 
 <light-preview>
   <script type="text/plain" slot="preview-html">
@@ -30,7 +30,7 @@ component: light-preview
   </script>
 </light-preview>
 
-## Nesting a light-pen inside of a light-pen
+### Nesting a light-preview inside of a light-preview
 
 <light-preview>
   <template slot="code">
@@ -73,7 +73,7 @@ component: light-preview
 </light-preview>
 
 
-## Loading inside a shadow DOM
+### Loading inside a shadow DOM
 
 By default, previews are loaded inside an `<iframe>` for true "encapsulation". This may not always be desirable.
 For not as strict encapsulation you can use `preview-mode="shadow-dom"`
@@ -105,8 +105,7 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
 </light-preview>
 
 
-## Additional buttons
-
+### Adding Additional buttons
 
 <style>
   #additional-buttons button {
@@ -197,7 +196,7 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
   <button slot="actions">Codepen</button>
 </light-preview>
 
-## Escaping nested script tags
+### Escaping nested script tags
 
 <light-preview preview-mode="shadow-dom">
   <script type="text/plain" slot="code">
@@ -217,7 +216,7 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
   </script>
 </light-preview>
 
-## Highlight Lines
+### Highlight Lines
 
 <light-preview preview-mode="shadow-dom" highlight-lines="{2}">
   <script type="text/plain" slot="preview-html">
@@ -235,7 +234,7 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
 
 If you check the source code in the above example, you'll notice a `&lt;/script>`.
 
+## Additional Notes
+
 For more on why script tags are used, check out [Why script tags](/references/why-script-tags/)
 for further reading.
-
-

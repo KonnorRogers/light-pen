@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class ScrollSpyController extends Controller {
   connect () {
-    this.observer = new IntersectionObserver(this.handleIntersect, { rootMargin: '0px 0px' });
+    this.observer = new IntersectionObserver(this.handleIntersect, { rootMargin: '-100px 0px' });
 
     this.linkMap = new WeakMap();
     this.visibleSet = new WeakSet();
