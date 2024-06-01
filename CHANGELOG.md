@@ -1,3 +1,9 @@
+## Next
+
+- Bug Fix(light-code): Fixed a bug that caused LineNumberPlugin to run before the Prism `afterTokenize` hooks.
+
+- Styles(light-code): `<light-code>` refactored to use CSS variables for easier initial styling.
+
 ## v3.1.0 - 05/28/2024
 
 - Feature: Add `src` attribute for loading remote content into `<light-editor>`
