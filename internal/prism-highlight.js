@@ -4,7 +4,7 @@
 import { Prism as PrismJS, Token } from "prism-esm"
 
 // HTML
-import { loader as markdownLoader } from "prism-esm/components/prism-markdown.js"
+// import { loader as markdownLoader } from "prism-esm/components/prism-markdown.js"
 import { loader as markupLoader } from "prism-esm/components/prism-markup.js"
 import { loader as markupTemplatingLoader } from "prism-esm/components/prism-markup-templating.js"
 
@@ -56,7 +56,7 @@ export function createPrismInstance () {
 	jsxLoader(prism)
 	tsLoader(prism)
 	tsxLoader(prism)
-	markdownLoader(prism)
+	// markdownLoader(prism)
 	return prism
 }
 

@@ -209,7 +209,12 @@ export default class LightCode extends BaseElement {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   willUpdate (changedProperties) {
-    if (changedProperties.has("code")) {
+    if (
+      changedProperties.has("highlighter") ||
+      changedProperties.has("language") ||
+      changedProperties.has("code")
+      // We purposely don't re-highlight on line number changes for performance reasons.
+    ) {
       this.__highlightedCode__ = this.highlight(this.code)
     }
 

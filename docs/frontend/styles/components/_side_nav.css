@@ -24,11 +24,12 @@ ul.side-nav__menu li::marker {
 }
 
 .side-nav__item[data-level="2"] {
-  font-size: 1em;
+  font-size: 1.15em;
+  margin-top: 1em;
 }
 
 .side-nav__item[data-level="3"] {
-  font-size: 0.95em;
+  font-size: 1em;
   margin-inline-start: 1em;
 }
 

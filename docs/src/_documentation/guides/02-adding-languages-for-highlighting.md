@@ -26,14 +26,14 @@ const x = 'y'
     </light-editor>
     <script>
       ;(async () => {
-        // const MarkdownLoader = (await import("https://cdn.jsdelivr.net/npm/prism-esm/components/prism-markdown.js")).loader
+        const MarkdownLoader = (await import("https://cdn.jsdelivr.net/npm/prism-esm/components/prism-markdown.js")).loader
         const lightEditor = document.querySelector("light-editor")
 
         // Get the Prism highlighter instance
         const highlighter = lightEditor.highlighter
 
         // Add the markdown "grammar"
-        // MarkdownLoader(highlighter)
+        MarkdownLoader(highlighter)
 
         // Force an update
         lightEditor.highlighter = highlighter
@@ -42,3 +42,46 @@ const x = 'y'
     &lt;/script>
   </script>
 </light-preview>
+
+## Caveats
+
+Be aware that only "loaders" added to your PrismJS instance can perform syntax highlighting on code blocks.
+
+For example, the default Prism instance only comes loaded with the following languages / grammars:
+
+
+-	markup
+-	markup-templating
+-	css
+-	css-extras
+-	javascript
+-	js-extras
+-	js-templates
+-	jsx
+-	typescript
+-	tsx
+
+A full list of all possible languages and grammars can be found here:
+
+<https://github.com/KonnorRogers/prism-esm/tree/master/components>
+
+The general syntax is as follows:
+
+```js
+// Import the loader
+import { loader as RubyLoader } from "https://cdn.jsdelivr.net/npm/prism-esm/components/prism-ruby.js")
+
+// Find the `<light-editor>` element
+const lightEditor = document.querySelector("light-editor")
+
+// Get the Prism highlighter instance
+const highlighter = lightEditor.highlighter
+
+// Add the "grammar"
+RubyLoader(highlighter)
+
+// Force an update
+lightEditor.setAttribute("language", "markdown")
+lightEditor.requestUpdate("highlighter")
+```
+
