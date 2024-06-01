@@ -4,6 +4,8 @@
 
 - Styles(light-code): `<light-code>` refactored to use CSS variables for easier initial styling.
 
+- Dependencies: Upgraded Lit and `form-associated-helpers`
+
 ## v3.1.0 - 05/28/2024
 
 - Feature: Add `src` attribute for loading remote content into `<light-editor>`
