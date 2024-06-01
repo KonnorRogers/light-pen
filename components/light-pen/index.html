@@ -6,16 +6,16 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.P2OPND6X.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.CA42LAWB.js">
 <link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.4TMGPDKM.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.FAS5LFPC.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.P55C4FBP.css">
 <!-- Deferred CSS -->
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.P2OPND6X.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.CA42LAWB.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.4TMGPDKM.js" type="module"></script>
 
 <!-- Favicons -->
@@ -293,16 +293,20 @@
 <main id="main" class="documentation-content flow">
   <h1 id="<light-pen>">
     <a href="#<light-pen>">
-      &lt;Light Pen&gt;
+      &lt;light-pen&gt;
     </a>
   </h1>
 
     <p>A lightweight codepen-like editor. <code class="highlighter-rouge">&lt;light-pen&gt;</code> is <code class="highlighter-rouge">~15kb</code> in size. Compared to <code class="highlighter-rouge">~90kb</code> from CodeMirror and <code class="highlighter-rouge">~160kb</code> from CodeSandbox. LightPen purposely is small and lightweight and is not intended to replace these tools. But rather
 fill a gap for users who don’t need as much power.</p>
 
-  <h2 id="typical-usage">
-          <a href="#typical-usage">Typical Usage</a>
+  <h2 id="examples">
+          <a href="#examples">Examples</a>
         </h2>
+
+<h3 id="default-usage">
+          <a href="#default-usage">Default Usage</a>
+        </h3>
 
 <light-pen style="padding: 8px; height: 75vh; max-height: 75vh;" resize-position="30" open-languages="js,html,css">
   <template slot="html">
@@ -340,13 +344,17 @@ fill a gap for users who don’t need as much power.</p>
   </template>
 
   <template slot="js">
-    import LightPen from "/light-pen/bridgetown/static/light-pen/exports/light-pen.YGURLBIR.js";
+    import LightPen from "/light-pen/bridgetown/static/light-pen/exports/light-pen.6TBMEIDI.js";
     LightPen.define()
   </template>
 </light-pen>
-<h2 id="imports">
-          <a href="#imports">Imports</a>
+<h2 id="api-reference">
+          <a href="#api-reference">API Reference</a>
         </h2>
+
+<h3 id="imports">
+          <a href="#imports">Imports</a>
+        </h3>
 
 <sl-tab-group>
 <sl-tab slot="nav" panel="Script">Script</sl-tab>
@@ -356,12 +364,12 @@ fill a gap for users who don’t need as much power.</p>
             HTML
           </div>
 
-          <clipboard-copy for="d88fecd4-b026-429d-8b6e-796ecdd4c816" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="b895bcdf-384c-42a4-a99a-e2cf73b3e295" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="d88fecd4-b026-429d-8b6e-796ecdd4c816" hidden="">&lt;!-- Auto registers as &lt;light-pen&gt; --&gt;
+          <textarea id="b895bcdf-384c-42a4-a99a-e2cf73b3e295" hidden="">&lt;!-- Auto registers as &lt;light-pen&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-pen-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -377,12 +385,12 @@ fill a gap for users who don’t need as much power.</p>
             HTML
           </div>
 
-          <clipboard-copy for="caf3c76c-d024-4d32-a27e-33a146e3031a" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="58d285d6-fdd4-49a1-a8e3-bc8908fbf4c3" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="caf3c76c-d024-4d32-a27e-33a146e3031a" hidden="">&lt;script type="module"&gt;
+          <textarea id="58d285d6-fdd4-49a1-a8e3-bc8908fbf4c3" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-pen&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-pen-register.js"
 
@@ -412,12 +420,12 @@ fill a gap for users who don’t need as much power.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="1c3699fd-1495-4ef0-8093-871282cac6f7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="a5969e4a-da0c-4310-81f2-bf544a5e6677" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="1c3699fd-1495-4ef0-8093-871282cac6f7" hidden="">// Auto registers as &lt;light-pen&gt;
+          <textarea id="a5969e4a-da0c-4310-81f2-bf544a5e6677" hidden="">// Auto registers as &lt;light-pen&gt;
 import "light-pen/exports/light-pen-register.js"
 
 // Manual Register
@@ -438,9 +446,9 @@ LightPen.define()
 
 </sl-tab-group>
 
-<h2 id="slots">
+<h3 id="slots">
           <a href="#slots">Slots</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -456,7 +464,7 @@ LightPen.define()
     <code>html</code>
   </td>
   <td>
-    HTML to insert
+    <p>HTML to insert</p>
   </td>
 </tr>
 
@@ -465,7 +473,7 @@ LightPen.define()
     <code>css</code>
   </td>
   <td>
-    CSS to insert
+    <p>CSS to insert</p>
   </td>
 </tr>
 
@@ -474,7 +482,7 @@ LightPen.define()
     <code>js</code>
   </td>
   <td>
-    JavaScript to insert
+    <p>JavaScript to insert</p>
   </td>
 </tr>
 
@@ -483,7 +491,7 @@ LightPen.define()
     <code>title</code>
   </td>
   <td>
-    The title to appear at the top of the editor
+    <p>The title to appear at the top of the editor</p>
   </td>
 </tr>
 
@@ -491,9 +499,9 @@ LightPen.define()
   </table>
 </div>
 
-<h2 id="attributes">
+<h3 id="attributes">
           <a href="#attributes">Attributes</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -521,7 +529,7 @@ LightPen.define()
     <div style="text-align: center;">-</div>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>number</code>
@@ -542,11 +550,11 @@ LightPen.define()
       <code>openLanguages</code>
   </td>
   <td>
-    Languages to have open on initial render
-Comma separated list of elements to open on initial render "html,css,js" to open all.
+    <p>Languages to have open on initial render
+Comma separated list of elements to open on initial render “html,css,js” to open all.</p>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -563,10 +571,10 @@ Comma separated list of elements to open on initial render "html,css,js" to open
       <code>console</code>
   </td>
   <td>
-    Not implemented.
+    <p>Not implemented.</p>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>"enabled" | "disabled"</code>
@@ -590,7 +598,7 @@ Comma separated list of elements to open on initial render "html,css,js" to open
     <div style="text-align: center;">-</div>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -611,10 +619,10 @@ Comma separated list of elements to open on initial render "html,css,js" to open
       <code>preserveWhitespace</code>
   </td>
   <td>
-    Passed down to the editors.
+    <p>Passed down to the editors.</p>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>boolean</code>
@@ -628,9 +636,9 @@ Comma separated list of elements to open on initial render "html,css,js" to open
   </table>
 </div>
 
-<h2 id="functions">
+<h3 id="functions">
           <a href="#functions">Functions</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -647,7 +655,7 @@ Comma separated list of elements to open on initial render "html,css,js" to open
     <code>updateCachedWidth()</code>
   </td>
   <td>
-    Sets an initial width so we dont need to keep computing getBoundingClientRect
+    <p>Sets an initial width so we dont need to keep computing getBoundingClientRect</p>
   </td>
   <td>
     <div style="text-align: center;">-</div>
@@ -742,9 +750,9 @@ Comma separated list of elements to open on initial render "html,css,js" to open
   </table>
 </div>
 
-<h2 id="parts">
+<h3 id="parts">
           <a href="#parts">Parts</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -760,7 +768,7 @@ Comma separated list of elements to open on initial render "html,css,js" to open
     <code>base</code>
   </td>
   <td>
-    The base wrapper
+    <p>The base wrapper</p>
   </td>
 </tr>
 
@@ -769,7 +777,7 @@ Comma separated list of elements to open on initial render "html,css,js" to open
     <code>sandbox</code>
   </td>
   <td>
-    The wrapper around the editor and the iframe
+    <p>The wrapper around the editor and the iframe</p>
   </td>
 </tr>
 
@@ -778,7 +786,7 @@ Comma separated list of elements to open on initial render "html,css,js" to open
     <code>sandbox-header</code>
   </td>
   <td>
-    The wrapper around the header area
+    <p>The wrapper around the header area</p>
   </td>
 </tr>
 
@@ -823,21 +831,25 @@ Comma separated list of elements to open on initial render "html,css,js" to open
 
 <nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
   <h2 class="table-of-contents__header">
-    &lt;Light Pen&gt;
+    &lt;light-pen&gt;
   </h2>
   <ol class="table-of-contents__list">
-  <li class="side-nav__item">
-        <a href="#typical-usage" class="side-nav__link">Typical Usage</a>
-      </li><li class="side-nav__item">
-        <a href="#imports" class="side-nav__link">Imports</a>
-      </li><li class="side-nav__item">
-        <a href="#slots" class="side-nav__link">Slots</a>
-      </li><li class="side-nav__item">
-        <a href="#attributes" class="side-nav__link">Attributes</a>
-      </li><li class="side-nav__item">
-        <a href="#functions" class="side-nav__link">Functions</a>
-      </li><li class="side-nav__item">
-        <a href="#parts" class="side-nav__link">Parts</a>
+  <li class="side-nav__item" data-level="2">
+        <a href="#examples" class="side-nav__link" style="">Examples</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#default-usage" class="side-nav__link" style="">Default Usage</a>
+      </li><li class="side-nav__item" data-level="2">
+        <a href="#api-reference" class="side-nav__link" style="">API Reference</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#imports" class="side-nav__link" style="">Imports</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#slots" class="side-nav__link" style="">Slots</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#attributes" class="side-nav__link" style="">Attributes</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#functions" class="side-nav__link" style="">Functions</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#parts" class="side-nav__link" style="">Parts</a>
       </li></ol>
 </nav>
 

@@ -6,16 +6,16 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.P2OPND6X.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.CA42LAWB.js">
 <link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.4TMGPDKM.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.FAS5LFPC.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.P55C4FBP.css">
 <!-- Deferred CSS -->
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.P2OPND6X.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.CA42LAWB.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.4TMGPDKM.js" type="module"></script>
 
 <!-- Favicons -->
@@ -293,7 +293,7 @@
 <main id="main" class="documentation-content flow">
   <h1 id="<light-code>">
     <a href="#<light-code>">
-      &lt;Light Code&gt;
+      &lt;light-code&gt;
     </a>
   </h1>
 
@@ -349,9 +349,9 @@ for further reading.</p>
   </template>
 </light-preview>
 
-<h2 id="highlight-lines">
-          <a href="#highlight-lines">Highlight Lines</a>
-        </h2>
+<h3 id="highlighting-lines">
+          <a href="#highlighting-lines">Highlighting Lines</a>
+        </h3>
 
 <p>Line highlighting accepts 2 syntaxes, the number itself:</p>
 
@@ -363,12 +363,12 @@ can combine ranges and numbers like so:</p>
             HTML
           </div>
 
-          <clipboard-copy for="f42960df-629c-4103-8f1a-8abe623b5b3e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="d4ebbe89-6028-4c77-9d9f-6613b1ecbdec" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="f42960df-629c-4103-8f1a-8abe623b5b3e" hidden="">&lt;light-code highlight-lines="{1, 4-8, 12}"&gt;&lt;/light-code&gt;
+          <textarea id="d4ebbe89-6028-4c77-9d9f-6613b1ecbdec" hidden="">&lt;light-code highlight-lines="{1, 4-8, 12}"&gt;&lt;/light-code&gt;
 </textarea>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-code</span> <span class="na">highlight-lines=</span><span class="s">"{1, 4-8, 12}"</span><span class="nt">&gt;&lt;/light-code&gt;</span>
@@ -394,9 +394,9 @@ can combine ranges and numbers like so:</p>
   </script>
 </light-preview>
 
-<h2 id="writings-diffs">
+<h3 id="writings-diffs">
           <a href="#writings-diffs">Writings diffs</a>
-        </h2>
+        </h3>
 
 <h3 id="inserted-lines">
           <a href="#inserted-lines">Inserted lines</a>
@@ -518,9 +518,9 @@ counting lines at <code class="highlighter-rouge">10</code> in the following sni
   </script>
 </light-preview>
 
-<h2 id="line-wrapping">
+<h3 id="line-wrapping">
           <a href="#line-wrapping">Line Wrapping</a>
-        </h2>
+        </h3>
 
 <p>By default <code class="highlighter-rouge">&lt;light-preview&gt;</code> will “soft wrap” lines for you. Meaning, code will wrap and not overflow
 the container. If this is undesirable, you can pass <code class="highlighter-rouge">wrap="hard"</code> and lines will not wrap.</p>
@@ -567,9 +567,13 @@ the container. If this is undesirable, you can pass <code class="highlighter-rou
     </div>
   </template>
 </light-preview>
-<h2 id="imports">
-          <a href="#imports">Imports</a>
+<h2 id="api-reference">
+          <a href="#api-reference">API Reference</a>
         </h2>
+
+<h3 id="imports">
+          <a href="#imports">Imports</a>
+        </h3>
 
 <sl-tab-group>
 <sl-tab slot="nav" panel="Script">Script</sl-tab>
@@ -579,12 +583,12 @@ the container. If this is undesirable, you can pass <code class="highlighter-rou
             HTML
           </div>
 
-          <clipboard-copy for="c8de20ed-277b-4b2a-ac3c-5c99dffc5106" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="6efb44ed-a06f-4ac3-86cc-6f2593bb0a2a" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="c8de20ed-277b-4b2a-ac3c-5c99dffc5106" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
+          <textarea id="6efb44ed-a06f-4ac3-86cc-6f2593bb0a2a" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -600,12 +604,12 @@ the container. If this is undesirable, you can pass <code class="highlighter-rou
             HTML
           </div>
 
-          <clipboard-copy for="459075e9-5e9d-435c-af28-fc7e889f3ddf" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="67f17906-55ad-47f1-8c50-72fad40813c9" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="459075e9-5e9d-435c-af28-fc7e889f3ddf" hidden="">&lt;script type="module"&gt;
+          <textarea id="67f17906-55ad-47f1-8c50-72fad40813c9" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-code&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-code-register.js"
 
@@ -635,12 +639,12 @@ the container. If this is undesirable, you can pass <code class="highlighter-rou
             JavaScript
           </div>
 
-          <clipboard-copy for="3810b505-124d-49af-9607-a2acb81cc2b7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="f2c14188-7a88-4f41-b8e6-7a25b8034f70" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="3810b505-124d-49af-9607-a2acb81cc2b7" hidden="">// Auto registers as &lt;light-code&gt;
+          <textarea id="f2c14188-7a88-4f41-b8e6-7a25b8034f70" hidden="">// Auto registers as &lt;light-code&gt;
 import "light-pen/exports/light-code-register.js"
 
 // Manual Register
@@ -661,9 +665,9 @@ LightCode.define()
 
 </sl-tab-group>
 
-<h2 id="slots">
+<h3 id="slots">
           <a href="#slots">Slots</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -679,7 +683,7 @@ LightCode.define()
     <code>default</code>
   </td>
   <td>
-    The code to use for highlighting
+    <p>The code to use for highlighting</p>
   </td>
 </tr>
 
@@ -687,9 +691,9 @@ LightCode.define()
   </table>
 </div>
 
-<h2 id="attributes">
+<h3 id="attributes">
           <a href="#attributes">Attributes</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -710,10 +714,10 @@ LightCode.define()
       <code>language</code>
   </td>
   <td>
-    The language to highlight for.
+    <p>The language to highlight for.</p>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -734,10 +738,10 @@ LightCode.define()
       <code>disableHighlight</code>
   </td>
   <td>
-    If disabled, its on you to provide `&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;`
+    <p>If disabled, its on you to provide <code class="highlighter-rouge">&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;</code></p>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>boolean</code>
@@ -754,12 +758,12 @@ LightCode.define()
       <code>code</code>
   </td>
   <td>
-    We will take the code, wrap it in `&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;` and run it through
-Highlight.js.
-If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
+    <p>We will take the code, wrap it in <code class="highlighter-rouge">&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;</code> and run it through
+PrismJS.
+If the element has <code class="highlighter-rouge">disableHighlight</code>, we will not touch their code. Instead they must pass in escapedHTML.</p>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -776,10 +780,10 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
       <code>wrap</code>
   </td>
   <td>
-    If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
+    <p>If <code class="highlighter-rouge">wrap="soft"</code>, lines will wrap when they reach the edge of their container. If <code class="highlighter-rouge">wrap="none"</code>, lines will not wrap instead all the user to scroll horizontally to see more code.</p>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>"soft" | "none"</code>
@@ -796,10 +800,10 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
       <code>preserveWhitespace</code>
   </td>
   <td>
-    Whether or not to preserve white spaces from templates and attempt to dedent and chomp new lines.
+    <p>Whether or not to preserve white spaces from templates and attempt to dedent and chomp new lines.</p>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>Boolean</code>
@@ -820,10 +824,10 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
       <code>highlightLines</code>
   </td>
   <td>
-    A string of possible lines to highlight. Example: "{1-9, 16, 18}"
+    <p>A string of possible lines to highlight. Example: “{1-9, 16, 18}”</p>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -844,10 +848,10 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
       <code>insertedLines</code>
   </td>
   <td>
-    A string of lines that are inserted for diffs. Example: "{1-9, 16, 18}"
+    <p>A string of lines that are inserted for diffs. Example: “{1-9, 16, 18}”</p>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -868,10 +872,10 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
       <code>deletedLines</code>
   </td>
   <td>
-    A string of lines that are deleted for diffs. Example: "{1-9, 16, 18}"
+    <p>A string of lines that are deleted for diffs. Example: “{1-9, 16, 18}”</p>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -892,10 +896,10 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
       <code>disableLineNumbers</code>
   </td>
   <td>
-    whether or not to disable line numbers
+    <p>whether or not to disable line numbers</p>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>boolean</code>
@@ -916,10 +920,10 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
       <code>lineNumberStart</code>
   </td>
   <td>
-    Where to start counting from indexes. Note, this is only for display purposes in the gutter.
+    <p>Where to start counting from indexes. Note, this is only for display purposes in the gutter.</p>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>number</code>
@@ -939,7 +943,7 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
     <div style="text-align: center;">-</div>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <div style="text-align: center;">-</div>
@@ -953,9 +957,9 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
   </table>
 </div>
 
-<h2 id="functions">
+<h3 id="functions">
           <a href="#functions">Functions</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -983,9 +987,9 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
   </table>
 </div>
 
-<h2 id="parts">
+<h3 id="parts">
           <a href="#parts">Parts</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -1001,7 +1005,7 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
     <code>base</code>
   </td>
   <td>
-    The base wrapping element
+    <p>The base wrapping element</p>
   </td>
 </tr>
 
@@ -1010,7 +1014,7 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
     <code>pre</code>
   </td>
   <td>
-    The &lt;pre&gt; element wrapping the source code
+    <p>The &lt;pre&gt; element wrapping the source code</p>
   </td>
 </tr>
 
@@ -1019,7 +1023,7 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
     <code>code</code>
   </td>
   <td>
-    The &lt;code&gt;  element wrapping the source code
+    <p>The <code>  element wrapping the source code</code></p>
   </td>
 </tr>
 
@@ -1028,7 +1032,7 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
     <code>gutter</code>
   </td>
   <td>
-    The gutter for line numbers. This is only for the overlay for when the lines dont correspond to size of the code.
+    <p>The gutter for line numbers. This is only for the overlay for when the lines dont correspond to size of the code.</p>
   </td>
 </tr>
 
@@ -1037,7 +1041,7 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
     <code>gutter-cell</code>
   </td>
   <td>
-    The element that holds line numbers.
+    <p>The element that holds line numbers.</p>
   </td>
 </tr>
 
@@ -1070,39 +1074,41 @@ If the element has `disableHighlight`, we will not touch their code. Instead the
 
 <nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
   <h2 class="table-of-contents__header">
-    &lt;Light Code&gt;
+    &lt;light-code&gt;
   </h2>
   <ol class="table-of-contents__list">
-  <li class="side-nav__item">
-        <a href="#examples" class="side-nav__link">Examples</a>
-      </li><li class="side-nav__item">
-        <a href="#using-the-code-attribute" class="side-nav__link">Using the “code” attribute</a>
-      </li><li class="side-nav__item">
-        <a href="#highlight-lines" class="side-nav__link">Highlight Lines</a>
-      </li><li class="side-nav__item">
-        <a href="#writings-diffs" class="side-nav__link">Writings diffs</a>
-      </li><li class="side-nav__item">
-        <a href="#inserted-lines" class="side-nav__link">Inserted lines</a>
-      </li><li class="side-nav__item">
-        <a href="#deleted-lines" class="side-nav__link">Deleted lines</a>
-      </li><li class="side-nav__item">
-        <a href="#combining-inserted-and-deleted-lines" class="side-nav__link">Combining inserted and deleted lines</a>
-      </li><li class="side-nav__item">
-        <a href="#disable-line-numbers" class="side-nav__link">Disable Line Numbers</a>
-      </li><li class="side-nav__item">
-        <a href="#starting-counting-lines-at-a-specific-index" class="side-nav__link">Starting counting lines at a specific index</a>
-      </li><li class="side-nav__item">
-        <a href="#line-wrapping" class="side-nav__link">Line Wrapping</a>
-      </li><li class="side-nav__item">
-        <a href="#imports" class="side-nav__link">Imports</a>
-      </li><li class="side-nav__item">
-        <a href="#slots" class="side-nav__link">Slots</a>
-      </li><li class="side-nav__item">
-        <a href="#attributes" class="side-nav__link">Attributes</a>
-      </li><li class="side-nav__item">
-        <a href="#functions" class="side-nav__link">Functions</a>
-      </li><li class="side-nav__item">
-        <a href="#parts" class="side-nav__link">Parts</a>
+  <li class="side-nav__item" data-level="2">
+        <a href="#examples" class="side-nav__link" style="">Examples</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#using-the-code-attribute" class="side-nav__link" style="">Using the “code” attribute</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#highlighting-lines" class="side-nav__link" style="">Highlighting Lines</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#writings-diffs" class="side-nav__link" style="">Writings diffs</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#inserted-lines" class="side-nav__link" style="">Inserted lines</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#deleted-lines" class="side-nav__link" style="">Deleted lines</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#combining-inserted-and-deleted-lines" class="side-nav__link" style="">Combining inserted and deleted lines</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#disable-line-numbers" class="side-nav__link" style="">Disable Line Numbers</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#starting-counting-lines-at-a-specific-index" class="side-nav__link" style="">Starting counting lines at a specific index</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#line-wrapping" class="side-nav__link" style="">Line Wrapping</a>
+      </li><li class="side-nav__item" data-level="2">
+        <a href="#api-reference" class="side-nav__link" style="">API Reference</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#imports" class="side-nav__link" style="">Imports</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#slots" class="side-nav__link" style="">Slots</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#attributes" class="side-nav__link" style="">Attributes</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#functions" class="side-nav__link" style="">Functions</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#parts" class="side-nav__link" style="">Parts</a>
       </li></ol>
 </nav>
 

@@ -6,16 +6,16 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.P2OPND6X.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.CA42LAWB.js">
 <link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.4TMGPDKM.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.FAS5LFPC.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.P55C4FBP.css">
 <!-- Deferred CSS -->
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.P2OPND6X.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.CA42LAWB.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.4TMGPDKM.js" type="module"></script>
 
 <!-- Favicons -->
@@ -293,7 +293,7 @@
 <main id="main" class="documentation-content flow">
   <h1 id="<light-editor>">
     <a href="#<light-editor>">
-      &lt;Light Editor&gt;
+      &lt;light-editor&gt;
     </a>
   </h1>
 
@@ -344,9 +344,13 @@
 <p>For more on why script tags are used, check out <a href="/references/why-script-tags/">Why script tags</a>
 for further reading.</p>
 
-<h2 id="using-the-value-attribute">
-          <a href="#using-the-value-attribute">Using the value attribute</a>
+<h2 id="examples">
+          <a href="#examples">Examples</a>
         </h2>
+
+<h3 id="using-the-value-attribute">
+          <a href="#using-the-value-attribute">Using the value attribute</a>
+        </h3>
 
 <p>Using the <code class="highlighter-rouge">value</code> attribute is the generally recommended way to provide the most consistent experience. By default,
 leading and trailing newlines / whitespace will be stripped.</p>
@@ -377,9 +381,9 @@ leading and trailing newlines / whitespace will be stripped.</p>
   </script>
 </light-preview>
 
-<h2 id="preserve-white-space-with-value-attribute">
+<h3 id="preserve-white-space-with-value-attribute">
           <a href="#preserve-white-space-with-value-attribute">Preserve white space with value attribute</a>
-        </h2>
+        </h3>
 
 <p>By default, extra white space before the first character and after the last character will be stripped.
 If you want to leave extra white-space, pass the <code class="highlighter-rouge">preserve-whitespace</code> boolean attribute to the editor.</p>
@@ -409,9 +413,9 @@ If you want to leave extra white-space, pass the <code class="highlighter-rouge"
   </template>
 </light-preview>
 
-<h2 id="with-a-template-tag">
+<h3 id="with-a-template-tag">
           <a href="#with-a-template-tag">With a template tag</a>
-        </h2>
+        </h3>
 
 <p>We can use a <code class="highlighter-rouge">&lt;template&gt;</code> tag to be able to “slot” in the default <code class="highlighter-rouge">value</code></p>
 
@@ -434,9 +438,9 @@ If you want to leave extra white-space, pass the <code class="highlighter-rouge"
   </template>
 </light-preview>
 
-<h2 id="changing-the-highlight-language-to-css">
+<h3 id="changing-the-highlight-language-to-css">
           <a href="#changing-the-highlight-language-to-css">Changing the highlight language to CSS</a>
-        </h2>
+        </h3>
 
 <p>By default, the highlighter from Highlight.js only supports HTML / CSS / JS.
 This is intentional to keep the bundle size low. Supported languages are <code class="highlighter-rouge">html</code>, <code class="highlighter-rouge">css</code>, and <code class="highlighter-rouge">js</code>.</p>
@@ -460,66 +464,6 @@ This is intentional to keep the bundle size low. Supported languages are <code c
   </template>
 </light-preview>
 
-<h2 id="caveats-to-the-initial-editor-value">
-          <a href="#caveats-to-the-initial-editor-value">Caveats to the initial editor value</a>
-        </h2>
-
-<p>Declarative slots are hard. The most “consistent” way to provide a default value for the editor
-is to use <code class="highlighter-rouge">value</code> attribute. Like so:</p>
-
-<div class="syntax-block">        <div class="syntax-block__actions">
-          <div class="syntax-block__badge">
-            HTML
-          </div>
-
-          <clipboard-copy for="3c5653b7-300d-4de8-9e54-b0455b7b9dae" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
-
-          <textarea id="3c5653b7-300d-4de8-9e54-b0455b7b9dae" hidden="">&lt;light-editor value="&lt;html&gt;&lt;/html&gt;"&gt;&lt;/light-editor&gt;
-</textarea>
-        </div>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-editor</span> <span class="na">value=</span><span class="s">"&lt;html&gt;&lt;/html&gt;"</span><span class="nt">&gt;&lt;/light-editor&gt;</span>
-</code></pre></div></div></div>
-
-<h3 id="problems-with-declarative-slotting">
-          <a href="#problems-with-declarative-slotting">Problems with declarative slotting</a>
-        </h3>
-
-<p>If you really <em>want</em> declarative slotting, it’s best to use a <code class="highlighter-rouge">&lt;textarea&gt;</code> in the default slot.
-The editor is really a <code class="highlighter-rouge">&lt;textarea&gt;</code> at it’s core, so its recommended to use the <code class="highlighter-rouge">&lt;textarea&gt;</code> element to slot in elements.
-It has 1 drawback which is around not being able to slot in a <code class="highlighter-rouge">&lt;textarea&gt;</code> directly.
-And showing <code class="highlighter-rouge">&amp;lt;</code> and <code class="highlighter-rouge">&amp;gt;</code> literals is challenging. <code class="highlighter-rouge">&amp;amp;lt;html&amp;amp;gt;</code> is equivalent to <code class="highlighter-rouge">&amp;gt;html&amp;lt;&gt;</code>
-This limitation only exists for slotting.</p>
-
-<p>Using a <code class="highlighter-rouge">&lt;textarea&gt;</code> element for the default slot requires the following markup to nest a
-<code class="highlighter-rouge">&lt;textarea&gt;</code> string literal inside of it:</p>
-
-<div class="syntax-block">        <div class="syntax-block__actions">
-          <div class="syntax-block__badge">
-            HTML
-          </div>
-
-          <clipboard-copy for="0ff01596-36f3-421e-8435-8f4e01445a53" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
-
-          <textarea id="0ff01596-36f3-421e-8435-8f4e01445a53" hidden="">&lt;light-editor&gt;
-  &lt;textarea&gt;
-    &lt;textarea&gt;&lt;/textarea&gt;
-  </textarea>
-
-
-        </div>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-editor&gt;</span>
-  <span class="nt">&lt;textarea&gt;</span>
-    <span class="ni">&amp;lt;</span>textarea<span class="ni">&amp;gt;&amp;lt;</span>/textarea<span class="ni">&amp;gt;</span>
-  <span class="nt">&lt;/textarea&gt;</span>
-<span class="nt">&lt;/light-editor&gt;</span>
-</code></pre></div></div></div>
-
 <h3 id="using-a-script-tag">
           <a href="#using-a-script-tag">Using a script tag</a>
         </h3>
@@ -529,12 +473,12 @@ This limitation only exists for slotting.</p>
             HTML
           </div>
 
-          <clipboard-copy for="b7bfd8b0-c0d9-4331-b711-abb99008e511" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="40bf646b-e348-4677-9ea3-0a94e4531dcf" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="b7bfd8b0-c0d9-4331-b711-abb99008e511" hidden="">&lt;light-editor&gt;
+          <textarea id="40bf646b-e348-4677-9ea3-0a94e4531dcf" hidden="">&lt;light-editor&gt;
   &lt;!-- Important to use `type="text/plain"` --&gt;
   &lt;script type="text/plain"&gt;
     &lt;script&gt;&lt;/script&gt;
@@ -550,17 +494,9 @@ This limitation only exists for slotting.</p>
 <span class="nt">&lt;/light-editor&gt;</span>
 </code></pre></div></div></div>
 
-<h3 id="other-slottable-tags">
-          <a href="#other-slottable-tags">Other slottable tags</a>
-        </h3>
-
-<p><code class="highlighter-rouge">&lt;template&gt;</code> formats the HTML and strips improper HTML. It’s also not suitable for non-HTML strings. You can do it, but you’ve been warned.
-<code class="highlighter-rouge">&lt;xmp&gt;</code> is deprecated and also has some issues around if you do something like: <code class="highlighter-rouge"><span class="cp">&lt;!DOCTYPE html &gt;</span></code>
-<code class="highlighter-rouge">&lt;!-- --&gt;</code> isn’t supported like with Prism’s auto escape plugin could be used, but runs into issues if you want comments nested in comments.</p>
-
-<h2 id="disabled-editor">
+<h3 id="disabled-editor">
           <a href="#disabled-editor">Disabled Editor</a>
-        </h2>
+        </h3>
 
 <p>To disable the editor, provide a <code class="highlighter-rouge">disabled</code> attribute.</p>
 
@@ -570,9 +506,9 @@ This limitation only exists for slotting.</p>
   </script>
 </light-preview>
 
-<h2 id="editor-with-a-placeholder">
+<h3 id="editor-with-a-placeholder">
           <a href="#editor-with-a-placeholder">Editor with a placeholder</a>
-        </h2>
+        </h3>
 
 <p>To provide a placeholder, use the <code class="highlighter-rouge">placeholder</code> attribute. Note, this does not support a <code class="highlighter-rouge">&lt;slot&gt;</code>
 because it’s using the native <code class="highlighter-rouge">&lt;textarea&gt;</code> placeholder attribute.</p>
@@ -583,18 +519,16 @@ because it’s using the native <code class="highlighter-rouge">&lt;textarea&gt;
   </template>
 </light-preview>
 
-<h2 id="editor-with-validations">
+<h3 id="editor-with-validations">
           <a href="#editor-with-validations">Editor with validations</a>
-        </h2>
+        </h3>
 
 <p>Validations are handled using “Form Associated Custom Elements”.</p>
 
 <p><code class="highlighter-rouge">&lt;light-editor&gt;</code> supports <code class="highlighter-rouge">minlength</code>, <code class="highlighter-rouge">maxlength</code>, and <code class="highlighter-rouge">required</code> just like the
 native <code class="highlighter-rouge">&lt;textarea&gt;</code> element.</p>
 
-<h3 id="minlength-maxlength-required-validations">
-          <a href="#minlength-maxlength-required-validations">minlength, maxlength, required validations</a>
-        </h3>
+<p><strong>minlength, maxlength, required validations</strong></p>
 
 <light-preview preview-mode="shadow-dom" script-scope="shadow-dom">
   <script type="text/plain" slot="code">
@@ -613,9 +547,9 @@ native <code class="highlighter-rouge">&lt;textarea&gt;</code> element.</p>
   </script>
 </light-preview>
 
-<h2 id="removing-line-numbers">
+<h3 id="removing-line-numbers">
           <a href="#removing-line-numbers">Removing line numbers</a>
-        </h2>
+        </h3>
 
 <p>Removing line numbers can be done with the boolean attribute <code class="highlighter-rouge">disable-line-numbers</code></p>
 
@@ -649,9 +583,86 @@ native <code class="highlighter-rouge">&lt;textarea&gt;</code> element.</p>
     </light-editor>
   </script>
 </light-preview>
-<h2 id="imports">
-          <a href="#imports">Imports</a>
+
+<h2 id="additional-notes">
+          <a href="#additional-notes">Additional Notes</a>
         </h2>
+
+<h3 id="caveats-to-the-initial-editor-value">
+          <a href="#caveats-to-the-initial-editor-value">Caveats to the initial editor value</a>
+        </h3>
+
+<p>Declarative slots are hard. The most “consistent” way to provide a default value for the editor
+is to use <code class="highlighter-rouge">value</code> attribute. Like so:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="ff4bfdbb-5899-401f-8f4b-6b4c26870cdf" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="ff4bfdbb-5899-401f-8f4b-6b4c26870cdf" hidden="">&lt;light-editor value="&lt;html&gt;&lt;/html&gt;"&gt;&lt;/light-editor&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-editor</span> <span class="na">value=</span><span class="s">"&lt;html&gt;&lt;/html&gt;"</span><span class="nt">&gt;&lt;/light-editor&gt;</span>
+</code></pre></div></div></div>
+
+<h3 id="problems-with-declarative-slotting">
+          <a href="#problems-with-declarative-slotting">Problems with declarative slotting</a>
+        </h3>
+
+<p>If you really <em>want</em> declarative slotting, it’s best to use a <code class="highlighter-rouge">&lt;textarea&gt;</code> in the default slot.
+The editor is really a <code class="highlighter-rouge">&lt;textarea&gt;</code> at it’s core, so its recommended to use the <code class="highlighter-rouge">&lt;textarea&gt;</code> element to slot in elements.
+It has 1 drawback which is around not being able to slot in a <code class="highlighter-rouge">&lt;textarea&gt;</code> directly.
+And showing <code class="highlighter-rouge">&amp;lt;</code> and <code class="highlighter-rouge">&amp;gt;</code> literals is challenging. <code class="highlighter-rouge">&amp;amp;lt;html&amp;amp;gt;</code> is equivalent to <code class="highlighter-rouge">&amp;gt;html&amp;lt;&gt;</code>
+This limitation only exists for slotting.</p>
+
+<p>Using a <code class="highlighter-rouge">&lt;textarea&gt;</code> element for the default slot requires the following markup to nest a
+<code class="highlighter-rouge">&lt;textarea&gt;</code> string literal inside of it:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="58f6f17b-86de-42ed-8bcd-6c799018257c" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="58f6f17b-86de-42ed-8bcd-6c799018257c" hidden="">&lt;light-editor&gt;
+  &lt;textarea&gt;
+    &lt;textarea&gt;&lt;/textarea&gt;
+  </textarea>
+
+
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-editor&gt;</span>
+  <span class="nt">&lt;textarea&gt;</span>
+    <span class="ni">&amp;lt;</span>textarea<span class="ni">&amp;gt;&amp;lt;</span>/textarea<span class="ni">&amp;gt;</span>
+  <span class="nt">&lt;/textarea&gt;</span>
+<span class="nt">&lt;/light-editor&gt;</span>
+</code></pre></div></div></div>
+
+<h3 id="other-slottable-tags">
+          <a href="#other-slottable-tags">Other slottable tags</a>
+        </h3>
+
+<p><code class="highlighter-rouge">&lt;template&gt;</code> formats the HTML and strips improper HTML. It’s also not suitable for non-HTML strings. You can do it, but you’ve been warned.
+<code class="highlighter-rouge">&lt;xmp&gt;</code> is deprecated and also has some issues around if you do something like: <code class="highlighter-rouge"><span class="cp">&lt;!DOCTYPE html &gt;</span></code>
+<code class="highlighter-rouge">&lt;!-- --&gt;</code> isn’t supported like with Prism’s auto escape plugin could be used, but runs into issues if you want comments nested in comments.</p>
+
+<h2 id="api-reference">
+          <a href="#api-reference">API Reference</a>
+        </h2>
+
+<h3 id="imports">
+          <a href="#imports">Imports</a>
+        </h3>
 
 <sl-tab-group>
 <sl-tab slot="nav" panel="Script">Script</sl-tab>
@@ -661,12 +672,12 @@ native <code class="highlighter-rouge">&lt;textarea&gt;</code> element.</p>
             HTML
           </div>
 
-          <clipboard-copy for="4dd30d74-41cd-4b47-be73-850365485c50" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="cd7fe6e8-ae54-4637-b864-b6c49970958f" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="4dd30d74-41cd-4b47-be73-850365485c50" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
+          <textarea id="cd7fe6e8-ae54-4637-b864-b6c49970958f" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js"&gt;&lt;/script&gt;
 </textarea>
         </div>
@@ -682,12 +693,12 @@ native <code class="highlighter-rouge">&lt;textarea&gt;</code> element.</p>
             HTML
           </div>
 
-          <clipboard-copy for="1151199d-2b4b-48c4-8bd9-c07d7b60105e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="8e8dca4c-959b-4a08-b929-a10b4bbc643d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="1151199d-2b4b-48c4-8bd9-c07d7b60105e" hidden="">&lt;script type="module"&gt;
+          <textarea id="8e8dca4c-959b-4a08-b929-a10b4bbc643d" hidden="">&lt;script type="module"&gt;
   // Auto registers as &lt;light-editor&gt;
   import "https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js"
 
@@ -717,12 +728,12 @@ native <code class="highlighter-rouge">&lt;textarea&gt;</code> element.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="b67134ed-6643-45f5-99a5-79c91a55e308" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="51ed531f-d060-4ba0-a041-9f169a825d58" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="b67134ed-6643-45f5-99a5-79c91a55e308" hidden="">// Auto registers as &lt;light-editor&gt;
+          <textarea id="51ed531f-d060-4ba0-a041-9f169a825d58" hidden="">// Auto registers as &lt;light-editor&gt;
 import "light-pen/exports/light-editor-register.js"
 
 // Manual Register
@@ -743,9 +754,9 @@ LightEditor.define()
 
 </sl-tab-group>
 
-<h2 id="attributes">
+<h3 id="attributes">
           <a href="#attributes">Attributes</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -766,10 +777,10 @@ LightEditor.define()
       <code>language</code>
   </td>
   <td>
-    The language used for highlighting. Default is "html". "css" and "js" also included by default.
+    <p>The language used for highlighting. Default is “html”. “css” and “js” also included by default.</p>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>string</code>
@@ -786,10 +797,10 @@ LightEditor.define()
       <code>src</code>
   </td>
   <td>
-    Points to a remote file source that should be accessible via `fetch()`
+    <p>Points to a remote file source that should be accessible via <code class="highlighter-rouge">fetch()</code></p>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>string | null</code>
@@ -806,10 +817,10 @@ LightEditor.define()
       <code>wrap</code>
   </td>
   <td>
-    If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
+    <p>If <code class="highlighter-rouge">wrap="soft"</code>, lines will wrap when they reach the edge of their container. If <code class="highlighter-rouge">wrap="none"</code>, lines will not wrap instead all the user to scroll horizontally to see more code.</p>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>"soft" | "hard"</code>
@@ -830,10 +841,10 @@ LightEditor.define()
       <code>preserveWhitespace</code>
   </td>
   <td>
-    Whether to strip whitespace before first character, and after the last character.
+    <p>Whether to strip whitespace before first character, and after the last character.</p>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>boolean</code>
@@ -857,7 +868,7 @@ LightEditor.define()
     <div style="text-align: center;">-</div>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>boolean</code>
@@ -877,7 +888,7 @@ LightEditor.define()
     <div style="text-align: center;">-</div>
   </td>
   <td>
-    <div style="text-align: center;">-</div>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <div style="text-align: center;">-</div>
@@ -901,7 +912,7 @@ LightEditor.define()
     <div style="text-align: center;">-</div>
   </td>
   <td>
-    <sl-icon name="check-lg" style="text-align: center; display: flex; margin: 0 auto;"></sl-icon>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
   </td>
   <td>
     <code>boolean</code>
@@ -915,9 +926,9 @@ LightEditor.define()
   </table>
 </div>
 
-<h2 id="events">
+<h3 id="events">
           <a href="#events">Events</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -933,7 +944,7 @@ LightEditor.define()
     <code>light-value-change</code>
   </td>
   <td>
-    Emitted whenever the "value" attribute of the editor changes.
+    <p>Emitted whenever the “value” attribute of the editor changes.</p>
   </td>
 </tr>
 
@@ -951,7 +962,7 @@ LightEditor.define()
     <code>light-focus</code>
   </td>
   <td>
-    Re-emits the textarea's "focus" event
+    <p>Re-emits the textarea’s “focus” event</p>
   </td>
 </tr>
 
@@ -960,7 +971,7 @@ LightEditor.define()
     <code>light-blur</code>
   </td>
   <td>
-    Re-emits the textarea's "blur" event
+    <p>Re-emits the textarea’s “blur” event</p>
   </td>
 </tr>
 
@@ -969,7 +980,7 @@ LightEditor.define()
     <code>light-selectionchange</code>
   </td>
   <td>
-    Re-emits the textarea's "selectionchange" event
+    <p>Re-emits the textarea’s “selectionchange” event</p>
   </td>
 </tr>
 
@@ -978,7 +989,7 @@ LightEditor.define()
     <code>light-input</code>
   </td>
   <td>
-    Re-emits the textarea's "input" event
+    <p>Re-emits the textarea’s “input” event</p>
   </td>
 </tr>
 
@@ -996,7 +1007,7 @@ LightEditor.define()
     <code>light-resize</code>
   </td>
   <td>
-    Is emitting whenever the editor resizes.
+    <p>Is emitting whenever the editor resizes.</p>
   </td>
 </tr>
 
@@ -1005,7 +1016,7 @@ LightEditor.define()
     <code>light-change</code>
   </td>
   <td>
-    Re-emits the textarea's "change" event
+    <p>Re-emits the textarea’s “change” event</p>
   </td>
 </tr>
 
@@ -1013,9 +1024,9 @@ LightEditor.define()
   </table>
 </div>
 
-<h2 id="functions">
+<h3 id="functions">
           <a href="#functions">Functions</a>
-        </h2>
+        </h3>
 
 <div class="table-container">
   <table class="table--component">
@@ -1117,43 +1128,47 @@ LightEditor.define()
 
 <nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
   <h2 class="table-of-contents__header">
-    &lt;Light Editor&gt;
+    &lt;light-editor&gt;
   </h2>
   <ol class="table-of-contents__list">
-  <li class="side-nav__item">
-        <a href="#using-the-value-attribute" class="side-nav__link">Using the value attribute</a>
-      </li><li class="side-nav__item">
-        <a href="#preserve-white-space-with-value-attribute" class="side-nav__link">Preserve white space with value attribute</a>
-      </li><li class="side-nav__item">
-        <a href="#with-a-template-tag" class="side-nav__link">With a template tag</a>
-      </li><li class="side-nav__item">
-        <a href="#changing-the-highlight-language-to-css" class="side-nav__link">Changing the highlight language to CSS</a>
-      </li><li class="side-nav__item">
-        <a href="#caveats-to-the-initial-editor-value" class="side-nav__link">Caveats to the initial editor value</a>
-      </li><li class="side-nav__item">
-        <a href="#problems-with-declarative-slotting" class="side-nav__link">Problems with declarative slotting</a>
-      </li><li class="side-nav__item">
-        <a href="#using-a-script-tag" class="side-nav__link">Using a script tag</a>
-      </li><li class="side-nav__item">
-        <a href="#other-slottable-tags" class="side-nav__link">Other slottable tags</a>
-      </li><li class="side-nav__item">
-        <a href="#disabled-editor" class="side-nav__link">Disabled Editor</a>
-      </li><li class="side-nav__item">
-        <a href="#editor-with-a-placeholder" class="side-nav__link">Editor with a placeholder</a>
-      </li><li class="side-nav__item">
-        <a href="#editor-with-validations" class="side-nav__link">Editor with validations</a>
-      </li><li class="side-nav__item">
-        <a href="#minlength-maxlength-required-validations" class="side-nav__link">minlength, maxlength, required validations</a>
-      </li><li class="side-nav__item">
-        <a href="#removing-line-numbers" class="side-nav__link">Removing line numbers</a>
-      </li><li class="side-nav__item">
-        <a href="#imports" class="side-nav__link">Imports</a>
-      </li><li class="side-nav__item">
-        <a href="#attributes" class="side-nav__link">Attributes</a>
-      </li><li class="side-nav__item">
-        <a href="#events" class="side-nav__link">Events</a>
-      </li><li class="side-nav__item">
-        <a href="#functions" class="side-nav__link">Functions</a>
+  <li class="side-nav__item" data-level="2">
+        <a href="#examples" class="side-nav__link" style="">Examples</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#using-the-value-attribute" class="side-nav__link" style="">Using the value attribute</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#preserve-white-space-with-value-attribute" class="side-nav__link" style="">Preserve white space with value attribute</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#with-a-template-tag" class="side-nav__link" style="">With a template tag</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#changing-the-highlight-language-to-css" class="side-nav__link" style="">Changing the highlight language to CSS</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#using-a-script-tag" class="side-nav__link" style="">Using a script tag</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#disabled-editor" class="side-nav__link" style="">Disabled Editor</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#editor-with-a-placeholder" class="side-nav__link" style="">Editor with a placeholder</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#editor-with-validations" class="side-nav__link" style="">Editor with validations</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#removing-line-numbers" class="side-nav__link" style="">Removing line numbers</a>
+      </li><li class="side-nav__item" data-level="2">
+        <a href="#additional-notes" class="side-nav__link" style="">Additional Notes</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#caveats-to-the-initial-editor-value" class="side-nav__link" style="">Caveats to the initial editor value</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#problems-with-declarative-slotting" class="side-nav__link" style="">Problems with declarative slotting</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#other-slottable-tags" class="side-nav__link" style="">Other slottable tags</a>
+      </li><li class="side-nav__item" data-level="2">
+        <a href="#api-reference" class="side-nav__link" style="">API Reference</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#imports" class="side-nav__link" style="">Imports</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#attributes" class="side-nav__link" style="">Attributes</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#events" class="side-nav__link" style="">Events</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#functions" class="side-nav__link" style="">Functions</a>
       </li></ol>
 </nav>
 
