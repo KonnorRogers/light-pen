@@ -1,0 +1,10 @@
+import { html, fixture, assert } from "@open-wc/testing"
+import "../exports/components/{{ tagWithoutPrefix tag }}/{{ tagWithoutPrefix tag }}-register.js"
+
+suite('<{{ tag }}>', () => {
+  test("Should render a component", async () => {
+    const el = await fixture(html` <{{ tag }}></{{ tag }}> `);
+
+    assert(el.matches(":defined"), `"${el.tagName.toLowerCase()}" element should be ":defined"`)
+  })
+})

@@ -20,19 +20,27 @@
     "LICENSE"
   ],
   "scripts": {
-    "start": "web-dev-server --watch",
     "start:docs": "cd docs && bin/bridgetown start",
     "setup": "pnpm install && cd docs && pnpm install && bundle install",
-    "build:docs": "cd docs && pnpm run build && cd - && pnpm run build:api",
+    "build:docs": "pnpm run build && cd docs && pnpm run build",
     "build:api": "typedoc --out ./docs/output/references/api/ ./exports/**/*.js",
-    "clean": "rimraf -g \"./{exports,internal}/**/*.d.ts\"",
-    "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
-    "watch:cem": "custom-elements-manifest analyze --litelement --watch",
+    "build:api-json": "typedoc --json ./typedoc-generation.json ./exports/**/*.js",
+    "clean": "rimraf -g \"./{exports,internal}/**/!(*-globals|*-types).d.ts\"",
+    "build": "npm run clean && tsc && npm run build:cem",
+    "create:component": "plop --plopfile scripts/plop/plopfile.js",
+    "watch:cem": "custom-elements-manifest analyze --watch",
+    "build:cem": "custom-elements-manifest analyze",
     "analyze": "custom-elements-manifest analyze --litelement",
-    "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
-    "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",
-    "deploy:major": "npm run build && npm version major && npm publish && git push --follow-tags",
-    "test": "web-test-runner"
+    "preversion": "npm run build",
+    "prepublish": "npm run build",
+    "deploy:patch": "npm version patch && npm publish && git push --follow-tags",
+    "deploy:minor": "npm version minor && npm publish && git push --follow-tags",
+    "deploy:major": "npm version major && npm publish && git push --follow-tags",
+    "publish:beta": "npm publish --tag=beta && git push --follow-tags",
+    "lint": "prettier --check --ignore-path .gitignore .",
+    "fix": "prettier --write --ignore-path .gitignore .",
+    "test": "web-test-runner",
+    "test:watch": "web-test-runner --watch"
   },
   "keywords": [
     "web-components",
@@ -55,7 +63,7 @@
     "@esm-bundle/chai": "4.3.4-fix.0",
     "@open-wc/testing": "^4.0.0",
     "@open-wc/testing-helpers": "^3.0.1",
-    "@types/node": "^20.13.0",
+    "@types/node": "^20.14.8",
     "@web/test-runner": "^0.18.2",
     "@web/test-runner-commands": "^0.9.0",
     "@web/test-runner-playwright": "^0.11.0",
@@ -65,12 +73,12 @@
     "light-pen": "link:.",
     "playwright": "^1.44.1",
     "rimraf": "^5.0.7",
-    "typedoc": "^0.25.13",
-    "typescript": "~5.4.5"
+    "typedoc": "^0.26.1",
+    "typescript": "~5.5.2"
   },
   "dependencies": {
-    "form-associated-helpers": "^0.0.9",
-    "lit": "^3.1.3",
+    "form-associated-helpers": "^0.0.10",
+    "lit": "^3.1.4",
     "prism-esm": "1.29.0-fix.4",
     "web-component-define": "^2.0.11"
   },

@@ -1,0 +1,11 @@
+// @ts-check
+import {{ properCase tag }} from './{{ tagWithoutPrefix tag }}.js';
+
+{{ properCase tag }}.define('{{ tag }}');
+
+export default {{ properCase tag }};
+export * from './{{ tagWithoutPrefix tag }}.js';
+
+/**
+ * @type {import("./{{ tagWithoutPrefix tag }}-globals.js")}
+ */

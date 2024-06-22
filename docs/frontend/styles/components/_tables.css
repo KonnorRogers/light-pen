@@ -30,4 +30,7 @@ tbody > tr:nth-of-type(2n) {
 
 table :is(code, code.highlight) {
   border: 1px solid rgba(0,0,0,0.2);
+  min-width: max-content;
+  text-align: justify;
+  word-break: keep-all;
 }
