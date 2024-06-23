@@ -111,7 +111,8 @@ test("Should fail validity check with required and no value", async () => {
 
   assert.equal(called, 0)
 
-  assert.equal(editor.validationMessage, "Please fill out this field.")
+  const { validationMessage } = Object.assign(document.createElement("input"), { required: true, value: "" })
+  assert.equal(editor.validationMessage, validationMessage)
   assert.equal(editor.validity.valueMissing, true)
   assert.equal(editor.validity.valid, false)
 })
