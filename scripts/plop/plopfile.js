@@ -2,6 +2,8 @@ import { readdirSync } from 'fs'
 import * as process from "process"
 import * as path from "path"
 
+const COMPONENT_PREFIX = "light-"
+
 const getDirectories = (source) =>
   readdirSync(source, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
@@ -9,10 +11,9 @@ const getDirectories = (source) =>
 
 
 export default function (plop) {
-  const componentPrefix = "role-"
 
   function tagWithoutPrefix (tag) {
-    return tag.replace(new RegExp(`^${componentPrefix}`), '')
+    return tag.replace(new RegExp(`^${COMPONENT_PREFIX}`), '')
   }
 
   function tagToTitle (tag) {
