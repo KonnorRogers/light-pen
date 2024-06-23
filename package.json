@@ -9,7 +9,8 @@
     ".": "./exports/index.js",
     "./package.json": "./package.json",
     "./exports/*.js": "./exports/*.js",
-    "./exports/*": "./exports/*"
+    "./exports/*": "./exports/*",
+    "./types/*": "./types/*.d.ts"
   },
   "type": "module",
   "files": [
@@ -80,7 +81,6 @@
     "form-associated-helpers": "^0.0.10",
     "lit": "^3.1.4",
     "prism-esm": "1.29.0-fix.4",
-    "role-components": "3.0.0-beta.1",
     "web-component-define": "^2.0.11"
   },
   "customElements": "custom-elements.json"

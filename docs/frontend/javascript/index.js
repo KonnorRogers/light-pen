@@ -10,6 +10,7 @@ import LazyLoader from "./src/lazy-loader.js"
 import * as Turbo from "@hotwired/turbo"
 window.Turbo = Turbo
 import "./src/layout.js"
+
 //
 LazyLoader()
 //

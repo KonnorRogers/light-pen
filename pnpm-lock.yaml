@@ -17,9 +17,6 @@ importers:
       prism-esm:
         specifier: 1.29.0-fix.4
         version: 1.29.0-fix.4
-      role-components:
-        specifier: 3.0.0-beta.1
-        version: 3.0.0-beta.1
       web-component-define:
         specifier: ^2.0.11
         version: 2.0.11
@@ -112,15 +109,6 @@ packages:
 
   '@esm-bundle/chai@4.3.4-fix.0':
     resolution: {integrity: sha512-26SKdM4uvDWlY8/OOOxSB1AqQWeBosCX3wRYUZO7enTAj03CtVxIiCimYVG2WpULcyV51qapK4qTovwkUr5Mlw==}
-
-  '@floating-ui/core@1.6.2':
-    resolution: {integrity: sha512-+2XpQV9LLZeanU4ZevzRnGFg2neDeKHgFLjP6YLW+tly0IvrhqT4u8enLGjLH3qeh85g19xY5rsAusfwTdn5lg==}
-
-  '@floating-ui/dom@1.6.5':
-    resolution: {integrity: sha512-Nsdud2X65Dz+1RHjAIP0t8z5e2ff/IRbei6BqFrl1urT8sDVzM1HMQ+R0XcU5ceRfyO3I6ayeqIfh+6Wb8LGTw==}
-
-  '@floating-ui/utils@0.2.2':
-    resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
 
   '@github/catalyst@1.6.0':
     resolution: {integrity: sha512-u8A+DameixqpeyHzvnJWTGj+wfiskQOYHzSiJscCWVfMkIT3rxnbHMtGh3lMthaRY21nbUOK71WcsCnCrXhBJQ==}
@@ -1680,9 +1668,6 @@ packages:
     engines: {node: '>=14.18'}
     hasBin: true
 
-  role-components@3.0.0-beta.1:
-    resolution: {integrity: sha512-863Um3c0dTo2JLt6f05P6Wu6dAU7v5JhN7f1/PmmSjfVDzMbQIdcqY/C2LnRCzuNciC8mlN3zwloCi6vjikRDQ==}
-
   rollup@4.18.0:
     resolution: {integrity: sha512-QmJz14PX3rzbJCN1SG4Xe/bAAX2a6NpCP8ab2vfu2GiUr8AQcr2nCV/oEO3yneFarB67zk8ShlIyWb2LGTb3Sg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -2065,17 +2050,6 @@ snapshots:
   '@esm-bundle/chai@4.3.4-fix.0':
     dependencies:
       '@types/chai': 4.3.11
-
-  '@floating-ui/core@1.6.2':
-    dependencies:
-      '@floating-ui/utils': 0.2.2
-
-  '@floating-ui/dom@1.6.5':
-    dependencies:
-      '@floating-ui/core': 1.6.2
-      '@floating-ui/utils': 0.2.2
-
-  '@floating-ui/utils@0.2.2': {}
 
   '@github/catalyst@1.6.0': {}
 
@@ -3879,13 +3853,6 @@ snapshots:
   rimraf@5.0.7:
     dependencies:
       glob: 10.4.1
-
-  role-components@3.0.0-beta.1:
-    dependencies:
-      '@floating-ui/dom': 1.6.5
-      form-associated-helpers: 0.0.10
-      lit: 3.1.4
-      web-component-define: 2.0.11
 
   rollup@4.18.0:
     dependencies:
