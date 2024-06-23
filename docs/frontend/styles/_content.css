@@ -14,7 +14,7 @@ pre code {
 .highlighter-rouge,
 .highlight {
   border-radius: 8px;
-  font-size: 1em;
+  font-size: 1rem;
   font-family: var(--sl-font-mono);
 }
 
