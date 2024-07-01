@@ -49,7 +49,7 @@ class Builders::Inspectors < SiteBuilder
             <sl-icon class='clipboard__icon--idle' name='clipboard'></sl-icon>
           </clipboard-copy>
 
-          <textarea id='#{id}' hidden>#{text}</textarea>
+          <script type="text/plain" id='#{id}' hidden>#{CGI.escape_html(text)}</script>
         </div>
       HTML
 
