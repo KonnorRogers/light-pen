@@ -8,6 +8,7 @@ const AssetMapper = require("asset-mapper-esbuild").default
 // Update this if you need to configure a destination folder other than `output`
 const outputFolder = "src"
 
+
 // You can customize this as you wish, perhaps to add new esbuild plugins.
 //
 // ```
@@ -39,6 +40,7 @@ const esbuildOptions = {
   },
   publicPath: path.join(process.env.BASE_PATH, "bridgetown", "static"),
   outdir: path.join(process.cwd(), outputFolder, "bridgetown", "static"),
+
   splitting: true,
   format: "esm",
   plugins: [
