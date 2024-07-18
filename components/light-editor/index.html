@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.IVANCGF4.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.OBNXDLHZ.js">
 <link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.IW32RKUC.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.IVANCGF4.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.OBNXDLHZ.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.IW32RKUC.js" type="module"></script>
 
 <!-- Favicons -->
@@ -473,12 +473,12 @@ This is intentional to keep the bundle size low. Supported languages are <code c
             HTML
           </div>
 
-          <clipboard-copy for="258c756a-0cc9-4d37-a031-397d19f3d19c" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="5da7bbcd-9959-4c1c-90e9-c596d9f686e7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="258c756a-0cc9-4d37-a031-397d19f3d19c" hidden="">&lt;light-editor&gt;
+          <script type="text/plain" id="5da7bbcd-9959-4c1c-90e9-c596d9f686e7" hidden="">&lt;light-editor&gt;
   &lt;!-- Important to use `type=&quot;text/plain&quot;` --&gt;
   &lt;script type=&quot;text/plain&quot;&gt;
     &lt;script&gt;&amp;lt;/script&gt;
@@ -584,6 +584,56 @@ native <code class="highlighter-rouge">&lt;textarea&gt;</code> element.</p>
   </script>
 </light-preview>
 
+<h3 id="whitespace-wrapping">
+          <a href="#whitespace-wrapping">Whitespace wrapping</a>
+        </h3>
+
+<p>By default <code class="highlighter-rouge">&lt;light-preview&gt;</code> will “soft wrap” lines for you. Meaning, code will wrap and not overflow
+the container. If this is undesirable, you can pass <code class="highlighter-rouge">wrap="hard"</code> and lines will not wrap.</p>
+
+<p>Here’s a preview of soft wrapping vs hard wrapping.</p>
+
+<light-preview preview-mode="shadow-dom" unescape-behavior="none">
+  <template slot="code">
+    <div style="display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <section>
+        <h2>With "soft" wrapping</h2>
+        <light-editor>
+          <script type="text/plain">
+            <html>
+              <head></head>
+              <body>
+                HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
+                <script>
+                  const greeting = "Hello World"
+                  console.log(greeting)
+                &lt;/script>
+              </body>
+            </html>
+          </script>
+        </light-editor>
+      </section>
+      <section>
+        <h2>With "hard" wrapping</h2>
+        <light-editor wrap="hard" highlight-lines="{4}">
+          <script type="text/plain">
+            <html>
+              <head></head>
+              <body>
+                HHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello WorldHello World Hello World Hello Worldello World Hello World Hello World
+                <script>
+                  const greeting = "Hello World"
+                  console.log(greeting)
+                &lt;/script>
+              </body>
+            </html>
+          </script>
+        </light-editor>
+      </section>
+    </div>
+  </template>
+</light-preview>
+
 <h2 id="additional-notes">
           <a href="#additional-notes">Additional Notes</a>
         </h2>
@@ -600,12 +650,12 @@ is to use <code class="highlighter-rouge">value</code> attribute. Like so:</p>
             HTML
           </div>
 
-          <clipboard-copy for="7008d57b-0c15-4a2c-bef5-a8bfeeb710ee" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="d800e8e3-e935-4823-b293-cb8f5755458a" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="7008d57b-0c15-4a2c-bef5-a8bfeeb710ee" hidden="">&lt;light-editor value=&quot;&lt;html&gt;&lt;/html&gt;&quot;&gt;&lt;/light-editor&gt;
+          <script type="text/plain" id="d800e8e3-e935-4823-b293-cb8f5755458a" hidden="">&lt;light-editor value=&quot;&lt;html&gt;&lt;/html&gt;&quot;&gt;&lt;/light-editor&gt;
 </script>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-editor</span> <span class="na">value=</span><span class="s">"&lt;html&gt;&lt;/html&gt;"</span><span class="nt">&gt;&lt;/light-editor&gt;</span>
@@ -629,12 +679,12 @@ This limitation only exists for slotting.</p>
             HTML
           </div>
 
-          <clipboard-copy for="4681f623-dafe-4c26-b262-4ae2f6875eab" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="1017723b-ce23-4a70-9c3f-c118d2464ecc" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="4681f623-dafe-4c26-b262-4ae2f6875eab" hidden="">&lt;light-editor&gt;
+          <script type="text/plain" id="1017723b-ce23-4a70-9c3f-c118d2464ecc" hidden="">&lt;light-editor&gt;
   &lt;textarea&gt;
     &amp;lt;textarea&amp;gt;&amp;lt;/textarea&amp;gt;
   &lt;/textarea&gt;
@@ -672,12 +722,12 @@ This limitation only exists for slotting.</p>
             HTML
           </div>
 
-          <clipboard-copy for="f5c28eb0-2daf-4447-9794-995a7bd18394" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="f18acd52-11d0-47a8-871b-9dce7af9401d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="f5c28eb0-2daf-4447-9794-995a7bd18394" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
+          <script type="text/plain" id="f18acd52-11d0-47a8-871b-9dce7af9401d" hidden="">&lt;!-- Auto registers as &lt;light-editor&gt; --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js&quot;&gt;&lt;/script&gt;
 </script>
         </div>
@@ -693,12 +743,12 @@ This limitation only exists for slotting.</p>
             HTML
           </div>
 
-          <clipboard-copy for="9dfa9655-ab1a-43dc-8997-c9deaf3f01a9" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="98a14d4f-9501-4bab-b8ab-61264c471307" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="9dfa9655-ab1a-43dc-8997-c9deaf3f01a9" hidden="">&lt;script type=&quot;module&quot;&gt;
+          <script type="text/plain" id="98a14d4f-9501-4bab-b8ab-61264c471307" hidden="">&lt;script type=&quot;module&quot;&gt;
   // Auto registers as &lt;light-editor&gt;
   import &quot;https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor-register.js&quot;
 
@@ -715,7 +765,7 @@ This limitation only exists for slotting.</p>
 
   <span class="c1">// Manual Register</span>
   <span class="k">import</span> <span class="nx">LightEditor</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-editor.js</span><span class="dl">"</span>
-  <span class="nx">LightEditor</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
+  <span class="nx">LightEditor</span><span class="p">.</span><span class="nf">define</span><span class="p">()</span>
   <span class="c1">// =&gt; Registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">editor</span><span class="o">&gt;</span>
 <span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div></div>
@@ -728,12 +778,12 @@ This limitation only exists for slotting.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="eebda88a-a8a5-401e-bc54-35d2b8d856e3" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="1addd958-8de5-4780-b4f5-af3122f5f5e8" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="eebda88a-a8a5-401e-bc54-35d2b8d856e3" hidden="">// Auto registers as &lt;light-editor&gt;
+          <script type="text/plain" id="1addd958-8de5-4780-b4f5-af3122f5f5e8" hidden="">// Auto registers as &lt;light-editor&gt;
 import &quot;light-pen/exports/light-editor-register.js&quot;
 
 // Manual Register
@@ -747,7 +797,7 @@ LightEditor.define()
 
 <span class="c1">// Manual Register</span>
 <span class="k">import</span> <span class="nx">LightEditor</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-editor.js</span><span class="dl">"</span>
-<span class="nx">LightEditor</span><span class="p">.</span><span class="nx">define</span><span class="p">()</span>
+<span class="nx">LightEditor</span><span class="p">.</span><span class="nf">define</span><span class="p">()</span>
 <span class="c1">// =&gt; Registers as &lt;light-editor&gt;</span>
 </code></pre></div></div></div>
 </sl-tab-panel>
@@ -817,7 +867,7 @@ LightEditor.define()
       <code>wrap</code>
   </td>
   <td>
-    <p>If <code class="highlighter-rouge">wrap="soft"</code>, lines will wrap when they reach the edge of their container. If <code class="highlighter-rouge">wrap="none"</code>, lines will not wrap instead all the user to scroll horizontally to see more code.</p>
+    <p>If <code class="highlighter-rouge">wrap="soft"</code>, lines will wrap when they reach the edge of their container. If <code class="highlighter-rouge">wrap="hard"</code>, lines will not wrap instead all the user to scroll horizontally to see more code.</p>
   </td>
   <td>
     <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
@@ -1044,7 +1094,31 @@ LightEditor.define()
 
 <tr>
   <td>
+    <code>getCaretPosition()</code>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+</tr>
+
+<tr>
+  <td>
     <code>setCurrentLineHighlight()</code>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <code>getLinesToSelectionStart()</code>
   </td>
   <td>
     <div style="text-align: center;">-</div>
@@ -1131,6 +1205,8 @@ LightEditor.define()
         <a href="#editor-with-validations" class="side-nav__link" style="">Editor with validations</a>
       </li><li class="side-nav__item" data-level="3">
         <a href="#removing-line-numbers" class="side-nav__link" style="">Removing line numbers</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#whitespace-wrapping" class="side-nav__link" style="">Whitespace wrapping</a>
       </li><li class="side-nav__item" data-level="2">
         <a href="#additional-notes" class="side-nav__link" style="">Additional Notes</a>
       </li><li class="side-nav__item" data-level="3">
