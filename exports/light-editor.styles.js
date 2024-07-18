@@ -81,14 +81,15 @@ export const styles = css`
     font-family: inherit;
     line-height: inherit;
     tab-size: inherit;
+  }
 
+  [part~="textarea"] {
     /* this creates line-wrapping. */
     word-break: break-word;
     white-space: pre-wrap;
   }
 
-  :host([wrap="none"])
-    :is(light-code::part(pre), [part~="textarea"], light-code::part(code)) {
+  :host([wrap="hard"]) [part~="textarea"] {
     /* This would remove line-wrapping */
     word-break: break-all;
     white-space: pre;

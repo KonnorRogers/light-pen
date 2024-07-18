@@ -19,6 +19,13 @@ export const codeStyles = css`
 
 [part~="code"] {
   display: grid;
+}
+
+:host([wrap="hard"]) [part~="code"] {
+  grid-template-columns: max-content max-content;
+}
+
+:host([wrap="soft"]) [part~="code"] {
   grid-template-columns: max-content minmax(0, 1fr);
 }
 

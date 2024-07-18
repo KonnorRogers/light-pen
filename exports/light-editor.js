@@ -59,7 +59,11 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   /**
    * @override
    */
-  static styles = [baseStyles, styles, theme];
+  static styles = [
+    baseStyles,
+    styles,
+    theme
+  ];
 
   /**
    * @override
@@ -127,7 +131,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     /**
      * @property
      * @type {"soft" | "hard"}
-     * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
+     * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="hard"`, lines will not wrap instead all the user to scroll horizontally to see more code.
      */
     this.wrap = "soft";
 
@@ -262,6 +266,18 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
       <div part="base">
         <!-- This is where the fancy syntax highlighting comes in -->
         <div part="base-editor">
+          <!-- This bad boy is for measuring cursors -->
+          <pre
+            part="pre"
+            aria-hidden="true"
+            style="
+              position: fixed;
+              top: 0;
+              left: 0;
+              pointer-events: none;
+              visibility: hidden;
+            "><code part="code"><span id="before-caret"></span><span id="caret">.</span><span id="after-caret">.</span></code></pre>
+
           <light-code
             tabindex="-1"
             .language=${this.language}
@@ -417,10 +433,12 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   }
 
   /**
-   * Syncs the `<pre>` element scroll position to the same as the `<textarea>`
+   * Syncs the `<light-code>` element scroll position to the same as the `<textarea>`
+   * @param {boolean} [syncCaret=false] - Whether or not to sync the caret. This is generally reserved for right / left arrow keys because the gutter is `position: sticky;`.
    * @internal
    */
-  syncScroll() {
+  syncScroll(syncCaret = false) {
+    // TODO: There's probably a lot of caching we can do here to reduce recomputes.
     /**
      * @type {undefined | null | HTMLTextAreaElement}
      */
@@ -429,11 +447,24 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     if (textarea == null) return;
 
     const lightCode = this.shadowRoot?.querySelector("light-code")
+    const code = lightCode?.shadowRoot?.querySelector("code")
+
+    if (syncCaret) {
+      const { top, left } = this.getCaretPosition()
+      // textarea.scrollTop = top
+      if (left < 60) {
+        textarea.scrollLeft = Math.min(left, textarea.scrollLeft)
+      }
+    }
 
     if (lightCode) {
       lightCode.scrollTop = textarea.scrollTop;
-      lightCode.scrollLeft = textarea.scrollLeft;
     }
+
+    if (code) {
+      code.scrollLeft = textarea.scrollLeft;
+    }
+
   }
 
   /**
@@ -507,7 +538,11 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     this.setCurrentLineHighlight();
     // setTimeout is needed for Safari which appears to be "slow" to update selection APIs.
     setTimeout(() => this.setCurrentLineHighlight());
-    // this.textarea
+    this.syncScroll()
+
+    if (evt.key.startsWith("Arrow") || evt.key === "Backspace") {
+      this.syncScroll(true)
+    }
 
     // Let's not trap focus. For now.
     // if ('Tab' === evt.key) {
@@ -518,6 +553,38 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     // }
   }
 
+  getCaretPosition () {
+      /* Inspired by https://github.com/component/textarea-caret-position */
+      const beforeCaret = this.shadowRoot?.getElementById("before-caret")
+      const afterCaret = this.shadowRoot?.getElementById("after-caret")
+      const caret = this.shadowRoot?.getElementById("caret")
+      const textarea = this.textarea
+
+      const fallback = { top: 0, left: 0 }
+
+      if (!beforeCaret) { return fallback }
+      if (!afterCaret) { return fallback }
+      if (!caret) { return fallback }
+      if (!textarea) { return fallback }
+
+      if (textarea.selectionStart !== textarea.selectionEnd) { return fallback }
+
+      beforeCaret.textContent = ""
+
+      const textLines = this.getLinesToSelectionStart()
+
+      if (!textLines) { return fallback }
+
+      const currentLineNumber = textLines.length - 1;
+      const beforeCaretText = textLines[currentLineNumber].substring(0, textarea.selectionStart)
+      beforeCaret.textContent = beforeCaretText
+
+      return {
+        top: afterCaret.offsetTop - textarea.scrollTop,
+        left: afterCaret.offsetLeft - textarea.scrollLeft
+      };
+  }
+
   setCurrentLineHighlight() {
     const currentLineNumber = this.getCurrentLineNumber();
 
@@ -526,7 +593,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     }
   }
 
-  getCurrentLineNumber() {
+  getLinesToSelectionStart () {
     const textArea = this.textarea;
 
     if (!textArea) return;
@@ -534,6 +601,15 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     const textLines = textArea.value
       .substr(0, textArea.selectionStart)
       .split(newLineRegex);
+
+    return textLines
+  }
+
+  getCurrentLineNumber() {
+    const textLines = this.getLinesToSelectionStart()
+
+    if (!textLines) { return 0 }
+
     const currentLineNumber = textLines.length - 1;
     // const currentColumnIndex = textLines[textLines.length-1].length;
     // console.log("Current Line Number "+ currentLineNumber+" Current Column Index "+currentColumnIndex );
