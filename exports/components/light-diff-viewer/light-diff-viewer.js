@@ -2,13 +2,13 @@ import { html } from "lit"
 
 import { BaseElement } from "../../../internal/base-element.js";
 import { baseStyles } from "../../styles/base-styles.js";
-import { componentStyles } from "./{{ tag }}.styles.js";
+import { componentStyles } from "./light-diff-viewer.styles.js";
 
 /**
  * @customElement
- * @tagname {{ tag }}
+ * @tagname light-diff-viewer
  * @summary Short summary of the component's intended use.
- * @documentation https://konnorrogers.github.io/light-pen/components/{{ tag }}
+ * @documentation https://konnorrogers.github.io/light-pen/components/light-diff-viewer
  * @status experimental
  * @since 4.0
  *
@@ -20,11 +20,11 @@ import { componentStyles } from "./{{ tag }}.styles.js";
  *
  * @cssproperty --example - An example CSS custom property.
  */
-export default class {{ properCase tag }} extends BaseElement {
+export default class LightDiffViewer extends BaseElement {
   /**
    * @override
    */
-  static baseName = "{{ tag }}"
+  static baseName = "light-diff-viewer"
 
   /**
    * @override
