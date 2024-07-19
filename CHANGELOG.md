@@ -1,3 +1,8 @@
+
+## Next
+
+- BREAKING_CHANGE: All components are now scoped under `exports/components/<component-name>/<component-name>.js`
+
 ## v3.1.2 - 07/18/2024
 
 - Bug Fix(light-code): `wrap="none"` properly renamed to `wrap="hard"` [#22](https://github.com/KonnorRogers/light-pen/pull/22)

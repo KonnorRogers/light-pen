@@ -1,7 +1,6 @@
 import { assert } from "@esm-bundle/chai"
-import { html, fixture, elementUpdated, aTimeout } from "@open-wc/testing-helpers"
-import { sendKeys } from "@web/test-runner-commands"
-import "../exports/light-pen-register.js"
+import { html, fixture, elementUpdated } from "@open-wc/testing-helpers"
+import "../exports/components/light-pen/light-pen-register.js"
 
 test("it should reset to initial values", async () => {
   const lightPen = await fixture(html`

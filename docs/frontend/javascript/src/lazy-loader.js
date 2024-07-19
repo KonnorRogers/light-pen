@@ -5,22 +5,22 @@ export default function lazyLoader() {
     components: {
       "light-code": {
         register () {
-          import("light-pen/exports/light-code-register.js")
+          import("light-pen/exports/components/light-code/light-code-register.js")
         }
       },
       "light-editor": {
         register () {
-          import("light-pen/exports/light-editor-register.js")
+          import("light-pen/exports/components/light-editor/light-editor-register.js")
         }
       },
       "light-pen": {
         register () {
-          import("light-pen/exports/light-pen-register.js")
+          import("light-pen/exports/components/light-pen/light-pen-register.js")
         }
       },
       "light-preview": {
         register () {
-          import("light-pen/exports/light-preview-register.js")
+          import("light-pen/exports/components/light-preview/light-preview-register.js")
         }
       },
       "clipboard-copy": {

@@ -1,6 +1,6 @@
 import { html, css } from "lit"
-import { baseStyles } from "./base-styles.js"
-import { BaseElement } from "../internal/base-element.js"
+import { baseStyles } from "../../styles/base-styles.js"
+import { BaseElement } from "../../../internal/base-element.js"
 
 function motionReduced () {
   return /** @type {any} */ (window.matchMedia(`(prefers-reduced-motion: reduce)`)) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;

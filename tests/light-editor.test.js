@@ -1,4 +1,4 @@
-import LightEditor from "light-pen/exports/light-editor.js"
+import LightEditor from "light-pen/exports/components/light-editor/light-editor.js"
 import { assert } from "@esm-bundle/chai"
 import { aTimeout, elementUpdated, html } from "@open-wc/testing-helpers"
 import { fixture } from "@open-wc/testing-helpers"

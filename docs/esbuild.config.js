@@ -12,7 +12,8 @@ const outputFolder = "src"
 // You can customize this as you wish, perhaps to add new esbuild plugins.
 //
 // ```
-const path = require("path")
+const path = require("path");
+const glob = require("glob");
 const esbuildCopy = require('esbuild-plugin-copy').default
 // const esbuildOptions = {
 // }
@@ -25,15 +26,20 @@ const esbuildCopy = require('esbuild-plugin-copy').default
 // ```
 const watch = process.argv.includes("--watch")
 
+const componentNames = glob.sync("../exports/components/*").map((name) => path.parse(name).name)
+
+const components = {}
+
+componentNames.forEach((name) => {
+  components[`light-pen/exports/components/${name}/${name}`] = `../exports/components/${name}/${name}.js`
+})
+
 const esbuildOptions = {
   target: "es2020",
   entryPoints: {
     "javascript/index": "frontend/javascript/index.js",
     "javascript/defer": "frontend/javascript/defer.js",
-    "light-pen/exports/light-pen": "../exports/light-pen.js",
-    "light-pen/exports/light-preview": "../exports/light-preview.js",
-    "light-pen/exports/light-editor": "../exports/light-editor.js",
-    "light-pen/exports/light-code": "../exports/light-code.js",
+    ...components,
   },
   define: {
     "process.env.BASE_PATH": `"${process.env.BASE_PATH}"`

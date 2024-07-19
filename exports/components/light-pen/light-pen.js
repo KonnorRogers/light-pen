@@ -3,16 +3,16 @@
 import { html } from "lit";
 import { styles } from "./light-pen.styles.js";
 import { when } from "lit/directives/when.js";
-
-import { baseStyles, buttonStyles } from "./base-styles.js";
-
-import { clamp } from "../internal/clamp.js";
-import { drag } from "../internal/drag.js";
-import { resizeIcon } from "../internal/resize-icon.js";
-import { BaseElement } from "../internal/base-element.js";
-import LightEditor from "./light-editor.js";
-import LightDisclosure from "./light-disclosure.js";
 import { ifDefined } from "lit/directives/if-defined.js";
+
+import { baseStyles, buttonStyles } from "../../styles/base-styles.js";
+
+import { clamp } from "../../../internal/clamp.js";
+import { drag } from "../../../internal/drag.js";
+import { resizeIcon } from "../../../internal/resize-icon.js";
+import { BaseElement } from "../../../internal/base-element.js";
+import LightEditor from "../light-editor/light-editor.js";
+import LightDisclosure from "../light-disclosure/light-disclosure.js";
 
 /**
  * @typedef {"html" | "css" | "js"} SupportedLanguages

@@ -1,21 +1,24 @@
 // @ts-check
 import { html } from "lit";
-import { buttonStyles, baseStyles } from "./base-styles.js";
 
-import { when } from "lit/directives/when.js";
+import { buttonStyles, baseStyles } from "../../styles/base-styles.js";
 import { previewStyles } from "./light-preview.styles.js";
-import { drag } from "../internal/drag.js";
-import { clamp } from "../internal/clamp.js";
-import { stringMap } from "../internal/string-map.js";
-import { debounce } from "../internal/debounce.js";
-import { resizeIcon } from "../internal/resize-icon.js";
-import { BaseElement } from "../internal/base-element.js";
-import LightDisclosure from "./light-disclosure.js";
-import { elementsToString } from "../internal/elements-to-strings.js";
-import { dedent } from "../internal/dedent.js";
-import LightCode from "./light-code.js";
+
 import { ifDefined } from "lit/directives/if-defined.js";
-import { createPrismInstance } from "../internal/prism-highlight.js";
+import { when } from "lit/directives/when.js";
+
+import LightDisclosure from "../light-disclosure/light-disclosure.js";
+import LightCode from "../light-code/light-code.js";
+
+import { drag } from "../../../internal/drag.js";
+import { clamp } from "../../../internal/clamp.js";
+import { stringMap } from "../../../internal/string-map.js";
+import { debounce } from "../../../internal/debounce.js";
+import { resizeIcon } from "../../../internal/resize-icon.js";
+import { BaseElement } from "../../../internal/base-element.js";
+import { elementsToString } from "../../../internal/elements-to-strings.js";
+import { dedent } from "../../../internal/dedent.js";
+import { createPrismInstance } from "../../../internal/prism-highlight.js";
 
 const sourceCodeFallback = "Show source code"
 

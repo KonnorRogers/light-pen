@@ -1,20 +1,20 @@
 // @ts-check
 import { css, html } from "lit";
-import { baseStyles } from "./base-styles.js";
-
-import { theme } from './default-theme.styles.js'
-import { PrismHighlight, createPrismInstance } from '../internal/prism-highlight.js';
-
 import { when } from "lit/directives/when.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { debounce } from "../internal/debounce.js";
-import { BaseElement } from "../internal/base-element.js";
-import { elementsToString } from "../internal/elements-to-strings.js";
-import { dedent } from "../internal/dedent.js";
-import { codeStyles } from "./code-styles.js";
-import { LineNumberPlugin } from "../internal/line-number-plugin.js";
-import { NumberRange } from "../internal/number-range.js";
-import { LineHighlightPlugin, LineHighlightWrapPlugin } from "../internal/line-highlight-plugin.js";
+
+import { baseStyles } from "../../styles/base-styles.js";
+import { theme } from '../../styles/default-theme.styles.js'
+import { codeStyles } from "../../styles/code-styles.js";
+
+import { PrismHighlight, createPrismInstance } from '../../../internal/prism-highlight.js';
+import { debounce } from "../../../internal/debounce.js";
+import { BaseElement } from "../../../internal/base-element.js";
+import { elementsToString } from "../../../internal/elements-to-strings.js";
+import { dedent } from "../../../internal/dedent.js";
+import { LineNumberPlugin } from "../../../internal/line-number-plugin.js";
+import { NumberRange } from "../../../internal/number-range.js";
+import { LineHighlightPlugin, LineHighlightWrapPlugin } from "../../../internal/line-highlight-plugin.js";
 
 /**
  * LightCode is a minimal wrapper around Prism for displaying code highlighting

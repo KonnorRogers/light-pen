@@ -44,7 +44,7 @@ component: light-pen
   </template>
 
   <template slot="js">
-    import LightPen from "<%= find_asset "../exports/light-pen.js" %>";
+    import LightPen from "<%= find_asset "../exports/components/light-pen/light-pen.js" %>";
     LightPen.define()
   </template>
 </light-pen>

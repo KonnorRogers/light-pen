@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@github/clipboard-copy-element':
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.3.0
+        version: 1.3.0
       '@hotwired/stimulus':
         specifier: ^3.2.1
         version: 3.2.1
@@ -21,8 +21,8 @@ importers:
         specifier: ^3.10.4
         version: 3.10.4
       '@shoelace-style/shoelace':
-        specifier: ^2.7.0
-        version: 2.7.0
+        specifier: ^2.15.1
+        version: 2.15.1(@types/react@18.3.3)
       bridgetown-quick-search:
         specifier: 2.0.0
         version: 2.0.0
@@ -167,9 +167,9 @@ packages:
       postcss: ^8.2
       postcss-selector-parser: ^6.0.10
 
-  '@ctrl/tinycolor@3.6.0':
-    resolution: {integrity: sha512-/Z3l6pXthq0JvMYdUFyX9j0MaCltlIn6mfh9jLyQwg5aPKxkyNa0PTHtU1AlFXLNk55ZuAeJRcpvq+tmLfKmaQ==}
-    engines: {node: '>=10'}
+  '@ctrl/tinycolor@4.1.0':
+    resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
+    engines: {node: '>=14'}
 
   '@esbuild/aix-ppc64@0.21.4':
     resolution: {integrity: sha512-Zrm+B33R4LWPLjDEVnEqt2+SLTATlru1q/xYKVn8oVTbiRBGmK2VIMoIYGJDGyftnGaC788IuzGFAlb7IQ0Y8A==}
@@ -309,14 +309,17 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@floating-ui/core@1.3.1':
-    resolution: {integrity: sha512-Bu+AMaXNjrpjh41znzHqaz3r2Nr8hHuHZT6V2LBKMhyMl0FgKA62PNYbqnfgmzOhoWZj70Zecisbo4H1rotP5g==}
+  '@floating-ui/core@1.6.4':
+    resolution: {integrity: sha512-a4IowK4QkXl4SCWTGUR0INAfEOX3wtsYw3rKK5InQEHMGObkR8Xk44qYQD9P4r6HHw0iIfK6GUKECmY8sTkqRA==}
 
-  '@floating-ui/dom@1.4.4':
-    resolution: {integrity: sha512-21hhDEPOiWkGp0Ys4Wi6Neriah7HweToKra626CIK712B5m9qkdz54OP9gVldUg+URnBTpv/j/bi/skmGdstXQ==}
+  '@floating-ui/dom@1.6.7':
+    resolution: {integrity: sha512-wmVfPG5o2xnKDU4jx/m4w5qva9FWHcnZ8BvzEe90D/RpwsJaTAVYPEPdQ8sbr/N8zZTAHlZUTQdqg8ZUbzHmng==}
 
-  '@github/clipboard-copy-element@1.2.1':
-    resolution: {integrity: sha512-PLccyUCnzmOQ6zrRsH66rr67iumJyP5r7ij17ezprFQAK/oA8CXhlC8LTG+xpW3cYAvnp2zCgRNTfXS8wk09Lg==}
+  '@floating-ui/utils@0.2.4':
+    resolution: {integrity: sha512-dWO2pw8hhi+WrXq1YJy2yCuWoL20PddgGaqTgVe4cOS9Q6qklXCiA1tJEqX6BEwRNSCP84/afac9hd4MS+zEUA==}
+
+  '@github/clipboard-copy-element@1.3.0':
+    resolution: {integrity: sha512-wyntkQkwoLbLo+Hqg2LIVMXDIzcvUb9bSDz+clX6nVJItwzh103rHxdXFRZD+DmxVbuEW5xSznYQXkz1jZT+xg==}
 
   '@hotwired/stimulus@3.2.1':
     resolution: {integrity: sha512-HGlzDcf9vv/EQrMJ5ZG6VWNs8Z/xMN+1o2OhV1gKiSG6CqZt5MCBB1gRg5ILiN3U0jEAxuDTNPRfBcnZBDmupQ==}
@@ -328,14 +331,16 @@ packages:
   '@konnorr/bridgetown-quick-search@3.10.4':
     resolution: {integrity: sha512-BJih2/72YCR5M5osQr0BwmHAF1bKD+6OORvW9H3KbGzyuzmwEctVRxHtUMjY6gwmjYriejNWkZPkeeixAHoHog==}
 
-  '@lit-labs/react@1.2.1':
-    resolution: {integrity: sha512-DiZdJYFU0tBbdQkfwwRSwYyI/mcWkg3sWesKRsHUd4G+NekTmmeq9fzsurvcKTNVa0comNljwtg4Hvi1ds3V+A==}
-
   '@lit-labs/ssr-dom-shim@1.1.1':
     resolution: {integrity: sha512-kXOeFbfCm4fFf2A3WwVEeQj55tMZa8c8/f9AKHMobQMkzNUfUj+antR3fRPaZJawsa1aZiP/Da3ndpZrwEe4rQ==}
 
   '@lit-labs/ssr-dom-shim@1.2.0':
     resolution: {integrity: sha512-yWJKmpGE6lUURKAaIltoPIE/wrbY3TEkqQt+X0m+7fQNnAv0keydnYvbiJFP1PnMhizmIWRWOG5KLhYyc/xl+g==}
+
+  '@lit/react@1.0.5':
+    resolution: {integrity: sha512-RSHhrcuSMa4vzhqiTenzXvtQ6QDq3hSPsnHHO3jaPmmvVFeoNNm4DHoQ0zLdKAUvY3wP3tTENSUf7xpyVfrDEA==}
+    peerDependencies:
+      '@types/react': 17 || 18
 
   '@lit/reactive-element@1.6.2':
     resolution: {integrity: sha512-rDfl+QnCYjuIGf5xI2sVJWdYIi56CTCwWa+nidKYX6oIuBYwUbT/vX4qbUDlHiZKJ/3FRNQ/tWJui44p6/stSA==}
@@ -371,12 +376,18 @@ packages:
   '@shoelace-style/animations@1.1.0':
     resolution: {integrity: sha512-Be+cahtZyI2dPKRm8EZSx3YJQ+jLvEcn3xzRP7tM4tqBnvd/eW/64Xh0iOf0t2w5P8iJKfdBbpVNE9naCaOf2g==}
 
-  '@shoelace-style/localize@3.1.1':
-    resolution: {integrity: sha512-NkM/hj3Js6yXCU9WxhsyxRUdyqUUUl/BSvIluUMptQteUWGOJaoyP1iMbOMqO544DYMzBfnoCw66ZHkGuTdKgA==}
+  '@shoelace-style/localize@3.2.1':
+    resolution: {integrity: sha512-r4C9C/5kSfMBIr0D9imvpRdCNXtUNgyYThc4YlS6K5Hchv1UyxNQ9mxwj+BTRH2i1Neits260sR3OjKMnplsFA==}
 
-  '@shoelace-style/shoelace@2.7.0':
-    resolution: {integrity: sha512-w7FnHqBoYR6Ne42WZPW+bIJGIAGsUZgxF3WA9LLfqn3+Q4NOQ4r5jl/DEfsQmRUTmY0nUrs4WGO1CeTrhv6taA==}
+  '@shoelace-style/shoelace@2.15.1':
+    resolution: {integrity: sha512-3ecUw8gRwOtcZQ8kWWkjk4FTfObYQ/XIl3aRhxprESoOYV1cYhloYPsmQY38UoL3+pwJiZb5+LzX0l3u3Zl0GA==}
     engines: {node: '>=14.17.0'}
+
+  '@types/prop-types@15.7.12':
+    resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
+
+  '@types/react@18.3.3':
+    resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
 
   '@types/trusted-types@2.0.3':
     resolution: {integrity: sha512-NfQ4gyz38SL8sDNrSixxU2Os1a5xcdFxipAFxYEuLUlvU2uDwS4NUpsImcf1//SlWItCVMMLiylsxbmNMToV/g==}
@@ -479,6 +490,9 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  csstype@3.1.3:
+    resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
   dir-glob@3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
@@ -1037,7 +1051,7 @@ snapshots:
       postcss: 8.4.19
       postcss-selector-parser: 6.0.11
 
-  '@ctrl/tinycolor@3.6.0': {}
+  '@ctrl/tinycolor@4.1.0': {}
 
   '@esbuild/aix-ppc64@0.21.4':
     optional: true
@@ -1108,13 +1122,18 @@ snapshots:
   '@esbuild/win32-x64@0.21.4':
     optional: true
 
-  '@floating-ui/core@1.3.1': {}
-
-  '@floating-ui/dom@1.4.4':
+  '@floating-ui/core@1.6.4':
     dependencies:
-      '@floating-ui/core': 1.3.1
+      '@floating-ui/utils': 0.2.4
 
-  '@github/clipboard-copy-element@1.2.1': {}
+  '@floating-ui/dom@1.6.7':
+    dependencies:
+      '@floating-ui/core': 1.6.4
+      '@floating-ui/utils': 0.2.4
+
+  '@floating-ui/utils@0.2.4': {}
+
+  '@github/clipboard-copy-element@1.3.0': {}
 
   '@hotwired/stimulus@3.2.1': {}
 
@@ -1126,11 +1145,13 @@ snapshots:
       lit: 3.1.3
       lunr: 2.3.9
 
-  '@lit-labs/react@1.2.1': {}
-
   '@lit-labs/ssr-dom-shim@1.1.1': {}
 
   '@lit-labs/ssr-dom-shim@1.2.0': {}
+
+  '@lit/react@1.0.5(@types/react@18.3.3)':
+    dependencies:
+      '@types/react': 18.3.3
 
   '@lit/reactive-element@1.6.2':
     dependencies:
@@ -1170,18 +1191,27 @@ snapshots:
 
   '@shoelace-style/animations@1.1.0': {}
 
-  '@shoelace-style/localize@3.1.1': {}
+  '@shoelace-style/localize@3.2.1': {}
 
-  '@shoelace-style/shoelace@2.7.0':
+  '@shoelace-style/shoelace@2.15.1(@types/react@18.3.3)':
     dependencies:
-      '@ctrl/tinycolor': 3.6.0
-      '@floating-ui/dom': 1.4.4
-      '@lit-labs/react': 1.2.1
+      '@ctrl/tinycolor': 4.1.0
+      '@floating-ui/dom': 1.6.7
+      '@lit/react': 1.0.5(@types/react@18.3.3)
       '@shoelace-style/animations': 1.1.0
-      '@shoelace-style/localize': 3.1.1
+      '@shoelace-style/localize': 3.2.1
       composed-offset-position: 0.0.4
-      lit: 2.8.0
+      lit: 3.1.3
       qr-creator: 1.0.0
+    transitivePeerDependencies:
+      - '@types/react'
+
+  '@types/prop-types@15.7.12': {}
+
+  '@types/react@18.3.3':
+    dependencies:
+      '@types/prop-types': 15.7.12
+      csstype: 3.1.3
 
   '@types/trusted-types@2.0.3': {}
 
@@ -1281,6 +1311,8 @@ snapshots:
   cssdb@7.1.0: {}
 
   cssesc@3.0.0: {}
+
+  csstype@3.1.3: {}
 
   dir-glob@3.0.1:
     dependencies:

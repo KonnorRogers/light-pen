@@ -2,8 +2,6 @@ import { readdirSync } from 'fs'
 import * as process from "process"
 import * as path from "path"
 
-const COMPONENT_PREFIX = "light-"
-
 const getDirectories = (source) =>
   readdirSync(source, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
@@ -11,9 +9,10 @@ const getDirectories = (source) =>
 
 
 export default function (plop) {
+  const componentPrefix = "light-"
 
   function tagWithoutPrefix (tag) {
-    return tag.replace(new RegExp(`^${COMPONENT_PREFIX}`), '')
+    return tag.replace(new RegExp(`^${componentPrefix}`), '')
   }
 
   function tagToTitle (tag) {
@@ -31,10 +30,13 @@ export default function (plop) {
       {
         type: 'input',
         name: 'tag',
-        message: 'Tag name? (e.g. role-button)',
+        message: `Tag name? (e.g. ${componentPrefix}-button)`,
         validate: value => {
-          // Start with role- and include only a-z + dashes
-          if (!/^role-[a-z-+]+/.test(value)) {
+          // Start with light- and include only a-z + dashes
+          const regex = new RegExp(`^${componentPrefix}[a-z-+]+`)
+
+          if (!(regex.test(value))) {
+            console.error(`Tag must start with ${componentPrefix}`)
             return false;
           }
 
@@ -48,31 +50,36 @@ export default function (plop) {
       }
     ],
     actions: [
-      // {
-      //   type: 'add',
-      //   path: '../../exports/components/{{ tagWithoutPrefix tag }}/{{ tagWithoutPrefix tag }}-register.js',
-      //   templateFile: 'templates/component-register.hbs'
-      // },
-      // {
-      //   type: 'add',
-      //   path: '../../exports/components/{{ tagWithoutPrefix tag }}/{{ tagWithoutPrefix tag }}.js',
-      //   templateFile: 'templates/component.hbs'
-      // },
-      // {
-      //   type: 'add',
-      //   path: '../../exports/components/{{ tagWithoutPrefix tag }}/{{ tagWithoutPrefix tag }}.styles.js',
-      //   templateFile: 'templates/component-styles.hbs'
-      // },
-      // {
-      //   type: 'add',
-      //   path: '../../tests/{{ tagWithoutPrefix tag }}.test.js',
-      //   templateFile: 'templates/component-tests.hbs'
-      // },
-      // {
-      //   type: 'add',
-      //   path: '../../docs/src/_documentation/components/{{ tagWithoutPrefix tag }}.md',
-      //   templateFile: 'templates/component-docs.hbs'
-      // },
+      {
+        type: 'add',
+        path: '../../exports/components/{{ tagWithoutPrefix tag }}/{{ tagWithoutPrefix tag }}-register.js',
+        templateFile: 'templates/component-register.hbs'
+      },
+      {
+        type: 'add',
+        path: '../../exports/components/{{ tagWithoutPrefix tag }}/{{ tagWithoutPrefix tag }}.js',
+        templateFile: 'templates/component-globals.hbs'
+      },
+      {
+        type: 'add',
+        path: '../../exports/components/{{ tagWithoutPrefix tag }}/{{ tagWithoutPrefix tag }}.js',
+        templateFile: 'templates/component.hbs'
+      },
+      {
+        type: 'add',
+        path: '../../exports/components/{{ tagWithoutPrefix tag }}/{{ tagWithoutPrefix tag }}.styles.js',
+        templateFile: 'templates/component-styles.hbs'
+      },
+      {
+        type: 'add',
+        path: '../../tests/{{ tagWithoutPrefix tag }}.test.js',
+        templateFile: 'templates/component-tests.hbs'
+      },
+      {
+        type: 'add',
+        path: '../../docs/src/_documentation/components/{{ tagWithoutPrefix tag }}.md',
+        templateFile: 'templates/component-docs.hbs'
+      },
       {
         type: "modify",
         path: "../../exports/index.js",

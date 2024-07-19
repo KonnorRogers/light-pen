@@ -1,19 +1,20 @@
 // @ts-check
-import { html } from "lit";
-
+import { html, LitElement } from "lit";
 import { ref } from "lit/directives/ref.js";
-
-import { LitElement } from "lit";
-import { BaseElement } from "../internal/base-element.js";
-import { baseStyles } from "./base-styles.js";
-import { styles } from "./light-editor.styles.js";
-import { theme } from "./default-theme.styles.js";
-import { dedent } from "../internal/dedent.js";
-import { LightResizeEvent } from "./events/light-resize-event.js";
-import { elementsToString } from "../internal/elements-to-strings.js";
-import { createPrismInstance } from "../internal/prism-highlight.js";
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js";
-import LightCode from "./light-code.js";
+
+import { baseStyles } from "../../styles/base-styles.js";
+import { theme } from "../../styles/default-theme.styles.js";
+import { styles } from "./light-editor.styles.js";
+
+import { LightResizeEvent } from "../../events/light-resize-event.js";
+
+import { dedent } from "../../../internal/dedent.js";
+import { BaseElement } from "../../../internal/base-element.js";
+import { elementsToString } from "../../../internal/elements-to-strings.js";
+import { createPrismInstance } from "../../../internal/prism-highlight.js";
+
+import LightCode from "../light-code/light-code.js";
 
 const newLineRegex = /\r\n?|\n/g;
 

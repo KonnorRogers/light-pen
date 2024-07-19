@@ -24,7 +24,7 @@ component: light-preview
     </light-preview>
 
     <script type="module">
-      import LightPreview from "./exports/light-preview.js";
+      import LightPreview from "./exports/components/light-preview/light-preview.js";
       LightPreview.define()
     &lt;/script>
   </script>
@@ -47,7 +47,7 @@ component: light-preview
     </light-preview>
 
     <script type="module">
-      import LightPreview from "light-pen/exports/light-preview.js"
+      import LightPreview from "light-pen/exports/components/light-preview/light-preview.js"
       LightPreview.define()
     </script>
   </template>
@@ -66,7 +66,7 @@ component: light-preview
     </light-preview>
 
     <script type="module">
-      import LightPreview from "<%= find_asset "../exports/light-preview.js" %>"
+      import LightPreview from "<%= find_asset "../exports/components/light-preview/light-preview.js" %>"
       LightPreview.define()
     </script>
   </template>
@@ -98,7 +98,7 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
     </light-preview>
 
     <script type="module">
-      import LightPreview from "<%= find_asset "../exports/light-preview.js" %>"
+      import LightPreview from "<%= find_asset "../exports/components/light-preview/light-preview.js" %>"
       LightPreview.define()
     </script>
   </template>
@@ -187,7 +187,7 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
     </light-preview>
 
     <script type="module">
-      import LightPreview from "<%= find_asset "../exports/light-preview.js" %>"
+      import LightPreview from "<%= find_asset "../exports/components/light-preview/light-preview.js" %>"
       LightPreview.define()
     </script>
   </template>
