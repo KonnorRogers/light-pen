@@ -73,7 +73,7 @@ export function LineHighlightWrapPlugin () {
     }
 
     if (env.type.includes("light-gutter-cell")) {
-	    env.attributes['part'] = "gutter-cell"
+      env.attributes['part'] = "gutter-cell"
 
       partTypes.forEach((type) => {
         if (!env.type.includes("gutter-cell-" + type)) return
@@ -81,6 +81,6 @@ export function LineHighlightWrapPlugin () {
 
         env.attributes["part"] += " gutter-cell-" + type
       })
-	  }
-	}
+    }
+  }
 }

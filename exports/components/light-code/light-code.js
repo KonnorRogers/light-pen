@@ -88,9 +88,8 @@ export default class LightCode extends BaseElement {
    * @override
    */
   static properties = {
-    summary: {},
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
-    preserveWhitespace: { type: Boolean, attribute: "preserveWhitespace" },
+    preserveWhitespace: { type: Boolean, attribute: "preserve-whitespace" },
     highlightLines: { attribute: "highlight-lines" },
     insertedLines: { attribute: "inserted-lines" },
     deletedLines: { attribute: "deleted-lines" },

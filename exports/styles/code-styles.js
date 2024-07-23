@@ -44,6 +44,7 @@ export const codeStyles = css`
   width: 100%;
   padding-inline-start: 6px;
   padding-inline-end: 6px;
+  min-height: 1lh;
 }
 
 [part~="line"]::before {

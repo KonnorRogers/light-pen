@@ -57,11 +57,22 @@ export class NumberRange {
 	}
 
 	/**
-	 * Given a string like this: "{1-3, 4, 5}" create a Range
-	 * @param {string} str
+	 * Given a string like this: "{1-3, 4, 5}" create a Range. Also accepts an array of numbers or a Set of numbers.
+	* @param {Set<number> | Array<number> | string} str
 	 */
 	parse (str) {
 		this.reset()
+
+		if (Array.isArray(str)) {
+			str.forEach((num) => this.numbers.add(num))
+			return this
+		}
+
+		if (str instanceof Set) {
+			this.numbers = str
+			return this
+		}
+
 
 		if (!str.includes("{")) {
 			this.errors.push(new Error("Unable to parse range. No `{` found."))

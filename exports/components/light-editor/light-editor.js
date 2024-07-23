@@ -50,7 +50,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   /**
    * @override
    * Without delegatesFocus, we get this fun message:
-   *  "The invalid form control with name=‘editor’ is not focusable."
+   *  "The invalid form control with name='editor' is not focusable."
    */
   static shadowRootOptions = {
     ...LitElement.shadowRootOptions,

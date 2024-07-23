@@ -23,6 +23,11 @@ export default function lazyLoader() {
           import("light-pen/exports/components/light-preview/light-preview-register.js")
         }
       },
+      "light-diff-viewer": {
+        register () {
+          import("light-pen/exports/components/light-diff-viewer/light-diff-viewer-register.js")
+        }
+      },
       "clipboard-copy": {
         register() {
           import("@github/clipboard-copy-element");

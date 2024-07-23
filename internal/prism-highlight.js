@@ -80,6 +80,20 @@ class PrismSingleton {
  * @param {Hooks} hooks
  */
 export function PrismHighlight(text, grammar, language, highlighter, hooks = {}) {
+	const env = PrismEnv(text, grammar, language, highlighter, hooks)
+	return Token.stringify(highlighter.util.encode(/** @type {Array<Token>} */ (env.tokens)), env.language, highlighter);
+}
+
+/**
+ * @see https://github.com/PrismJS/prism/blob/59e5a3471377057de1f401ba38337aca27b80e03/prism.js#L660
+ * A forked function from PrismJS to make wrap the tokenizer with custom functionality.
+ * @param {string} text - The code to highlight
+ * @param {import("prism-esm").Grammar} grammar - The grammar to use
+ * @param {string} language - The language to detect
+ * @param {typeof PrismSingleton["instance"]} highlighter
+ * @param {Hooks} hooks
+ */
+export function PrismEnv(text, grammar, language, highlighter, hooks = {}) {
     if (!highlighter) {
   	  highlighter = PrismSingleton.instance
     }
@@ -118,5 +132,5 @@ export function PrismHighlight(text, grammar, language, highlighter, hooks = {})
 		hook(env)
 	})
 
-	return Token.stringify(highlighter.util.encode(/** @type {Array<Token>} */ (env.tokens)), env.language, highlighter);
+	return env
 }

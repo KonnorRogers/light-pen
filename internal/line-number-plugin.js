@@ -8,6 +8,7 @@ const newLineRegex = /\r\n|\r|\n/
  * @typedef {object} Options
  * @property {boolean} [disableLineNumbers] - Toggle line numbers off.
  * @property {number} [lineNumberStart=1] - Where to start counting from. Default is 1.
+  * @property {(ary: Array<string | Token>, index: number, tokens: Array<Token>) => void} [callback] - substitute your own callback for each line.
  */
 
 /**
@@ -21,6 +22,24 @@ export function LineNumberPlugin(
   const disableLineNumbers = options.disableLineNumbers ?? false
   const lineNumberStart = options.lineNumberStart ?? 1
 
+  let callback = options.callback
+
+  if (typeof callback !== "function") {
+    callback = (ary, index, tokens) => {
+      if (ary.length <= 0) {
+        return
+      }
+
+      if (!options.disableLineNumbers) {
+        tokens.push(new Token("light-gutter-cell", (index + lineNumberStart).toString()))
+      }
+
+      tokens.push(new Token("light-line", ary))
+    }
+  }
+
+
+
   /**
    * @type {import('./prism-highlight.js').Hook}
    */
@@ -30,15 +49,7 @@ export function LineNumberPlugin(
      */
     const tokens = []
     splitLinesRec(env.tokens).forEach((ary, index) => {
-      if (ary.length <= 0) {
-        ary.push(" ")
-      }
-
-      if (options.disableLineNumbers !== true) {
-        tokens.push(new Token("light-gutter-cell", (index + lineNumberStart).toString()))
-      }
-
-      tokens.push(new Token("light-line", ary))
+      callback(ary, index, tokens)
     });
 
     env.tokens = tokens

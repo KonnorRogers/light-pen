@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@open-wc/semantic-dom-diff':
+        specifier: ^0.20.1
+        version: 0.20.1
+      diff:
+        specifier: ^5.2.0
+        version: 5.2.0
       form-associated-helpers:
         specifier: ^0.0.10
         version: 0.0.10
@@ -33,6 +39,9 @@ importers:
       '@open-wc/testing-helpers':
         specifier: ^3.0.1
         version: 3.0.1
+      '@types/diff':
+        specifier: ^5.2.1
+        version: 5.2.1
       '@types/node':
         specifier: ^20.14.8
         version: 20.14.8
@@ -348,6 +357,9 @@ packages:
 
   '@types/debounce@1.2.4':
     resolution: {integrity: sha512-jBqiORIzKDOToaF63Fm//haOCHuwQuLa2202RK4MozpA6lh93eCBc+/8+wZn5OzjJt3ySdc+74SXWXB55Ewtyw==}
+
+  '@types/diff@5.2.1':
+    resolution: {integrity: sha512-uxpcuwWJGhe2AR1g8hD9F5OYGCqjqWnBUQFD8gMZsDbv8oPHzxJF6iMO6n8Tk0AdzlxoaaoQhOYlIg/PukVU8g==}
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
@@ -2711,6 +2723,8 @@ snapshots:
   '@types/debounce@1.2.1': {}
 
   '@types/debounce@1.2.4': {}
+
+  '@types/diff@5.2.1': {}
 
   '@types/estree@1.0.5': {}
 

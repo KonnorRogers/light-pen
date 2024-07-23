@@ -19,6 +19,7 @@ import { BaseElement } from "../../../internal/base-element.js";
 import { elementsToString } from "../../../internal/elements-to-strings.js";
 import { dedent } from "../../../internal/dedent.js";
 import { createPrismInstance } from "../../../internal/prism-highlight.js";
+import { replaceLast } from "../../../internal/replace-functions.js";
 
 const sourceCodeFallback = "Show source code"
 
@@ -80,21 +81,23 @@ export default class LightPreview extends BaseElement {
     summary: {},
     sandboxSettings: { reflect: true, attribute: "sandbox-settings" },
     previewMode: { reflect: true, attribute: "preview-mode" },
-    disableHighlight: { type: Boolean, attribute: "disable-highlight" },
     open: { reflect: true, type: Boolean },
     resizePosition: { reflect: true, type: Number, attribute: "resize-position" },
     resizing: { reflect: true, type: Boolean },
-    language: { reflect: true },
-    unescapeBehavior: { attribute: "unescape-behavior", reflect: true },
-    disableLineNumbers: {type: Boolean, reflect: true, attribute: "disable-line-numbers"},
-    highlightLines: {attribute: "highlight-lines"},
-    insertedLines: {attribute: "inserted-lines"},
-    deletedLines: {attribute: "deleted-lines"},
-    lineNumberStart: {type: Number, attribute: "line-number-start"},
     scriptScope: {attribute: "script-scope"},
-    wrap: {reflect: true},
-    code: {},
     previewHtml: { attribute: "preview-html" },
+
+    // <light-code> properties
+    disableHighlight: { type: Boolean, attribute: "disable-highlight" },
+    preserveWhitespace: { type: Boolean, attribute: "preserve-whitespace" },
+    highlightLines: { attribute: "highlight-lines" },
+    insertedLines: { attribute: "inserted-lines" },
+    deletedLines: { attribute: "deleted-lines" },
+    disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
+    lineNumberStart: { type: Number, attribute: "line-number-start" },
+    wrap: { reflect: true, attribute: "wrap" },
+    language: {},
+    code: {},
     highlighter: {attribute: false, state: true},
   }
 
@@ -114,12 +117,6 @@ export default class LightPreview extends BaseElement {
     this.summary = sourceCodeFallback
 
     /**
-     * The language to highlight for.
-     * @type {string}
-     */
-    this.language = "html"
-
-    /**
      * Set to true to not use an <iframe> for previewing
      * @type {"iframe" | "shadow-dom"}
      */
@@ -132,10 +129,81 @@ export default class LightPreview extends BaseElement {
     this.resizing = false
 
     /**
+     * If `disableHighlight` is true, then you must pass in an element into `previewHtml` to be able to get
+     *   the code to run in the previewer.
+     * @type {string}
+     */
+    this.previewHtml = ""
+
+    /**
+     * Whether or not the source code is being shown
+     * @type {boolean}
+     */
+    this.open = false
+
+    /**
+     * The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
+     * @type {number}
+     */
+    this.resizePosition = 100
+
+
+    /**
+     * @internal
+     * @type {ResizeObserver}
+     */
+    this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
+
+    /**
+     * @internal
+     * @type {MutationObserverInit}
+     */
+    this.__mutationObserverConfig = {childList: true, subtree: true, characterData: true }
+
+    /**
+     * @internal
+     * @type {() => void}
+     */
+    this.previewHtmlDebounce = debounce(() => this.handleMutation("preview-html"), 20)
+
+    /**
+     * @internal
+     * @type {() => void}
+     */
+    this.codeDebounce = debounce(() => this.handleMutation("code"), 20)
+
+
+    /**
+     * When using `preview-mode="shadow-dom"`,
+     * There's a funky issue with previews where if you want the location of the shadowRoot
+     * you are, you can't get it. As a result, `<light-preview>` supports the idea of a "scriptScope"
+     * where `document` is bound to the current shadowRoot instead of the actual top level `document`
+     * For more info, check out this GitHub issue:
+     * @link {https://github.com/WICG/webcomponents/issues/717#issuecomment-1126786185}
+     *
+     * @type {"document" | "shadow-dom"}
+     */
+    this.scriptScope = "document"
+
+    // Light Code properties to forward
+
+    /**
+     * The language to highlight for.
+     * @type {string}
+     */
+    this.language = "html"
+
+    /**
+     * Preserve leading and trailing whitespace.
+     */
+    this.preserveWhitespace = false
+
+    /**
      * If disabled, its on you to provide `<pre><code></code></pre>`
      * @type {boolean}
      */
     this.disableHighlight = false
+
 
 
     /**
@@ -174,53 +242,10 @@ export default class LightPreview extends BaseElement {
 
 
     /**
-     * If `disableHighlight` is true, then you must pass in an element into `previewHtml` to be able to get
-     *   the code to run in the previewer.
-     * @type {string}
-     */
-    this.previewHtml = ""
-
-    /**
-     * Whether or not the source code is being shown
-     * @type {boolean}
-     */
-    this.open = false
-
-    /**
-     * The current position of the resizer. 100 means all the way to right. 0 means all the way to left.
-     * @type {number}
-     */
-    this.resizePosition = 100
-
-    /**
      * Points to an instance of Prism from "prism-esm" for adjusting highlighting, adding plugins, etc.
      * @type {ReturnType<typeof createPrismInstance>}
      */
     this.highlighter = createPrismInstance()
-
-    /**
-     * @internal
-     * @type {ResizeObserver}
-     */
-    this.resizeObserver = new ResizeObserver((entries) => this.handleResize(entries));
-
-    /**
-     * @internal
-     * @type {MutationObserverInit}
-     */
-    this.__mutationObserverConfig = {childList: true, subtree: true, characterData: true }
-
-    /**
-     * @internal
-     * @type {() => void}
-     */
-    this.previewHtmlDebounce = debounce(() => this.handleMutation("preview-html"), 20)
-
-    /**
-     * @internal
-     * @type {() => void}
-     */
-    this.codeDebounce = debounce(() => this.handleMutation("code"), 20)
 
     /**
      * @property
@@ -238,17 +263,6 @@ export default class LightPreview extends BaseElement {
      */
     this.unescapeBehavior = "last"
 
-    /**
-     * When using `preview-mode="shadow-dom"`,
-     * There's a funky issue with previews where if you want the location of the shadowRoot
-     * you are, you can't get it. As a result, `<light-preview>` supports the idea of a "scriptScope"
-     * where `document` is bound to the current shadowRoot instead of the actual top level `document`
-     * For more info, check out this GitHub issue:
-     * @link {https://github.com/WICG/webcomponents/issues/717#issuecomment-1126786185}
-     *
-     * @type {"document" | "shadow-dom"}
-     */
-    this.scriptScope = "document"
   }
 
   /**
@@ -570,6 +584,7 @@ export default class LightPreview extends BaseElement {
         >
           <div part="code-wrapper">
             <light-code
+              .preserveWhitespace=${this.preserveWhitespace}
               .language=${this.language}
               .code=${this.transformTags(this.code)}
               wrap=${this.wrap}
@@ -717,32 +732,3 @@ export default class LightPreview extends BaseElement {
   }
 }
 
-/**
-  * @param {string} s - The string to replace
-  * @param {number} start - The start index
-  * @param {number} end - The end index
-  * @param {string} substitute - the substituting string
-  */
-function replaceRange(s, start, end, substitute) {
-    return s.substring(0, start) + substitute + s.substring(end);
-}
-
-/**
- * @param {string} text
- * @param {RegExp} regex
- */
-function replaceLast (text, regex) {
-  const matches = [...text.matchAll(regex)]
-
-  const lastMatch = matches[matches.length - 1]
-
-  if (!lastMatch) return text
-  if (lastMatch.index == null) return text
-
-  const { index } = lastMatch
-
-  const start = index
-  const end = index + lastMatch[0].length
-  const substitution = "</" + lastMatch[1] + ">"
-  return replaceRange(text, start, end, substitution)
-}
