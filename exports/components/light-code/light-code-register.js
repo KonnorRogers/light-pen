@@ -1,5 +1,5 @@
 import LightCode from "./light-code.js";
 
-export default LightCode
+export default LightCode;
 
-LightCode.define()
+LightCode.define();

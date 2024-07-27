@@ -102,6 +102,7 @@ Inserted lines can be highlighted via `inserted-lines` attribute.
         </html>
       &lt;/script>
     </light-code>
+
   </script>
 </light-preview>
 
@@ -148,7 +149,6 @@ Deleted lines can be highlighted via `deleted-lines` attribute.
     </light-code>
   </script>
 </light-preview>
-
 
 ### Disable Line Numbers
 

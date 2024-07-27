@@ -27,4 +27,3 @@ call_to_action_items:
 <div style="display: grid; justify-content: center;">
   A collection of components that may not fit a design system, but that I wanted to build.
 </div>
-

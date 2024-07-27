@@ -1,33 +1,31 @@
-import { playwrightLauncher } from '@web/test-runner-playwright';
+import { playwrightLauncher } from "@web/test-runner-playwright";
 // import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 /** @type {import("@web/test-runner").TestRunnerConfig} */
 export default {
-  rootDir: '.',
-  files: ['./tests/**/*.test.js'], // "default" group
+  rootDir: ".",
+  files: ["./tests/**/*.test.js"], // "default" group
   concurrentBrowsers: 3,
   nodeResolve: true,
   testFramework: {
     config: {
-      ui: 'tdd',
+      ui: "tdd",
       timeout: 3000,
-      retries: 1
-    }
+      retries: 1,
+    },
   },
-  plugins: [
-
-  ],
+  plugins: [],
   browsers: [
     playwrightLauncher({
-      product: 'chromium',
+      product: "chromium",
       launchOptions: {
-        headless: !(["true", "1"].includes(process.env.DEBUG))
-      }
+        headless: !["true", "1"].includes(process.env.DEBUG),
+      },
     }),
-    playwrightLauncher({ product: 'firefox' }),
-    playwrightLauncher({ product: 'webkit' })
+    playwrightLauncher({ product: "firefox" }),
+    playwrightLauncher({ product: "webkit" }),
   ],
-  testRunnerHtml: testFramework => `
+  testRunnerHtml: (testFramework) => `
     <html lang="en-US">
       <head></head>
       <body>
@@ -38,4 +36,4 @@ export default {
       </body>
     </html>
   `,
-}
+};

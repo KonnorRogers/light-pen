@@ -4,17 +4,23 @@ import { when } from "lit/directives/when.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import { baseStyles } from "../../styles/base-styles.js";
-import { theme } from '../../styles/default-theme.styles.js'
+import { theme } from "../../styles/default-theme.styles.js";
 import { codeStyles } from "../../styles/code-styles.js";
 
-import { PrismHighlight, createPrismInstance } from '../../../internal/prism-highlight.js';
+import {
+  PrismHighlight,
+  createPrismInstance,
+} from "../../../internal/prism-highlight.js";
 import { debounce } from "../../../internal/debounce.js";
 import { BaseElement } from "../../../internal/base-element.js";
 import { elementsToString } from "../../../internal/elements-to-strings.js";
 import { dedent } from "../../../internal/dedent.js";
 import { LineNumberPlugin } from "../../../internal/line-number-plugin.js";
 import { NumberRange } from "../../../internal/number-range.js";
-import { LineHighlightPlugin, LineHighlightWrapPlugin } from "../../../internal/line-highlight-plugin.js";
+import {
+  LineHighlightPlugin,
+  LineHighlightWrapPlugin,
+} from "../../../internal/line-highlight-plugin.js";
 
 /**
  * LightCode is a minimal wrapper around Prism for displaying code highlighting
@@ -34,7 +40,7 @@ export default class LightCode extends BaseElement {
   /**
    * @override
    */
-  static baseName = "light-code"
+  static baseName = "light-code";
 
   /**
    * @override
@@ -45,21 +51,21 @@ export default class LightCode extends BaseElement {
     theme,
     css`
       :host {
-	display: grid;
+        display: grid;
       }
       [part~="base"] {
         height: 100%;
         position: relative;
         z-index: 0;
-	background: hsl(230, 1%, 98%);
-	color: hsl(230, 8%, 24%);
-	display: grid;
+        background: hsl(230, 1%, 98%);
+        color: hsl(230, 8%, 24%);
+        display: grid;
       }
 
       [part~="pre"] {
         height: 100%;
-	display: grid;
-	place-items: start;
+        display: grid;
+        place-items: start;
       }
 
       [part~="code"] {
@@ -81,8 +87,8 @@ export default class LightCode extends BaseElement {
         pointer-events: none;
         z-index: 2;
       }
-    `
-  ]
+    `,
+  ];
 
   /**
    * @override
@@ -93,29 +99,33 @@ export default class LightCode extends BaseElement {
     highlightLines: { attribute: "highlight-lines" },
     insertedLines: { attribute: "inserted-lines" },
     deletedLines: { attribute: "deleted-lines" },
-    disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
+    disableLineNumbers: {
+      type: Boolean,
+      reflect: true,
+      attribute: "disable-line-numbers",
+    },
     lineNumberStart: { type: Number, attribute: "line-number-start" },
     wrap: { reflect: true, attribute: "wrap" },
     language: {},
     code: {},
-    highlighter: {attribute: false, state: true},
-    __highlightedCode__: {attribute: false, state: true}
-  }
+    highlighter: { attribute: false, state: true },
+    __highlightedCode__: { attribute: false, state: true },
+  };
 
-  constructor () {
-    super()
+  constructor() {
+    super();
 
     /**
      * The language to highlight for.
      * @type {string}
      */
-    this.language = "html"
+    this.language = "html";
 
     /**
      * If disabled, its on you to provide `<pre><code></code></pre>`
      * @type {boolean}
      */
-    this.disableHighlight = false
+    this.disableHighlight = false;
 
     /**
      * We will take the code, wrap it in `<pre><code></code></pre>` and run it through
@@ -123,152 +133,171 @@ export default class LightCode extends BaseElement {
      * If the element has `disableHighlight`, we will not touch their code. Instead they must pass in escapedHTML.
      * @type {string}
      */
-    this.code = ""
+    this.code = "";
 
     /**
      * @internal
      * @type {MutationObserverInit}
      */
-    this.__mutationObserverConfig = {childList: true, subtree: true, characterData: true }
+    this.__mutationObserverConfig = {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    };
 
     /**
      * @internal
      * @type {() => void}
      */
-    this.codeDebounce = debounce(() => this.handleMutation("code"), 20)
+    this.codeDebounce = debounce(() => this.handleMutation("code"), 20);
 
     /**
      * @property
      * @type {"soft" | "none"}
      * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
      */
-    this.wrap = "soft"
+    this.wrap = "soft";
 
     /**
      * @property
      * @type {Boolean}
      * Whether or not to preserve white spaces from templates and attempt to dedent and chomp new lines.
      */
-    this.preserveWhitespace = false
+    this.preserveWhitespace = false;
 
     /**
      * @type {string} - A string of possible lines to highlight. Example: "{1-9, 16, 18}"
      */
-    this.highlightLines = ""
+    this.highlightLines = "";
 
     /**
      * @type {string} - A string of lines that are inserted for diffs. Example: "{1-9, 16, 18}"
      */
-    this.insertedLines = ""
+    this.insertedLines = "";
 
     /**
      * @type {string} - A string of lines that are deleted for diffs. Example: "{1-9, 16, 18}"
      */
-    this.deletedLines = ""
+    this.deletedLines = "";
 
     /**
      * @type {boolean} whether or not to disable line numbers
      */
-    this.disableLineNumbers = false
+    this.disableLineNumbers = false;
 
     /**
      * Where to start counting from indexes. Note, this is only for display purposes in the gutter.
      * @type {number}
      */
-    this.lineNumberStart = 1
+    this.lineNumberStart = 1;
 
     /**
      * Highlighter to use for highlighting code. Default is Prism.
      */
-    this.highlighter = createPrismInstance()
+    this.highlighter = createPrismInstance();
 
-    this.__resizeObserver = new ResizeObserver(() => this.__setGutterMeasurements())
+    this.__resizeObserver = new ResizeObserver(() =>
+      this.__setGutterMeasurements(),
+    );
 
-    this.__highlightedCode__ = ""
+    this.__highlightedCode__ = "";
   }
 
   /**
    * @override
    */
-  connectedCallback () {
-    super.connectedCallback()
-    this.__resizeObserver.observe(this)
+  connectedCallback() {
+    super.connectedCallback();
+    this.__resizeObserver.observe(this);
   }
 
   /**
    * @override
    */
-  disconnectedCallback () {
-    super.disconnectedCallback()
-    this.__resizeObserver.unobserve(this)
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.__resizeObserver.unobserve(this);
   }
 
   /**
    * @override
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
-  willUpdate (changedProperties) {
+  willUpdate(changedProperties) {
     if (
       changedProperties.has("highlighter") ||
       changedProperties.has("language") ||
       changedProperties.has("code")
       // We purposely don't re-highlight on line number changes for performance reasons.
     ) {
-      this.__highlightedCode__ = this.highlight(this.code)
+      this.__highlightedCode__ = this.highlight(this.code);
     }
 
-    super.willUpdate(changedProperties)
+    super.willUpdate(changedProperties);
   }
 
   /**
    * @override
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
-  updated (changedProperties) {
+  updated(changedProperties) {
     if (
-      (
-        changedProperties.has("insertedLines")
-        || changedProperties.has("deletedLines")
-        || changedProperties.has("highlightLines")
-      ) && !changedProperties.has("code")
+      (changedProperties.has("insertedLines") ||
+        changedProperties.has("deletedLines") ||
+        changedProperties.has("highlightLines")) &&
+      !changedProperties.has("code")
     ) {
-      const lines = this.shadowRoot?.querySelectorAll(".light-gutter-cell, .light-line")
+      const lines = this.shadowRoot?.querySelectorAll(
+        ".light-gutter-cell, .light-line",
+      );
 
       if (lines?.length) {
-        const highlightLinesRange = new NumberRange().parse(this.highlightLines)
-        const insertedLinesRange = new NumberRange().parse(this.insertedLines)
-        const deletedLinesRange = new NumberRange().parse(this.deletedLines)
+        const highlightLinesRange = new NumberRange().parse(
+          this.highlightLines,
+        );
+        const insertedLinesRange = new NumberRange().parse(this.insertedLines);
+        const deletedLinesRange = new NumberRange().parse(this.deletedLines);
 
         lines.forEach((el, index) => {
           // We have twice as many lines as line numbers.
-          const divisor = index % 2 === 0 ? index : index - 1
-          const lineNumber = (divisor / 2) + 1
+          const divisor = index % 2 === 0 ? index : index - 1;
+          const lineNumber = divisor / 2 + 1;
 
-          el.classList.toggle("line-highlight", highlightLinesRange.includes(lineNumber))
-          el.part.toggle("line-highlight", highlightLinesRange.includes(lineNumber))
+          el.classList.toggle(
+            "line-highlight",
+            highlightLinesRange.includes(lineNumber),
+          );
+          el.part.toggle(
+            "line-highlight",
+            highlightLinesRange.includes(lineNumber),
+          );
 
-          el.classList.toggle("inserted", insertedLinesRange.includes(lineNumber))
-          el.part.toggle("inserted", insertedLinesRange.includes(lineNumber))
+          el.classList.toggle(
+            "inserted",
+            insertedLinesRange.includes(lineNumber),
+          );
+          el.part.toggle("inserted", insertedLinesRange.includes(lineNumber));
 
-          el.classList.toggle("deleted", deletedLinesRange.includes(lineNumber))
-          el.part.toggle("deleted", deletedLinesRange.includes(lineNumber))
-
-        })
+          el.classList.toggle(
+            "deleted",
+            deletedLinesRange.includes(lineNumber),
+          );
+          el.part.toggle("deleted", deletedLinesRange.includes(lineNumber));
+        });
       }
     }
 
-    super.updated(changedProperties)
+    super.updated(changedProperties);
   }
-
 
   /**
    * @internal
    * @param {"preview-code" | "code"} variable
    */
-  handleMutation (variable) {
+  handleMutation(variable) {
     if (variable === "code") {
-      this.handleTemplate({ target: this.findSlot("code") })
-      return
+      this.handleTemplate({ target: this.findSlot("code") });
+      return;
     }
   }
 
@@ -278,37 +307,37 @@ export default class LightCode extends BaseElement {
    * @returns {HTMLSlotElement | null | undefined}
    */
   findSlot(name) {
-    return this.shadowRoot?.querySelector(`slot[name='${name}']`)
+    return this.shadowRoot?.querySelector(`slot[name='${name}']`);
   }
 
   /**
    * @internal
    * @param {Event | { target?: undefined | null | HTMLSlotElement }} e
    */
-  handleTemplate (e) {
+  handleTemplate(e) {
     /**
      * @type {HTMLSlotElement | null | undefined}
      */
     // @ts-expect-error
-    const slot = e.target
+    const slot = e.target;
 
-    if (slot == null) return
+    if (slot == null) return;
 
-    const name = slot.getAttribute("name")
+    const name = slot.getAttribute("name");
 
-    if (["preview-code", "code"].includes(name || "") === false) return
+    if (["preview-code", "code"].includes(name || "") === false) return;
 
-    let elements = slot.assignedElements({flatten: true})
+    let elements = slot.assignedElements({ flatten: true });
 
-		let code = this.unescapeTags(elementsToString(...elements))
+    let code = this.unescapeTags(elementsToString(...elements));
 
-		if (!this.preserveWhitespace) {
-    	code = dedent(code.trim())
+    if (!this.preserveWhitespace) {
+      code = dedent(code.trim());
     }
 
     if (name === "code") {
-      this.code = code
-      return
+      this.code = code;
+      return;
     }
   }
 
@@ -317,17 +346,17 @@ export default class LightCode extends BaseElement {
    * @internal
    * @param {string} text
    */
-  unescapeTags (text) {
+  unescapeTags(text) {
     // Replace usages of `&lt;/script>` with `</script>`. Match against
     // `&lt;/` so that other usages of &lt; aren't replaced.
-    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>")
+    return text.replaceAll(/&lt;\/([\w\d\.-_]+)>/g, "</$1>");
   }
 
   /**
    * @public
    * Override this function to use your own highlight function
    */
-  highlight (code = this.code) {
+  highlight(code = this.code) {
     // const newLineRegex = /\r\n|\r|\n/
     // const CELL_START = `<span class="token light-gutter-cell" part="gutter-cell">`
     // const LINE_START = `</span><span class="token light-line" part="line">`
@@ -352,60 +381,74 @@ export default class LightCode extends BaseElement {
     // }).join("\n")
 
     if (!this.highlighter) {
-      this.highlighter = createPrismInstance()
+      this.highlighter = createPrismInstance();
     }
     const afterTokenizePlugins = [
       LineNumberPlugin({
         lineNumberStart: this.lineNumberStart,
-        disableLineNumbers: this.disableLineNumbers
+        disableLineNumbers: this.disableLineNumbers,
       }),
       LineHighlightPlugin({
         insertedLinesRange: new NumberRange().parse(this.insertedLines),
         deletedLinesRange: new NumberRange().parse(this.deletedLines),
-        highlightLinesRange: new NumberRange().parse(this.highlightLines)
-      })
-    ]
+        highlightLinesRange: new NumberRange().parse(this.highlightLines),
+      }),
+    ];
 
-    this.highlighter.hooks.add("wrap", /** @type {any} */ (LineHighlightWrapPlugin()))
+    this.highlighter.hooks.add(
+      "wrap",
+      /** @type {any} */ (LineHighlightWrapPlugin()),
+    );
 
-    code = PrismHighlight(code, this.highlighter.languages[this.language], this.language, this.highlighter, {
-      afterTokenize: afterTokenizePlugins
-    })
+    code = PrismHighlight(
+      code,
+      this.highlighter.languages[this.language],
+      this.language,
+      this.highlighter,
+      {
+        afterTokenize: afterTokenizePlugins,
+      },
+    );
 
-    return code
+    return code;
   }
 
   /**
    * @internal
    */
-  __setGutterMeasurements () {
+  __setGutterMeasurements() {
     // @ts-expect-error
-    const gutterWidth = this.shadowRoot?.querySelector("[part~='gutter-cell']")?.offsetWidth
+    const gutterWidth = this.shadowRoot?.querySelector(
+      "[part~='gutter-cell']",
+    )?.offsetWidth;
 
     if (gutterWidth) {
-      this.style.setProperty("--gutter-cell-width", `${gutterWidth}px`)
+      this.style.setProperty("--gutter-cell-width", `${gutterWidth}px`);
     }
 
-    const codeEl = this.shadowRoot?.querySelector("[part~='code']")
+    const codeEl = this.shadowRoot?.querySelector("[part~='code']");
 
     if (codeEl) {
-      const { offsetHeight, clientHeight } = /** @type {HTMLElement} */ (codeEl)
-      const scrollbarHeight = offsetHeight - clientHeight
-      this.style.setProperty("--scrollbar-height", `${scrollbarHeight}px`)
+      const { offsetHeight, clientHeight } = /** @type {HTMLElement} */ (
+        codeEl
+      );
+      const scrollbarHeight = offsetHeight - clientHeight;
+      this.style.setProperty("--scrollbar-height", `${scrollbarHeight}px`);
     }
   }
 
   /**
    * @override
    */
-  render () {
-    const language = this.language
+  render() {
+    const language = this.language;
 
     const finalHTML = html`
       <div part="base">
-        ${when(!this.disableHighlight,
-          () => html`
-            <pre
+        ${when(
+          !this.disableHighlight,
+          () =>
+            html` <pre
               id="pre-${language}"
               data-code-lang=${language}
               aria-hidden="true"
@@ -419,26 +462,26 @@ export default class LightCode extends BaseElement {
                 class="language-${language}"
                 .innerHTML=${this.__highlightedCode__}
               ></code></pre>`,
-          () => html`${unsafeHTML(this.code)}`
+          () => html`${unsafeHTML(this.code)}`,
         )}
         <!-- This gutter is for showing when line numbers may not correspond to existing lines. -->
-        ${when(this.disableLineNumbers,
+        ${when(
+          this.disableLineNumbers,
           () => html``,
-          () => html`<div part="gutter"></div>`
+          () => html`<div part="gutter"></div>`,
         )}
       </div>
 
       <div hidden>
         <slot name="code" @slotchange=${this.handleTemplate}></slot>
       </div>
-    `
+    `;
 
     setTimeout(async () => {
-      await this.updateComplete
-      setTimeout(() => this.__setGutterMeasurements())
-    })
+      await this.updateComplete;
+      setTimeout(() => this.__setGutterMeasurements());
+    });
 
-    return finalHTML
+    return finalHTML;
   }
 }
-

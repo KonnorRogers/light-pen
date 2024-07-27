@@ -10,7 +10,7 @@
 }
 
 ul.side-nav__menu li::marker {
-  content: ""
+  content: "";
 }
 
 .side-nav__item {

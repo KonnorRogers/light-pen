@@ -40,7 +40,6 @@ LightPen.define("other-name")
 
 That's it!
 
-
 ### Slotting in HTML / CSS / JS
 
 ```html
@@ -93,4 +92,4 @@ More to come for more docs coming on how to change things!
 - [ ] - Add vertical resizing of `<textarea>`
 - [ ] - More documentation around customization.
 - [ ] - Add a console logger
->>>>>>> 7b592c8f5f05ed82d439d7950450eec06dc3ab66
+    > > > > > > > 7b592c8f5f05ed82d439d7950450eec06dc3ab66

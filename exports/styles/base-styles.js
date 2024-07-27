@@ -1,28 +1,30 @@
-import { css } from "lit"
+import { css } from "lit";
 
 export const baseStyles = css`
-*, *:after, *:before {
-  box-sizing: border-box;
-}
+  *,
+  *:after,
+  *:before {
+    box-sizing: border-box;
+  }
 
-.visually-hidden:not(:focus-within) {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  width: 1px;
-  height: 1px;
-  white-space: nowrap;
-}
+  .visually-hidden:not(:focus-within) {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    white-space: nowrap;
+  }
 
-[hidden] {
-  display: none !important;
-}
+  [hidden] {
+    display: none !important;
+  }
 
-:host {
-  display: block;
-}
-`
+  :host {
+    display: block;
+  }
+`;
 
 /**
  * @param {string[]} selectors
@@ -53,5 +55,4 @@ export const buttonStyles = css`
     color: hsla(203, 77%, 43%);
     background-color: hsla(203, 77%, 93%);
   }
-`
-
+`;

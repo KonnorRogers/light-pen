@@ -5,10 +5,10 @@
 /* .documentation-content {} */
 
 body:is(.index, .doc, .page, .post) kr-layout::part(main-content) {
-	background: var(--body-color);
+  background: var(--body-color);
 }
 
-kr-layout > [slot='aside'] {
+kr-layout > [slot="aside"] {
   display: none;
 }
 
@@ -50,18 +50,18 @@ kr-layout::part(main) {
 }
 
 main {
-	max-width: 100%;
-	padding: 0 var(--main-padding-x) 2rem;
-	width: 100%;
-	margin: 0 auto;
-	background-color: var(--body-color);
-	color: var(--text-color);
+  max-width: 100%;
+  padding: 0 var(--main-padding-x) 2rem;
+  width: 100%;
+  margin: 0 auto;
+  background-color: var(--body-color);
+  color: var(--text-color);
 }
 
 .documentation-content {
-	display: flex;
-	flex-direction: column;
-	min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 :is(.default, .home) main {
@@ -73,12 +73,11 @@ main {
 }
 
 :is(.doc, .index, .page, .post) main {
-	background-color: var(--body-color);
+  background-color: var(--body-color);
 }
 
-
 @media screen and (min-width: 1360px) {
-  kr-layout > [slot='aside'] {
+  kr-layout > [slot="aside"] {
     display: block;
   }
 }
@@ -94,16 +93,15 @@ main {
     border-radius: 32px;
   }
 
-	body:is(.index, .doc, .page, .post) kr-layout::part(main) {
-	  background-color: transparent;
-	  margin-inline-end: 16px;
-	  margin-inline-start: 16px;
+  body:is(.index, .doc, .page, .post) kr-layout::part(main) {
+    background-color: transparent;
+    margin-inline-end: 16px;
+    margin-inline-start: 16px;
+  }
 
-	}
-
-	body:is(.index, .doc, .page, .post) kr-layout::part(main-content) {
-		box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
-		background: var(--body-color);
-		border-radius: 32px;
-	}
+  body:is(.index, .doc, .page, .post) kr-layout::part(main-content) {
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
+    background: var(--body-color);
+    border-radius: 32px;
+  }
 }

@@ -28,6 +28,7 @@ component: light-pen
         }
       </template>
     </light-pen>
+
   </template>
 
   <template slot="css">
@@ -41,6 +42,7 @@ component: light-pen
     light-pen {
       height: 100%;
     }
+
   </template>
 
   <template slot="js">

@@ -1,4 +1,3 @@
-
 ## Next
 
 - BREAKING_CHANGE: All components are now scoped under `exports/components/<component-name>/<component-name>.js`
@@ -9,7 +8,6 @@
 - Bug Fix(light-code): Fixes wrapping in light-editor, and adjusts the `wrap` values to align with `<light-pen>` [#22](https://github.com/KonnorRogers/light-pen/pull/22)
 - Bug Fix(light-code) Line highlights now work properly when using `wrap="hard"` [#22](https://github.com/KonnorRogers/light-pen/pull/22)
 - Bug Fix(light-code): Added cursor syncing due to line numbers obstructing view of text [#22](https://github.com/KonnorRogers/light-pen/pull/22)
-
 
 ## v3.1.1 - 06/01/2024
 
@@ -74,7 +72,6 @@ Bug Fix: `<light-preview>` now correctly passes the `wrap` property down to `<li
 - Improvement: `<light-editor>`, `<light-code>`, and `<light-preview>` all use `<light-code>` internally now.
 - Improvement: Use declarative shadow DOM and fallback to polyfill in `<light-preview>`
 
-
 ## v2.3.1 - 02/13/2024
 
 - Update form associated package
@@ -112,7 +109,7 @@ Bug Fix: `<light-preview>` now correctly passes the `wrap` property down to `<li
 ## v1.1.2
 
 - Don't use `src` or `srcdoc`, return to using `iframe.contentWindow.writeln(content)` due to fixing
-some CORS bugs.
+  some CORS bugs.
 
 ## v1.1.0
 

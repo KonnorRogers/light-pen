@@ -1,5 +1,5 @@
 import LightEditor from "./light-editor.js";
 
-export default LightEditor
+export default LightEditor;
 
-LightEditor.define()
+LightEditor.define();

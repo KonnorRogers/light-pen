@@ -10,5 +10,4 @@ export const defaultSandboxSettings = `
   allow-popups
   allow-presentation
   allow-same-origin
-`
-
+`;

@@ -14,8 +14,9 @@
   font-size: 1rem;
 }
 
-.clipboard__icon--success, .clipboard__icon--idle {
-  transition: transform .2s ease-in-out;
+.clipboard__icon--success,
+.clipboard__icon--idle {
+  transition: transform 0.2s ease-in-out;
 }
 
 .clipboard .clipboard__icon--idle,
@@ -30,4 +31,3 @@
   visibility: hidden;
   transform: scale(0);
 }
-

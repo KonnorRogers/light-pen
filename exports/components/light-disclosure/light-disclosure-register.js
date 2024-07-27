@@ -1,5 +1,5 @@
 import LightDisclosure from "./light-disclosure.js";
 
-export default LightDisclosure
+export default LightDisclosure;
 
-LightDisclosure.define()
+LightDisclosure.define();

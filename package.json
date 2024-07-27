@@ -38,8 +38,8 @@
     "deploy:minor": "npm version minor && npm publish && git push --follow-tags",
     "deploy:major": "npm version major && npm publish && git push --follow-tags",
     "publish:beta": "npm publish --tag=beta && git push --follow-tags",
-    "lint": "prettier --check --ignore-path .gitignore .",
-    "fix": "prettier --write --ignore-path .gitignore .",
+    "lint": "prettier --check .",
+    "fix": "prettier --write .",
     "test": "web-test-runner",
     "test:watch": "web-test-runner --watch"
   },
@@ -75,6 +75,7 @@
     "light-pen": "link:.",
     "playwright": "^1.44.1",
     "plop": "^4.0.1",
+    "prettier": "^3.3.3",
     "rimraf": "^5.0.7",
     "typedoc": "^0.26.1",
     "typescript": "~5.5.2"

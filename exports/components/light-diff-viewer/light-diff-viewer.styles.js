@@ -1,4 +1,4 @@
-import { css } from "lit"
+import { css } from "lit";
 
 export const componentStyles = css`
   :host {
@@ -50,29 +50,37 @@ export const componentStyles = css`
     word-break: inherit;
   }
 
+  [part~="line"]::before {
+    content: " ";
+    line-height: inherit;
+    padding-inline-end: 6px;
+  }
 
-[part~="line"]::before {
-  content: " ";
-  line-height: inherit;
-  padding-inline-end: 6px;
-}
+  [part~="line"].deleted::before {
+    content: "-";
+  }
 
+  [part~="line"].inserted::before {
+    content: "+";
+  }
 
-[part~="line"].deleted::before {
-  content: "-"
-}
+  [part~="gutter-cell"] {
+    user-select: none;
+    color: rgba(0, 0, 0, 0.35);
+    background-color: var(--syntax-bg);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    z-index: 1;
+    left: 0px;
+  }
 
-[part~="line"].inserted::before {
-  content: "+"
-}
+  .light-diff-viewer--removed {
+    padding: 0.2em 0;
+    background: hsla(353, 95%, 46%, 0.15);
+  }
 
-[part~='gutter-cell'] {
-  user-select: none;
-  color: rgba(0, 0, 0, 0.35);
-  background-color: var(--syntax-bg);
-  font-variant-numeric: tabular-nums;
-  text-align: end;
-  z-index: 1;
-  left: 0px;
-}
-`
+  .light-diff-viewer--added {
+    padding: 0.2em 0;
+    background: hsla(137, 100%, 75%);
+  }
+`;

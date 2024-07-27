@@ -1,5 +1,5 @@
 import LightPen from "./light-pen.js";
 
-export default LightPen
+export default LightPen;
 
-LightPen.define()
+LightPen.define();

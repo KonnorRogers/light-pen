@@ -1,30 +1,30 @@
 // A custom Prism highlight implementation specific for adding line numbers for the editor by
 // modifying the tokenizer.
 
-import { Prism as PrismJS, Token } from "prism-esm"
+import { Prism as PrismJS, Token } from "prism-esm";
 
 // HTML
 // import { loader as markdownLoader } from "prism-esm/components/prism-markdown.js"
-import { loader as markupLoader } from "prism-esm/components/prism-markup.js"
-import { loader as markupTemplatingLoader } from "prism-esm/components/prism-markup-templating.js"
+import { loader as markupLoader } from "prism-esm/components/prism-markup.js";
+import { loader as markupTemplatingLoader } from "prism-esm/components/prism-markup-templating.js";
 
 // CSS
-import { loader as cssLoader } from "prism-esm/components/prism-css.js"
-import { loader as cssExtrasLoader } from "prism-esm/components/prism-css-extras.js"
+import { loader as cssLoader } from "prism-esm/components/prism-css.js";
+import { loader as cssExtrasLoader } from "prism-esm/components/prism-css-extras.js";
 
 // JS
-import { loader as javascriptLoader } from "prism-esm/components/prism-javascript.js"
-import { loader as javascriptExtrasLoader } from "prism-esm/components/prism-js-extras.js"
-import { loader as javascriptTemplatesLoader } from "prism-esm/components/prism-js-templates.js"
+import { loader as javascriptLoader } from "prism-esm/components/prism-javascript.js";
+import { loader as javascriptExtrasLoader } from "prism-esm/components/prism-js-extras.js";
+import { loader as javascriptTemplatesLoader } from "prism-esm/components/prism-js-templates.js";
 
 // JSX
-import { loader as jsxLoader } from "prism-esm/components/prism-jsx.js"
+import { loader as jsxLoader } from "prism-esm/components/prism-jsx.js";
 
 // TS
-import { loader as tsLoader } from "prism-esm/components/prism-typescript.js"
+import { loader as tsLoader } from "prism-esm/components/prism-typescript.js";
 
 // TSX
-import { loader as tsxLoader } from "prism-esm/components/prism-tsx.js"
+import { loader as tsxLoader } from "prism-esm/components/prism-tsx.js";
 
 /**
  * @typedef {{ code: string, grammar: import("prism-esm").Grammar, language: string } & { tokens: Array<string | Token>}} Env
@@ -43,31 +43,30 @@ import { loader as tsxLoader } from "prism-esm/components/prism-tsx.js"
  * @typedef {(env: Env) => void} Hook
  */
 
-
-export function createPrismInstance () {
-	const prism = new PrismJS()
-	markupLoader(prism)
-	markupTemplatingLoader(prism)
-	cssLoader(prism)
-	cssExtrasLoader(prism)
-	javascriptLoader(prism)
-	javascriptExtrasLoader(prism)
-	javascriptTemplatesLoader(prism)
-	jsxLoader(prism)
-	tsLoader(prism)
-	tsxLoader(prism)
-	// markdownLoader(prism)
-	return prism
+export function createPrismInstance() {
+  const prism = new PrismJS();
+  markupLoader(prism);
+  markupTemplatingLoader(prism);
+  cssLoader(prism);
+  cssExtrasLoader(prism);
+  javascriptLoader(prism);
+  javascriptExtrasLoader(prism);
+  javascriptTemplatesLoader(prism);
+  jsxLoader(prism);
+  tsLoader(prism);
+  tsxLoader(prism);
+  // markdownLoader(prism)
+  return prism;
 }
 
 class PrismSingleton {
-	static get instance () {
-		if (!this.__singleton__) {
-			this.__singleton__ = createPrismInstance()
-		}
+  static get instance() {
+    if (!this.__singleton__) {
+      this.__singleton__ = createPrismInstance();
+    }
 
-		return this.__singleton__
-	}
+    return this.__singleton__;
+  }
 }
 
 /**
@@ -79,9 +78,19 @@ class PrismSingleton {
  * @param {typeof PrismSingleton["instance"]} highlighter
  * @param {Hooks} hooks
  */
-export function PrismHighlight(text, grammar, language, highlighter, hooks = {}) {
-	const env = PrismEnv(text, grammar, language, highlighter, hooks)
-	return Token.stringify(highlighter.util.encode(/** @type {Array<Token>} */ (env.tokens)), env.language, highlighter);
+export function PrismHighlight(
+  text,
+  grammar,
+  language,
+  highlighter,
+  hooks = {},
+) {
+  const env = PrismEnv(text, grammar, language, highlighter, hooks);
+  return Token.stringify(
+    highlighter.util.encode(/** @type {Array<Token>} */ (env.tokens)),
+    env.language,
+    highlighter,
+  );
 }
 
 /**
@@ -94,43 +103,45 @@ export function PrismHighlight(text, grammar, language, highlighter, hooks = {})
  * @param {Hooks} hooks
  */
 export function PrismEnv(text, grammar, language, highlighter, hooks = {}) {
-    if (!highlighter) {
-  	  highlighter = PrismSingleton.instance
-    }
+  if (!highlighter) {
+    highlighter = PrismSingleton.instance;
+  }
 
-	if (!grammar) {
-		grammar = highlighter.languages["markup"]
-	}
+  if (!grammar) {
+    grammar = highlighter.languages["markup"];
+  }
 
   /**
    * @type {Env}
    */
-	var env = {
-		code: text,
-		grammar: grammar,
-		language: language,
-		tokens: []
-	};
+  var env = {
+    code: text,
+    grammar: grammar,
+    language: language,
+    tokens: [],
+  };
 
-	highlighter.hooks.run('before-tokenize', env);
+  highlighter.hooks.run("before-tokenize", env);
 
-	hooks.beforeTokenize?.forEach((hook) => {
-    	    hook(env)
-	})
+  hooks.beforeTokenize?.forEach((hook) => {
+    hook(env);
+  });
 
-	if (!env.grammar) {
-		throw new Error('The language "' + env.language + '" has no grammar.');
-	}
+  if (!env.grammar) {
+    throw new Error('The language "' + env.language + '" has no grammar.');
+  }
 
-    	// New tokenizer wrapping every new line
-	env.tokens = /** @type {Array<Token>} */ (highlighter.tokenize(env.code, env.grammar))
+  // New tokenizer wrapping every new line
+  env.tokens = /** @type {Array<Token>} */ (
+    highlighter.tokenize(env.code, env.grammar)
+  );
 
-	highlighter.hooks.run('after-tokenize', env);
+  highlighter.hooks.run("after-tokenize", env);
 
-	/** Make sure these run after the real after-tokenize for line number plugins. */
-	hooks.afterTokenize?.forEach((hook) => {
-		hook(env)
-	})
+  /** Make sure these run after the real after-tokenize for line number plugins. */
+  hooks.afterTokenize?.forEach((hook) => {
+    hook(env);
+  });
 
-	return env
+  return env;
 }

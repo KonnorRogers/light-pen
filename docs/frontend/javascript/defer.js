@@ -1,7 +1,8 @@
-import "../styles/defer.css"
-
-;(window.requestIdleCallback || window.setTimeout)(async () => {
-  const { BridgetownNinjaKeys } = await import("@konnorr/bridgetown-quick-search/ninja-keys.js")
+import "../styles/defer.css";
+(window.requestIdleCallback || window.setTimeout)(async () => {
+  const { BridgetownNinjaKeys } = await import(
+    "@konnorr/bridgetown-quick-search/ninja-keys.js"
+  );
 
   /** @type {import("konnors-ninja-keys").INinjaAction[]} */
   const staticData = [
@@ -11,10 +12,10 @@ import "../styles/defer.css"
       title: "Light Mode",
       section: "Theme",
       keywords: "theme",
-      handler () {
+      handler() {
         window.applyTheme("light");
-        return {keepOpen: true}
-      }
+        return { keepOpen: true };
+      },
     },
     {
       id: "theme-dark",
@@ -22,10 +23,10 @@ import "../styles/defer.css"
       title: "Dark Mode",
       section: "Theme",
       keywords: "theme",
-      handler () {
+      handler() {
         window.applyTheme("dark");
-        return {keepOpen: true}
-      }
+        return { keepOpen: true };
+      },
     },
     {
       id: "theme-system",
@@ -33,61 +34,63 @@ import "../styles/defer.css"
       title: "System",
       section: "Theme",
       keywords: "theme",
-      handler () {
+      handler() {
         window.applyTheme("system");
-        return {keepOpen: true}
-      }
+        return { keepOpen: true };
+      },
     },
-  ]
+  ];
 
-  ;(class extends BridgetownNinjaKeys {
-    constructor (...args) {
-      super(...args)
-      this.staticData = staticData
+  (class extends BridgetownNinjaKeys {
+    constructor(...args) {
+      super(...args);
+      this.staticData = staticData;
     }
 
     createData() {
-      this.results = this.showResultsForQuery(this._search || "*").reverse()
+      this.results = this.showResultsForQuery(this._search || "*").reverse();
 
       this.results.forEach((result) => {
-        result.icon = `<sl-icon name="link-45deg"></sl-icon>`
-      })
+        result.icon = `<sl-icon name="link-45deg"></sl-icon>`;
+      });
 
-      return this.staticData.concat(this.results)
+      return this.staticData.concat(this.results);
     }
 
-   transformResult (result) {
-      const action = super.transformResult(result)
+    transformResult(result) {
+      const action = super.transformResult(result);
 
-      if (!action) return
+      if (!action) return;
 
-      action.section = result.collection.name
+      action.section = result.collection.name;
 
-      return action
+      return action;
     }
 
-    open () {
+    open() {
       this.scrollTop = window.scrollY;
-      document.body.classList.add('fixed-body');
+      document.body.classList.add("fixed-body");
       // Scroll the wrapper, rather than setting an offset
       // via `top` or `transform`.
       document.body.scroll(0, this.scrollTop);
 
       this.nonModals.forEach((el) => {
-        el.setAttribute("inert", "")
-      })
-      super.open()
+        el.setAttribute("inert", "");
+      });
+      super.open();
     }
 
-    close () {
-      document.body.classList.remove('fixed-body');
+    close() {
+      document.body.classList.remove("fixed-body");
       window.scrollTo(0, this.scrollTop);
-      super.close()
-      this.nonModals.forEach((el) => el.removeAttribute("inert"))
+      super.close();
+      this.nonModals.forEach((el) => el.removeAttribute("inert"));
     }
 
-    get nonModals () {
-      return [...document.body.children].filter((el) => el.localName !== "bridgetown-ninja-keys")
+    get nonModals() {
+      return [...document.body.children].filter(
+        (el) => el.localName !== "bridgetown-ninja-keys",
+      );
     }
-  }).define("bridgetown-ninja-keys")
-})
+  }).define("bridgetown-ninja-keys");
+});

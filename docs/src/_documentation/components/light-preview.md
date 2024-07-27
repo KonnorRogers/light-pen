@@ -27,6 +27,7 @@ component: light-preview
       import LightPreview from "./exports/components/light-preview/light-preview.js";
       LightPreview.define()
     &lt;/script>
+
   </script>
 </light-preview>
 
@@ -50,6 +51,7 @@ component: light-preview
       import LightPreview from "light-pen/exports/components/light-preview/light-preview.js"
       LightPreview.define()
     </script>
+
   </template>
 
   <template slot="preview-html">
@@ -69,9 +71,9 @@ component: light-preview
       import LightPreview from "<%= find_asset "../exports/components/light-preview/light-preview.js" %>"
       LightPreview.define()
     </script>
+
   </template>
 </light-preview>
-
 
 ### Loading inside a shadow DOM
 
@@ -101,9 +103,9 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
       import LightPreview from "<%= find_asset "../exports/components/light-preview/light-preview.js" %>"
       LightPreview.define()
     </script>
+
   </template>
 </light-preview>
-
 
 ### Adding Additional buttons
 
@@ -190,10 +192,11 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
       import LightPreview from "<%= find_asset "../exports/components/light-preview/light-preview.js" %>"
       LightPreview.define()
     </script>
+
   </template>
 
-  <button slot="actions">HTML</button>
-  <button slot="actions">Codepen</button>
+<button slot="actions">HTML</button>
+<button slot="actions">Codepen</button>
 </light-preview>
 
 ### Escaping nested script tags
@@ -230,7 +233,6 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
     </light-preview>
   </script>
 </light-preview>
-
 
 If you check the source code in the above example, you'll notice a `&lt;/script>`.
 

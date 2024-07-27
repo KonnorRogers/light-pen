@@ -1,10 +1,10 @@
 // @ts-check
-import LightDiffViewer from './light-diff-viewer.js';
+import LightDiffViewer from "./light-diff-viewer.js";
 
-LightDiffViewer.define('light-diff-viewer');
+LightDiffViewer.define("light-diff-viewer");
 
 export default LightDiffViewer;
-export * from './light-diff-viewer.js';
+export * from "./light-diff-viewer.js";
 
 /**
  * @type {import("./light-diff-viewer-globals.js")}

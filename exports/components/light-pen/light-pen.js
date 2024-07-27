@@ -424,7 +424,13 @@ export default class LightPen extends BaseElement {
             </button>
 
             <div part="sandbox-iframe-wrapper">
-              <iframe part="sandbox-iframe" frameborder="0" sandbox=${ifDefined(this.sandboxSettings ? this.sandboxSettings : null)}></iframe>
+              <iframe
+                part="sandbox-iframe"
+                frameborder="0"
+                sandbox=${ifDefined(
+                  this.sandboxSettings ? this.sandboxSettings : null,
+                )}
+              ></iframe>
             </div>
           </div>
 

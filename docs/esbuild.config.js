@@ -2,19 +2,18 @@
 const { spawn } = require("child_process");
 
 // const glob = require("glob")
-const build = require("./config/esbuild.defaults.js")
+const build = require("./config/esbuild.defaults.js");
 
-const AssetMapper = require("asset-mapper-esbuild").default
+const AssetMapper = require("asset-mapper-esbuild").default;
 // Update this if you need to configure a destination folder other than `output`
-const outputFolder = "src"
-
+const outputFolder = "src";
 
 // You can customize this as you wish, perhaps to add new esbuild plugins.
 //
 // ```
 const path = require("path");
 const glob = require("glob");
-const esbuildCopy = require('esbuild-plugin-copy').default
+const esbuildCopy = require("esbuild-plugin-copy").default;
 // const esbuildOptions = {
 // }
 // ```
@@ -24,15 +23,18 @@ const esbuildCopy = require('esbuild-plugin-copy').default
 // ```
 // const esbuildOptions = { publicPath: "/my_subfolder/_bridgetown/static" }
 // ```
-const watch = process.argv.includes("--watch")
+const watch = process.argv.includes("--watch");
 
-const componentNames = glob.sync("../exports/components/*").map((name) => path.parse(name).name)
+const componentNames = glob
+  .sync("../exports/components/*")
+  .map((name) => path.parse(name).name);
 
-const components = {}
+const components = {};
 
 componentNames.forEach((name) => {
-  components[`light-pen/exports/components/${name}/${name}`] = `../exports/components/${name}/${name}.js`
-})
+  components[`light-pen/exports/components/${name}/${name}`] =
+    `../exports/components/${name}/${name}.js`;
+});
 
 const esbuildOptions = {
   target: "es2020",
@@ -42,7 +44,7 @@ const esbuildOptions = {
     ...components,
   },
   define: {
-    "process.env.BASE_PATH": `"${process.env.BASE_PATH}"`
+    "process.env.BASE_PATH": `"${process.env.BASE_PATH}"`,
   },
   publicPath: path.join(process.env.BASE_PATH, "bridgetown", "static"),
   outdir: path.join(process.cwd(), outputFolder, "bridgetown", "static"),
@@ -52,16 +54,25 @@ const esbuildOptions = {
   plugins: [
     esbuildCopy({
       assets: {
-        from: [path.resolve(__dirname, 'node_modules/@shoelace-style/shoelace/dist/assets/icons/**/*.svg')],
-        to: [path.resolve(__dirname, 'src/shoelace-assets/assets/icons')],
+        from: [
+          path.resolve(
+            __dirname,
+            "node_modules/@shoelace-style/shoelace/dist/assets/icons/**/*.svg",
+          ),
+        ],
+        to: [path.resolve(__dirname, "src/shoelace-assets/assets/icons")],
       },
-      verbose: false
+      verbose: false,
     }),
     AssetMapper({
-      manifestFile: path.join(process.cwd(), ".bridgetown-cache", "asset-mapper-manifest.json"),
+      manifestFile: path.join(
+        process.cwd(),
+        ".bridgetown-cache",
+        "asset-mapper-manifest.json",
+      ),
       // outputRoot: path.join(process.cwd(), process.env.BASE_PATH)
     }),
-  ]
-}
+  ],
+};
 
-build(outputFolder, esbuildOptions)
+build(outputFolder, esbuildOptions);

@@ -3,10 +3,9 @@
  * @param {number} curr
  * @param {number} max
  */
-export function clamp (min, curr, max) {
-  if (curr < min) return min
-  if (curr > max) return max
+export function clamp(min, curr, max) {
+  if (curr < min) return min;
+  if (curr > max) return max;
 
-  return curr
+  return curr;
 }
-

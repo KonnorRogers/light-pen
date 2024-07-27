@@ -1,5 +1,5 @@
 import LightPreview from "./light-preview.js";
 
-LightPreview.define()
+LightPreview.define();
 
-export default LightPreview
+export default LightPreview;

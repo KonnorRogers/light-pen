@@ -1,8 +1,7 @@
 ---
 title: Adding languages for highlighting
 permalink: /guides/adding-languages-for-highlighting/
-description:
-  Learning how to to extend the highlighter and add languages.
+description: Learning how to to extend the highlighter and add languages.
 ---
 
 <light-editor style="display: none;"></light-editor>
@@ -40,6 +39,7 @@ const x = 'y'
         lightEditor.setAttribute("language", "markdown")
       })()
     &lt;/script>
+
   </script>
 </light-preview>
 
@@ -49,17 +49,16 @@ Be aware that only "loaders" added to your PrismJS instance can perform syntax h
 
 For example, the default Prism instance only comes loaded with the following languages / grammars:
 
-
--	markup
--	markup-templating
--	css
--	css-extras
--	javascript
--	js-extras
--	js-templates
--	jsx
--	typescript
--	tsx
+- markup
+- markup-templating
+- css
+- css-extras
+- javascript
+- js-extras
+- js-templates
+- jsx
+- typescript
+- tsx
 
 A full list of all possible languages and grammars can be found here:
 
@@ -84,4 +83,3 @@ RubyLoader(highlighter)
 lightEditor.setAttribute("language", "markdown")
 lightEditor.requestUpdate("highlighter")
 ```
-

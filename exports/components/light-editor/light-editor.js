@@ -45,7 +45,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   /**
    * @override
    */
-  static dependencies = {"light-code": LightCode}
+  static dependencies = { "light-code": LightCode };
 
   /**
    * @override
@@ -60,11 +60,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   /**
    * @override
    */
-  static styles = [
-    baseStyles,
-    styles,
-    theme
-  ];
+  static styles = [baseStyles, styles, theme];
 
   /**
    * @override
@@ -74,7 +70,11 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     wrap: { reflect: true, state: false },
     language: { reflect: true },
     src: {},
-    disableLineNumbers: { type: Boolean, reflect: true, attribute: "disable-line-numbers" },
+    disableLineNumbers: {
+      type: Boolean,
+      reflect: true,
+      attribute: "disable-line-numbers",
+    },
     preserveWhitespace: {
       type: Boolean,
       reflect: true,
@@ -88,13 +88,13 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     currentLineNumber: {
       attribute: false,
       state: true,
-      type: Number
+      type: Number,
     },
     highlighter: {
       attribute: false,
       state: true,
-    }
-  }
+    },
+  };
 
   constructor() {
     super();
@@ -127,7 +127,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
      * Points to a remote file source that should be accessible via `fetch()`
      * @type {string | null}
      */
-    this.src = null
+    this.src = null;
 
     /**
      * @property
@@ -145,18 +145,18 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     /**
      * @type {boolean}
      */
-    this.disableLineNumbers = false
+    this.disableLineNumbers = false;
 
     /**
      * Points to an instance of Prism from "prism-esm" for adjusting highlighting, adding plugins, etc.
      * @type {ReturnType<typeof createPrismInstance>}
      */
-    this.highlighter = createPrismInstance()
+    this.highlighter = createPrismInstance();
 
     /**
      * @type {number}
      */
-    this.currentLineNumber = 1
+    this.currentLineNumber = 1;
   }
 
   /**
@@ -198,7 +198,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
 
     if (changedProperties.has("src") && this.src) {
       fetch(this.src).then(async (response) => {
-        let finalValue = await response.text()
+        let finalValue = await response.text();
 
         if (this.preserveWhitespace !== true) {
           finalValue = dedent(
@@ -206,8 +206,8 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
           ).trim();
         }
 
-        return finalValue
-      })
+        return finalValue;
+      });
     }
 
     super.willUpdate(changedProperties);
@@ -239,16 +239,18 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   /**
    * @internal
    */
-  __setGutterWidth () {
+  __setGutterWidth() {
     // @ts-expect-error
-    const gutterWidth = this.shadowRoot?.querySelector("light-code")?.shadowRoot?.querySelector("[part~='gutter']")?.offsetWidth
+    const gutterWidth = this.shadowRoot
+      ?.querySelector("light-code")
+      ?.shadowRoot?.querySelector("[part~='gutter']")?.offsetWidth;
 
     if (gutterWidth) {
-      this.style.setProperty("--gutter-width", `${gutterWidth}px`)
-      return
+      this.style.setProperty("--gutter-width", `${gutterWidth}px`);
+      return;
     }
 
-    this.style.removeProperty("--gutter-width")
+    this.style.removeProperty("--gutter-width");
   }
 
   /**
@@ -259,9 +261,9 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     this.syncScroll();
 
     setTimeout(async () => {
-      await this.updateComplete
-      this.__setGutterWidth()
-    })
+      await this.updateComplete;
+      this.__setGutterWidth();
+    });
 
     return html`
       <div part="base">
@@ -277,7 +279,8 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
               left: 0;
               pointer-events: none;
               visibility: hidden;
-            "><code part="code"><span id="before-caret"></span><span id="caret">.</span><span id="after-caret">.</span></code></pre>
+            "
+          ><code part="code"><span id="before-caret"></span><span id="caret">.</span><span id="after-caret">.</span></code></pre>
 
           <light-code
             tabindex="-1"
@@ -301,7 +304,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             }}
           ></light-code>
 
-
           <!-- IMPORTANT! There must be no white-space above. -->
           <textarea
             id="textarea-${language}"
@@ -322,7 +324,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             @keyup=${this.keyupHandler}
             @keydown=${this.keydownHandler}
             @focus=${() => {
-              this.hasFocused = true
+              this.hasFocused = true;
               this.syncScroll();
               this.setCurrentLineHighlight();
               this.dispatchEvent(
@@ -447,14 +449,14 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
 
     if (textarea == null) return;
 
-    const lightCode = this.shadowRoot?.querySelector("light-code")
-    const code = lightCode?.shadowRoot?.querySelector("code")
+    const lightCode = this.shadowRoot?.querySelector("light-code");
+    const code = lightCode?.shadowRoot?.querySelector("code");
 
     if (syncCaret) {
-      const { top, left } = this.getCaretPosition()
+      const { top, left } = this.getCaretPosition();
       // textarea.scrollTop = top
       if (left < 60) {
-        textarea.scrollLeft = Math.min(left, textarea.scrollLeft)
+        textarea.scrollLeft = Math.min(left, textarea.scrollLeft);
       }
     }
 
@@ -465,7 +467,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     if (code) {
       code.scrollLeft = textarea.scrollLeft;
     }
-
   }
 
   /**
@@ -539,10 +540,10 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     this.setCurrentLineHighlight();
     // setTimeout is needed for Safari which appears to be "slow" to update selection APIs.
     setTimeout(() => this.setCurrentLineHighlight());
-    this.syncScroll()
+    this.syncScroll();
 
     if (evt.key.startsWith("Arrow") || evt.key === "Backspace") {
-      this.syncScroll(true)
+      this.syncScroll(true);
     }
 
     // Let's not trap focus. For now.
@@ -554,36 +555,51 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     // }
   }
 
-  getCaretPosition () {
-      /* Inspired by https://github.com/component/textarea-caret-position */
-      const beforeCaret = this.shadowRoot?.getElementById("before-caret")
-      const afterCaret = this.shadowRoot?.getElementById("after-caret")
-      const caret = this.shadowRoot?.getElementById("caret")
-      const textarea = this.textarea
+  getCaretPosition() {
+    /* Inspired by https://github.com/component/textarea-caret-position */
+    const beforeCaret = this.shadowRoot?.getElementById("before-caret");
+    const afterCaret = this.shadowRoot?.getElementById("after-caret");
+    const caret = this.shadowRoot?.getElementById("caret");
+    const textarea = this.textarea;
 
-      const fallback = { top: 0, left: 0 }
+    const fallback = { top: 0, left: 0 };
 
-      if (!beforeCaret) { return fallback }
-      if (!afterCaret) { return fallback }
-      if (!caret) { return fallback }
-      if (!textarea) { return fallback }
+    if (!beforeCaret) {
+      return fallback;
+    }
+    if (!afterCaret) {
+      return fallback;
+    }
+    if (!caret) {
+      return fallback;
+    }
+    if (!textarea) {
+      return fallback;
+    }
 
-      if (textarea.selectionStart !== textarea.selectionEnd) { return fallback }
+    if (textarea.selectionStart !== textarea.selectionEnd) {
+      return fallback;
+    }
 
-      beforeCaret.textContent = ""
+    beforeCaret.textContent = "";
 
-      const textLines = this.getLinesToSelectionStart()
+    const textLines = this.getLinesToSelectionStart();
 
-      if (!textLines) { return fallback }
+    if (!textLines) {
+      return fallback;
+    }
 
-      const currentLineNumber = textLines.length - 1;
-      const beforeCaretText = textLines[currentLineNumber].substring(0, textarea.selectionStart)
-      beforeCaret.textContent = beforeCaretText
+    const currentLineNumber = textLines.length - 1;
+    const beforeCaretText = textLines[currentLineNumber].substring(
+      0,
+      textarea.selectionStart,
+    );
+    beforeCaret.textContent = beforeCaretText;
 
-      return {
-        top: afterCaret.offsetTop - textarea.scrollTop,
-        left: afterCaret.offsetLeft - textarea.scrollLeft
-      };
+    return {
+      top: afterCaret.offsetTop - textarea.scrollTop,
+      left: afterCaret.offsetLeft - textarea.scrollLeft,
+    };
   }
 
   setCurrentLineHighlight() {
@@ -594,7 +610,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     }
   }
 
-  getLinesToSelectionStart () {
+  getLinesToSelectionStart() {
     const textArea = this.textarea;
 
     if (!textArea) return;
@@ -603,13 +619,15 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
       .substr(0, textArea.selectionStart)
       .split(newLineRegex);
 
-    return textLines
+    return textLines;
   }
 
   getCurrentLineNumber() {
-    const textLines = this.getLinesToSelectionStart()
+    const textLines = this.getLinesToSelectionStart();
 
-    if (!textLines) { return 0 }
+    if (!textLines) {
+      return 0;
+    }
 
     const currentLineNumber = textLines.length - 1;
     // const currentColumnIndex = textLines[textLines.length-1].length;

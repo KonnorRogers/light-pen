@@ -1,9 +1,9 @@
-import type LightDiffViewer from "./light-diff-viewer.js"
+import type LightDiffViewer from "./light-diff-viewer.js";
 
 declare global {
   interface HTMLElementTagNameMap {
-    'light-diff-viewer': LightDiffViewer
+    "light-diff-viewer": LightDiffViewer;
   }
 }
 
-export {}
+export {};

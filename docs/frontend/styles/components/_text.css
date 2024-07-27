@@ -2,7 +2,9 @@
   color: var(--text-color-primary);
   font-size: var(--sl-font-size-x-large);
   padding-bottom: var(--sl-spacing-x-small);
-  margin-bottom: calc(var(--sl-spacing-x-small) - (var(--sl-spacing-x-small) * 2));
+  margin-bottom: calc(
+    var(--sl-spacing-x-small) - (var(--sl-spacing-x-small) * 2)
+  );
   margin-inline-start: var(--sl-spacing-2x-small);
 }
 

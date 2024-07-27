@@ -30,7 +30,13 @@
   color: var(--sl-color-neutral-700);
 }
 
-:is(.language-bash, .language-shell, .language-zsh, .language-sh).highlighter-rouge pre.highlight::before {
+:is(
+    .language-bash,
+    .language-shell,
+    .language-zsh,
+    .language-sh
+  ).highlighter-rouge
+  pre.highlight::before {
   content: "$";
   user-select: none;
   /* vertical-align: -2px; */

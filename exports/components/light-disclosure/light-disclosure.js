@@ -1,9 +1,14 @@
-import { html, css } from "lit"
-import { baseStyles } from "../../styles/base-styles.js"
-import { BaseElement } from "../../../internal/base-element.js"
+import { html, css } from "lit";
+import { baseStyles } from "../../styles/base-styles.js";
+import { BaseElement } from "../../../internal/base-element.js";
 
-function motionReduced () {
-  return /** @type {any} */ (window.matchMedia(`(prefers-reduced-motion: reduce)`)) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
+function motionReduced() {
+  return (
+    /** @type {any} */ (
+      window.matchMedia(`(prefers-reduced-motion: reduce)`)
+    ) === true ||
+    window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true
+  );
 }
 
 /**
@@ -18,7 +23,7 @@ export default class LightDisclosure extends BaseElement {
   /**
    * @override
    */
-  static baseName = "light-disclosure"
+  static baseName = "light-disclosure";
 
   /**
    * @override
@@ -46,7 +51,7 @@ export default class LightDisclosure extends BaseElement {
       }
 
       summary:hover {
-        background-color: rgba(0,0,0,0.05);
+        background-color: rgba(0, 0, 0, 0.05);
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -57,35 +62,35 @@ export default class LightDisclosure extends BaseElement {
           grid-template-rows: 1fr;
         }
       }
-    `
-  ]
+    `,
+  ];
 
   /**
    * @override
    */
   static properties = {
     summary: {},
-    open: { type: Boolean }
-  }
+    open: { type: Boolean },
+  };
 
-  constructor () {
-    super()
+  constructor() {
+    super();
     /**
      * @type {string}
      */
-    this.summary = ""
+    this.summary = "";
 
     /**
      * @type {boolean}
      */
-    this.open = false
+    this.open = false;
 
     /**
      * @internal
      * This is used because Safari has strange timing on the "toggle" event. If we don't use this,
      *   our initial opening of the disclosure gets clipped and is like a normal `<details>`
      */
-    this._openOnToggle = true
+    this._openOnToggle = true;
   }
 
   // TODO: Add a mutationObserver for when it connects
@@ -94,37 +99,37 @@ export default class LightDisclosure extends BaseElement {
    * @override
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
-  willUpdate (changedProperties) {
-    const details = this.details
+  willUpdate(changedProperties) {
+    const details = this.details;
 
     if (details && changedProperties.has("open")) {
       if (!this.open) {
         if (details.hasAttribute("expanded")) {
-          details.removeAttribute("expanded")
+          details.removeAttribute("expanded");
         } else {
-          details.open = this.open
+          details.open = this.open;
         }
 
         // "transitionend" will fire and set "open" on the details element accordingly.
         // If motion is reduced, our transition will never fire. so we need to set "open" on the <details> here.
         if (motionReduced()) {
-          details.open = this.open
+          details.open = this.open;
         }
 
-        this.dispatchEvent(new Event("light-toggle"))
+        this.dispatchEvent(new Event("light-toggle"));
       } else {
-        details.open = this.open
+        details.open = this.open;
 
-        this._openOnToggle = false
+        this._openOnToggle = false;
 
         // If you only wait 1 animation frame, we get clipped by `display: none;`
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            details.setAttribute("expanded", "")
-            this._openOnToggle = true
-            this.dispatchEvent(new Event("light-toggle"))
-          })
-        })
+            details.setAttribute("expanded", "");
+            this._openOnToggle = true;
+            this.dispatchEvent(new Event("light-toggle"));
+          });
+        });
       }
     }
   }
@@ -132,22 +137,22 @@ export default class LightDisclosure extends BaseElement {
   /**
    * @override
    */
-  click () {
-    this.open = !this.open
+  click() {
+    this.open = !this.open;
   }
 
   /**
    * @override
    * @param {FocusOptions} [options]
    */
-  focus (options) {
-    this.shadowRoot?.querySelector("summary")?.focus(options)
+  focus(options) {
+    this.shadowRoot?.querySelector("summary")?.focus(options);
   }
 
   /**
    * @override
    */
-  render () {
+  render() {
     return html`
       <details
         part="details"
@@ -164,28 +169,28 @@ export default class LightDisclosure extends BaseElement {
           </div>
         </div>
       </details>
-    `
+    `;
   }
 
-  get details () {
-    return this.shadowRoot?.querySelector("details")
+  get details() {
+    return this.shadowRoot?.querySelector("details");
   }
 
   /**
    * @param {TransitionEvent} e
    */
-  handleTransitionEnd (e) {
-    const details = this.details
+  handleTransitionEnd(e) {
+    const details = this.details;
 
-    if (!details) return
-    if (!(e.propertyName === "grid-template-rows")) return
+    if (!details) return;
+    if (!(e.propertyName === "grid-template-rows")) return;
 
     if (details.open === true) {
-      if (!(details.hasAttribute("expanded"))) {
-        details.open = false
+      if (!details.hasAttribute("expanded")) {
+        details.open = false;
       }
     } else {
-      details.open = true
+      details.open = true;
     }
   }
 
@@ -193,32 +198,36 @@ export default class LightDisclosure extends BaseElement {
    * Toggle fires after the attribute is set / unset, so its useless for expanded. But useful for when users search a page with "ctrl+f"
    * @param {Event} _e
    */
-  handleToggle (_e) {
-    const details = this.details
+  handleToggle(_e) {
+    const details = this.details;
 
-    if (!details) return
+    if (!details) return;
 
-    if (details.open && !(details.hasAttribute("expanded")) && this._openOnToggle) {
-      this.open = details.open
-      this.dispatchEvent(new Event("light-toggle"))
-      details.setAttribute("expanded", "")
+    if (
+      details.open &&
+      !details.hasAttribute("expanded") &&
+      this._openOnToggle
+    ) {
+      this.open = details.open;
+      this.dispatchEvent(new Event("light-toggle"));
+      details.setAttribute("expanded", "");
     }
   }
 
   /**
    * @param {Event} e
    */
-  handleSummaryClick (e) {
-    const details = this.details
-    if (!details) return
+  handleSummaryClick(e) {
+    const details = this.details;
+    if (!details) return;
 
-    e.preventDefault()
+    e.preventDefault();
 
     if (details.open) {
-      this.open = false
-      return false
+      this.open = false;
+      return false;
     }
 
-    this.open = true
+    this.open = true;
   }
 }
