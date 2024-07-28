@@ -40,6 +40,7 @@
     "publish:beta": "npm publish --tag=beta && git push --follow-tags",
     "lint": "prettier --check .",
     "fix": "prettier --write .",
+    "verify": "npm run lint && npm run build && npm run test",
     "test": "web-test-runner",
     "test:watch": "web-test-runner --watch"
   },

@@ -417,9 +417,8 @@ export default class LightCode extends BaseElement {
    * @internal
    */
   __setGutterMeasurements() {
-    // @ts-expect-error
-    const gutterWidth = this.shadowRoot?.querySelector(
-      "[part~='gutter-cell']",
+    const gutterWidth = /** @type {null | undefined | HTMLElement} */ (
+      this.shadowRoot?.querySelector("[part~='gutter-cell']")
     )?.offsetWidth;
 
     if (gutterWidth) {

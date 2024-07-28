@@ -2,3 +2,4 @@ scripts/
 docs/output/
 docs/bridgetown/
 docs/src/bridgetown/static
+docs/.bridgetown-cache

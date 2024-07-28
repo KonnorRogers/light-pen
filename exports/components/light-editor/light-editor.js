@@ -240,10 +240,11 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    * @internal
    */
   __setGutterWidth() {
-    // @ts-expect-error
-    const gutterWidth = this.shadowRoot
-      ?.querySelector("light-code")
-      ?.shadowRoot?.querySelector("[part~='gutter']")?.offsetWidth;
+    const gutterWidth = /** @type {undefined | null | HTMLElement} */ (
+      this.shadowRoot
+        ?.querySelector("light-code")
+        ?.shadowRoot?.querySelector("[part~='gutter']")
+    )?.offsetWidth;
 
     if (gutterWidth) {
       this.style.setProperty("--gutter-width", `${gutterWidth}px`);
@@ -616,7 +617,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     if (!textArea) return;
 
     const textLines = textArea.value
-      .substr(0, textArea.selectionStart)
+      .substring(0, textArea.selectionStart)
       .split(newLineRegex);
 
     return textLines;
