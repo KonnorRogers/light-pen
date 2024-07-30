@@ -10,15 +10,6 @@ export const componentStyles = css`
     max-width: 100%;
   }
 
-  light-code {
-    border: 1px solid lightgray;
-    min-height: 15em;
-  }
-
-  span {
-    white-space: inherit;
-  }
-
   table {
     border-collapse: collapse;
   }
@@ -31,11 +22,12 @@ export const componentStyles = css`
     vertical-align: top;
     border-inline-end: 1px solid gray;
     word-break: normal;
-    padding: 2px 16px;
+    padding: 2px 8px;
   }
 
   table {
     border: 1px solid gray;
+    width: 100%;
   }
 
   [part~="line"] {
@@ -43,6 +35,7 @@ export const componentStyles = css`
     padding-inline-start: 4px;
   }
 
+  [part~="marker"],
   [part~="gutter-cell"],
   [part~="line"] {
     min-height: 1lh;
@@ -50,25 +43,30 @@ export const componentStyles = css`
     word-break: inherit;
   }
 
-  [part~="line"]::before {
+  [part~="marker"] {
+    padding-inline-start: 4px;
+    text-align: center;
+    user-select: none;
+    font-variant-numeric: tabular-nums;
+  }
+
+  [part~="marker"]::after {
     content: " ";
-    line-height: inherit;
-    padding-inline-end: 6px;
   }
 
-  [part~="line"].deleted::before {
-    content: "-";
+  [part~="marker"][part~="marker-deleted"]::after {
+    content: "-"
   }
 
-  [part~="line"].inserted::before {
+  [part~="marker"][part~="marker-inserted"]::after {
     content: "+";
   }
 
   [part~="gutter-cell"] {
     user-select: none;
+    font-variant-numeric: tabular-nums;
     color: rgba(0, 0, 0, 0.35);
     background-color: var(--syntax-bg);
-    font-variant-numeric: tabular-nums;
     text-align: end;
     z-index: 1;
     left: 0px;

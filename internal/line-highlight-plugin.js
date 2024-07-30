@@ -55,32 +55,31 @@ export function LineHighlightPlugin(options) {
  *   prism.hooks.add("wrap", LineHighlightWrapPlugin)
  */
 export function LineHighlightWrapPlugin() {
+  const partTypes = ["inserted", "line-highlight", "deleted"];
+
+  /**
+   * @param {{ type: string, attributes: Record<string, string> }} token
+   * @param {string} tokenName - Name of token to find
+   * @param {string} partName - Name of part to add
+   */
+  function addParts (token, tokenName, partName) {
+    if (token.type.includes(tokenName)) {
+      token.attributes["part"] = partName;
+
+      partTypes.forEach((type) => {
+        if (!token.type.includes(type)) return;
+        if (type === "line-highlight") type = "highlight";
+
+        token.attributes["part"] += ` ${partName}-${type}`;
+      });
+    }
+  }
   /**
    * @param {WrapEnv} env
    */
   return function (env) {
-    const partTypes = ["inserted", "line-highlight", "deleted"];
-
-    if (env.type.includes("light-line")) {
-      env.attributes["part"] = "line";
-
-      partTypes.forEach((type) => {
-        if (!env.type.includes(type)) return;
-        if (type === "line-highlight") type = "highlight";
-
-        env.attributes["part"] += " line-" + type;
-      });
-    }
-
-    if (env.type.includes("light-gutter-cell")) {
-      env.attributes["part"] = "gutter-cell";
-
-      partTypes.forEach((type) => {
-        if (!env.type.includes("gutter-cell-" + type)) return;
-        if (type === "line-highlight") type = "highlight";
-
-        env.attributes["part"] += " gutter-cell-" + type;
-      });
-    }
+    addParts(env, "light-line", "line")
+    addParts(env, "light-gutter-cell", "gutter-cell")
+    addParts(env, "light-marker", "marker")
   };
 }

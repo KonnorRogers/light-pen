@@ -162,6 +162,7 @@ const computeDiff = (oldValue, newValue, compareMethod = DiffMethod.CHARS) => {
       return diffInformation;
     },
   );
+
   return computedDiff;
 };
 

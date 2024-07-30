@@ -105,8 +105,8 @@ export default class LightDiffViewer extends BaseElement {
    */
   static properties = /** @type {const} */ ({
     view: {},
-    new: {},
-    old: {},
+    newValue: {},
+    oldValue: {},
 
     // <light-code> properties
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
@@ -129,20 +129,15 @@ export default class LightDiffViewer extends BaseElement {
   constructor() {
     super();
 
-    this.new = `
-      const y = "Hello Moto"
-      console.log(y)
-    `;
+    this.newValue = "";
 
-    this.old = `
-      const y = "Hello World"
-    `;
+    this.oldValue = "";
 
     /**
-     * Side by side is for a typical GitHub like view. "3-way" will show the "old" on the left, the "merged" diff in the middle, and the "new" on the right.
-     * @type {"side-by-side" | "3-way"}
+     * Side by side comparison of the diff
+     * @type {"split"}
      */
-    this.view = "side-by-side";
+    this.view = "split";
 
     // Light Code properties to forward
 
@@ -228,7 +223,7 @@ export default class LightDiffViewer extends BaseElement {
    * @override
    */
   render() {
-    const computedLines = computeLineInformation(this.old, this.new);
+    const computedLines = computeLineInformation(this.oldValue, this.newValue);
 
     return html`
       <div part="base">
@@ -290,18 +285,25 @@ export default class LightDiffViewer extends BaseElement {
    * @returns {LineDiffData}
    */
   toWordData(diffInfo, diffInfoLine, index) {
-    return {
-      length: /** @type {string} */ (diffInfoLine.value).length,
-      type: diffInfoLine.type || /** @type {"empty"} */ ("empty"),
-      offset:
-        /** @type {import("./compute-line-info.js").DiffInformation[]} */ (
+    const offsetValue = /** @type {import("./compute-line-info.js").DiffInformation[]} */ (
           diffInfo.value
         )
           .slice(0, index)
-          .map((obj) => obj.value)
-          .join("").length,
-      // y: diffInfo.lineNumber,
-      // value: diffInfoLine.value,
+          .map((obj) => obj.value || "")
+          .join("") || ""
+
+    const value = /** @type {import("./compute-line-info.js").DiffInformation[]} */ (
+          diffInfo.value
+        )
+          .map((obj) => obj.value || "")
+          .join("") || ""
+
+    return {
+      length: /** @type {string} */ (diffInfoLine.value).length,
+      type: diffInfoLine.type || /** @type {"empty"} */ ("empty"),
+      offset: offsetValue.length,
+      offsetValue,
+      value,
     };
   }
 
@@ -326,7 +328,10 @@ export default class LightDiffViewer extends BaseElement {
 
           /** @type {import("prism-esm/prism-core.js").TokenStream} */ (
             row.content
-          ).push(new CustomToken("light-line", ""));
+          ).push(
+            new CustomToken("light-marker", ""),
+            new CustomToken("light-line", " ")
+          );
           return;
         }
 
@@ -344,13 +349,20 @@ export default class LightDiffViewer extends BaseElement {
           }
         }
 
-        const token = new CustomToken("light-line", ary);
-        // Add line numbers so we can easily add diffs.
-        token.lineNumber = tokensIndex + this.lineNumberStart;
+        const lineTokens = [
+          new CustomToken("light-marker", ""),
+          new CustomToken("light-line", ary),
+        ]
 
-        if (Array.isArray(row.content)) {
-          row.content.push(token);
-        }
+        // Add line numbers so we can easily add diffs.
+        lineTokens.forEach((token) => {
+          token.lineNumber = tokensIndex + this.lineNumberStart;
+
+          if (Array.isArray(row.content)) {
+            row.content.push(token);
+          }
+        })
+
       },
     });
   }
@@ -360,32 +372,32 @@ export default class LightDiffViewer extends BaseElement {
    */
   syntaxHighlight(lineInfo) {
     const leftObj = {
-      value:
-        /** @type {import("./compute-line-info.js").DiffInformation["value"]}  */ ([]),
+      value: /** @type {import("./compute-line-info.js").DiffInformation["value"]}  */ ([]),
       insertedLines: new Set(),
       deletedLines: new Set(),
     };
 
     const rightObj = {
-      value:
-        /** @type {import("./compute-line-info.js").DiffInformation["value"]}  */ ([]),
+      value: /** @type {import("./compute-line-info.js").DiffInformation["value"]}  */ ([]),
       insertedLines: new Set(),
       deletedLines: new Set(),
     };
 
     lineInfo.forEach((line) => {
-      const leftLineInfo = line.left.value;
+      const leftLineInfo = /** @type {string} */ (line.left.value);
       if (line.left.type === "removed") {
         leftObj.deletedLines.add(line.left.lineNumber);
       }
-      leftObj.value = leftLineInfo;
 
-      const rightLineInfo = line.right.value;
+      ;/** @type {string[]} */ (leftObj.value).push(leftLineInfo);
+
+      const rightLineInfo = /** @type {string} */ (line.right.value);
 
       if (line.right.type === "added") {
         rightObj.insertedLines.add(line.right.lineNumber);
       }
-      rightObj.value = rightLineInfo;
+
+      ;/** @type {string[]} */ (rightObj.value).push(rightLineInfo);
     });
 
     if (!this.highlighter) {
@@ -395,12 +407,14 @@ export default class LightDiffViewer extends BaseElement {
     this.highlighter.hooks.add(
       "wrap",
       /** @param {any} env */ function (env) {
-        if (env.type.includes("light-line")) {
-          env.tag = "td";
-        }
+        const cells = [
+          "light-line",
+          "light-marker",
+          "light-gutter-cell",
+        ]
 
-        if (env.type.includes("light-gutter-cell")) {
-          env.tag = "td";
+        if (cells.some((str) => env.type.match(str))) {
+          env.tag = "td"
         }
       },
     );
@@ -435,7 +449,7 @@ export default class LightDiffViewer extends BaseElement {
     );
 
     leftEnv.tokens.forEach((token, index) => {
-      const { data } = lineInfo[index].left;
+      const data = lineInfo[index]?.left?.data;
 
       if (typeof token === "string") {
         return;
@@ -458,7 +472,7 @@ export default class LightDiffViewer extends BaseElement {
     });
 
     const rightEnv = PrismEnv(
-      /** @type {string[]} */ (leftObj.value).join("\n"),
+      /** @type {string[]} */ (rightObj.value).join("\n"),
       this.highlighter.languages[this.language],
       this.language,
       this.highlighter,
@@ -483,7 +497,7 @@ export default class LightDiffViewer extends BaseElement {
     );
 
     rightEnv.tokens.forEach((token, index) => {
-      const { data } = lineInfo[index].right;
+      const data = lineInfo[index]?.right?.data;
 
       if (typeof token === "string") {
         return;
@@ -599,11 +613,17 @@ export default class LightDiffViewer extends BaseElement {
   /**
    * @param {import("prism-esm/prism-core.js").TokenStreamItem} token
    * @param {LineDiffData} data
-   * @param {{ offset: number, count: number }} [currentData={offset: 0, count: 0}] - The current number of characters modified. Once this reaches data.length, terminates.
+   * @param {{ offset: number, count: number, value: string, offsetValue: string }} [currentData={offset: 0, count: 0, value: "", offsetValue: ""}] - The current number of characters modified. Once this reaches data.length, terminates.
    */
-  modifyToken(token, data, currentData = { offset: 0, count: 0 }) {
-    // if (currentData.count >= data.length) { return }
-    if (token.type.includes("light-gutter-cell")) {
+  modifyToken(token, data, currentData = { offset: 0, count: 0, value: "", offsetValue: "" }) {
+    if (currentData.count >= data.length) { return }
+
+    const skippedTokens = [
+      "light-gutter-cell",
+      "light-marker"
+    ]
+
+    if (skippedTokens.some((tokenType) => token.type.match(tokenType))) {
       return;
     }
 
@@ -657,10 +677,14 @@ export default class LightDiffViewer extends BaseElement {
     }
 
     if (index != null && token.touchedIndexes.has(index)) {
+      currentData.offset += content.length;
+      currentData.offsetValue += content
       return;
     }
 
     if (index == null && token.touched) {
+      currentData.offset += content.length;
+      currentData.offsetValue += content
       return;
     }
 
@@ -677,11 +701,13 @@ export default class LightDiffViewer extends BaseElement {
 
     if (offsetStart > data.offset + data.length) {
       currentData.offset += content.length;
+      currentData.offsetValue += content
       return;
     }
 
     if (offsetEnd < data.offset) {
       currentData.offset += content.length;
+      currentData.offsetValue += content
       return;
     }
 
@@ -694,7 +720,8 @@ export default class LightDiffViewer extends BaseElement {
     const afterContent = content.substring(localOffset + currentContent.length);
     currentData.value += currentContent;
 
-    currentData.offset += content.length;
+    currentData.offset += content.length
+    currentData.offsetValue += content
 
     if (index != null) {
       token.touchedIndexes.add(index + 1);
