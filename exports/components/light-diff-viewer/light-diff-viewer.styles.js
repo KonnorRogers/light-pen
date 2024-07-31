@@ -72,12 +72,12 @@ export const componentStyles = css`
     left: 0px;
   }
 
-  .light-diff-viewer--removed {
+  [part~="character-diff"][part~="character-diff--removed"] {
     padding: 0.2em 0;
     background: hsla(353, 95%, 46%, 0.15);
   }
 
-  .light-diff-viewer--added {
+  [part~="character-diff"][part~="character-diff--added"] {
     padding: 0.2em 0;
     background: hsla(137, 100%, 75%);
   }

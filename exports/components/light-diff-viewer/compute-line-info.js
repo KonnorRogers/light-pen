@@ -189,8 +189,8 @@ const computeLineInformation = (
   linesOffset = 0,
 ) => {
   const diffArray = diff.diffLines(
-    oldString.trimStart(),
-    newString.trimStart(),
+    oldString.trimEnd(),
+    newString.trimEnd(),
     {
       newlineIsToken: true,
       ignoreWhitespace: false,

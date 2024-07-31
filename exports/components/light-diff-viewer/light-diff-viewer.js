@@ -416,6 +416,14 @@ export default class LightDiffViewer extends BaseElement {
         if (cells.some((str) => env.type.match(str))) {
           env.tag = "td"
         }
+
+        // Add wrap for `light-character-diff--${"removed" | "added"}`
+
+        if (env.type.startsWith("light-character-diff")) {
+          const [base, diffType] = env.type.replace(/^light-/, "").split(/--/)
+          // part="character-diff character-diff--{removed|added}"
+          env.attributes["part"] = `${base} ${base}--${diffType}`
+        }
       },
     );
     this.highlighter.hooks.add(
@@ -729,9 +737,10 @@ export default class LightDiffViewer extends BaseElement {
     }
 
     const newToken = new Token(
-      `light-diff-viewer--${data.type}`,
+      `light-character-diff--${data.type}`,
       currentContent,
     );
+
     /** @type {Token & { touched: boolean }} */ (newToken).touched = true;
     const newContent = [beforeContent, newToken, afterContent];
 
