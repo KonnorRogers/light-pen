@@ -68,6 +68,7 @@ export const previewStyles = css`
     align-items: center;
     grid-auto-flow: column;
     grid-template-columns: minmax(0, 1fr) repeat(auto-fill, minmax(0, auto));
+    grid-template-rows: minmax(0, 1fr);
   }
 
   button[part~="source-code-toggle"] {
