@@ -1,7 +1,11 @@
-// @ts-check import
-{{properCase tag}}
-from './{{tag}}.js';
+// @ts-check
+import {{ properCase tag }} from './{{ tag }}.js';
 
-{{properCase tag}}.define('{{tag}}'); export default
-{{properCase tag}}; export * from './{{tag}}.js'; /** * @type {import("./{{tag}}-globals.js")}
-*/
+{{ properCase tag }}.define('{{ tag }}');
+
+export default {{ properCase tag }};
+export * from './{{ tag }}.js';
+
+/**
+ * @type {import("./{{ tag }}-globals.js")}
+ */

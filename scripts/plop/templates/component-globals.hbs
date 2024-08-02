@@ -1,5 +1,9 @@
-import type
-{{properCase tag}}
-from "./{{tag}}.js" declare global { interface HTMLElementTagNameMap { '{{tag}}':
-{{properCase tag}}
-} } export {}
+import type {{ properCase tag }} from "./{{ tag }}.js"
+
+declare global {
+  interface HTMLElementTagNameMap {
+    '{{ tag }}': {{ properCase tag }}
+  }
+}
+
+export {}
