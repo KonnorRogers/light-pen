@@ -5,3 +5,4 @@ docs/src/bridgetown/static
 docs/.bridgetown-cache
 *.hbs
 tests/fixtures/
+*.yaml
