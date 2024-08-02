@@ -4,24 +4,32 @@ export default function lazyLoader() {
   return new LazyLoader({
     components: {
       "light-code": {
-        register () {
-          import("light-pen/exports/light-code-register.js")
-        }
+        register() {
+          import(
+            "light-pen/exports/components/light-code/light-code-register.js"
+          );
+        },
       },
       "light-editor": {
-        register () {
-          import("light-pen/exports/light-editor-register.js")
-        }
+        register() {
+          import(
+            "light-pen/exports/components/light-editor/light-editor-register.js"
+          );
+        },
       },
       "light-pen": {
-        register () {
-          import("light-pen/exports/light-pen-register.js")
-        }
+        register() {
+          import(
+            "light-pen/exports/components/light-pen/light-pen-register.js"
+          );
+        },
       },
       "light-preview": {
-        register () {
-          import("light-pen/exports/light-preview-register.js")
-        }
+        register() {
+          import(
+            "light-pen/exports/components/light-preview/light-preview-register.js"
+          );
+        },
       },
       "clipboard-copy": {
         register() {
@@ -101,9 +109,7 @@ export default function lazyLoader() {
       },
       "sl-tab": {
         register() {
-          import(
-            "@shoelace-style/shoelace/dist/components/tab/tab.js"
-          );
+          import("@shoelace-style/shoelace/dist/components/tab/tab.js");
         },
       },
       "sl-tab-panel": {

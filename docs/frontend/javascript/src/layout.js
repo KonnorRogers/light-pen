@@ -1,4 +1,4 @@
-import {LitElement, html, css} from "lit"
+import { LitElement, html, css } from "lit";
 
 class KrLayout extends LitElement {
   static styles = css`
@@ -27,8 +27,10 @@ class KrLayout extends LitElement {
       justify-content: center;
     }
 
-    *, *:after, *:before {
-      box-sizing: border-box;;
+    *,
+    *:after,
+    *:before {
+      box-sizing: border-box;
     }
 
     [part~="base"] {
@@ -62,7 +64,9 @@ class KrLayout extends LitElement {
     [part~="body"] {
       display: grid;
       /** Menu, Main, Aside **/
-      grid-template-columns: minmax(0, var(--menu-width)) minmax(0, var(--main-width)) minmax(0, var(--aside-width));
+      grid-template-columns:
+        minmax(0, var(--menu-width)) minmax(0, var(--main-width))
+        minmax(0, var(--aside-width));
       grid-template-rows: minmax(0, 1fr);
     }
 
@@ -85,7 +89,8 @@ class KrLayout extends LitElement {
       grid-template-rows: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
     }
 
-    [part~="footer"] {}
+    [part~="footer"] {
+    }
 
     sl-visually-hidden:not(:focus-within) {
       position: absolute !important;
@@ -112,50 +117,53 @@ class KrLayout extends LitElement {
       place-items: center;
       text-align: center;
     }
-  `
+  `;
 
   static properties = {
-    main_id: { attribute: "main-id", reflect: true }
+    main_id: { attribute: "main-id", reflect: true },
+  };
+
+  constructor() {
+    super();
+    this.main_id = "main";
   }
 
-  constructor () {
-    super()
-    this.main_id = "main"
-  }
-
-  createResizeObserver (slot) {
+  createResizeObserver(slot) {
     return new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.contentBoxSize) {
           const contentBoxSize = entry.borderBoxSize[0];
-          this.style.setProperty(`--${slot}-height`, `${contentBoxSize.blockSize}px`)
+          this.style.setProperty(
+            `--${slot}-height`,
+            `${contentBoxSize.blockSize}px`,
+          );
         }
       }
-    })
+    });
   }
 
-  connectedCallback () {
-    super.connectedCallback?.()
+  connectedCallback() {
+    super.connectedCallback?.();
 
     this.headerResizeObserver = this.createResizeObserver("header");
     this.footerResizeObserver = this.createResizeObserver("footer");
 
     setTimeout(() => {
-      this.header = this.shadowRoot.querySelector("[part~='header']")
-      this.headerResizeObserver.observe(this.header)
+      this.header = this.shadowRoot.querySelector("[part~='header']");
+      this.headerResizeObserver.observe(this.header);
 
       // this.footer = this.shadowRoot.querySelector("[part~='main-footer']")
       // this.footerResizeObserver.observe(this.footer)
-    })
+    });
   }
 
-  disconnectedCallback () {
-    super.disconnectedCallback?.()
-    this.headerResizeObserver.unobserve(this.header)
+  disconnectedCallback() {
+    super.disconnectedCallback?.();
+    this.headerResizeObserver.unobserve(this.header);
     // this.footerResizeObserver.unobserve(this.footer)
   }
 
-  render () {
+  render() {
     return html`
       <sl-visually-hidden class="skip-links" part="skip-links">
         <slot name="skip-links">
@@ -200,12 +208,10 @@ class KrLayout extends LitElement {
       <div part="dialog" class="dialog">
         <slot name="dialog"></slot>
       </div>
-    `
+    `;
   }
 }
 
 if (!window.customElements.get("kr-layout")) {
-window.customElements.define("kr-layout", KrLayout)
+  window.customElements.define("kr-layout", KrLayout);
 }
-
-

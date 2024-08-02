@@ -4,7 +4,7 @@
  * @param {T} callback
  * @param {number} wait
  */
-export function debounce (callback, wait = 0) {
+export function debounce(callback, wait = 0) {
   /**
    * @type {number | null}
    */

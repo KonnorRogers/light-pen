@@ -28,20 +28,19 @@ export function drag(container, options) {
   }
 
   function stop() {
-    document.removeEventListener('pointermove', move);
-    document.removeEventListener('pointerup', stop);
+    document.removeEventListener("pointermove", move);
+    document.removeEventListener("pointerup", stop);
 
     if (options?.onStop) {
       options.onStop();
     }
   }
 
-  document.addEventListener('pointermove', move, { passive: true });
-  document.addEventListener('pointerup', stop);
+  document.addEventListener("pointermove", move, { passive: true });
+  document.addEventListener("pointerup", stop);
 
   // If an initial event is set, trigger the first drag immediately
   if (options?.initialEvent instanceof PointerEvent) {
     move(options.initialEvent);
   }
 }
-

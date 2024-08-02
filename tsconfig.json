@@ -1,9 +1,5 @@
 {
-  "include": [
-    "exports/**/*.*",
-    "internal/**/*.*",
-    "types/**/*.d.ts"
-  ],
+  "include": ["exports/**/*.*", "internal/**/*.*", "types/**/*.d.ts"],
   "compilerOptions": {
     "skipDefaultLibCheck": true,
     "strict": true,
@@ -22,4 +18,3 @@
     "noImplicitOverride": true
   }
 }
-

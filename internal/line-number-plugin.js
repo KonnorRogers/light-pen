@@ -1,58 +1,63 @@
 // @ts-check
-import { Token } from 'prism-esm';
+import { Token } from "prism-esm";
 
-const newLineRegex = /\r\n|\r|\n/
+const newLineRegex = /\r\n|\r|\n/;
 
 /**
  * Options for the LineNumberPlugin. Currently nothing.
  * @typedef {object} Options
  * @property {boolean} [disableLineNumbers] - Toggle line numbers off.
  * @property {number} [lineNumberStart=1] - Where to start counting from. Default is 1.
+ * @property {(ary: Array<string | Token>, index: number, tokens: Array<Token>) => void} [callback] - substitute your own callback for each line.
  */
 
 /**
  * @param {Options} [options={}]
  * @return {import('./prism-highlight.js').Hook}
  */
-export function LineNumberPlugin(
-  options = {}
-) {
+export function LineNumberPlugin(options = {}) {
+  const disableLineNumbers = options.disableLineNumbers ?? false;
+  const lineNumberStart = options.lineNumberStart ?? 1;
 
-  const disableLineNumbers = options.disableLineNumbers ?? false
-  const lineNumberStart = options.lineNumberStart ?? 1
+  let callback = options.callback;
+
+  if (typeof callback !== "function") {
+    callback = (ary, index, tokens) => {
+      if (ary.length <= 0) {
+        return;
+      }
+
+      if (!options.disableLineNumbers) {
+        tokens.push(
+          new Token("light-gutter-cell", (index + lineNumberStart).toString()),
+        );
+      }
+
+      tokens.push(new Token("light-line", ary));
+    };
+  }
 
   /**
    * @type {import('./prism-highlight.js').Hook}
    */
-  return function lineNumberPlugin (env) {
+  return function lineNumberPlugin(env) {
     /**
      * @type {Token[]}
      */
-    const tokens = []
+    const tokens = [];
     splitLinesRec(env.tokens).forEach((ary, index) => {
-      if (ary.length <= 0) {
-        ary.push(" ")
-      }
-
-      if (options.disableLineNumbers !== true) {
-        tokens.push(new Token("light-gutter-cell", (index + lineNumberStart).toString()))
-      }
-
-      tokens.push(new Token("light-line", ary))
+      callback(ary, index, tokens);
     });
 
-    env.tokens = tokens
-
-  }
+    env.tokens = tokens;
+  };
 }
 
 /**
  * @param {Array<Token | string> | Token | string} content
  * @return {Array<Token | string>}
  */
-function wrapContent(
-  content,
-) {
+function wrapContent(content) {
   return Array.isArray(content) ? content : [content];
 }
 
@@ -60,26 +65,21 @@ function wrapContent(
  * @param {Array<Token | string>} content
  * @return {Array<Token | string> | string}
  */
-function unwrapContent(
-  content,
-) {
+function unwrapContent(content) {
   if (content.length === 0) {
-    return '';
-  } else if (content.length === 1 && typeof content[0] === 'string') {
+    return "";
+  } else if (content.length === 1 && typeof content[0] === "string") {
     return content[0];
   }
 
   return content;
 }
 
-
 /**
  * @param {Array<Token | string>} tokens
  * @return {Array<Array<Token | string>>}
  */
-function splitLinesRec(
-  tokens
-) {
+function splitLinesRec(tokens) {
   /** @type {Array<Token | string>} */
   let currentLine = [];
   /** @type {Array<Array<Token | string>>} */
@@ -87,7 +87,7 @@ function splitLinesRec(
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
-    if (typeof token === 'string') {
+    if (typeof token === "string") {
       const split = token.split(newLineRegex);
       for (let j = 0; j < split.length; j++) {
         if (j > 0) {
@@ -128,4 +128,3 @@ function splitLinesRec(
 
   return lines;
 }
-

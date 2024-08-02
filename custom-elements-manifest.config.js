@@ -1,15 +1,19 @@
 // @ts-check
 // import { expandTypesPlugin } from './expand-types.js'
 
-const globs = ['exports/**/*.{d.ts,js}', 'internal/**/*.{d.ts,js}', 'types/**/*.d.ts']
+const globs = [
+  "exports/**/*.{d.ts,js}",
+  "internal/**/*.{d.ts,js}",
+  "types/**/*.d.ts",
+];
 
 export default {
   /** Globs to analyze */
   globs,
   /** Globs to exclude */
-  exclude: ['node_modules', 'docs'],
+  exclude: ["node_modules", "docs"],
   /** Directory to output CEM to */
-  outdir: '.',
+  outdir: ".",
   /** Run in dev mode, provides extra logging */
   dev: process.argv.includes("--verbose"),
   /** Run in watch mode, runs on file changes */
@@ -41,4 +45,4 @@ export default {
   //   /** You can now pass the typeChecker to your plugins */
   //   expandTypesPlugin({ globs })
   // ],
-}
+};

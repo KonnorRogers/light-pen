@@ -5,6 +5,7 @@ component: light-editor
 ---
 
 <!-- Register it with the lazy loader -->
+
 <light-editor style="display: none;"></light-editor>
 <light-code style="display: none;"></light-code>
 
@@ -38,6 +39,7 @@ component: light-editor
         &lt;/script>
       </light-editor>
     </form>
+
   </script>
 </light-preview>
 
@@ -130,6 +132,7 @@ We can use a `<template>` tag to be able to "slot" in the default `value`
         This is madness!!
       </template>
     </light-editor>
+
   </template>
 </light-preview>
 
@@ -154,6 +157,7 @@ This is intentional to keep the bundle size low. Supported languages are `html`,
         }
       </template>
     </light-editor>
+
   </template>
 </light-preview>
 
@@ -247,6 +251,7 @@ Removing line numbers can be done with the boolean attribute `disable-line-numbe
         </html>
       &lt;/script>
     </light-editor>
+
   </script>
 </light-preview>
 
@@ -298,7 +303,6 @@ Here's a preview of soft wrapping vs hard wrapping.
   </template>
 </light-preview>
 
-
 ## Additional Notes
 
 ### Caveats to the initial editor value
@@ -312,7 +316,7 @@ is to use `value` attribute. Like so:
 
 ### Problems with declarative slotting
 
-If you really *want* declarative slotting, it's best to use a `<textarea>` in the default slot.
+If you really _want_ declarative slotting, it's best to use a `<textarea>` in the default slot.
 The editor is really a `<textarea>` at it's core, so its recommended to use the `<textarea>` element to slot in elements.
 It has 1 drawback which is around not being able to slot in a `<textarea>` directly.
 And showing `&lt;` and `&gt;` literals is challenging. `&amp;lt;html&amp;gt;` is equivalent to `&gt;html&lt;>`
@@ -334,4 +338,3 @@ Using a `<textarea>` element for the default slot requires the following markup 
 `<template>` formats the HTML and strips improper HTML. It's also not suitable for non-HTML strings. You can do it, but you've been warned.
 `<xmp>` is deprecated and also has some issues around if you do something like: `<!DOCTYPE html >`
 `<!-- -->` isn't supported like with Prism's auto escape plugin could be used, but runs into issues if you want comments nested in comments.
-

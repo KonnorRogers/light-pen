@@ -23,12 +23,12 @@ npm install light-pen
 import "light-pen"
 
 // Registry yourself
-import LightPen "light-pen/exports/light-pen.js"
+import LightPen "light-pen/exports/components/light-pen/light-pen.js"
 
 LightPen.define() // Registers `<light-pen>`
 
 // Register under another name
-import LightPen "light-pen/exports/light-pen.js"
+import LightPen "light-pen/exports/components/light-pen/light-pen.js"
 LightPen.define("other-name")
 ```
 
@@ -39,7 +39,6 @@ LightPen.define("other-name")
 ```
 
 That's it!
-
 
 ### Slotting in HTML / CSS / JS
 
@@ -93,4 +92,4 @@ More to come for more docs coming on how to change things!
 - [ ] - Add vertical resizing of `<textarea>`
 - [ ] - More documentation around customization.
 - [ ] - Add a console logger
->>>>>>> 7b592c8f5f05ed82d439d7950450eec06dc3ab66
+    > > > > > > > 7b592c8f5f05ed82d439d7950450eec06dc3ab66

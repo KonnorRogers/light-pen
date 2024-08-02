@@ -4,7 +4,6 @@ permalink: /components/light-disclosure/
 component: light-disclosure
 ---
 
-
 ## Typical Usage
 
 <light-disclosure style="display: none;"></light-disclosure>
@@ -16,4 +15,3 @@ component: light-disclosure
     </light-disclosure>
   </template>
 </light-preview>
-

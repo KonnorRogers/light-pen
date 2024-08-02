@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+  </head>
+  <body>
+    <script type="module">
+      import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/shoelace.js";
+      import { registerIconLibrary } from "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/utilities/icon-library.js";
+      registerIconLibrary("sprite", {
+        resolver: (name) => `#${name}`,
+        // mutator: svg => svg.setAttribute('fill', 'currentColor'),
+        spriteSheet: true,
+      });
+    </script>
+
+    <script>
+      (async () => {
+        const resp = await (
+          await fetch("https://shoelace.style/assets/images/sprite.svg")
+        ).text();
+        const docFrag = new DocumentFragment();
+        const div = document.createElement("div");
+        div.innerHTML = resp;
+        docFrag.append(div.firstElementChild);
+        console.log(resp);
+        document.body.append(docFrag);
+      })();
+    </script>
+
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <use href="#gear" />
+    </svg>
+
+    <div>
+      <template shadowrootmode="open">
+        <svg xmlns="http://www.w3.org/2000/svg">
+          <use href="#gear" />
+        </svg>
+      </template>
+    </div>
+
+    <div style="font-size: 24px">
+      <sl-icon library="sprite" name="gear"></sl-icon>
+      <sl-icon library="sprite" name="speedometer"></sl-icon>
+    </div>
+
+    <div>Hello World</div>
+  </body>
+</html>

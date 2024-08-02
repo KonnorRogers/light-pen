@@ -6,15 +6,15 @@
   width: 100%;
 }
 
-[data-controller~='theme-switcher'],
-[data-controller~='theme-switcher']:not(:defined) {
+[data-controller~="theme-switcher"],
+[data-controller~="theme-switcher"]:not(:defined) {
   height: 0;
   width: 0;
   opacity: 0;
   visibility: hidden;
 }
 
-[data-controller~='theme-switcher']:defined {
+[data-controller~="theme-switcher"]:defined {
   height: unset;
   width: unset;
   visibility: visible;
@@ -23,4 +23,3 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
-

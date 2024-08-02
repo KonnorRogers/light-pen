@@ -1,18 +1,18 @@
 import { html } from "lit"
 
 import { BaseElement } from "../../../internal/base-element.js";
-import { hostStyles } from "../../styles/host-styles.js";
-import { componentStyles } from "./{{ tagWithoutPrefix tag }}.styles.js";
+import { baseStyles } from "../../styles/base-styles.js";
+import { componentStyles } from "./{{ tag }}.styles.js";
 
 /**
  * @customElement
  * @tagname {{ tag }}
  * @summary Short summary of the component's intended use.
- * @documentation https://role-components.vercel.app/components/{{ tagWithoutPrefix tag }}
+ * @documentation https://konnorrogers.github.io/light-pen/components/{{ tag }}
  * @status experimental
- * @since 2.0
+ * @since 4.0
  *
- * @event role-event-name - Emitted as an example.
+ * @event light-event-name - Emitted as an example.
  *
  * @slot - The default slot.
  *
@@ -21,16 +21,29 @@ import { componentStyles } from "./{{ tagWithoutPrefix tag }}.styles.js";
  * @cssproperty --example - An example CSS custom property.
  */
 export default class {{ properCase tag }} extends BaseElement {
+  /**
+   * @override
+   */
   static baseName = "{{ tag }}"
+
+  /**
+   * @override
+   */
   static styles = [
-    hostStyles,
+    baseStyles,
     componentStyles,
   ]
 
+  /**
+   * @override
+   */
   static properties = /** @type {const} */ ({
 
   })
 
+  /**
+   * @override
+   */
   render () {
     return html`
       <slot></slot>

@@ -28,6 +28,7 @@ component: light-pen
         }
       </template>
     </light-pen>
+
   </template>
 
   <template slot="css">
@@ -41,10 +42,11 @@ component: light-pen
     light-pen {
       height: 100%;
     }
+
   </template>
 
   <template slot="js">
-    import LightPen from "<%= find_asset "../exports/light-pen.js" %>";
+    import LightPen from "<%= find_asset "../exports/components/light-pen/light-pen.js" %>";
     LightPen.define()
   </template>
 </light-pen>

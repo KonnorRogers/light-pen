@@ -39,14 +39,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: |
             pnpm-lock.yaml
             docs/pnpm-lock.yaml
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.0'
+          ruby-version: "3.0"
           rubygems: latest
           bundler-cache: true
 
@@ -61,7 +61,6 @@ jobs:
 
       - name: Set base_url
         run: echo "BASE_URL=$URL/$BASE_PATH" >> $GITHUB_ENV
-
 
       - name: Build website
         run: |

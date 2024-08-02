@@ -15,8 +15,11 @@
   font-weight: var(--sl-font-weight-semibold);
   user-select: none;
   white-space: nowrap;
-  transition: var(--sl-transition-x-fast) background-color, var(--sl-transition-x-fast) color,
-    var(--sl-transition-x-fast) border, var(--sl-transition-x-fast) box-shadow;
+  transition:
+    var(--sl-transition-x-fast) background-color,
+    var(--sl-transition-x-fast) color,
+    var(--sl-transition-x-fast) border,
+    var(--sl-transition-x-fast) box-shadow;
   background-color: var(--sl-color-neutral-0);
   border-color: var(--sl-color-neutral-300);
   color: var(--sl-color-neutral-700);
@@ -35,7 +38,6 @@
 .button:focus-visible {
   outline: var(--sl-focus-ring);
   outline-offset: var(--sl-focus-ring-offset);
-
 }
 
 .button:hover {
@@ -49,4 +51,3 @@
   border-color: var(--sl-color-primary-400);
   color: var(--sl-color-primary-700);
 }
-
