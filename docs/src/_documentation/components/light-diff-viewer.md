@@ -26,9 +26,11 @@ console.log(y)"
 ### First Example
 
 <light-preview
-  preview-mode="shadow-dom"
-  script-scope="shadow-dom"
+preview-mode="shadow-dom"
+script-scope="shadow-dom"
+
 >
+
   <script slot="code" type="text/plain">
     <light-diff-viewer
       language="javascript"
@@ -46,7 +48,6 @@ console.log(y)"
     &lt;/script>
   </script>
 </light-preview>
-
 
 ## Future enhancements
 

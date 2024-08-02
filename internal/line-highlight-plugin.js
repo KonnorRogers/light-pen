@@ -62,7 +62,7 @@ export function LineHighlightWrapPlugin() {
    * @param {string} tokenName - Name of token to find
    * @param {string} partName - Name of part to add
    */
-  function addParts (token, tokenName, partName) {
+  function addParts(token, tokenName, partName) {
     if (token.type.includes(tokenName)) {
       token.attributes["part"] = partName;
 
@@ -78,8 +78,8 @@ export function LineHighlightWrapPlugin() {
    * @param {WrapEnv} env
    */
   return function (env) {
-    addParts(env, "light-line", "line")
-    addParts(env, "light-gutter-cell", "gutter-cell")
-    addParts(env, "light-marker", "marker")
+    addParts(env, "light-line", "line");
+    addParts(env, "light-gutter-cell", "gutter-cell");
+    addParts(env, "light-marker", "marker");
   };
 }

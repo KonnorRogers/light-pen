@@ -55,7 +55,7 @@ export const componentStyles = css`
   }
 
   [part~="marker"][part~="marker-deleted"]::after {
-    content: "-"
+    content: "-";
   }
 
   [part~="marker"][part~="marker-inserted"]::after {
