@@ -1,0 +1,2 @@
+import{a as e}from"/light-pen/bridgetown/static/chunks/chunk-QOOXLTHJ.js";import"/light-pen/bridgetown/static/chunks/chunk-5CS36Z5Z.js";import"/light-pen/bridgetown/static/chunks/chunk-236G7YSG.js";import"/light-pen/bridgetown/static/chunks/chunk-W66D5EKA.js";import"/light-pen/bridgetown/static/chunks/chunk-P2RRBH44.js";import"/light-pen/bridgetown/static/chunks/chunk-S5UFBUWK.js";import"/light-pen/bridgetown/static/chunks/chunk-F7GCPXDI.js";var f=e;e.define();export{f as default};
+//# sourceMappingURL=/light-pen/bridgetown/static/chunks/light-pen-register-B2GR6L2P.js.map

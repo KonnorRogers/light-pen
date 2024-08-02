@@ -6,17 +6,17 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.OBNXDLHZ.js">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.IW32RKUC.js">
-<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.HJHMM7OK.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.IWQMOJIS.js">
+<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.XQKLCJIM.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.A4XNSGMK.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.SG5LDSHV.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.IOI6UUKQ.css"></noscript>
+<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.XQKLCJIM.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.OBNXDLHZ.js" type="module"></script>
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.IW32RKUC.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.HJHMM7OK.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.IWQMOJIS.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/light-pen/apple-touch-icon.png">
@@ -322,9 +322,10 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "./exports/light-preview.js";
+      import LightPreview from "./exports/components/light-preview/light-preview.js";
       LightPreview.define()
     &lt;/script>
+
   </script>
 </light-preview>
 
@@ -347,9 +348,10 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "light-pen/exports/light-preview.js"
+      import LightPreview from "light-pen/exports/components/light-preview/light-preview.js"
       LightPreview.define()
     </script>
+
   </template>
 
   <template slot="preview-html">
@@ -366,9 +368,10 @@
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.KGQH7LT2.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/components/light-preview/light-preview.7RLFPWDF.js"
       LightPreview.define()
     </script>
+
   </template>
 </light-preview>
 
@@ -399,9 +402,10 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.KGQH7LT2.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/components/light-preview/light-preview.7RLFPWDF.js"
       LightPreview.define()
     </script>
+
   </template>
 </light-preview>
 
@@ -489,13 +493,14 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/light-preview.KGQH7LT2.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/components/light-preview/light-preview.7RLFPWDF.js"
       LightPreview.define()
     </script>
+
   </template>
 
-  <button slot="actions">HTML</button>
-  <button slot="actions">Codepen</button>
+<button slot="actions">HTML</button>
+<button slot="actions">Codepen</button>
 </light-preview>
 
 <h3 id="escaping-nested-script-tags">
@@ -561,17 +566,17 @@ for further reading.</p>
             HTML
           </div>
 
-          <clipboard-copy for="8c0695bf-959f-44e4-a7e3-95993740a44c" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="d24b5074-d091-40d8-a19d-9a14318b2b70" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="8c0695bf-959f-44e4-a7e3-95993740a44c" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js&quot;&gt;&lt;/script&gt;
+          <script type="text/plain" id="d24b5074-d091-40d8-a19d-9a14318b2b70" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-preview/light-preview-register.js&quot;&gt;&lt;/script&gt;
 </script>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span> <span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span> <span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-preview/light-preview-register.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre></div></div></div>
 </sl-tab-panel>
 
@@ -582,17 +587,17 @@ for further reading.</p>
             HTML
           </div>
 
-          <clipboard-copy for="168ef288-40ec-444a-8faa-7e7c30b01665" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="7d37087b-726b-4287-9611-4b4a59316934" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="168ef288-40ec-444a-8faa-7e7c30b01665" hidden="">&lt;script type=&quot;module&quot;&gt;
+          <script type="text/plain" id="7d37087b-726b-4287-9611-4b4a59316934" hidden="">&lt;script type=&quot;module&quot;&gt;
   // Auto registers as &lt;light-preview&gt;
-  import &quot;https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js&quot;
+  import &quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-preview/light-preview-register.js&quot;
 
   // Manual Register
-  import LightPreview from &quot;https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview.js&quot;
+  import LightPreview from &quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-preview/light-preview.js&quot;
   LightPreview.define()
   // =&gt; Registers as &lt;light-preview&gt;
 &lt;/script&gt;
@@ -600,10 +605,10 @@ for further reading.</p>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span><span class="nt">&gt;</span>
   <span class="c1">// Auto registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">preview</span><span class="o">&gt;</span>
-  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview-register.js</span><span class="dl">"</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-preview/light-preview-register.js</span><span class="dl">"</span>
 
   <span class="c1">// Manual Register</span>
-  <span class="k">import</span> <span class="nx">LightPreview</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/light-preview.js</span><span class="dl">"</span>
+  <span class="k">import</span> <span class="nx">LightPreview</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-preview/light-preview.js</span><span class="dl">"</span>
   <span class="nx">LightPreview</span><span class="p">.</span><span class="nf">define</span><span class="p">()</span>
   <span class="c1">// =&gt; Registers as </span><span class="o">&lt;</span><span class="nx">light</span><span class="o">-</span><span class="nx">preview</span><span class="o">&gt;</span>
 <span class="nt">&lt;/script&gt;</span>
@@ -617,25 +622,25 @@ for further reading.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="a8073fc3-5aaa-4b7d-898b-5eba2148ceb6" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="bf161f26-1161-40d0-b3d1-6c54c8e39f74" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="a8073fc3-5aaa-4b7d-898b-5eba2148ceb6" hidden="">// Auto registers as &lt;light-preview&gt;
-import &quot;light-pen/exports/light-preview-register.js&quot;
+          <script type="text/plain" id="bf161f26-1161-40d0-b3d1-6c54c8e39f74" hidden="">// Auto registers as &lt;light-preview&gt;
+import &quot;light-pen/exports/components/light-preview/light-preview-register.js&quot;
 
 // Manual Register
-import LightPreview &quot;light-pen/exports/light-preview.js&quot;
+import LightPreview &quot;light-pen/exports/components/light-preview/light-preview.js&quot;
 LightPreview.define()
 // =&gt; Registers as &lt;light-preview&gt;
 </script>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Auto registers as &lt;light-preview&gt;</span>
-<span class="k">import</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-preview-register.js</span><span class="dl">"</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">light-pen/exports/components/light-preview/light-preview-register.js</span><span class="dl">"</span>
 
 <span class="c1">// Manual Register</span>
-<span class="k">import</span> <span class="nx">LightPreview</span> <span class="dl">"</span><span class="s2">light-pen/exports/light-preview.js</span><span class="dl">"</span>
+<span class="k">import</span> <span class="nx">LightPreview</span> <span class="dl">"</span><span class="s2">light-pen/exports/components/light-preview/light-preview.js</span><span class="dl">"</span>
 <span class="nx">LightPreview</span><span class="p">.</span><span class="nf">define</span><span class="p">()</span>
 <span class="c1">// =&gt; Registers as &lt;light-preview&gt;</span>
 </code></pre></div></div></div>
@@ -776,26 +781,6 @@ LightPreview.define()
 
 <tr>
   <td>
-      <small>[Attribute + Property]</small>
-      <br>
-      <code>language</code>
-  </td>
-  <td>
-    <p>The language to highlight for.</p>
-  </td>
-  <td>
-    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
-  </td>
-  <td>
-    <code>string</code>
-  </td>
-  <td>
-    <code>"html"</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
       <small>[Attribute]</small>
       <br>
       <code>preview-mode</code>
@@ -829,6 +814,147 @@ LightPreview.define()
   </td>
   <td>
     <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
+  </td>
+  <td>
+    <code>boolean</code>
+  </td>
+  <td>
+    <code>false</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>preview-html</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>previewHtml</code>
+  </td>
+  <td>
+    <p>If <code class="highlighter-rouge">disableHighlight</code> is true, then you must pass in an element into <code class="highlighter-rouge">previewHtml</code> to be able to get
+  the code to run in the previewer.</p>
+  </td>
+  <td>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>""</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>open</code>
+  </td>
+  <td>
+    <p>Whether or not the source code is being shown</p>
+  </td>
+  <td>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
+  </td>
+  <td>
+    <code>boolean</code>
+  </td>
+  <td>
+    <code>false</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>resize-position</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>resizePosition</code>
+  </td>
+  <td>
+    <p>The current position of the resizer. 100 means all the way to right. 0 means all the way to left.</p>
+  </td>
+  <td>
+    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
+  </td>
+  <td>
+    <code>number</code>
+  </td>
+  <td>
+    <code>100</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>script-scope</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>scriptScope</code>
+  </td>
+  <td>
+    <p>When using <code class="highlighter-rouge">preview-mode="shadow-dom"</code>,
+There’s a funky issue with previews where if you want the location of the shadowRoot
+you are, you can’t get it. As a result, <code class="highlighter-rouge">&lt;light-preview&gt;</code> supports the idea of a “scriptScope”
+where <code class="highlighter-rouge">document</code> is bound to the current shadowRoot instead of the actual top level <code class="highlighter-rouge">document</code>
+For more info, check out this GitHub issue:</p>
+  </td>
+  <td>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
+  </td>
+  <td>
+    <code>"document" | "shadow-dom"</code>
+  </td>
+  <td>
+    <code>"document"</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute + Property]</small>
+      <br>
+      <code>language</code>
+  </td>
+  <td>
+    <p>The language to highlight for.</p>
+  </td>
+  <td>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
+  </td>
+  <td>
+    <code>string</code>
+  </td>
+  <td>
+    <code>"html"</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>preserve-whitespace</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>preserveWhitespace</code>
+  </td>
+  <td>
+    <p>Preserve leading and trailing whitespace.</p>
+  </td>
+  <td>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
   </td>
   <td>
     <code>boolean</code>
@@ -1006,75 +1132,6 @@ If the element has <code class="highlighter-rouge">disableHighlight</code>, we w
 
 <tr>
   <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>preview-html</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>previewHtml</code>
-  </td>
-  <td>
-    <p>If <code class="highlighter-rouge">disableHighlight</code> is true, then you must pass in an element into <code class="highlighter-rouge">previewHtml</code> to be able to get
-  the code to run in the previewer.</p>
-  </td>
-  <td>
-    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
-  </td>
-  <td>
-    <code>string</code>
-  </td>
-  <td>
-    <code>""</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute + Property]</small>
-      <br>
-      <code>open</code>
-  </td>
-  <td>
-    <p>Whether or not the source code is being shown</p>
-  </td>
-  <td>
-    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
-  </td>
-  <td>
-    <code>boolean</code>
-  </td>
-  <td>
-    <code>false</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>resize-position</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>resizePosition</code>
-  </td>
-  <td>
-    <p>The current position of the resizer. 100 means all the way to right. 0 means all the way to left.</p>
-  </td>
-  <td>
-    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
-  </td>
-  <td>
-    <code>number</code>
-  </td>
-  <td>
-    <code>100</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
       <small>[Attribute + Property]</small>
       <br>
       <code>wrap</code>
@@ -1090,59 +1147,6 @@ If the element has <code class="highlighter-rouge">disableHighlight</code>, we w
   </td>
   <td>
     <code>"soft"</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>unescape-behavior</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>unescapeBehavior</code>
-  </td>
-  <td>
-    <p>Whether or not to transform <code class="highlighter-rouge">&amp;lt;/script&gt;</code> into <code class="highlighter-rouge">&lt;script&gt;</code>
-If true, will run transform. If false, will leave the code as is.</p>
-  </td>
-  <td>
-    <sl-icon name="check-lg" style="font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);"></sl-icon>
-  </td>
-  <td>
-    <code>"all" | "last" | "none"</code>
-  </td>
-  <td>
-    <code>"last"</code>
-  </td>
-</tr>
-
-<tr>
-  <td>
-      <small>[Attribute]</small>
-      <br>
-      <code>script-scope</code>
-      <br><br>
-      <small>[Property]</small>
-      <br>
-      <code>scriptScope</code>
-  </td>
-  <td>
-    <p>When using <code class="highlighter-rouge">preview-mode="shadow-dom"</code>,
-There’s a funky issue with previews where if you want the location of the shadowRoot
-you are, you can’t get it. As a result, <code class="highlighter-rouge">&lt;light-preview&gt;</code> supports the idea of a “scriptScope”
-where <code class="highlighter-rouge">document</code> is bound to the current shadowRoot instead of the actual top level <code class="highlighter-rouge">document</code>
-For more info, check out this GitHub issue:</p>
-  </td>
-  <td>
-    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
-  </td>
-  <td>
-    <code>"document" | "shadow-dom"</code>
-  </td>
-  <td>
-    <code>"document"</code>
   </td>
 </tr>
 
