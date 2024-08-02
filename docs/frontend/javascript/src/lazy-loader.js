@@ -31,13 +31,6 @@ export default function lazyLoader() {
           );
         },
       },
-      "light-diff-viewer": {
-        register() {
-          import(
-            "light-pen/exports/components/light-diff-viewer/light-diff-viewer-register.js"
-          );
-        },
-      },
       "clipboard-copy": {
         register() {
           import("@github/clipboard-copy-element");
