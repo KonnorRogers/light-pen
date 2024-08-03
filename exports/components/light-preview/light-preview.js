@@ -86,6 +86,7 @@ export default class LightPreview extends BaseElement {
     resizing: { reflect: true, type: Boolean },
     scriptScope: { attribute: "script-scope" },
     previewHtml: { attribute: "preview-html" },
+    unescapeBehavior: { attribute: "unescape-behavior" },
 
     // <light-code> properties
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
