@@ -1,4 +1,8 @@
-## Next
+## 4.0.1 - 08/03/2024
+
+- Bug Fix(light-preview): now properly listens to changes to `unescapeBehavior` / `unescape-behavior` [#24]
+
+## 4.0.0 - 08/01/2024
 
 - BREAKING_CHANGE: All components are now scoped under `exports/components/<component-name>/<component-name>.js`
 
