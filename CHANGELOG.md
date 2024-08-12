@@ -1,5 +1,6 @@
-## 4.0.1 - 08/03/2024
+## 4.1.0 - 08/03/2024
 
+- Feature(light-preview): Added the `after-actions`, `above-expanded-code`, and `after-expanded-code` slots and parts. [#24]
 - Bug Fix(light-preview): now properly listens to changes to `unescapeBehavior` / `unescape-behavior` [#24]
 
 ## 4.0.0 - 08/01/2024
