@@ -40,16 +40,24 @@ const sourceCodeFallback = "Show source code";
  * @csspart code-wrapper - The div that wraps the <pre> + <code> elements containing your highlighted code
  * @csspart pre - The <pre> element wrapping the source code
  * @csspart code - The <code>  element wrapping the source code
- * @csspart actions - The buttons at the bottom of the code previewer
  * @csspart source-code-toggle - The button to show the source code
+ * @csspart actions - The buttons at the bottom of the code previewer
+ * @csspart before-expanded-code - A wrapper around the "before-expanded-code" slot
+ * @csspart after-expanded-code - A wrapper around the "after-expanded-code" slot
+ * @csspart after-actions - A wrapper around the "after-actions" slot
  * @csspart source-code-toggle-icon - The caret icon in the source code toggle
  *
  * @slot resize-icon - The icon to display in the resizer button. Override this to provide your own icon.
  * @slot summary - What to display in source code expander
  * @slot source-code-toggle-icon - Slot in your own icon to override the default caret.
- * @slot actions - Slot in buttons / links to allow for additional actions in the bottom bar.
+ * @slot above-actions - Additional actions placed above the source code toggle
+ * @slot below-actions - Additional actions placed above the source code toggle
+ * @slot actions - Slot in buttons / links to allow for additional actions in the bottom bar. These are placed inline.
  * @slot preview-html - If you want to run code that is slightly different from the source code you want to display, slot it into "preview-html"
  * @slot code - Used to display both source code and to power your preview in the iframe. If you slot in "preview-html", then it will only be used to show / highlight your source code.
+ * @slot before-expanded-code - A slot to add actions such as buttons. This will sit above the source-code-toggle, and when code is expanded, will be *above* the expanded code.
+ * @slot after-expanded-code - A slot to add actions such as buttons. This will sit above the source-code-toggle, and when code is expanded, will be *below* the expanded code.
+ * @slot after-actions - A slot add actions below the source-code-toggle button.
  */
 export default class LightPreview extends BaseElement {
   /**
@@ -86,6 +94,7 @@ export default class LightPreview extends BaseElement {
     resizing: { reflect: true, type: Boolean },
     scriptScope: { attribute: "script-scope" },
     previewHtml: { attribute: "preview-html" },
+    unescapeBehavior: { attribute: "unescape-behavior" },
 
     // <light-code> properties
     disableHighlight: { type: Boolean, attribute: "disable-highlight" },
@@ -604,6 +613,7 @@ export default class LightPreview extends BaseElement {
           <div part="end-panel"></div>
         </div>
 
+        <div part="above-expanded-code"><slot name="above-expanded-code"></slot></div>
         <light-disclosure
           id="details"
           ?open=${this.open}
@@ -631,8 +641,9 @@ export default class LightPreview extends BaseElement {
             ></light-code>
           </div>
         </light-disclosure>
-
+        <div part="after-expanded-code"><slot name="after-expanded-code"></slot></div>
         <div part="actions">
+          <div><slot name="before-toggle-button"></slot></div>
           <button
             class="light-button"
             part="source-code-toggle"
@@ -658,9 +669,9 @@ export default class LightPreview extends BaseElement {
               </svg>
             </slot>
           </button>
-
           <slot name="actions"></slot>
         </div>
+        <div part="after-actions"><slot name="after-actions"></slot></div>
       </div>
 
       <div hidden>
