@@ -1,4 +1,4 @@
-import{a as S,b as p,c as $,d as M}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-434BZ7XX.js";import{a as R}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-EGZYEUJO.js";import{a as g,f as v,g as c,h as y,i as x,j as z}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-DRGPG425.js";import{a as m,b as h,g as f,h as b,i as w}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-SV7VIJF3.js";import{d}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-OS2XYXOL.js";var H=m`
+import{a as S,b as p,c as $,d as M}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-434BZ7XX.js";import{a as R}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-EGZYEUJO.js";import{a as g,f as v,g as c,h as y,i as x,j as z}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-SETBXB4N.js";import{a as m,b as h,g as f,h as b,i as w}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-SV7VIJF3.js";import{d}from"/light-pen/pull/25/bridgetown/static/chunks/chunk-OS2XYXOL.js";var H=m`
   :host {
     --border-color: lightgray;
   }
@@ -17,7 +17,10 @@ import{a as S,b as p,c as $,d as M}from"/light-pen/pull/25/bridgetown/static/chu
     border-radius: 3px;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(0, auto) minmax(0, 1fr) repeat(3, minmax(0, auto));
+    grid-template-rows: minmax(0, auto) minmax(0, 1fr) repeat(
+        3,
+        minmax(0, auto)
+      );
     height: 100%;
     min-height: inherit;
   }
@@ -65,7 +68,10 @@ import{a as S,b as p,c as $,d as M}from"/light-pen/pull/25/bridgetown/static/chu
     display: grid;
     align-items: center;
     grid-auto-flow: column;
-    grid-template-columns: minmax(0, auto) minmax(0, 1fr) repeat(auto-fill, minmax(0, auto));
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr) repeat(
+        auto-fill,
+        minmax(0, auto)
+      );
     grid-template-rows: minmax(0, 1fr);
   }
 
@@ -135,7 +141,9 @@ import{a as S,b as p,c as $,d as M}from"/light-pen/pull/25/bridgetown/static/chu
           <div part="end-panel"></div>
         </div>
 
-        <div part="above-expanded-code"><slot name="above-expanded-code"></slot></div>
+        <div part="above-expanded-code">
+          <slot name="above-expanded-code"></slot>
+        </div>
         <light-disclosure
           id="details"
           ?open=${this.open}
@@ -162,7 +170,9 @@ import{a as S,b as p,c as $,d as M}from"/light-pen/pull/25/bridgetown/static/chu
             ></light-code>
           </div>
         </light-disclosure>
-        <div part="after-expanded-code"><slot name="after-expanded-code"></slot></div>
+        <div part="after-expanded-code">
+          <slot name="after-expanded-code"></slot>
+        </div>
         <div part="actions">
           <div><slot name="before-toggle-button"></slot></div>
           <button
@@ -200,4 +210,4 @@ import{a as S,b as p,c as $,d as M}from"/light-pen/pull/25/bridgetown/static/chu
         <slot name="code" @slotchange=${this.handleTemplate}></slot>
       </div>
     `}get panelResizer(){return this.shadowRoot?.querySelector("[part~='panel-resizer']")}handleDrag(e){e.cancelable&&e.preventDefault();let t=this.shadowRoot?.querySelector("iframe");t&&(t.style.pointerEvents="none"),this.resizing=!0;let s=(e.currentTarget?.offsetWidth||0)/2;$(this,{onMove:(r,o)=>{let n=r+s;this.resizePosition=p(0,this.pixelsToPercentage(n),100),this.updateResizePosition(),this.resizing=!0},onStop:()=>{let r=this.shadowRoot?.querySelector("iframe");r&&(r.style.pointerEvents="auto"),this.resizing=!1},initialEvent:e})}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let i=100-t;this.style.setProperty("--start-panel-width",`clamp(100px, ${t}%, 100%)`),this.style.setProperty("--end-panel-width",`${i}%`)}}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,i=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=i),e.key==="ArrowRight"&&(t+=i),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=p(0,t,100)}}pixelsToPercentage(e){return e/this.cachedWidth*100}};d(l,"baseName","light-preview"),d(l,"dependencies",{"light-disclosure":R,"light-code":z}),d(l,"styles",[f,b,H]),d(l,"properties",{summary:{},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},previewMode:{reflect:!0,attribute:"preview-mode"},open:{reflect:!0,type:Boolean},resizePosition:{reflect:!0,type:Number,attribute:"resize-position"},resizing:{reflect:!0,type:Boolean},scriptScope:{attribute:"script-scope"},previewHtml:{attribute:"preview-html"},unescapeBehavior:{attribute:"unescape-behavior"},disableHighlight:{type:Boolean,attribute:"disable-highlight"},preserveWhitespace:{type:Boolean,attribute:"preserve-whitespace"},highlightLines:{attribute:"highlight-lines"},insertedLines:{attribute:"inserted-lines"},deletedLines:{attribute:"deleted-lines"},disableLineNumbers:{type:Boolean,reflect:!0,attribute:"disable-line-numbers"},lineNumberStart:{type:Number,attribute:"line-number-start"},wrap:{reflect:!0,attribute:"wrap"},language:{},code:{},highlighter:{attribute:!1,state:!0}});export{l as a};
-//# sourceMappingURL=/light-pen/pull/25/bridgetown/static/chunks/chunk-GDXYTP2L.js.map
+//# sourceMappingURL=/light-pen/pull/25/bridgetown/static/chunks/chunk-FTNW47SX.js.map
