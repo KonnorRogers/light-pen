@@ -613,7 +613,9 @@ export default class LightPreview extends BaseElement {
           <div part="end-panel"></div>
         </div>
 
-        <div part="above-expanded-code"><slot name="above-expanded-code"></slot></div>
+        <div part="above-expanded-code">
+          <slot name="above-expanded-code"></slot>
+        </div>
         <light-disclosure
           id="details"
           ?open=${this.open}
@@ -641,7 +643,9 @@ export default class LightPreview extends BaseElement {
             ></light-code>
           </div>
         </light-disclosure>
-        <div part="after-expanded-code"><slot name="after-expanded-code"></slot></div>
+        <div part="after-expanded-code">
+          <slot name="after-expanded-code"></slot>
+        </div>
         <div part="actions">
           <div><slot name="before-toggle-button"></slot></div>
           <button

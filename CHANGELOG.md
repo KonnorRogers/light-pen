@@ -2,6 +2,7 @@
 
 - Feature(light-preview): Added the `after-actions`, `above-expanded-code`, and `after-expanded-code` slots and parts. [#24]
 - Bug Fix(light-preview): now properly listens to changes to `unescapeBehavior` / `unescape-behavior` [#24]
+- Bug Fix(light-editor): Properly insert new lines. [#25]
 
 ## 4.0.0 - 08/01/2024
 

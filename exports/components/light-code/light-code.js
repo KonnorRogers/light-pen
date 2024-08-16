@@ -200,6 +200,7 @@ export default class LightCode extends BaseElement {
       this.__setGutterMeasurements(),
     );
 
+    this.newLineRegex = /\r\n|\r|\n/;
     this.__highlightedCode__ = "";
   }
 
@@ -379,6 +380,17 @@ export default class LightCode extends BaseElement {
     // code = code.split(newLineRegex).map((line, index) => {
     //   return CELL_START + (index + 1) + LINE_START + escapeString(line) + LINE_END
     // }).join("\n")
+
+    code = code
+      .split(this.newLineRegex)
+      .map((str) => {
+        if (str === "") {
+          return " ";
+        }
+
+        return str;
+      })
+      .join("\n");
 
     if (!this.highlighter) {
       this.highlighter = createPrismInstance();
