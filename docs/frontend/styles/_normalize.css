@@ -1,19 +1,17 @@
 html {
   box-sizing: border-box;
   height: 100%;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
   scrollbar-gutter: stable;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
 }
 
 light-code {
   isolation: isolate;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
 }
 
 body {
@@ -22,48 +20,31 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeSpeed;
   font-family: var(--sl-font-sans);
-  background-color: var(--body-color);
-  color: var(--text-color);
-  display: grid;
-  grid-template-rows: minmax(0, 1fr);
-  font-size: 110%;
+	background-color: var(--body-color);
+	color: var(--text-color);
+	display: grid;
+	grid-template-rows: minmax(0, 1fr);
   min-height: 100%;
   margin: 0;
   padding: 0;
+  font-size: 115%;
 }
 
 [hidden] {
   display: none !important;
 }
 
-img,
-picture,
-video,
-canvas,
-svg {
+img, picture, video, canvas, svg {
   display: block;
   max-width: 100%;
 }
 
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
   font: inherit;
 }
 
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
-}
-
-.flow > * + * {
-  margin-block-start: var(--flow-space, 1em);
 }
 
 body {
@@ -81,12 +62,7 @@ button:hover {
   cursor: pointer;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1,h2,h3,h4,h5,h6 {
   scroll-margin-top: calc(80px + 2em);
   margin: 0;
   padding: 0;
@@ -109,13 +85,11 @@ h2 {
   font-size: 1.15em;
 }
 
-h3,
-h4 {
+h3, h4 {
   font-size: 1.1em;
 }
 
-h5,
-h6 {
+h5, h6 {
   font-size: 1.05em;
 }
 
@@ -126,9 +100,8 @@ p {
   font-size: 1em;
 }
 
-p,
-li {
-  line-height: 1.8;
+p, li {
+  line-height: 1.5;
 }
 
 li {
@@ -177,6 +150,7 @@ a:is(:hover) {
   color: var(--link-color-focus);
 }
 
+
 kr-layout::part(skip-link):is(:focus-visible),
 a:is(:focus-visible) {
   box-shadow: 0px 0px 3px 3px var(--sl-color-primary-600);
@@ -224,3 +198,4 @@ blockquote {
   padding: 0.75em;
   background-color: var(--sl-color-neutral-50);
 }
+
