@@ -240,3 +240,29 @@ Here's a preview of soft wrapping vs hard wrapping.
     </div>
   </template>
 </light-preview>
+
+
+## No JS fallback
+
+A no JS fallback could be something like this:
+
+```css
+light-code:defined > [slot="code"] {
+  display: none;
+}
+
+light-code > [slot="code"] {
+  display: block;
+  overflow: auto;
+  /* this stops line-wrapping. */
+  white-space: pre;
+  word-break: break-all;
+}
+
+light-code[wrap="soft"] > [slot="code"] {
+    /* this creates "soft" line-wrapping. */
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+```
