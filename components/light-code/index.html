@@ -6,17 +6,17 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.SRRMMBZT.js">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.IWQMOJIS.js">
-<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.XQKLCJIM.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.HYMF2IGG.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.OTXPVKFZ.js">
+<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.5IYK5AYA.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
 <link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.V4NOXB77.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.XQKLCJIM.css"></noscript>
+<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.5IYK5AYA.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.SRRMMBZT.js" type="module"></script>
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.IWQMOJIS.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.HYMF2IGG.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.OTXPVKFZ.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/light-pen/apple-touch-icon.png">
@@ -363,12 +363,12 @@ can combine ranges and numbers like so:</p>
             HTML
           </div>
 
-          <clipboard-copy for="c9df72d1-6729-4981-9986-bc080777e25b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="438f9511-133a-4303-a15e-8536233b604b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="c9df72d1-6729-4981-9986-bc080777e25b" hidden="">&lt;light-code highlight-lines=&quot;{1, 4-8, 12}&quot;&gt;&lt;/light-code&gt;
+          <script type="text/plain" id="438f9511-133a-4303-a15e-8536233b604b" hidden="">&lt;light-code highlight-lines=&quot;{1, 4-8, 12}&quot;&gt;&lt;/light-code&gt;
 </script>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-code</span> <span class="na">highlight-lines=</span><span class="s">"{1, 4-8, 12}"</span><span class="nt">&gt;&lt;/light-code&gt;</span>
@@ -568,6 +568,62 @@ the container. If this is undesirable, you can pass <code class="highlighter-rou
     </div>
   </template>
 </light-preview>
+
+<h2 id="no-js-fallback">
+          <a href="#no-js-fallback">No JS fallback</a>
+        </h2>
+
+<p>A no JS fallback could be something like this:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            CSS
+          </div>
+
+          <clipboard-copy for="8e8ea1da-fc8a-482f-999c-18eacf34e1b0" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <script type="text/plain" id="8e8ea1da-fc8a-482f-999c-18eacf34e1b0" hidden="">light-code:defined &gt; [slot=&quot;code&quot;] {
+  display: none;
+}
+
+light-code &gt; [slot=&quot;code&quot;] {
+  display: block;
+  overflow: auto;
+  /* this stops line-wrapping. */
+  white-space: pre;
+  word-break: break-all;
+}
+
+light-code[wrap=&quot;soft&quot;] &gt; [slot=&quot;code&quot;] {
+    /* this creates &quot;soft&quot; line-wrapping. */
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+</script>
+        </div>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">light-code</span><span class="nd">:defined</span> <span class="o">&gt;</span> <span class="o">[</span><span class="nt">slot</span><span class="o">=</span><span class="s1">"code"</span><span class="o">]</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">light-code</span> <span class="o">&gt;</span> <span class="o">[</span><span class="nt">slot</span><span class="o">=</span><span class="s1">"code"</span><span class="o">]</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+  <span class="nl">overflow</span><span class="p">:</span> <span class="nb">auto</span><span class="p">;</span>
+  <span class="c">/* this stops line-wrapping. */</span>
+  <span class="nl">white-space</span><span class="p">:</span> <span class="n">pre</span><span class="p">;</span>
+  <span class="nl">word-break</span><span class="p">:</span> <span class="n">break-all</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">light-code</span><span class="o">[</span><span class="nt">wrap</span><span class="o">=</span><span class="s1">"soft"</span><span class="o">]</span> <span class="o">&gt;</span> <span class="o">[</span><span class="nt">slot</span><span class="o">=</span><span class="s1">"code"</span><span class="o">]</span> <span class="p">{</span>
+    <span class="c">/* this creates "soft" line-wrapping. */</span>
+    <span class="nl">word-break</span><span class="p">:</span> <span class="n">break-word</span><span class="p">;</span>
+    <span class="nl">white-space</span><span class="p">:</span> <span class="n">pre-wrap</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div></div>
 <h2 id="api-reference">
           <a href="#api-reference">API Reference</a>
         </h2>
@@ -584,12 +640,12 @@ the container. If this is undesirable, you can pass <code class="highlighter-rou
             HTML
           </div>
 
-          <clipboard-copy for="594c84e7-c097-4a90-bf9d-fc8ec151a2b1" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="41fadbfb-8eb6-4b19-a647-869947f8ebf5" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="594c84e7-c097-4a90-bf9d-fc8ec151a2b1" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
+          <script type="text/plain" id="41fadbfb-8eb6-4b19-a647-869947f8ebf5" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-code/light-code-register.js&quot;&gt;&lt;/script&gt;
 </script>
         </div>
@@ -605,12 +661,12 @@ the container. If this is undesirable, you can pass <code class="highlighter-rou
             HTML
           </div>
 
-          <clipboard-copy for="08f11793-97f1-497e-a29c-9b1f59597c28" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="aa61e2b6-5879-4037-8d74-2476f7bf8ae7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="08f11793-97f1-497e-a29c-9b1f59597c28" hidden="">&lt;script type=&quot;module&quot;&gt;
+          <script type="text/plain" id="aa61e2b6-5879-4037-8d74-2476f7bf8ae7" hidden="">&lt;script type=&quot;module&quot;&gt;
   // Auto registers as &lt;light-code&gt;
   import &quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-code/light-code-register.js&quot;
 
@@ -640,12 +696,12 @@ the container. If this is undesirable, you can pass <code class="highlighter-rou
             JavaScript
           </div>
 
-          <clipboard-copy for="1423e4af-92e6-4d85-a434-815d99aea71b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="4012c8ad-7b88-4aab-be49-5a333860d839" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <script type="text/plain" id="1423e4af-92e6-4d85-a434-815d99aea71b" hidden="">// Auto registers as &lt;light-code&gt;
+          <script type="text/plain" id="4012c8ad-7b88-4aab-be49-5a333860d839" hidden="">// Auto registers as &lt;light-code&gt;
 import &quot;light-pen/exports/components/light-code/light-code-register.js&quot;
 
 // Manual Register
@@ -1082,6 +1138,8 @@ If the element has <code class="highlighter-rouge">disableHighlight</code>, we w
         <a href="#starting-counting-lines-at-a-specific-index" class="side-nav__link" style="">Starting counting lines at a specific index</a>
       </li><li class="side-nav__item" data-level="3">
         <a href="#line-wrapping" class="side-nav__link" style="">Line Wrapping</a>
+      </li><li class="side-nav__item" data-level="2">
+        <a href="#no-js-fallback" class="side-nav__link" style="">No JS fallback</a>
       </li><li class="side-nav__item" data-level="2">
         <a href="#api-reference" class="side-nav__link" style="">API Reference</a>
       </li><li class="side-nav__item" data-level="3">
