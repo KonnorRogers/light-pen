@@ -46,8 +46,7 @@ export const previewStyles = css`
       minmax(0, var(--end-panel-width, auto));
     overflow: auto;
     resize: vertical;
-    min-height: 100%;
-    max-height: 100%;
+    min-height: max-content;
     width: 100%;
     max-width: 100%;
   }
