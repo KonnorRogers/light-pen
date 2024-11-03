@@ -1,3 +1,7 @@
+## 4.1.1 - 11/03/2024
+
+- Bug Fix(light-preview): Fixed a bug in Safari with vertical resizing.
+
 ## 4.1.0 - 08/03/2024
 
 - Feature(light-preview): Added the `after-actions`, `above-expanded-code`, and `after-expanded-code` slots and parts. [#24]
