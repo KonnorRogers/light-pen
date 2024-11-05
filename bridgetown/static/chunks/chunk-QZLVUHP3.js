@@ -1,4 +1,4 @@
-import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-NUD3VE2C.js";import{a as u,b as d,c as b,d as f}from"/light-pen/bridgetown/static/chunks/chunk-3JMHAER2.js";import{a as x}from"/light-pen/bridgetown/static/chunks/chunk-JH2JOBOE.js";import{a as n}from"/light-pen/bridgetown/static/chunks/chunk-F2HUOIKT.js";import{a as l,b as s,g as p,h as c,i as h}from"/light-pen/bridgetown/static/chunks/chunk-ME66SWC4.js";import{d as o}from"/light-pen/bridgetown/static/chunks/chunk-F7GCPXDI.js";var g=l`
+import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-X5HFLDZW.js";import{a as u,b as d,c as b,d as f}from"/light-pen/bridgetown/static/chunks/chunk-3JMHAER2.js";import{a as x}from"/light-pen/bridgetown/static/chunks/chunk-JH2JOBOE.js";import{a as n}from"/light-pen/bridgetown/static/chunks/chunk-RQ3EAU6P.js";import{a as l,b as s,g as p,h as c,i as h}from"/light-pen/bridgetown/static/chunks/chunk-ME66SWC4.js";import{d as o}from"/light-pen/bridgetown/static/chunks/chunk-F7GCPXDI.js";var g=l`
   [part~="sandbox-iframe"] {
     width: 100%;
     height: 100%;
@@ -253,4 +253,4 @@ import{a as m}from"/light-pen/bridgetown/static/chunks/chunk-NUD3VE2C.js";import
         ${this.renderEditor(e)}
       </light-disclosure>
     `}};o(i,"baseName","light-pen"),o(i,"styles",[p,c,g]),o(i,"dependencies",{"light-editor":m,"light-disclosure":x}),o(i,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{i as a};
-//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-ZFHOMQUE.js.map
+//# sourceMappingURL=/light-pen/bridgetown/static/chunks/chunk-QZLVUHP3.js.map
