@@ -153,10 +153,10 @@ export default class LightCode extends BaseElement {
 
     /**
      * @property
-     * @type {"soft" | "none"}
-     * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="none"`, lines will not wrap instead all the user to scroll horizontally to see more code.
+     * @type {"soft" | "hard"}
+     * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="hard"`, lines will not wrap instead all the user to scroll horizontally to see more code.
      */
-    this.wrap = "soft";
+    this.wrap = "hard";
 
     /**
      * @property

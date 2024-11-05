@@ -1,3 +1,7 @@
+## 4.2.0 - 11/04/2024
+
+- Styles(light-code): Default line wrapping of `<light-code>` is now `"hard"`
+
 ## 4.1.1 - 11/03/2024
 
 - Bug Fix(light-preview): Fixed a bug in Safari with vertical resizing.
