@@ -1,5 +1,9 @@
 ## 4.2.1 - 01/02/2025
 
+- Bug Fix(light-code): Fixed lines not spanning the full width of the grid.
+
+## 4.2.1 - 01/02/2025
+
 - Bug Fix(light-code): Make `dedent` from slotted tags not suck [#]
 
 ## 4.2.0 - 11/04/2024

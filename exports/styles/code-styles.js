@@ -22,7 +22,7 @@ export const codeStyles = css`
   }
 
   :host([wrap="hard"]) [part~="code"] {
-    grid-template-columns: max-content max-content;
+    grid-template-columns: max-content minmax(max-content, 1fr);
   }
 
   :host([wrap="soft"]) [part~="code"] {
