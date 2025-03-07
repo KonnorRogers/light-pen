@@ -77,14 +77,16 @@ jobs:
       - name: Deploy with gh-pages
         if: github.ref == 'refs/heads/main'
         run: |
-          pnpm exec gh-pages --remove "*(!(pull))" -d ./docs/output --dotfiles -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          pnpm exec gh-pages --remove "*(!(pull))" -d ./docs/output --dotfiles -b gh-pages -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy preview with gh-pages
         if: github.ref != 'refs/heads/main'
         run: |
-          pnpm exec gh-pages -d ./docs/output --dotfiles --dest "${{ env.PR_PATH }}" -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          pnpm exec gh-pages -d ./docs/output --dotfiles --dest "${{ env.PR_PATH }}" -b gh-pages -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
