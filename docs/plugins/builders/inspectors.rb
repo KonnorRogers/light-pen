@@ -1,9 +1,14 @@
+require "securerandom"
+require "cgi"
+require_relative "../../src/_components/syntax.rb"
+
 class Builders::Inspectors < SiteBuilder
   def build
     inspect_html do |document|
       grab_headers(document)
       mark_external(document)
       syntax_highlight(document)
+      wrap_light_code(document)
     end
   end
 
@@ -21,15 +26,49 @@ class Builders::Inspectors < SiteBuilder
     end
   end
 
+  def wrap_light_code(document)
+    document.css("light-code").each do |el|
+      lang = el["language"].to_s === "" ? "html" : el["language"]
+      lang = Syntax.full_language(lang)
+      id = el["id"] || "code-block-" + SecureRandom.uuid
+      el["id"] = id
+
+      el.wrap("<div class='syntax-block'></div>")
+
+      actions = <<-HTML
+        <div class='syntax-block__actions'>
+          <div class='syntax-block__badge'>
+            #{lang}
+          </div>
+
+          <sl-tooltip content="Copy">
+            <button
+              for='#{id}'
+              class='button clipboard clipboard--idle syntax-block__clipboard'
+              aria-label='Copy to clipboard'
+              data-controller='clipboard'
+              type="button"
+            >
+              <sl-icon class='clipboard__icon--success' name='clipboard-check'></sl-icon>
+              <sl-icon class='clipboard__icon--idle' name='clipboard'></sl-icon>
+            </button>
+          </sl-tooltip>
+        </div>
+      HTML
+
+      el.add_previous_sibling(actions)
+    end
+  end
+
   def syntax_highlight(document)
-    document.css(":not(.syntax-block) > div.highlighter-rouge").each do |el|
+    document.css("div.highlighter-rouge").each do |el|
       text = el.inner_text
       lang = el["class"].scan(/\s?language-.*\s/).last
 
       lang = lang.strip.split("-")[1] if lang
 
       lang = Syntax.full_language(lang)
-      id = SecureRandom.uuid
+      id = "code-block-" + SecureRandom.uuid
 
       el.wrap("<div class='syntax-block'></div>")
 
@@ -68,8 +107,6 @@ class Builders::Inspectors < SiteBuilder
     document.css("main").css("h2[id],h3[id],h4[id],h5[id],h6[id]").each do |heading|
       text = heading.inner_text
 
-      level = heading.name.split(/h/)[1]
-
       unless heading.css("a")[0]
         heading.content = ""
         anchor = %(
@@ -79,14 +116,15 @@ class Builders::Inspectors < SiteBuilder
         heading << anchor
       end
 
+
       side_anchor = %(
-        <a href='##{heading[:id]}' class='side-nav__link' style="">#{text}</a>
+        <a href='##{heading[:id]}' class='side-nav__link'>#{text}</a>
       )
 
-      item = document.create_element("li", "", class: "side-nav__item", "data-level": level.to_s)
+      item = document.create_element("li", "", class: "side-nav__item")
       item << side_anchor
 
-      table_of_contents << item
+      # table_of_contents << item
 
       # we'll get here.
       # list = document.create_element("ul", "", class: "side-nav__category-menu")
