@@ -1,3 +1,7 @@
+## 4.2.4 - 03/07/2025
+
+- Fixed a bug in Safari for being able to select line numbers
+
 ## 4.2.3 - 03/07/2025
 
 - Fixed a bug in `dedent` improperly flagging multiple new lines.
