@@ -78,7 +78,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          pnpm exec gh-pages -d ./docs/output --dotfiles -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+          pnpm exec gh-pages --remove "*(!(pull))" -d ./docs/output --dotfiles -b gh-pages -- -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
