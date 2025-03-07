@@ -19,14 +19,7 @@ export const codeStyles = css`
 
   [part~="code"] {
     display: grid;
-  }
-
-  :host([wrap="hard"]) [part~="code"] {
     grid-template-columns: max-content minmax(max-content, 1fr);
-  }
-
-  :host([wrap="soft"]) [part~="code"] {
-    grid-template-columns: max-content minmax(0, 1fr);
   }
 
   :host([wrap="soft"]) [part~="pre"] {
@@ -48,17 +41,20 @@ export const codeStyles = css`
   }
 
   [part~="line"]::before {
-    content: " ";
+    content: "";
     line-height: inherit;
     padding-inline-end: 6px;
+    padding-inline-start: 1ch;
   }
 
   [part~="line"].deleted::before {
     content: "-";
+    padding-inline-start: 0px;
   }
 
   [part~="line"].inserted::before {
     content: "+";
+    padding-inline-start: 0px;
   }
 
   [part~="gutter-cell"] {
@@ -66,6 +62,7 @@ export const codeStyles = css`
     padding-inline-end: 0.5em;
     padding-inline-start: 0.75em;
     user-select: none;
+    -webkit-user-select: none;
     color: rgba(0, 0, 0, 0.35);
     background-color: var(--syntax-bg);
     font-variant-numeric: tabular-nums;
