@@ -23,12 +23,12 @@ npm install light-pen
 import "light-pen"
 
 // Registry yourself
-import LightPen "light-pen/exports/components/light-pen/light-pen.js"
+import LightPen from "light-pen/exports/components/light-pen/light-pen.js"
 
 LightPen.define() // Registers `<light-pen>`
 
 // Register under another name
-import LightPen "light-pen/exports/components/light-pen/light-pen.js"
+import LightPen from "light-pen/exports/components/light-pen/light-pen.js"
 LightPen.define("other-name")
 ```
 
