@@ -39,7 +39,6 @@ component: light-editor
         &lt;/script>
       </light-editor>
     </form>
-
   </script>
 </light-preview>
 

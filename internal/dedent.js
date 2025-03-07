@@ -17,16 +17,15 @@ export function dedent(templateStrings, ...values) {
       ? [templateStrings]
       : templateStrings.slice();
 
-  let string = "";
-
-  function interpolate() {
-    string = strings[0];
+  function interpolate(strings, values) {
+    let finalString = []
+    finalString.push(strings[0]);
 
     for (let i = 0; i < values.length; i++) {
-      string += values[i] + strings[i + 1];
+      finalString.push(values[i] + strings[i + 1]);
     }
 
-    string = string.trim();
+    return finalString.join("\n").trim()
   }
 
   // 1. check if its dedentable.
@@ -37,7 +36,7 @@ export function dedent(templateStrings, ...values) {
     let match;
 
     // If any new line starts without any indentation and not an empty string, mark it as not dedentable, and then break the loop.
-    if (strings[i].trim() && strings[i].match(/\n[^\t ]/)) {
+    if (strings[i].match(/\n[^\f\r\n\t ]/)) {
       isDedentable = false;
       break;
     }
@@ -50,8 +49,7 @@ export function dedent(templateStrings, ...values) {
   }
 
   if (!isDedentable) {
-    interpolate();
-    return string;
+    return interpolate(strings, values);
   }
 
   // 3. Remove the common indentation from all strings.
@@ -65,8 +63,6 @@ export function dedent(templateStrings, ...values) {
   }
 
   // 5. Perform interpolation.
-  interpolate();
-
-  return string;
+  return interpolate(strings, values);
 }
 
