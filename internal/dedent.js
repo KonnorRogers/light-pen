@@ -22,14 +22,14 @@ export function dedent(templateStrings, ...values) {
    * @param {unknown[]} values
    */
   function interpolate(strings, values) {
-    let finalString = []
+    let finalString = [];
     finalString.push(strings[0]);
 
     for (let i = 0; i < values.length; i++) {
       finalString.push(values[i] + strings[i + 1]);
     }
 
-    return finalString.join("\n").trim()
+    return finalString.join("\n").trim();
   }
 
   // 1. check if its dedentable.
@@ -69,4 +69,3 @@ export function dedent(templateStrings, ...values) {
   // 5. Perform interpolation.
   return interpolate(strings, values);
 }
-
