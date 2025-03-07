@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../frontend/javascript/src/external-icon.js"],
+  "sourcesContent": ["class ExternalIcon extends HTMLElement {\n  connectedCallback() {\n    this.attachShadow({ mode: \"open\" });\n    this.shadowRoot.innerHTML = `<sl-icon name=\"box-arrow-up-right\"></sl-icon><sl-visually-hidden>Opens in new window</sl-visually-hidden>`;\n  }\n}\n\nif (!window.customElements.get(\"external-icon\")) {\n  window.customElements.define(\"external-icon\", ExternalIcon);\n}\n"],
+  "mappings": ";AAAA,IAAM,eAAN,cAA2B,YAAY;AAAA,EACrC,oBAAoB;AAClB,SAAK,aAAa,EAAE,MAAM,OAAO,CAAC;AAClC,SAAK,WAAW,YAAY;AAAA,EAC9B;AACF;AAEA,IAAI,CAAC,OAAO,eAAe,IAAI,eAAe,GAAG;AAC/C,SAAO,eAAe,OAAO,iBAAiB,YAAY;AAC5D;",
+  "names": []
+}

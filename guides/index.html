@@ -6,22 +6,22 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.3K6OUL3F.js">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.C2VPXCWA.js">
-<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.5IYK5AYA.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.OPT4A7LY.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.GPDC3374.js">
+<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.G7BFVZOQ.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.ISL6CEDV.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.J7I5Y2BV.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.5IYK5AYA.css"></noscript>
+<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.G7BFVZOQ.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.3K6OUL3F.js" type="module"></script>
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.C2VPXCWA.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.OPT4A7LY.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.GPDC3374.js" type="module"></script>
 
 <!-- Favicons -->
-<link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/light-pen/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://KonnorRogers.github.io/light-pen/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://KonnorRogers.github.io/light-pen/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/light-pen/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:4000/light-pen/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:4000/light-pen/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ec4899">
 <meta name="msapplication-TileColor" content="#da532c">
@@ -79,7 +79,53 @@
 </script>
 
 
+<script type="module">let lastmod = 0
+function startReloadConnection() {
+  const evtSource = new EventSource("/light-pen/_bridgetown/live_reload")
+  evtSource.onmessage = event => {
+    if (document.querySelector("#bridgetown-build-error")) document.querySelector("#bridgetown-build-error").close()
+    if (event.data == "reloaded!") {
+      location.reload()
+    } else {
+      const newmod = Number(event.data)
+      if (lastmod > 0 && newmod > 0 && lastmod < newmod) {
+        location.reload()
+      } else {
+        lastmod = newmod
+      }
+    }
+  }
+  evtSource.addEventListener("builderror", event => {
+    let dialog = document.querySelector("#bridgetown-build-error")
+    if (!dialog) {
+      dialog = document.createElement("dialog")
+      dialog.id = "bridgetown-build-error"
+      dialog.style.borderColor = "red"
+      dialog.style.fontSize = "110%"
+      dialog.innerHTML = `
+        <p style="color:red">There was an error when building the site:</p>
+        <output><pre></pre></output>
+        <p><small>Check your Bridgetown logs for further details.</small></p>
+      `
+      document.body.appendChild(dialog)
+      dialog.showModal()
+    }
+    dialog.querySelector("pre").textContent = JSON.parse(event.data)
+  })
+  evtSource.onerror = event => {
+    if (evtSource.readyState === 2) {
+      // reconnect with new object
+      evtSource.close()
+      console.warn("Live reload: attempting to reconnect in 3 seconds...")
 
+      setTimeout(() => startReloadConnection(), 3000)
+    }
+  }
+}
+setTimeout(() => {
+  startReloadConnection()
+}, 500)
+</script>
 
   </head>
   <body class="index " data-controller="search">
@@ -106,7 +152,7 @@
 
 
         <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
-    main
+    v4.2.2
   </div>
 
     </div>
@@ -190,7 +236,7 @@
 </a>
 
         <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
-    main
+    v4.2.2
   </div>
 
     </div>
@@ -361,7 +407,7 @@
 </a>
 
         <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
-    main
+    v4.2.2
   </div>
 
     </div>

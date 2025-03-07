@@ -1,0 +1,81 @@
+import "/light-pen/bridgetown/static/chunks/chunk-SHEXDT7D.js";
+
+// frontend/javascript/defer.js
+(window.requestIdleCallback || window.setTimeout)(async () => {
+  const { BridgetownNinjaKeys } = await import("/light-pen/bridgetown/static/chunks/ninja-keys-HX4INAWK.js");
+  const staticData = [
+    {
+      id: "theme-light",
+      icon: "<sl-icon name='sun'></sl-icon>",
+      title: "Light Mode",
+      section: "Theme",
+      keywords: "theme",
+      handler() {
+        window.applyTheme("light");
+        return { keepOpen: true };
+      }
+    },
+    {
+      id: "theme-dark",
+      icon: "<sl-icon name='moon'></sl-icon>",
+      title: "Dark Mode",
+      section: "Theme",
+      keywords: "theme",
+      handler() {
+        window.applyTheme("dark");
+        return { keepOpen: true };
+      }
+    },
+    {
+      id: "theme-system",
+      icon: "<sl-icon name='display'></sl-icon>",
+      title: "System",
+      section: "Theme",
+      keywords: "theme",
+      handler() {
+        window.applyTheme("system");
+        return { keepOpen: true };
+      }
+    }
+  ];
+  (class extends BridgetownNinjaKeys {
+    constructor(...args) {
+      super(...args);
+      this.staticData = staticData;
+    }
+    createData() {
+      this.results = this.showResultsForQuery(this._search || "*").reverse();
+      this.results.forEach((result) => {
+        result.icon = `<sl-icon name="link-45deg"></sl-icon>`;
+      });
+      return this.staticData.concat(this.results);
+    }
+    transformResult(result) {
+      const action = super.transformResult(result);
+      if (!action) return;
+      action.section = result.collection.name;
+      return action;
+    }
+    open() {
+      this.scrollTop = window.scrollY;
+      document.body.classList.add("fixed-body");
+      document.body.scroll(0, this.scrollTop);
+      this.nonModals.forEach((el) => {
+        el.setAttribute("inert", "");
+      });
+      super.open();
+    }
+    close() {
+      document.body.classList.remove("fixed-body");
+      window.scrollTo(0, this.scrollTop);
+      super.close();
+      this.nonModals.forEach((el) => el.removeAttribute("inert"));
+    }
+    get nonModals() {
+      return [...document.body.children].filter(
+        (el) => el.localName !== "bridgetown-ninja-keys"
+      );
+    }
+  }).define("bridgetown-ninja-keys");
+});
+//# sourceMappingURL=/light-pen/bridgetown/static/javascript/defer.GPDC3374.js.map

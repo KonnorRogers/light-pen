@@ -6,22 +6,22 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.3K6OUL3F.js">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.C2VPXCWA.js">
-<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.5IYK5AYA.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.OPT4A7LY.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.GPDC3374.js">
+<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.G7BFVZOQ.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.ISL6CEDV.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.J7I5Y2BV.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.5IYK5AYA.css"></noscript>
+<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.G7BFVZOQ.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.3K6OUL3F.js" type="module"></script>
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.C2VPXCWA.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.OPT4A7LY.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.GPDC3374.js" type="module"></script>
 
 <!-- Favicons -->
-<link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/light-pen/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://KonnorRogers.github.io/light-pen/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://KonnorRogers.github.io/light-pen/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/light-pen/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:4000/light-pen/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:4000/light-pen/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ec4899">
 <meta name="msapplication-TileColor" content="#da532c">
@@ -79,7 +79,53 @@
 </script>
 
 
+<script type="module">let lastmod = 0
+function startReloadConnection() {
+  const evtSource = new EventSource("/light-pen/_bridgetown/live_reload")
+  evtSource.onmessage = event => {
+    if (document.querySelector("#bridgetown-build-error")) document.querySelector("#bridgetown-build-error").close()
+    if (event.data == "reloaded!") {
+      location.reload()
+    } else {
+      const newmod = Number(event.data)
+      if (lastmod > 0 && newmod > 0 && lastmod < newmod) {
+        location.reload()
+      } else {
+        lastmod = newmod
+      }
+    }
+  }
+  evtSource.addEventListener("builderror", event => {
+    let dialog = document.querySelector("#bridgetown-build-error")
+    if (!dialog) {
+      dialog = document.createElement("dialog")
+      dialog.id = "bridgetown-build-error"
+      dialog.style.borderColor = "red"
+      dialog.style.fontSize = "110%"
+      dialog.innerHTML = `
+        <p style="color:red">There was an error when building the site:</p>
+        <output><pre></pre></output>
+        <p><small>Check your Bridgetown logs for further details.</small></p>
+      `
+      document.body.appendChild(dialog)
+      dialog.showModal()
+    }
+    dialog.querySelector("pre").textContent = JSON.parse(event.data)
+  })
+  evtSource.onerror = event => {
+    if (evtSource.readyState === 2) {
+      // reconnect with new object
+      evtSource.close()
+      console.warn("Live reload: attempting to reconnect in 3 seconds...")
 
+      setTimeout(() => startReloadConnection(), 3000)
+    }
+  }
+}
+setTimeout(() => {
+  startReloadConnection()
+}, 500)
+</script>
 
   </head>
   <body class="doc " data-controller="search">
@@ -106,7 +152,7 @@
 
 
         <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
-    main
+    v4.2.2
   </div>
 
     </div>
@@ -190,7 +236,7 @@
 </a>
 
         <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
-    main
+    v4.2.2
   </div>
 
     </div>
@@ -363,12 +409,14 @@ can combine ranges and numbers like so:</p>
             HTML
           </div>
 
-          <clipboard-copy for="32a15a88-6608-4109-9f61-c5209a765fa8" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
+          <sl-tooltip content="Copy">
+            <button for="c8c213f1-277d-4cd5-87e4-5f9ea07f91bc" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+              <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+              <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+            </button>
+          </sl-tooltip>
 
-          <script type="text/plain" id="32a15a88-6608-4109-9f61-c5209a765fa8" hidden="">&lt;light-code highlight-lines=&quot;{1, 4-8, 12}&quot;&gt;&lt;/light-code&gt;
+          <script type="text/plain" id="c8c213f1-277d-4cd5-87e4-5f9ea07f91bc" hidden="">&lt;light-code highlight-lines=&quot;{1, 4-8, 12}&quot;&gt;&lt;/light-code&gt;
 </script>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;light-code</span> <span class="na">highlight-lines=</span><span class="s">"{1, 4-8, 12}"</span><span class="nt">&gt;&lt;/light-code&gt;</span>
@@ -580,12 +628,14 @@ the container. If this is undesirable, you can pass <code class="highlighter-rou
             CSS
           </div>
 
-          <clipboard-copy for="39c525a5-ce35-419d-b0de-32f351dc9859" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
+          <sl-tooltip content="Copy">
+            <button for="6c0b0cd8-7007-4247-9e27-e2a1342788a2" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+              <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+              <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+            </button>
+          </sl-tooltip>
 
-          <script type="text/plain" id="39c525a5-ce35-419d-b0de-32f351dc9859" hidden="">light-code:defined &gt; [slot=&quot;code&quot;] {
+          <script type="text/plain" id="6c0b0cd8-7007-4247-9e27-e2a1342788a2" hidden="">light-code:defined &gt; [slot=&quot;code&quot;] {
   display: none;
 }
 
@@ -638,12 +688,14 @@ light-code[wrap=&quot;soft&quot;] &gt; [slot=&quot;code&quot;] {
             HTML
           </div>
 
-          <clipboard-copy for="5bfa1e21-20a4-4e1b-995a-cfa1758ff2a8" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
+          <sl-tooltip content="Copy">
+            <button for="2032ed84-2815-42f9-a7bb-a702d9eb6ccf" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+              <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+              <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+            </button>
+          </sl-tooltip>
 
-          <script type="text/plain" id="5bfa1e21-20a4-4e1b-995a-cfa1758ff2a8" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
+          <script type="text/plain" id="2032ed84-2815-42f9-a7bb-a702d9eb6ccf" hidden="">&lt;!-- Auto registers as &lt;light-code&gt; --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-code/light-code-register.js&quot;&gt;&lt;/script&gt;
 </script>
         </div>
@@ -659,12 +711,14 @@ light-code[wrap=&quot;soft&quot;] &gt; [slot=&quot;code&quot;] {
             HTML
           </div>
 
-          <clipboard-copy for="8efefe00-17c9-43dc-b29d-7a0d8e5d0053" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
+          <sl-tooltip content="Copy">
+            <button for="8af4b929-5693-4392-a34a-9433574fc2bf" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+              <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+              <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+            </button>
+          </sl-tooltip>
 
-          <script type="text/plain" id="8efefe00-17c9-43dc-b29d-7a0d8e5d0053" hidden="">&lt;script type=&quot;module&quot;&gt;
+          <script type="text/plain" id="8af4b929-5693-4392-a34a-9433574fc2bf" hidden="">&lt;script type=&quot;module&quot;&gt;
   // Auto registers as &lt;light-code&gt;
   import &quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-code/light-code-register.js&quot;
 
@@ -694,12 +748,14 @@ light-code[wrap=&quot;soft&quot;] &gt; [slot=&quot;code&quot;] {
             JavaScript
           </div>
 
-          <clipboard-copy for="df1e3574-e3dc-4fbd-adb3-3ff5719230ca" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
-            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
-            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
-          </clipboard-copy>
+          <sl-tooltip content="Copy">
+            <button for="ea124e95-9109-4472-88e4-898c52030693" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+              <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+              <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+            </button>
+          </sl-tooltip>
 
-          <script type="text/plain" id="df1e3574-e3dc-4fbd-adb3-3ff5719230ca" hidden="">// Auto registers as &lt;light-code&gt;
+          <script type="text/plain" id="ea124e95-9109-4472-88e4-898c52030693" hidden="">// Auto registers as &lt;light-code&gt;
 import &quot;light-pen/exports/components/light-code/light-code-register.js&quot;
 
 // Manual Register
@@ -1184,7 +1240,7 @@ If the element has <code class="highlighter-rouge">disableHighlight</code>, we w
 </a>
 
         <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
-    main
+    v4.2.2
   </div>
 
     </div>
