@@ -17,6 +17,10 @@ export function dedent(templateStrings, ...values) {
       ? [templateStrings]
       : templateStrings.slice();
 
+  /**
+   * @param {string[]} strings
+   * @param {unknown[]} values
+   */
   function interpolate(strings, values) {
     let finalString = []
     finalString.push(strings[0]);
