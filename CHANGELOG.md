@@ -1,3 +1,7 @@
+## 4.2.3 - 03/07/2025
+
+- Fixed a bug in `dedent` improperly flagging multiple new lines.
+
 ## 4.2.1 - 01/02/2025
 
 - Bug Fix(light-code): Fixed lines not spanning the full width of the grid.
