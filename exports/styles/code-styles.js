@@ -41,10 +41,14 @@ export const codeStyles = css`
   }
 
   [part~="line"]::before {
-    content: "";
+    content: " ";
     line-height: inherit;
     padding-inline-end: 6px;
-    padding-inline-start: 1ch;
+  }
+
+  [part~="line"]:not(.deleted, .inserted)::before {
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   [part~="line"].deleted::before {
