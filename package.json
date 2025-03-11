@@ -1,6 +1,6 @@
 {
   "name": "light-pen",
-  "version": "4.2.5",
+  "version": "4.2.4",
   "description": "A lightweight component library for code editing and syntax highlighting",
   "main": "./exports/index.js",
   "module": "./exports/index.js",
