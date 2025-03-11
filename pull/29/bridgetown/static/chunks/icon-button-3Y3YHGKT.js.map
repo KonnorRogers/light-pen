@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../node_modules/.pnpm/@shoelace-style+shoelace@2.20.1_@floating-ui+utils@0.2.9_@types+react@19.0.10/node_modules/@shoelace-style/shoelace/dist/chunks/chunk.EZCUSG7Q.js"],
+  "sourcesContent": ["import {\n  SlIconButton\n} from \"./chunk.7E4JTYWU.js\";\n\n// src/components/icon-button/icon-button.ts\nvar icon_button_default = SlIconButton;\nSlIconButton.define(\"sl-icon-button\");\n\nexport {\n  icon_button_default\n};\n"],
+  "mappings": "o1BAKA,IAAIA,EAAsBC,EAC1BA,EAAa,OAAO,gBAAgB",
+  "names": ["icon_button_default", "SlIconButton"]
+}
