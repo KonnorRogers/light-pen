@@ -1,3 +1,7 @@
+## 4.2.5 - 03/11/2025
+
+- Bug Fix(light-editor): Fixed a bug where cursors appeared wrong in `<light-editor>`
+
 ## 4.2.4 - 03/07/2025
 
 - Fixed a bug in Safari for being able to select line numbers
