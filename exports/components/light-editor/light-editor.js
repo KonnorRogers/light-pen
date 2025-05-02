@@ -287,7 +287,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             tabindex="-1"
             .language=${this.language}
             .code=${this.value}
-            .wrap=${this.wrap}
+            wrap=${this.wrap}
             .highlighter=${this.highlighter}
             .disableLineNumbers=${this.disableLineNumbers}
             .preserveWhitespace=${this.preserveWhitespace}

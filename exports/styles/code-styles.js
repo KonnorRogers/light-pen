@@ -22,6 +22,10 @@ export const codeStyles = css`
     grid-template-columns: max-content minmax(max-content, 1fr);
   }
 
+  :host([wrap="soft"]) [part~="code"] {
+    grid-template-columns: max-content auto;
+  }
+
   :host([wrap="soft"]) [part~="pre"] {
     /* this creates line-wrapping. */
     word-break: break-word;
@@ -30,6 +34,10 @@ export const codeStyles = css`
 
   :host([disable-line-numbers]) [part~="code"] {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  :host([wrap="soft"][disable-line-numbers]) [part~="code"] {
+    grid-template-columns: minmax(0, auto);
   }
 
   [part~="line"] {
