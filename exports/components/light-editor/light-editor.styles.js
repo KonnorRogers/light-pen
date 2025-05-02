@@ -30,7 +30,7 @@ export const styles = css`
 
   [part~="textarea"] {
     color: transparent;
-    /* color: rgba(255,0,0,0.2); */
+    /* color: rgba(255,0,0,0.5); */
     background-color: transparent;
     caret-color: inherit;
     z-index: 1;
@@ -39,6 +39,9 @@ export const styles = css`
 
     /* Dynamically generated based on the size of the  gutter from "<light-code>" */
     padding-inline-start: calc(var(--gutter-width, 40px) + 8px);
+
+    /* needs to match light-codes padding-inline-end */
+    padding-inline-end: 8px;
   }
 
   light-code {
@@ -84,13 +87,13 @@ export const styles = css`
   }
 
   [part~="textarea"] {
-    /* this creates line-wrapping. */
+    /* this creates "soft" line-wrapping. */
     word-break: break-word;
     white-space: pre-wrap;
   }
 
   :host([wrap="hard"]) [part~="textarea"] {
-    /* This would remove line-wrapping */
+    /* this would remove line-wrapping */
     word-break: break-all;
     white-space: pre;
   }

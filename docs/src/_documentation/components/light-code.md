@@ -205,7 +205,7 @@ Here's a preview of soft wrapping vs hard wrapping.
     <div style="display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
       <section>
         <h2>With "soft" wrapping</h2>
-        <light-code>
+        <light-code wrap="soft">
           <script type="text/plain" slot="code">
             <html>
               <head></head>
