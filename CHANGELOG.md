@@ -1,3 +1,8 @@
+## 4.2.6 - 05/02/2025
+
+- Bug Fix(light-code): Fixed a bug with soft wrapping in light-code
+- Bug Fix(light-editor): Fixed a synchronization bug between light-code and light-editor's textarea
+
 ## 4.2.5 - 03/11/2025
 
 - Bug Fix(light-editor): Fixed a bug where cursors appeared wrong in `<light-editor>`
