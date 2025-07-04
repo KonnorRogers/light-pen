@@ -23,10 +23,11 @@ export const codeStyles = css`
   }
 
   :host([wrap="soft"]) [part~="code"] {
-    grid-template-columns: max-content auto;
+    grid-template-columns: max-content minmax(auto, 1fr);
   }
 
-  :host([wrap="soft"]) [part~="pre"] {
+  :host([wrap="soft"]) [part~="pre"],
+  :host([wrap="soft"]) [part~="code"] {
     /* this creates line-wrapping. */
     word-break: break-word;
     white-space: pre-wrap;
