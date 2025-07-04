@@ -1,3 +1,7 @@
+## 4.3.0 - 07/04/2025
+
+- Bug Fix(light-editor): Fixed a bug with grid setup for soft wrapping
+
 ## 4.2.6 - 05/02/2025
 
 - Bug Fix(light-code): Fixed a bug with soft wrapping in light-code
