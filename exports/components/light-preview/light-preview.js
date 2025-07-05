@@ -431,7 +431,7 @@ export default class LightPreview extends BaseElement {
       iframe.removeAttribute("srcdoc");
     }
 
-    if (changedProperties.has("src")) {
+    if (changedProperties.has("src") && !this.src) {
       this.updateIframeContent();
     }
     super.updated(changedProperties);
