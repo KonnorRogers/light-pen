@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../node_modules/.pnpm/@shoelace-style+shoelace@2.20.1_@floating-ui+utils@0.2.10_@types+react@19.1.8/node_modules/@shoelace-style/shoelace/dist/chunks/chunk.LD4M4QGE.js"],
+  "sourcesContent": ["// src/internal/closeActiveElement.ts\nvar blurActiveElement = (elm) => {\n  var _a;\n  const { activeElement } = document;\n  if (activeElement && elm.contains(activeElement)) {\n    (_a = document.activeElement) == null ? void 0 : _a.blur();\n  }\n};\n\nexport {\n  blurActiveElement\n};\n"],
+  "mappings": "AACA,IAAIA,EAAqBC,GAAQ,CAC/B,IAAIC,EACJ,GAAM,CAAE,cAAAC,CAAc,EAAI,SACtBA,GAAiBF,EAAI,SAASE,CAAa,KAC5CD,EAAK,SAAS,gBAAkB,MAAgBA,EAAG,KAAK,EAE7D",
+  "names": ["blurActiveElement", "elm", "_a", "activeElement"]
+}
