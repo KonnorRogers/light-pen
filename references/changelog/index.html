@@ -6,7 +6,7 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.GMG2VOQL.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.WNT3AULH.js">
 <link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.G7KCPFFG.js">
 <link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.X5WWSVYM.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.X5WWSVYM.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.GMG2VOQL.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.WNT3AULH.js" type="module"></script>
 <script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.G7KCPFFG.js" type="module"></script>
 
 <!-- Favicons -->
@@ -303,7 +303,9 @@
         </h2>
 
 <ul>
+  <li>Security Fix(light-pen / light-preview): Previously, <code class="highlighter-rouge">&lt;iframe&gt;</code> in these 2 components could reach the parent. With this fix, it now has a default set of sandbox settings as follows: <code class="highlighter-rouge">allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts</code></li>
   <li>Bug Fix(light-editor): Fixed a bug with grid setup for soft wrapping</li>
+  <li>Feature(light-preview): Added support for <code class="highlighter-rouge">src</code> attribute for external URLs.</li>
 </ul>
 
 <h2 id="426---05022025">
