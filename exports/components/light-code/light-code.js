@@ -22,6 +22,26 @@ import {
   LineHighlightWrapPlugin,
 } from "../../../internal/line-highlight-plugin.js";
 
+const CELL_START = `<span class="token light-gutter-cell" part="gutter-cell">`
+const LINE_START = `</span><span class="token light-line" part="line">`
+const HIGHLIGHTED_LINE_START = `</span><span class="token light-line line-highlight" part="line line-highlight">`
+const LINE_END = `</span>`
+
+const ESCAPE_STRING_HASH = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#x27;"
+}
+
+const escapeString = (str) => {
+  return str
+    .replaceAll(/&/g, "&amp;")
+    .replaceAll(/[<>"']/g, (match) => ESCAPE_STRING_HASH[match])
+}
+
+
 /**
  * LightCode is a minimal wrapper around Prism for displaying code highlighting
  *
@@ -99,6 +119,8 @@ export default class LightCode extends BaseElement {
     highlightLines: { attribute: "highlight-lines" },
     insertedLines: { attribute: "inserted-lines" },
     deletedLines: { attribute: "deleted-lines" },
+    lineHighlightStart: {attribute: "line-highlight-start", type: Number},
+    lineHighlightEnd: { attribute: "line-highlight-end", type: Number },
     disableLineNumbers: {
       type: Boolean,
       reflect: true,
@@ -202,6 +224,8 @@ export default class LightCode extends BaseElement {
 
     this.newLineRegex = /\r\n|\r|\n/;
     this.__highlightedCode__ = "";
+    this.lineHighlightStart = 0
+    this.lineHighlightEnd = 0
   }
 
   /**
@@ -228,7 +252,9 @@ export default class LightCode extends BaseElement {
     if (
       changedProperties.has("highlighter") ||
       changedProperties.has("language") ||
-      changedProperties.has("code")
+      changedProperties.has("code") ||
+      changedProperties.has("lineHighlightStart") ||
+      changedProperties.has("lineHighlightEnd")
       // We purposely don't re-highlight on line number changes for performance reasons.
     ) {
       this.__highlightedCode__ = this.highlight(this.code);
@@ -245,8 +271,8 @@ export default class LightCode extends BaseElement {
     if (
       (changedProperties.has("insertedLines") ||
         changedProperties.has("deletedLines") ||
-        changedProperties.has("highlightLines")) &&
-      !changedProperties.has("code")
+        changedProperties.has("highlightLines"))
+        && !changedProperties.has("code")
     ) {
       const lines = this.shadowRoot?.querySelectorAll(
         ".light-gutter-cell, .light-line",
@@ -262,7 +288,7 @@ export default class LightCode extends BaseElement {
         lines.forEach((el, index) => {
           // We have twice as many lines as line numbers.
           const divisor = index % 2 === 0 ? index : index - 1;
-          const lineNumber = divisor / 2 + 1;
+          const lineNumber = ((divisor / 2) + 1) + this.lineHighlightStart;
 
           el.classList.toggle(
             "line-highlight",
@@ -358,49 +384,59 @@ export default class LightCode extends BaseElement {
    * Override this function to use your own highlight function
    */
   highlight(code = this.code) {
-    // const newLineRegex = /\r\n|\r|\n/
-    // const CELL_START = `<span class="token light-gutter-cell" part="gutter-cell">`
-    // const LINE_START = `</span><span class="token light-line" part="line">`
-    // const LINE_END = `</span>`
+    const newLineRegex = /\r\n|\r|\n/
 
-    // const ESCAPE_STRING_HASH = {
-    //   "&": "&amp;",
-    //   "<": "&lt;",
-    //   ">": "&gt;",
-    //   '"': "&quot;",
-    //   "'": "&#x27;"
-    // }
-
-    // const escapeString = (str) => {
-    //   return str
-    //     .replaceAll(/&/g, "&amp;")
-    //     .replaceAll(/[<>"']/g, (match) => ESCAPE_STRING_HASH[match])
-    // }
-
-    // code = code.split(newLineRegex).map((line, index) => {
-    //   return CELL_START + (index + 1) + LINE_START + escapeString(line) + LINE_END
-    // }).join("\n")
-
-    code = code
+    /** @type {string[]} */
+    let codeAry = []
+    code
       .split(this.newLineRegex)
-      .map((str) => {
+      .forEach((str, index, ary) => {
         if (str === "") {
-          return " ";
+          ary[index] = " ";
         }
 
-        return str;
+        if (index === ary.length - 1) {
+          codeAry = ary
+        }
       })
-      .join("\n");
+
+    code = codeAry.join("\n")
+    // const highlightedCode = [];
+    // for (let i = (this.lineHighlightStart || 0); i < (this.lineHighlightEnd || code.length - 1); i++) {
+    //   let line = lines[i];
+    //   if (line == null) {
+    //     break;
+    //   }
+
+    //   if (line === "") {
+    //     line = " ";
+    //   }
+
+    //   const highlightLinesRange = new NumberRange().parse(
+    //     this.highlightLines,
+    //   );
+    //   highlightedCode.push(
+    //     CELL_START +
+    //       (i + 1) +
+    //       (highlightLinesRange.includes(i + 1) ? HIGHLIGHTED_LINE_START : LINE_START) +
+    //       escapeString(line) +
+    //       LINE_END,
+    //   );
+    // }
+    // return highlightedCode.join("\n");
 
     if (!this.highlighter) {
       this.highlighter = createPrismInstance();
     }
     const afterTokenizePlugins = [
       LineNumberPlugin({
+        visibleLineStart: this.lineHighlightStart,
+        visibleLineEnd: this.lineHighlightEnd,
         lineNumberStart: this.lineNumberStart,
         disableLineNumbers: this.disableLineNumbers,
       }),
       LineHighlightPlugin({
+        lineIndexOffset: this.lineHighlightStart,
         insertedLinesRange: new NumberRange().parse(this.insertedLines),
         deletedLinesRange: new NumberRange().parse(this.deletedLines),
         highlightLinesRange: new NumberRange().parse(this.highlightLines),

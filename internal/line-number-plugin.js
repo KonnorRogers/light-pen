@@ -8,6 +8,8 @@ const newLineRegex = /\r\n|\r|\n/;
  * @typedef {object} Options
  * @property {boolean} [disableLineNumbers] - Toggle line numbers off.
  * @property {number} [lineNumberStart=1] - Where to start counting from. Default is 1.
+ * @property {number} [visibleLineStart=0] - Where to start counting from. Default is 0.
+ * @property {number | null} [visibleLineEnd=0] - Where to start counting from. Default is null.
  * @property {(ary: Array<string | Token>, index: number, tokens: Array<Token>) => void} [callback] - substitute your own callback for each line.
  */
 
@@ -18,6 +20,8 @@ const newLineRegex = /\r\n|\r|\n/;
 export function LineNumberPlugin(options = {}) {
   const disableLineNumbers = options.disableLineNumbers ?? false;
   const lineNumberStart = options.lineNumberStart ?? 1;
+  const visibleLineStart = options.visibleLineStart ?? 0
+  let visibleLineEnd = options.visibleLineEnd ?? null
 
   let callback = options.callback;
 
@@ -45,7 +49,10 @@ export function LineNumberPlugin(options = {}) {
      * @type {Token[]}
      */
     const tokens = [];
-    splitLinesRec(env.tokens).forEach((ary, index) => {
+    const lines = splitLinesRec(env.tokens)
+
+    lines.slice(visibleLineStart, visibleLineEnd || lines.length - 1).forEach((ary, index) => {
+      index += visibleLineStart
       callback(ary, index, tokens);
     });
 

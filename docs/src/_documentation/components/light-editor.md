@@ -9,6 +9,75 @@ component: light-editor
 <light-editor style="display: none;"></light-editor>
 <light-code style="display: none;"></light-code>
 
+<light-preview preview-mode="shadow-dom">
+  <script type="text/plain" slot="code">
+    <style>
+
+      light-editor {
+        &::part(base) {
+          perspective: 30em;
+        }
+
+        &::part(base),
+        &::part(light-code),
+        &::part(textarea) {
+          transform-style: preserve-3d;
+          transition-property: transform, opacity;
+          transition-duration: 0.6s;
+        }
+      }
+
+      div:has(input:checked) light-editor {
+        &::part(base) {
+          transform: rotateY(45deg) rotateZ(-12deg);
+        }
+        &::part(light-code) {
+          opacity: 0.45;
+          transform: translateX(0px);
+        }
+
+        &::part(textarea) {
+          color: rgba(0,0,255, 0.85);
+          transform: translateX(40px);
+        }
+      }
+    </style>
+
+    <div>
+      <label>
+      <input id="toggle-trees" type="checkbox">
+        Separate Trees
+      </label>
+      <light-editor label="A small editor">
+        <!-- We use a `<script type="text/plain">` because there's a lot of caveats to using `<template>` -->
+        <script type="text/plain">
+          <!DOCTYPE html>
+          <html lang='en'>
+            <head>
+              <meta charset='UTF-8'>
+              <title>Hello World</title>
+
+              <style>
+                h1 { font-size: 1.8rem; }
+              </style>
+            </head>
+            <body>
+              <main>
+                <h1>Hello World</h1>
+                Sup
+                <script>
+                  const greeting = 'Hello World'
+                  console.log(greeting)
+                &lt;/script>
+              </main>
+            </body>
+          </html>
+        &lt;/script>
+      </light-editor>
+    </div>
+  </script>
+</light-preview>
+
 <light-preview preview-mode="shadow-dom" >
   <script type="text/plain" slot="code">
     <form>

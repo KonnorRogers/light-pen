@@ -3,20 +3,25 @@
  * @property {import("./number-range.js").NumberRange} highlightLinesRange
  * @property {import("./number-range.js").NumberRange} insertedLinesRange
  * @property {import("./number-range.js").NumberRange} deletedLinesRange
+ * @property {number} [lineIndexOffset=0] - used for virtualized highlighting to know where to start counting indexes.
  */
 
 /**
  * @param {lineHighlightOptions} options
  */
 export function LineHighlightPlugin(options) {
-  const { highlightLinesRange, insertedLinesRange, deletedLinesRange } =
+  if (!options.lineIndexOffset) {
+    options.lineIndexOffset = 0
+  }
+
+  const { highlightLinesRange, insertedLinesRange, deletedLinesRange, lineIndexOffset } =
     options;
   /**
    * @param {import("./prism-highlight.js").Env} env
    */
   return function (env) {
     // -1 for 0-index.
-    let index = 1;
+    let index = (1 + lineIndexOffset);
     for (const token of env.tokens) {
       if (typeof token === "string") continue;
 
