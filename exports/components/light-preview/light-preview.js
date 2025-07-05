@@ -84,6 +84,7 @@ export default class LightPreview extends BaseElement {
   static properties = {
     summary: {},
     sandboxSettings: { reflect: true, attribute: "sandbox-settings" },
+    src: {},
     previewMode: { reflect: true, attribute: "preview-mode" },
     open: { reflect: true, type: Boolean },
     resizePosition: {
@@ -116,6 +117,11 @@ export default class LightPreview extends BaseElement {
 
   constructor() {
     super();
+
+    /**
+     * The `iframe` src to use. This can be set to an external URL. This will override any HTML provided to the component.
+     */
+    this.src = ""
 
     /**
      * The sandbox settings to provide to the <iframe>
@@ -407,7 +413,27 @@ export default class LightPreview extends BaseElement {
         </body>
       </html>`;
 
-    iframe.srcdoc = content;
+    if (!this.src) {
+      iframe.srcdoc = content;
+    } else {
+      iframe.removeAttribute("srcdoc")
+    }
+  }
+
+  /**
+   * @override
+   * @param {import("lit").PropertyValues<typeof this>} changedProperties
+   */
+  updated (changedProperties) {
+    const iframe = this.shadowRoot?.querySelector("iframe")
+    if (iframe && this.src) {
+      iframe.removeAttribute("srcdoc")
+    }
+
+    if (changedProperties.has("src")) {
+      this.updateIframeContent()
+    }
+    super.updated(changedProperties)
   }
 
   /**
@@ -574,6 +600,7 @@ export default class LightPreview extends BaseElement {
    * @override
    */
   render() {
+    const shouldUseSrcdoc = !this.src
     const finalHTML = html`
       <div
         part=${stringMap({
@@ -589,6 +616,7 @@ export default class LightPreview extends BaseElement {
                 part="start-panel iframe"
                 height="auto"
                 frameborder="0"
+                src=${this.src}
                 sandbox=${ifDefined(
                   this.sandboxSettings ? this.sandboxSettings : null,
                 )}
