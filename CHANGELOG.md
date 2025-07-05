@@ -1,3 +1,7 @@
+## 4.3.1 - 07/05/2025
+
+- Security Fix(light-pen / light-preview): Previously, `<iframe>` in these 2 components could reach the parent. With this fix, it now has a default set of sandbox settings as follows: `allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts`
+
 ## 4.3.0 - 07/04/2025
 
 - Bug Fix(light-editor): Fixed a bug with grid setup for soft wrapping

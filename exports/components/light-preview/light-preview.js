@@ -121,7 +121,7 @@ export default class LightPreview extends BaseElement {
      * The sandbox settings to provide to the <iframe>
      * @type {string}
      */
-    this.sandboxSettings = "allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts";
+    this.sandboxSettings = "allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts";
 
     /**
      * The text to provide in the <details> toggle button
