@@ -121,13 +121,14 @@ export default class LightPreview extends BaseElement {
     /**
      * The `iframe` src to use. This can be set to an external URL. This will override any HTML provided to the component.
      */
-    this.src = ""
+    this.src = "";
 
     /**
      * The sandbox settings to provide to the <iframe>
      * @type {string}
      */
-    this.sandboxSettings = "allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts";
+    this.sandboxSettings =
+      "allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts";
 
     /**
      * The text to provide in the <details> toggle button
@@ -416,7 +417,7 @@ export default class LightPreview extends BaseElement {
     if (!this.src) {
       iframe.srcdoc = content;
     } else {
-      iframe.removeAttribute("srcdoc")
+      iframe.removeAttribute("srcdoc");
     }
   }
 
@@ -424,16 +425,16 @@ export default class LightPreview extends BaseElement {
    * @override
    * @param {import("lit").PropertyValues<typeof this>} changedProperties
    */
-  updated (changedProperties) {
-    const iframe = this.shadowRoot?.querySelector("iframe")
+  updated(changedProperties) {
+    const iframe = this.shadowRoot?.querySelector("iframe");
     if (iframe && this.src) {
-      iframe.removeAttribute("srcdoc")
+      iframe.removeAttribute("srcdoc");
     }
 
     if (changedProperties.has("src")) {
-      this.updateIframeContent()
+      this.updateIframeContent();
     }
-    super.updated(changedProperties)
+    super.updated(changedProperties);
   }
 
   /**
@@ -600,7 +601,7 @@ export default class LightPreview extends BaseElement {
    * @override
    */
   render() {
-    const shouldUseSrcdoc = !this.src
+    const shouldUseSrcdoc = !this.src;
     const finalHTML = html`
       <div
         part=${stringMap({

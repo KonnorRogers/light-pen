@@ -146,7 +146,8 @@ export default class LightPen extends BaseElement {
      * @property
      * @type {string}
      */
-    this.sandboxSettings = "allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts";
+    this.sandboxSettings =
+      "allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts";
 
     /**
      * @internal
