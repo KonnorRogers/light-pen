@@ -288,7 +288,7 @@ export default class LightCode extends BaseElement {
         lines.forEach((el, index) => {
           // We have twice as many lines as line numbers.
           const divisor = index % 2 === 0 ? index : index - 1;
-          const lineNumber = divisor / 2 + 1;
+          const lineNumber = ((divisor / 2) + 1) + this.lineHighlightStart;
 
           el.classList.toggle(
             "line-highlight",
@@ -385,76 +385,78 @@ export default class LightCode extends BaseElement {
    */
   highlight(code = this.code) {
     const newLineRegex = /\r\n|\r|\n/
-    const lines = code.split(newLineRegex)
-      // .map((line, index) => {
-      // return CELL_START + (index + 1) + LINE_START + escapeString(line) + LINE_END
-    // }).join("\n")
 
-    const highlightedCode = [];
-    for (let i = (this.lineHighlightStart || 0); i < (this.lineHighlightEnd || code.length - 1); i++) {
-      let line = lines[i];
-      if (line == null) {
-        break;
-      }
+    /** @type {string[]} */
+    let codeAry = []
+    code
+      .split(this.newLineRegex)
+      .forEach((str, index, ary) => {
+        if (str === "") {
+          ary[index] = " ";
+        }
 
-      if (line === "") {
-        line = " ";
-      }
+        if (index === ary.length - 1) {
+          codeAry = ary
+        }
+      })
 
-      const highlightLinesRange = new NumberRange().parse(
-        this.highlightLines,
-      );
-      highlightedCode.push(
-        CELL_START +
-          (i + 1) +
-          (highlightLinesRange.includes(i + 1) ? HIGHLIGHTED_LINE_START : LINE_START) +
-          escapeString(line) +
-          LINE_END,
-      );
-    }
-    return highlightedCode.join("\n");
+    code = codeAry.join("\n")
+    // const highlightedCode = [];
+    // for (let i = (this.lineHighlightStart || 0); i < (this.lineHighlightEnd || code.length - 1); i++) {
+    //   let line = lines[i];
+    //   if (line == null) {
+    //     break;
+    //   }
 
+    //   if (line === "") {
+    //     line = " ";
+    //   }
 
-    // code = code
-    //   .split(this.newLineRegex)
-    //   .map((str) => {
-    //     if (str === "") {
-    //       return " ";
-    //     }
-
-    //     return str;
-    //   })
-    //   .join("\n");
-
-    // if (!this.highlighter) {
-    //   this.highlighter = createPrismInstance();
+    //   const highlightLinesRange = new NumberRange().parse(
+    //     this.highlightLines,
+    //   );
+    //   highlightedCode.push(
+    //     CELL_START +
+    //       (i + 1) +
+    //       (highlightLinesRange.includes(i + 1) ? HIGHLIGHTED_LINE_START : LINE_START) +
+    //       escapeString(line) +
+    //       LINE_END,
+    //   );
     // }
-    // const afterTokenizePlugins = [
-    //   LineNumberPlugin({
-    //     lineNumberStart: this.lineNumberStart,
-    //     disableLineNumbers: this.disableLineNumbers,
-    //   }),
-    //   LineHighlightPlugin({
-    //     insertedLinesRange: new NumberRange().parse(this.insertedLines),
-    //     deletedLinesRange: new NumberRange().parse(this.deletedLines),
-    //     highlightLinesRange: new NumberRange().parse(this.highlightLines),
-    //   }),
-    // ];
+    // return highlightedCode.join("\n");
 
-    // this.highlighter.hooks.add(
-    //   "wrap",
-    //   /** @type {any} */ (LineHighlightWrapPlugin()),
-    // );
+    if (!this.highlighter) {
+      this.highlighter = createPrismInstance();
+    }
+    const afterTokenizePlugins = [
+      LineNumberPlugin({
+        visibleLineStart: this.lineHighlightStart,
+        visibleLineEnd: this.lineHighlightEnd,
+        lineNumberStart: this.lineNumberStart,
+        disableLineNumbers: this.disableLineNumbers,
+      }),
+      LineHighlightPlugin({
+        lineIndexOffset: this.lineHighlightStart,
+        insertedLinesRange: new NumberRange().parse(this.insertedLines),
+        deletedLinesRange: new NumberRange().parse(this.deletedLines),
+        highlightLinesRange: new NumberRange().parse(this.highlightLines),
+      }),
+    ];
 
-    // code = PrismHighlight(
-    //   code,
-    //   this.highlighter.languages[this.language],
-    //   this.language,
-    //   this.highlighter,
-    //   {
-    //     afterTokenize: afterTokenizePlugins,
-    //   },
-    // );
+    this.highlighter.hooks.add(
+      "wrap",
+      /** @type {any} */ (LineHighlightWrapPlugin()),
+    );
+
+    code = PrismHighlight(
+      code,
+      this.highlighter.languages[this.language],
+      this.language,
+      this.highlighter,
+      {
+        afterTokenize: afterTokenizePlugins,
+      },
+    );
 
     return code;
   }

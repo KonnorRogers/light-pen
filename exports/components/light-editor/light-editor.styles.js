@@ -30,7 +30,7 @@ export const styles = css`
 
   [part~="textarea"] {
     color: transparent;
-    color: rgba(255,0,0,0.5);
+    /* color: rgba(0,0,200,0.2); */
     background-color: transparent;
     caret-color: inherit;
     z-index: 1;

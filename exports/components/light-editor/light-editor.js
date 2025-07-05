@@ -167,6 +167,16 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   connectedCallback() {
     super.connectedCallback();
 
+    this.handleAnimations = () => {
+
+      setTimeout(() => {
+        this.syncScroll();
+        this.setCurrentLineHighlight();
+      }, 300)
+    }
+    this.addEventListener("transitionend", this.handleAnimations)
+    this.addEventListener("animationend", this.handleAnimations)
+
     this.value = this.getAttribute("value") || "";
     this.defaultValue = this.getAttribute("value") || "";
 
@@ -290,6 +300,17 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             .language=${this.language}
             .code=${this.value}
             wrap=${this.wrap}
+            part="light-code"
+            exportparts=${`
+              gutter:light-code__gutter,
+              line-highlight:light-code__line-highlight,
+              gutter-cell:light-code__gutter-cell,
+              pre:light-code__pre,
+              pre-${this.language}:light-code__pre-${this.language},
+              code:light-code__code,
+              code-${this.language}:light-code__code-${this.language},
+              base:light-code__base
+            `}
             .lineHighlightStart=${this.topViewableLine}
             .lineHighlightEnd=${this.bottomViewableLine}
             .highlighter=${this.highlighter}
@@ -473,7 +494,6 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     const visibleLines = Math.ceil((this.textareaHeight || textarea.offsetHeight) / lineHeight) + 3;
 
     const topLine = Math.max(Math.floor(textarea.scrollTop / lineHeight), 0);
-    console.log({ top: textarea.scrollTop, lineHeight, topLine })
     const bottomLine = Math.ceil(topLine + visibleLines);
     return {
       topLine,
