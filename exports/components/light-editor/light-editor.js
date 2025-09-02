@@ -6,6 +6,7 @@ import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-tex
 import { baseStyles } from "../../styles/base-styles.js";
 import { theme } from "../../styles/default-theme.styles.js";
 import { styles } from "./light-editor.styles.js";
+import { codeStyles } from "../../styles/code-styles.js";
 
 import { LightResizeEvent } from "../../events/light-resize-event.js";
 
@@ -60,7 +61,12 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   /**
    * @override
    */
-  static styles = [baseStyles, styles, theme];
+  static styles = [
+    baseStyles,
+    codeStyles,
+    styles,
+    theme
+  ];
 
   /**
    * @override
@@ -136,7 +142,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
      * @type {"soft" | "hard"}
      * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="hard"`, lines will not wrap instead all the user to scroll horizontally to see more code.
      */
-    this.wrap = "soft";
+    this.wrap = "hard";
 
     /**
      * Whether to strip whitespace before first character, and after the last character.
@@ -493,7 +499,8 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
 
     const visibleLines = Math.ceil((this.textareaHeight || textarea.offsetHeight) / lineHeight) + 3;
 
-    const topLine = Math.max(Math.floor(textarea.scrollTop / lineHeight), 0);
+    // Because of rounding errors, add 1px to make topLine work when going down via arrow keys.
+    const topLine = Math.max(Math.floor((textarea.scrollTop + 1) / lineHeight), 0);
     const bottomLine = Math.ceil(topLine + visibleLines);
     return {
       topLine,
@@ -534,21 +541,14 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
               code.style.height = `${textarea.scrollHeight}px`
 
               const { topLine } = this.getViewableLines()
-              code.style.top = `${topLine * this.lineHeight}px`
+              code.style.top = `${Math.ceil(topLine * this.lineHeight)}px`
 
               if (syncCaret) {
                 if (left < 60) {
-                  pre.scrollLeft = Math.min(left, pre.scrollLeft);
+                  lightCode.scrollLeft = Math.min(left, lightCode.scrollLeft);
+                } else {
+                  lightCode.scrollLeft = left;
                 }
-              }
-
-              if (pre) {
-                function roundToNearest(num, closest) {
-                  return Math.round(num / closest) * closest
-                }
-
-                pre.scrollTop = textarea.scrollTop
-                pre.scrollLeft = textarea.scrollLeft
               }
             }, 10);
         })
@@ -623,9 +623,12 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    */
   keydownHandler(evt) {
     this.setCurrentLineHighlight();
+
     // setTimeout is needed for Safari which appears to be "slow" to update selection APIs.
-    setTimeout(() => this.setCurrentLineHighlight());
-    this.syncScroll();
+    setTimeout(() => {
+      this.syncScroll(true);
+      this.setCurrentLineHighlight()
+    });
 
     if (evt.key.startsWith("Arrow") || evt.key === "Backspace") {
       this.syncScroll(true);
