@@ -64,8 +64,8 @@ importers:
         specifier: ^10.4.1
         version: 10.4.1
       light-pen:
-        specifier: link:.
-        version: 'link:'
+        specifier: file:.
+        version: 'file:'
       playwright:
         specifier: ^1.44.1
         version: 1.44.1
@@ -1550,6 +1550,9 @@ packages:
   liftoff@4.0.0:
     resolution: {integrity: sha512-rMGwYF8q7g2XhG2ulBmmJgWv25qBsqRbDn5gH0+wnuyeFt7QBJlHJmtg5qEdn4pN6WVAUMgXnIxytMFRX9c1aA==}
     engines: {node: '>=10.13.0'}
+
+  'light-pen@file:':
+    resolution: {directory: '', type: directory}
 
   lighthouse-logger@1.4.2:
     resolution: {integrity: sha512-gPWxznF6TKmUHrOQjlVo2UbaL2EJ71mb2CCeRs/2qBpi4L/g4LUVc9+3lKQ6DTUZwJswfM7ainGrLO1+fOqa2g==}
@@ -4176,6 +4179,19 @@ snapshots:
       object.map: 1.0.1
       rechoir: 0.8.0
       resolve: 1.22.8
+
+  'light-pen@file:':
+    dependencies:
+      '@open-wc/semantic-dom-diff': 0.20.1
+      diff: 5.2.0
+      form-associated-helpers: 0.0.10
+      lit: 3.1.4
+      prism-esm: 1.29.0-fix.4
+      web-component-define: 2.0.11
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   lighthouse-logger@1.4.2:
     dependencies:

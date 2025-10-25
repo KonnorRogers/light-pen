@@ -11,12 +11,6 @@ component: light-preview
     <button>Displaying a super cool button</button>
   </script>
   <script type="text/plain" slot="code">
-    <style>
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-    </style>
-
     <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
@@ -35,12 +29,6 @@ component: light-preview
 
 <light-preview>
   <template slot="code">
-    <style>
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-    </style>
-
     <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
@@ -55,23 +43,15 @@ component: light-preview
   </template>
 
   <template slot="preview-html">
-    <style>
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-    </style>
-
     <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
       </template>
     </light-preview>
-
     <script type="module">
       import LightPreview from "<%= find_asset "../exports/components/light-preview/light-preview.js" %>"
       LightPreview.define()
     </script>
-
   </template>
 </light-preview>
 
@@ -142,6 +122,54 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
 </style>
 
 <light-preview id="additional-buttons">
+  <template slot="preview-html">
+    <style>
+      #additional-buttons button {
+        appearance: none;
+        -webkit-appearance: none;
+        background-color: inherit;
+        padding: 0.4em 0.6em;
+        color: inherit;
+        border: 1px solid lightgray;
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+        height: 100%;
+        border-radius: 0;
+      }
+
+      #additional-buttons button:focus-visible {
+        outline: 2px solid hsl(203, 77%, 43%);
+      }
+
+      @supports not selector(:focus-visible) {
+        #additional-buttons button:focus-within {
+          outline: 2px solid hsl(203, 77%, 43%);
+        }
+      }
+
+      #additional-buttons button:hover {
+        cursor: pointer;
+        color: hsla(203, 77%, 43%);
+        background-color: hsla(203, 77%, 43%, 0.1);
+      }
+
+      light-preview::part(iframe) { height: 80px; }
+    </style>
+
+    <light-preview id="additional-buttons">
+      <template slot="code">
+        <div>Look at additional buttons in bottom right</div>
+      </template>
+
+      <button class="light-button" slot="actions">HTML</button>
+      <button class="light-button" slot="actions">Codepen</button>
+    </light-preview>
+
+    <script type="module">
+      import LightPreview from "<%= find_asset "../exports/components/light-preview/light-preview.js" %>"
+      LightPreview.define()
+    </script>
+  </template>
   <template slot="code">
     <style>
       #additional-buttons button {
@@ -173,15 +201,12 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
         background-color: hsla(203, 77%, 43%, 0.1);
       }
 
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-
+      light-preview::part(iframe) { height: 80px; }
     </style>
 
     <light-preview id="additional-buttons">
       <template slot="code">
-        <div>Showing off more buttons</div>
+        <div>Look at additional buttons in bottom right</div>
       </template>
 
       <button class="light-button" slot="actions">HTML</button>
@@ -189,14 +214,10 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
     </light-preview>
 
     <script type="module">
-      import LightPreview from "<%= find_asset "../exports/components/light-preview/light-preview.js" %>"
+      import LightPreview from "light-pen/exports/components/light-preview/light-preview.js"
       LightPreview.define()
     </script>
-
   </template>
-
-<button slot="actions">HTML</button>
-<button slot="actions">Codepen</button>
 </light-preview>
 
 ### Escaping nested script tags
@@ -235,6 +256,30 @@ For not as strict encapsulation you can use `preview-mode="shadow-dom"`
 </light-preview>
 
 If you check the source code in the above example, you'll notice a `&lt;/script>`.
+
+## Rendering with the preview already open
+
+Add the `open` boolean attribute to render the preview already open.
+
+<light-preview open>
+  <script type="text/plain" slot="preview-html">
+    <button>Displaying a super cool button</button>
+  </script>
+  <script type="text/plain" slot="code">
+    <light-preview open>
+      <template slot="code">
+        <button>Displaying a super cool button</button>
+      </template>
+    </light-preview>
+
+    <script type="module">
+      import LightPreview from "./exports/components/light-preview/light-preview.js";
+      LightPreview.define()
+    &lt;/script>
+
+  </script>
+</light-preview>
+
 
 ## Additional Notes
 

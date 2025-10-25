@@ -32,6 +32,21 @@ import LightDisclosure from "../light-disclosure/light-disclosure.js";
  * @part base - The base wrapper
  * @part sandbox - The wrapper around the editor and the iframe
  * @part sandbox-header - The wrapper around the header area
+ * @part disclosure - Maps to any `<light-disclosure>` within `<light-pen>` shadow dom.
+ * @part disclosure-${language} - deprecated in favor of `sandbox-disclosure-${language}`
+ * @part disclosure-summary - re-exported summary from all `<light-disclosure>`
+ * @part disclosure-content - re-exported content from all `<light-disclosure>`
+ * @part base:disclosure-content-base - re-exported content-base from all `<light-disclosure>`
+ * @part sandbox-disclosure-summary - re-exported summary from all `<light-disclosure>`
+ * @part sandbox-disclosure - the `<light-disclosure>` wrapping around the js / css / html code respectively
+ * @part sandbox-disclosure-${language} -  the specific `<light-disclosure>` for the given language IE: `light-pen::part(sandbox-disclosure-css)`
+ * @part sandbox-disclosure-summary - re-exported summary part from light-disclosure
+ * @part sandbox-disclosure-${language}-summary - re-exported summary part from `light-disclosure-${language}`
+ * @part sandbox-disclosure-content - re-exported content part from light-disclosure
+ * @part sandbox-disclosure-${language}-content - re-exported content part from light-disclosure for the specific `${language}`
+ * @part sandbox-disclosure-content-base - re-exported content-base part from light-disclosure
+ * @part sandbox-disclosure-${language}-content-base - re-exported content-base part from light-disclosure for the specific `${language}`
+ *
  */
 export default class LightPen extends BaseElement {
   // Static
@@ -536,14 +551,33 @@ export default class LightPen extends BaseElement {
   renderDetails(language) {
     let fullLanguage = language.toUpperCase();
 
-    // const open = this.openLanguages.split(",").includes(language)
+    const languages = this.openLanguages
+      .split(/\s*,\s*/)
+      .map((str) => str.trim().toLowerCase());
+    const open = languages.includes(language);
 
     return html`
-      <light-disclosure part="disclosure disclosure-${language}">
-        <span part="summary" slot="summary"
-          ><slot name=${`summary-${language}`}>${fullLanguage}</slot></span
-        >
-
+      <light-disclosure
+        part="
+          disclosure disclosure-${language}
+          sandbox-disclosure sandbox-disclosure-${language}
+        "
+        exportparts="
+          summary:disclosure-summary,
+          content:disclosure-content,
+          content-base:disclosure-content-base,
+          summary:sandbox-disclosure-summary,
+          summary:sandbox-disclosure-${language}-summary,
+          content:sandbox-disclosure-content,
+          content:sandbox-disclosure-${language}-content,
+          content-base:sandbox-disclosure-content-base,
+          content-base:sandbox-disclosure-${language}-content-base
+        "
+        ?open=${open}
+      >
+        <span part="summary" slot="summary">
+          <slot name=${`summary-${language}`}>${fullLanguage}</slot>
+        </span>
         ${this.renderEditor(language)}
       </light-disclosure>
     `;

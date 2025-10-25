@@ -7,3 +7,4 @@ docs/
 *.hbs
 tests/fixtures/
 *.yaml
+**/*.styles.js
