@@ -32,8 +32,12 @@ import LightDisclosure from "../light-disclosure/light-disclosure.js";
  * @part base - The base wrapper
  * @part sandbox - The wrapper around the editor and the iframe
  * @part sandbox-header - The wrapper around the header area
- * @part disclosure - deprecated in favor of `sandbox-disclosure`.
+ * @part disclosure - Maps to any `<light-disclosure>` within `<light-pen>` shadow dom.
  * @part disclosure-${language} - deprecated in favor of `sandbox-disclosure-${language}`
+ * @part disclosure-summary - re-exported summary from all `<light-disclosure>`
+ * @part disclosure-content - re-exported content from all `<light-disclosure>`
+ * @part base:disclosure-content-base - re-exported content-base from all `<light-disclosure>`
+ * @part sandbox-disclosure-summary - re-exported summary from all `<light-disclosure>`
  * @part sandbox-disclosure - the `<light-disclosure>` wrapping around the js / css / html code respectively
  * @part sandbox-disclosure-${language} -  the specific `<light-disclosure>` for the given language IE: `light-pen::part(sandbox-disclosure-css)`
  * @part sandbox-disclosure-summary - re-exported summary part from light-disclosure
@@ -557,11 +561,14 @@ export default class LightPen extends BaseElement {
           sandbox-disclosure sandbox-disclosure-${language}
         "
         exportparts="
-          summary:sandbox-disclosure-summary
-          summary:sandbox-disclosure-${language}-summary
-          content:sandbox-disclosure-content
-          content:sandbox-disclosure-${language}-content
-          content-base:sandbox-disclosure-content-base
+          summary:disclosure-summary,
+          content:disclosure-content,
+          content-base:disclosure-content-base,
+          summary:sandbox-disclosure-summary,
+          summary:sandbox-disclosure-${language}-summary,
+          content:sandbox-disclosure-content,
+          content:sandbox-disclosure-${language}-content,
+          content-base:sandbox-disclosure-content-base,
           content-base:sandbox-disclosure-${language}-content-base
         "
         ?open=${open}

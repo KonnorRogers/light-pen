@@ -12,7 +12,7 @@
 
 ### Deprecations
 
-- Deprecation(light-pen)
+- Deprecation(light-pen) - `light-pen::part(disclosure-${language})` have been deprecated in favor of `light-pen::part(sandbox-disclosure-${language})` respectively. `disclosure-${language}` will be removed in the next major version as its superseded by `sandbox-disclosure-${language}`. `::part(disclosure)` will remain to be able to target all disclosures.
 
 ## 4.3.0 - 07/04/2025
 
