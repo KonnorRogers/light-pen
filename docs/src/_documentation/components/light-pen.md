@@ -10,7 +10,7 @@ component: light-pen
 
 <light-pen style="padding: 8px; height: 75vh; max-height: 75vh;" resize-position="30" open-languages="js,html,css">
   <template slot="html">
-    <light-pen>
+    <light-pen open-languages="html,css,js">
       <template slot="html">
         <div>
           This is kind of wild huh? We have a <code>&lt;light-pen&gt;</code>

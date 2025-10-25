@@ -54,6 +54,15 @@ export default class LightDisclosure extends BaseElement {
         background-color: rgba(0, 0, 0, 0.05);
       }
 
+
+      :host([no-animation]) [part~="content-base"] {
+        transition: none;
+      }
+
+      :host([no-animation]) details[open] [part~="content-base"] {
+          grid-template-rows: 1fr;
+      }
+
       @media (prefers-reduced-motion: reduce) {
         [part~="content-base"] {
           transition: none;
@@ -71,6 +80,7 @@ export default class LightDisclosure extends BaseElement {
   static properties = {
     summary: {},
     open: { type: Boolean },
+    noAnimation: { attribute: "no-animation", type: Boolean }
   };
 
   constructor() {
@@ -91,6 +101,30 @@ export default class LightDisclosure extends BaseElement {
      *   our initial opening of the disclosure gets clipped and is like a normal `<details>`
      */
     this._openOnToggle = true;
+
+    this.noAnimation = false
+  }
+
+  /**
+   * @override
+   */
+  firstUpdated () {
+    if (!this.noAnimation) {
+      this.setAttribute("no-animation", "")
+      this.noAnimation = true
+      // Set it back after an update
+      this.updateComplete.then(() => {
+        setTimeout(() => {
+          this.removeAttribute("no-animation")
+          this.noAnimation = false
+        })
+      })
+    }
+    if (this.open) {
+      // have to reset open and then set it back to trigger an update so it will open.
+      this.open = false
+      this.open = true
+    }
   }
 
   // TODO: Add a mutationObserver for when it connects
@@ -99,7 +133,7 @@ export default class LightDisclosure extends BaseElement {
    * @override
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
-  willUpdate(changedProperties) {
+  updated(changedProperties) {
     const details = this.details;
 
     if (details && changedProperties.has("open")) {
@@ -112,7 +146,7 @@ export default class LightDisclosure extends BaseElement {
 
         // "transitionend" will fire and set "open" on the details element accordingly.
         // If motion is reduced, our transition will never fire. so we need to set "open" on the <details> here.
-        if (motionReduced()) {
+        if (this.noAnimation || motionReduced()) {
           details.open = this.open;
         }
 

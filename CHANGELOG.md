@@ -1,3 +1,19 @@
+## 4.4.0 - 10/25/2025
+
+### Features
+
+- Feature(light-disclosure): Added `noAnimation` / `no-animation` property & attribute respectively to turn off disclosure animations.
+- Feature(light-pen): Added re-exported parts for the `<light-disclosure>` which contains html / css / js respectively.
+
+### Bug fixes
+
+- Bug Fix(light-disclosure): Now properly renders on connect in the "open" state.
+- Bug Fix(light-pen): Now properly renders disclosures in the `open`
+
+### Deprecations
+
+- Deprecation(light-pen)
+
 ## 4.3.0 - 07/04/2025
 
 - Security Fix(light-pen / light-preview): Previously, `<iframe>` in these 2 components could reach the parent. With this fix, it now has a default set of sandbox settings as follows: `allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts`
