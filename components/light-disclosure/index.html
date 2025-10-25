@@ -6,17 +6,17 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.WNT3AULH.js">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.G7KCPFFG.js">
-<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.X5WWSVYM.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.N2EOK6ZH.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.7O3MJQVT.js">
+<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.NI4NXJ3Y.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
 <link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.ISL6CEDV.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.X5WWSVYM.css"></noscript>
+<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.NI4NXJ3Y.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.WNT3AULH.js" type="module"></script>
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.G7KCPFFG.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.N2EOK6ZH.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.7O3MJQVT.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/light-pen/apple-touch-icon.png">
@@ -312,6 +312,35 @@
     </light-disclosure>
   </template>
 </light-preview>
+
+<h2 id="rendering-already-open">
+          <a href="#rendering-already-open">Rendering already open</a>
+        </h2>
+
+<p>If you want the preview to be rendered in an already open state, you can pass an <code class="highlighter-rouge">open</code> boolean attribute. This will disable the animation on first connect, and then re-enable animations on subsequent changes to <code class="highlighter-rouge">open</code>.</p>
+
+<light-preview preview-mode="shadow-dom">
+  <template slot="code">
+    <light-disclosure summary="Source Code" open="">
+      <code style="background-color: rgba(0,0,0,0.1);">export const x = "hi"</code>
+    </light-disclosure>
+  </template>
+</light-preview>
+
+<h2 id="disabling-animation">
+          <a href="#disabling-animation">Disabling animation</a>
+        </h2>
+
+<p>Open / close animations can be completely disabled with <code class="highlighter-rouge">no-animation</code> boolean attribute.</p>
+
+<light-preview preview-mode="shadow-dom">
+  <template slot="code">
+    <light-disclosure summary="Source Code" no-animation="">
+      <code style="background-color: rgba(0,0,0,0.1);">export const x = "hi"</code>
+    </light-disclosure>
+  </template>
+</light-preview>
+
 <h2 id="api-reference">
           <a href="#api-reference">API Reference</a>
         </h2>
@@ -329,13 +358,13 @@
           </div>
 
           <sl-tooltip content="Copy">
-            <button for="06b4e1dd-814f-48af-8286-77f83807aa78" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+            <button for="727fe3c3-8d1c-4e12-9887-7d85f747cebf" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
               <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
               <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
             </button>
           </sl-tooltip>
 
-          <script type="text/plain" id="06b4e1dd-814f-48af-8286-77f83807aa78" hidden="">&lt;!-- Auto registers as &lt;light-disclosure&gt; --&gt;
+          <script type="text/plain" id="727fe3c3-8d1c-4e12-9887-7d85f747cebf" hidden="">&lt;!-- Auto registers as &lt;light-disclosure&gt; --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-disclosure/light-disclosure-register.js&quot;&gt;&lt;/script&gt;
 </script>
         </div>
@@ -352,13 +381,13 @@
           </div>
 
           <sl-tooltip content="Copy">
-            <button for="56d2c557-5b6a-4529-a9a5-f79d591920a7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+            <button for="fc9625b5-95f7-47a3-8e43-d92c6e0093d4" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
               <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
               <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
             </button>
           </sl-tooltip>
 
-          <script type="text/plain" id="56d2c557-5b6a-4529-a9a5-f79d591920a7" hidden="">&lt;script type=&quot;module&quot;&gt;
+          <script type="text/plain" id="fc9625b5-95f7-47a3-8e43-d92c6e0093d4" hidden="">&lt;script type=&quot;module&quot;&gt;
   // Auto registers as &lt;light-disclosure&gt;
   import &quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-disclosure/light-disclosure-register.js&quot;
 
@@ -389,13 +418,13 @@
           </div>
 
           <sl-tooltip content="Copy">
-            <button for="a957a14d-5f57-4ae0-a3bf-eef89c438c4b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+            <button for="143a2661-1aa1-4339-b0ab-43be53a51efb" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
               <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
               <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
             </button>
           </sl-tooltip>
 
-          <script type="text/plain" id="a957a14d-5f57-4ae0-a3bf-eef89c438c4b" hidden="">// Auto registers as &lt;light-disclosure&gt;
+          <script type="text/plain" id="143a2661-1aa1-4339-b0ab-43be53a51efb" hidden="">// Auto registers as &lt;light-disclosure&gt;
 import &quot;light-pen/exports/components/light-disclosure/light-disclosure-register.js&quot;
 
 // Manual Register
@@ -483,6 +512,30 @@ LightDisclosure.define()
       <small>[Attribute + Property]</small>
       <br>
       <code>open</code>
+  </td>
+  <td>
+    <div style="text-align: center;">-</div>
+  </td>
+  <td>
+    <sl-icon name="x-lg" style="text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);"></sl-icon>
+  </td>
+  <td>
+    <code>boolean</code>
+  </td>
+  <td>
+    <code>false</code>
+  </td>
+</tr>
+
+<tr>
+  <td>
+      <small>[Attribute]</small>
+      <br>
+      <code>no-animation</code>
+      <br><br>
+      <small>[Property]</small>
+      <br>
+      <code>noAnimation</code>
   </td>
   <td>
     <div style="text-align: center;">-</div>
@@ -649,6 +702,10 @@ LightDisclosure.define()
   <ol class="table-of-contents__list">
   <li class="side-nav__item" data-level="2">
         <a href="#typical-usage" class="side-nav__link" style="">Typical Usage</a>
+      </li><li class="side-nav__item" data-level="2">
+        <a href="#rendering-already-open" class="side-nav__link" style="">Rendering already open</a>
+      </li><li class="side-nav__item" data-level="2">
+        <a href="#disabling-animation" class="side-nav__link" style="">Disabling animation</a>
       </li><li class="side-nav__item" data-level="2">
         <a href="#api-reference" class="side-nav__link" style="">API Reference</a>
       </li><li class="side-nav__item" data-level="3">

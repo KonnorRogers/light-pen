@@ -6,17 +6,17 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.WNT3AULH.js">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.G7KCPFFG.js">
-<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.X5WWSVYM.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.N2EOK6ZH.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.7O3MJQVT.js">
+<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.NI4NXJ3Y.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
 <link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.ISL6CEDV.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.X5WWSVYM.css"></noscript>
+<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.NI4NXJ3Y.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.WNT3AULH.js" type="module"></script>
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.G7KCPFFG.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.N2EOK6ZH.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.7O3MJQVT.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/light-pen/apple-touch-icon.png">
@@ -298,7 +298,37 @@
   </h1>
 
 
-  <h2 id="430---07042025">
+  <h2 id="next">
+          <a href="#next">Next</a>
+        </h2>
+
+<h3 id="features">
+          <a href="#features">Features</a>
+        </h3>
+
+<ul>
+  <li>Feature(light-disclosure): Added <code class="highlighter-rouge">noAnimation</code> / <code class="highlighter-rouge">no-animation</code> property &amp; attribute respectively to turn off disclosure animations.</li>
+  <li>Feature(light-pen): Added re-exported parts for the <code class="highlighter-rouge">&lt;light-disclosure&gt;</code> which contains html / css / js respectively.</li>
+</ul>
+
+<h3 id="bug-fixes">
+          <a href="#bug-fixes">Bug fixes</a>
+        </h3>
+
+<ul>
+  <li>Bug Fix(light-disclosure): Now properly renders on connect in the “open” state.</li>
+  <li>Bug Fix(light-pen): Now properly renders disclosures in the <code class="highlighter-rouge">open</code></li>
+</ul>
+
+<h3 id="deprecations">
+          <a href="#deprecations">Deprecations</a>
+        </h3>
+
+<ul>
+  <li>Deprecation(light-pen) - <code class="highlighter-rouge">light-pen::part(disclosure-${language})</code> have been deprecated in favor of <code class="highlighter-rouge">light-pen::part(sandbox-disclosure-${language})</code> respectively. <code class="highlighter-rouge">disclosure-${language}</code> will be removed in the next major version as its superseded by <code class="highlighter-rouge">sandbox-disclosure-${language}</code>. <code class="highlighter-rouge">::part(disclosure)</code> will remain to be able to target all disclosures.</li>
+</ul>
+
+<h2 id="430---07042025">
           <a href="#430---07042025">4.3.0 - 07/04/2025</a>
         </h2>
 
@@ -630,6 +660,14 @@ some CORS bugs.</li>
   </h2>
   <ol class="table-of-contents__list">
   <li class="side-nav__item" data-level="2">
+        <a href="#next" class="side-nav__link" style="">Next</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#features" class="side-nav__link" style="">Features</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#bug-fixes" class="side-nav__link" style="">Bug fixes</a>
+      </li><li class="side-nav__item" data-level="3">
+        <a href="#deprecations" class="side-nav__link" style="">Deprecations</a>
+      </li><li class="side-nav__item" data-level="2">
         <a href="#430---07042025" class="side-nav__link" style="">4.3.0 - 07/04/2025</a>
       </li><li class="side-nav__item" data-level="2">
         <a href="#426---05022025" class="side-nav__link" style="">4.2.6 - 05/02/2025</a>

@@ -6,17 +6,17 @@
 <!-- <base href="/light-pen/"> -->
 
 <meta name="description" content="Lightweight components editing and syntax highlighting.">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.WNT3AULH.js">
-<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.G7KCPFFG.js">
-<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.X5WWSVYM.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/index.N2EOK6ZH.js">
+<link rel="modulepreload" href="/light-pen/bridgetown/static/javascript/defer.7O3MJQVT.js">
+<link rel="preload" href="/light-pen/bridgetown/static/javascript/defer.NI4NXJ3Y.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
 <link rel="stylesheet" data-turbo-track="reload" href="/light-pen/bridgetown/static/javascript/index.ISL6CEDV.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.X5WWSVYM.css"></noscript>
+<noscript><link rel="stylesheet" href="/light-pen/bridgetown/static/javascript/defer.NI4NXJ3Y.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.WNT3AULH.js" type="module"></script>
-<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.G7KCPFFG.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/index.N2EOK6ZH.js" type="module"></script>
+<script data-turbo-track="reload" src="/light-pen/bridgetown/static/javascript/defer.7O3MJQVT.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/light-pen/apple-touch-icon.png">
@@ -309,12 +309,6 @@
     <button>Displaying a super cool button</button>
   </script>
   <script type="text/plain" slot="code">
-    <style>
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-    </style>
-
     <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
@@ -335,12 +329,6 @@
 
 <light-preview>
   <template slot="code">
-    <style>
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-    </style>
-
     <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
@@ -355,23 +343,15 @@
   </template>
 
   <template slot="preview-html">
-    <style>
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-    </style>
-
     <light-preview>
       <template slot="code">
         <button>Displaying a super cool button</button>
       </template>
     </light-preview>
-
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/components/light-preview/light-preview.TFVOGNUD.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/components/light-preview/light-preview.FYUBESAE.js"
       LightPreview.define()
     </script>
-
   </template>
 </light-preview>
 
@@ -402,7 +382,7 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/components/light-preview/light-preview.TFVOGNUD.js"
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/components/light-preview/light-preview.FYUBESAE.js"
       LightPreview.define()
     </script>
 
@@ -446,6 +426,54 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
 </style>
 
 <light-preview id="additional-buttons">
+  <template slot="preview-html">
+    <style>
+      #additional-buttons button {
+        appearance: none;
+        -webkit-appearance: none;
+        background-color: inherit;
+        padding: 0.4em 0.6em;
+        color: inherit;
+        border: 1px solid lightgray;
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+        height: 100%;
+        border-radius: 0;
+      }
+
+      #additional-buttons button:focus-visible {
+        outline: 2px solid hsl(203, 77%, 43%);
+      }
+
+      @supports not selector(:focus-visible) {
+        #additional-buttons button:focus-within {
+          outline: 2px solid hsl(203, 77%, 43%);
+        }
+      }
+
+      #additional-buttons button:hover {
+        cursor: pointer;
+        color: hsla(203, 77%, 43%);
+        background-color: hsla(203, 77%, 43%, 0.1);
+      }
+
+      light-preview::part(iframe) { height: 80px; }
+    </style>
+
+    <light-preview id="additional-buttons">
+      <template slot="code">
+        <div>Look at additional buttons in bottom right</div>
+      </template>
+
+      <button class="light-button" slot="actions">HTML</button>
+      <button class="light-button" slot="actions">Codepen</button>
+    </light-preview>
+
+    <script type="module">
+      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/components/light-preview/light-preview.FYUBESAE.js"
+      LightPreview.define()
+    </script>
+  </template>
   <template slot="code">
     <style>
       #additional-buttons button {
@@ -477,15 +505,12 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
         background-color: hsla(203, 77%, 43%, 0.1);
       }
 
-      light-preview::part(iframe) {
-        height: 80px;
-      }
-
+      light-preview::part(iframe) { height: 80px; }
     </style>
 
     <light-preview id="additional-buttons">
       <template slot="code">
-        <div>Showing off more buttons</div>
+        <div>Look at additional buttons in bottom right</div>
       </template>
 
       <button class="light-button" slot="actions">HTML</button>
@@ -493,14 +518,10 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
     </light-preview>
 
     <script type="module">
-      import LightPreview from "/light-pen/bridgetown/static/light-pen/exports/components/light-preview/light-preview.TFVOGNUD.js"
+      import LightPreview from "light-pen/exports/components/light-preview/light-preview.js"
       LightPreview.define()
     </script>
-
   </template>
-
-<button slot="actions">HTML</button>
-<button slot="actions">Codepen</button>
 </light-preview>
 
 <h3 id="escaping-nested-script-tags">
@@ -544,6 +565,31 @@ For not as strict encapsulation you can use <code class="highlighter-rouge">prev
 
 <p>If you check the source code in the above example, you’ll notice a <code class="highlighter-rouge">&amp;lt;/script&gt;</code>.</p>
 
+<h2 id="rendering-with-the-preview-already-open">
+          <a href="#rendering-with-the-preview-already-open">Rendering with the preview already open</a>
+        </h2>
+
+<p>Add the <code class="highlighter-rouge">open</code> boolean attribute to render the preview already open.</p>
+
+<light-preview open="">
+  <script type="text/plain" slot="preview-html">
+    <button>Displaying a super cool button</button>
+  </script>
+  <script type="text/plain" slot="code">
+    <light-preview open>
+      <template slot="code">
+        <button>Displaying a super cool button</button>
+      </template>
+    </light-preview>
+
+    <script type="module">
+      import LightPreview from "./exports/components/light-preview/light-preview.js";
+      LightPreview.define()
+    &lt;/script>
+
+  </script>
+</light-preview>
+
 <h2 id="additional-notes">
           <a href="#additional-notes">Additional Notes</a>
         </h2>
@@ -567,13 +613,13 @@ for further reading.</p>
           </div>
 
           <sl-tooltip content="Copy">
-            <button for="0e5d3c4b-e1ba-4248-bd8b-893bbf0c9a42" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+            <button for="e8693b4e-2cac-406b-8f08-e814e8849128" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
               <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
               <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
             </button>
           </sl-tooltip>
 
-          <script type="text/plain" id="0e5d3c4b-e1ba-4248-bd8b-893bbf0c9a42" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
+          <script type="text/plain" id="e8693b4e-2cac-406b-8f08-e814e8849128" hidden="">&lt;!-- Auto registers as &lt;light-preview&gt; --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-preview/light-preview-register.js&quot;&gt;&lt;/script&gt;
 </script>
         </div>
@@ -590,13 +636,13 @@ for further reading.</p>
           </div>
 
           <sl-tooltip content="Copy">
-            <button for="08a76b2b-be50-4ad8-9252-ccb67aaacc7c" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+            <button for="3785a835-9b0f-48c8-9929-0163d7a85737" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
               <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
               <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
             </button>
           </sl-tooltip>
 
-          <script type="text/plain" id="08a76b2b-be50-4ad8-9252-ccb67aaacc7c" hidden="">&lt;script type=&quot;module&quot;&gt;
+          <script type="text/plain" id="3785a835-9b0f-48c8-9929-0163d7a85737" hidden="">&lt;script type=&quot;module&quot;&gt;
   // Auto registers as &lt;light-preview&gt;
   import &quot;https://cdn.jsdelivr.net/npm/light-pen/exports/components/light-preview/light-preview-register.js&quot;
 
@@ -627,13 +673,13 @@ for further reading.</p>
           </div>
 
           <sl-tooltip content="Copy">
-            <button for="4cdbe8b9-87c1-4ac4-a7a5-96ac1f6a4f2b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
+            <button for="e03be55b-1d04-4828-afbc-eef8cc4f7616" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard" type="button">
               <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
               <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
             </button>
           </sl-tooltip>
 
-          <script type="text/plain" id="4cdbe8b9-87c1-4ac4-a7a5-96ac1f6a4f2b" hidden="">// Auto registers as &lt;light-preview&gt;
+          <script type="text/plain" id="e03be55b-1d04-4828-afbc-eef8cc4f7616" hidden="">// Auto registers as &lt;light-preview&gt;
 import &quot;light-pen/exports/components/light-preview/light-preview-register.js&quot;
 
 // Manual Register
@@ -1502,6 +1548,8 @@ If true, will run transform. If false, will leave the code as is.</p>
         <a href="#escaping-nested-script-tags" class="side-nav__link" style="">Escaping nested script tags</a>
       </li><li class="side-nav__item" data-level="3">
         <a href="#highlight-lines" class="side-nav__link" style="">Highlight Lines</a>
+      </li><li class="side-nav__item" data-level="2">
+        <a href="#rendering-with-the-preview-already-open" class="side-nav__link" style="">Rendering with the preview already open</a>
       </li><li class="side-nav__item" data-level="2">
         <a href="#additional-notes" class="side-nav__link" style="">Additional Notes</a>
       </li><li class="side-nav__item" data-level="2">

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../node_modules/.pnpm/file+/node_modules/light-pen/exports/components/light-code/light-code-register.js"],
+  "sourcesContent": ["import LightCode from \"./light-code.js\";\n\nexport default LightCode;\n\nLightCode.define();\n"],
+  "mappings": "oQAEA,IAAOA,EAAQC,EAEfA,EAAU,OAAO",
+  "names": ["light_code_register_default", "LightCode"]
+}
