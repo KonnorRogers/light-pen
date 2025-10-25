@@ -251,11 +251,14 @@ import{a as b}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-XPS5YIK4.js
           sandbox-disclosure sandbox-disclosure-${e}
         "
         exportparts="
-          summary:sandbox-disclosure-summary
-          summary:sandbox-disclosure-${e}-summary
-          content:sandbox-disclosure-content
-          content:sandbox-disclosure-${e}-content
-          content-base:sandbox-disclosure-content-base
+          summary:disclosure-summary,
+          content:disclosure-content,
+          content-base:disclosure-content-base,
+          summary:sandbox-disclosure-summary,
+          summary:sandbox-disclosure-${e}-summary,
+          content:sandbox-disclosure-content,
+          content:sandbox-disclosure-${e}-content,
+          content-base:sandbox-disclosure-content-base,
           content-base:sandbox-disclosure-${e}-content-base
         "
         ?open=${i}
@@ -266,4 +269,4 @@ import{a as b}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-XPS5YIK4.js
         ${this.renderEditor(e)}
       </light-disclosure>
     `}};a(o,"baseName","light-pen"),a(o,"styles",[p,h,g]),a(o,"dependencies",{"light-editor":b,"light-disclosure":u}),a(o,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{o as default};
-//# sourceMappingURL=/light-pen/pull/38/bridgetown/static/light-pen/exports/components/light-pen/light-pen.QUOKL2JN.js.map
+//# sourceMappingURL=/light-pen/pull/38/bridgetown/static/light-pen/exports/components/light-pen/light-pen.4SYQHPHK.js.map

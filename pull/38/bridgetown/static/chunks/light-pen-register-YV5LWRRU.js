@@ -1,4 +1,4 @@
-import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js";import{a as d,b,c as f,d as x}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-VNUOVIPF.js";import"/light-pen/pull/38/bridgetown/static/chunks/chunk-JZCSZA5D.js";import{a as u}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-6OOKXF3Q.js";import{a as p,b as c,f as h}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DC223XXB.js";import{a as n}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-ETT43YUL.js";import{a as l,b as o}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-LFPVEBVM.js";import{d as a}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-VT6VFEU4.js";var g=l`
+import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js";import{a as d,b,c as f,d as x}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-VNUOVIPF.js";import"/light-pen/pull/38/bridgetown/static/chunks/chunk-JZCSZA5D.js";import{a as u}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-6OOKXF3Q.js";import{a as c,b as p,f as h}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DC223XXB.js";import{a as n}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-ETT43YUL.js";import{a as l,b as o}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-LFPVEBVM.js";import{d as a}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-VT6VFEU4.js";var g=l`
   [part~="sandbox-iframe"] {
     width: 100%;
     height: 100%;
@@ -251,11 +251,14 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
           sandbox-disclosure sandbox-disclosure-${e}
         "
         exportparts="
-          summary:sandbox-disclosure-summary
-          summary:sandbox-disclosure-${e}-summary
-          content:sandbox-disclosure-content
-          content:sandbox-disclosure-${e}-content
-          content-base:sandbox-disclosure-content-base
+          summary:disclosure-summary,
+          content:disclosure-content,
+          content-base:disclosure-content-base,
+          summary:sandbox-disclosure-summary,
+          summary:sandbox-disclosure-${e}-summary,
+          content:sandbox-disclosure-content,
+          content:sandbox-disclosure-${e}-content,
+          content-base:sandbox-disclosure-content-base,
           content-base:sandbox-disclosure-${e}-content-base
         "
         ?open=${i}
@@ -265,5 +268,5 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
         </span>
         ${this.renderEditor(e)}
       </light-disclosure>
-    `}};a(r,"baseName","light-pen"),a(r,"styles",[p,c,g]),a(r,"dependencies",{"light-editor":m,"light-disclosure":x}),a(r,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});var q=r;r.define();export{q as default};
-//# sourceMappingURL=/light-pen/pull/38/bridgetown/static/chunks/light-pen-register-2TLPS2KM.js.map
+    `}};a(r,"baseName","light-pen"),a(r,"styles",[c,p,g]),a(r,"dependencies",{"light-editor":m,"light-disclosure":x}),a(r,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});var q=r;r.define();export{q as default};
+//# sourceMappingURL=/light-pen/pull/38/bridgetown/static/chunks/light-pen-register-YV5LWRRU.js.map
