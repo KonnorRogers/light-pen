@@ -1,4 +1,4 @@
-import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js";import{a as d,b,c as f,d as x}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-VNUOVIPF.js";import"/light-pen/pull/38/bridgetown/static/chunks/chunk-JZCSZA5D.js";import{a as u}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-6OOKXF3Q.js";import{a as c,b as p,f as h}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DC223XXB.js";import{a as n}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-ETT43YUL.js";import{a as l,b as o}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-LFPVEBVM.js";import{d as a}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-VT6VFEU4.js";var g=l`
+import{a as b}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-XPS5YIK4.js";import"/light-pen/pull/38/bridgetown/static/chunks/chunk-JZCSZA5D.js";import{a as d,b as f,c as x}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-AGKR6CQY.js";import{a as c}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-6OOKXF3Q.js";import{a as u}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-7KZIYAMT.js";import"/light-pen/pull/38/bridgetown/static/chunks/chunk-RHOYDH2N.js";import{a as p,b as h,c as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-WPX2IHC5.js";import{a as n}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-ETT43YUL.js";import{a as l,b as r}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-LFPVEBVM.js";import{d as a}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-VT6VFEU4.js";var g=l`
   [part~="sandbox-iframe"] {
     width: 100%;
     height: 100%;
@@ -152,7 +152,7 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
     border-top: 1px solid #1f252f;
     border-bottom-left-radius: 0;
   }
-`;var r=class extends h{constructor(){super(),this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode="",this.preserveWhitespace=!1}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),s=e+t;this.cachedWidth=s}handleResize(e){let{left:t,right:s}=e[0].contentRect,i=t+s;this.cachedWidth=i}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
+`;var o=class extends m{constructor(){super(),this.resizeObserver=new ResizeObserver(e=>this.handleResize(e)),this.resizePosition=50,this.openLanguages="",this.languages=["html","css","js"],this.console="disabled",this.consoleText="",this.cachedWidth=0,this.sandboxSettings="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts",this._resizing=!1,this.cssCode="",this.htmlCode="",this.jsCode="",this.preserveWhitespace=!1}get jsEditor(){return this.shadowRoot?.querySelector("#editor-js")}get cssEditor(){return this.shadowRoot?.querySelector("#editor-css")}get htmlEditor(){return this.shadowRoot?.querySelector("#editor-html")}connectedCallback(){super.connectedCallback(),this.updateCachedWidth(),this.updateComplete.then(()=>{this.resizeObserver.observe(this)})}updateCachedWidth(){let{left:e,right:t}=this.getBoundingClientRect(),s=e+t;this.cachedWidth=s}handleResize(e){let{left:t,right:s}=e[0].contentRect,i=t+s;this.cachedWidth=i}get iframeElem(){return this.shadowRoot?.querySelector("iframe")}updateIframeContent(){let e=this.iframeElem;if(e==null)return;let t=`
       <!doctype html><html>
         <head><meta charset="utf-8">
           <style>${this.cssCode}</style>
@@ -164,7 +164,7 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
           <\/script>
         </body>
       </html>
-    `;e.srcdoc=t}willUpdate(e){["cssCode","htmlCode","jsCode"].some(t=>e.has(t))&&(this._iframeDebounce!=null&&window.clearTimeout(this._iframeDebounce),this._iframeDebounce=setTimeout(()=>this.updateIframeContent(),300)),e.has("resizePosition")&&this.updateResizePosition(),super.willUpdate(e)}disconnectedCallback(){super.disconnectedCallback(),this.resizeObserver.disconnect()}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,s=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=s),e.key==="ArrowRight"&&(t+=s),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=d(t,0,100)}}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let s=100-t;this.style.setProperty("--start-panel-width",`${t}%`),this.style.setProperty("--end-panel-width",`${s}%`)}}resetValues(){this.htmlCode=this.htmlEditor?.getAttribute("value")||"",this.cssCode=this.cssEditor?.getAttribute("value")||"",this.jsCode=this.jsEditor?.getAttribute("value")||"",this.requestUpdate()}renderConsole(){return o`<div part="sandbox-console-log"></div>`}render(){return o` <!-- Where users can declaratively provide templates -->
+    `;e.srcdoc=t}willUpdate(e){["cssCode","htmlCode","jsCode"].some(t=>e.has(t))&&(this._iframeDebounce!=null&&window.clearTimeout(this._iframeDebounce),this._iframeDebounce=setTimeout(()=>this.updateIframeContent(),300)),e.has("resizePosition")&&this.updateResizePosition(),super.willUpdate(e)}disconnectedCallback(){super.disconnectedCallback(),this.resizeObserver.disconnect()}handleResizerKeydown(e){if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"].includes(e.key)){let t=this.resizePosition,s=(e.shiftKey?10:1)*1;e.preventDefault(),e.key==="ArrowLeft"&&(t-=s),e.key==="ArrowRight"&&(t+=s),e.key==="Home"&&(t=100),e.key==="End"&&(t=0),this.resizePosition=d(t,0,100)}}updateResizePosition(e=this.resizePosition){let t=e;if(t!=null){let s=100-t;this.style.setProperty("--start-panel-width",`${t}%`),this.style.setProperty("--end-panel-width",`${s}%`)}}resetValues(){this.htmlCode=this.htmlEditor?.getAttribute("value")||"",this.cssCode=this.cssEditor?.getAttribute("value")||"",this.jsCode=this.jsEditor?.getAttribute("value")||"",this.requestUpdate()}renderConsole(){return r`<div part="sandbox-console-log"></div>`}render(){return r` <!-- Where users can declaratively provide templates -->
       <div part="base" ?resizing=${this._resizing}>
         <div part="sandbox">
           <div part="sandbox-header">
@@ -181,7 +181,7 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
                 Reset
               </button>
 
-              ${n(this.console==="enabled",()=>o`<button @click="{}">Clear Console</button>`)}
+              ${n(this.console==="enabled",()=>r`<button @click="{}">Clear Console</button>`)}
             </span>
           </div>
           <div part="sandbox-content">
@@ -202,7 +202,7 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
               @touchstart=${this.handleDrag}
               class=${`light-button ${this._resizing?"is-active":""}`}
             >
-              <slot name="panel-resize-icon"> ${f} </slot>
+              <slot name="panel-resize-icon"> ${x} </slot>
               <span class="visually-hidden"
                 >Resize Panel. Pull to left or right to resize.</span
               >
@@ -212,13 +212,13 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
               <iframe
                 part="sandbox-iframe"
                 frameborder="0"
-                sandbox=${u(this.sandboxSettings?this.sandboxSettings:null)}
+                sandbox=${c(this.sandboxSettings?this.sandboxSettings:null)}
               ></iframe>
             </div>
           </div>
 
           <!--
-        ${n(this.console==="enabled",()=>o`
+        ${n(this.console==="enabled",()=>r`
               <details class="sandbox-console" ?open=${console}>
                 <summary part="summary summary-console" tabindex="0">
                   Console
@@ -228,7 +228,7 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
             `)}
         -->
         </div>
-      </div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,b(this,{onMove:(t,s)=>{this._resizing=!0;let i=t;this.resizePosition=d(0,this.pixelsToPercentage(i),100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){return o`
+      </div>`}handleDrag(e){e.cancelable&&e.preventDefault(),this.iframeElem&&(this.iframeElem.style.pointerEvents="none"),this._resizing=!0,f(this,{onMove:(t,s)=>{this._resizing=!0;let i=t;this.resizePosition=d(0,this.pixelsToPercentage(i),100),this.updateResizePosition()},onStop:()=>{this.iframeElem&&(this.iframeElem.style.pointerEvents="auto"),this._resizing=!1},initialEvent:e})}pixelsToPercentage(e){return e/this.cachedWidth*100}renderEditor(e){return r`
       <light-editor
         id=${`editor-${e}`}
         part=${`sandbox-editor sandbox-editor--${e}`}
@@ -244,7 +244,7 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
         @light-value-change=${t=>{this[`${e}Code`]=t.currentTarget.value}}
         ><slot name=${e}></slot
       ></light-editor>
-    `}renderDetails(e){let t=e.toUpperCase(),i=this.openLanguages.split(/\s*,\s*/).map(y=>y.trim().toLowerCase()).includes(e);return o`
+    `}renderDetails(e){let t=e.toUpperCase(),i=this.openLanguages.split(/\s*,\s*/).map(y=>y.trim().toLowerCase()).includes(e);return r`
       <light-disclosure
         part="
           disclosure disclosure-${e}
@@ -268,5 +268,5 @@ import{a as m}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DW5LMM4K.js
         </span>
         ${this.renderEditor(e)}
       </light-disclosure>
-    `}};a(r,"baseName","light-pen"),a(r,"styles",[c,p,g]),a(r,"dependencies",{"light-editor":m,"light-disclosure":x}),a(r,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});var q=r;r.define();export{q as default};
-//# sourceMappingURL=/light-pen/pull/38/bridgetown/static/chunks/light-pen-register-YV5LWRRU.js.map
+    `}};a(o,"baseName","light-pen"),a(o,"styles",[p,h,g]),a(o,"dependencies",{"light-editor":b,"light-disclosure":u}),a(o,"properties",{openLanguages:{reflect:!0,attribute:"open-languages"},resizePosition:{attribute:"resize-position",reflect:!0,type:Number},preserveWhitespace:{attribute:"preserve-whitespace",type:Boolean,reflect:!0},console:{reflect:!0},sandboxSettings:{reflect:!0,attribute:"sandbox-settings"},languages:{attribute:!1,type:Array},cssCode:{attribute:!1},htmlCode:{attribute:!1},jsCode:{attribute:!1},htmlResizeObserver:{attribute:!1},jsResizeObserver:{attribute:!1},cssResizeObserver:{attribute:!1},_resizing:{attribute:!1}});export{o as default};
+//# sourceMappingURL=/light-pen/pull/38/bridgetown/static/light-pen/exports/components/light-pen/light-pen.THVV6VRK.js.map

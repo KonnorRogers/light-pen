@@ -50,13 +50,12 @@ import{a as l,f as u}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DC22
         background-color: rgba(0, 0, 0, 0.05);
       }
 
-
       :host([no-animation]) [part~="content-base"] {
         transition: none;
       }
 
       :host([no-animation]) details[open] [part~="content-base"] {
-          grid-template-rows: 1fr;
+        grid-template-rows: 1fr;
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -68,4 +67,4 @@ import{a as l,f as u}from"/light-pen/pull/38/bridgetown/static/chunks/chunk-DC22
         }
       }
     `]),o(i,"properties",{summary:{},open:{type:Boolean},noAnimation:{attribute:"no-animation",type:Boolean}});export{w as a,y as b,x as c,i as d};
-//# sourceMappingURL=/light-pen/pull/38/bridgetown/static/chunks/chunk-VNUOVIPF.js.map
+//# sourceMappingURL=/light-pen/pull/38/bridgetown/static/chunks/chunk-RRDBKISK.js.map
