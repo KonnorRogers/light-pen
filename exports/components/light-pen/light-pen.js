@@ -536,10 +536,11 @@ export default class LightPen extends BaseElement {
   renderDetails(language) {
     let fullLanguage = language.toUpperCase();
 
-    // const open = this.openLanguages.split(",").includes(language)
+    const open = this.openLanguages.split(",").includes(language)
 
     return html`
-      <light-disclosure part="disclosure disclosure-${language}">
+      <light-disclosure part="disclosure disclosure-${language}"
+        ${open ? 'open' : ''}>
         <span part="summary" slot="summary"
           ><slot name=${`summary-${language}`}>${fullLanguage}</slot></span
         >
