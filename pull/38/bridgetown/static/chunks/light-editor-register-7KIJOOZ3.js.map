@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../node_modules/.pnpm/file+/node_modules/light-pen/exports/components/light-editor/light-editor-register.js"],
+  "sourcesContent": ["import LightEditor from \"./light-editor.js\";\n\nexport default LightEditor;\n\nLightEditor.define();\n"],
+  "mappings": "gbAEA,IAAOA,EAAQC,EAEfA,EAAY,OAAO",
+  "names": ["light_editor_register_default", "LightEditor"]
+}
