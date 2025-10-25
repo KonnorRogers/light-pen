@@ -1,4 +1,4 @@
-## Next
+## v4.4.0 - 10/25/2025
 
 ### Features
 
@@ -14,52 +14,52 @@
 
 - Deprecation(light-pen) - `light-pen::part(disclosure-${language})` have been deprecated in favor of `light-pen::part(sandbox-disclosure-${language})` respectively. `disclosure-${language}` will be removed in the next major version as its superseded by `sandbox-disclosure-${language}`. `::part(disclosure)` will remain to be able to target all disclosures.
 
-## 4.3.0 - 07/04/2025
+## v4.3.0 - 07/04/2025
 
 - Security Fix(light-pen / light-preview): Previously, `<iframe>` in these 2 components could reach the parent. With this fix, it now has a default set of sandbox settings as follows: `allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts`
 - Bug Fix(light-editor): Fixed a bug with grid setup for soft wrapping
 - Feature(light-preview): Added support for `src` attribute for external URLs.
 
-## 4.2.6 - 05/02/2025
+## v4.2.6 - 05/02/2025
 
 - Bug Fix(light-code): Fixed a bug with soft wrapping in light-code
 - Bug Fix(light-editor): Fixed a synchronization bug between light-code and light-editor's textarea
 
-## 4.2.5 - 03/11/2025
+## v4.2.5 - 03/11/2025
 
 - Bug Fix(light-editor): Fixed a bug where cursors appeared wrong in `<light-editor>`
 
-## 4.2.4 - 03/07/2025
+## v4.2.4 - 03/07/2025
 
 - Fixed a bug in Safari for being able to select line numbers
 
-## 4.2.3 - 03/07/2025
+## v4.2.3 - 03/07/2025
 
 - Fixed a bug in `dedent` improperly flagging multiple new lines.
 
-## 4.2.1 - 01/02/2025
+## v4.2.1 - 01/02/2025
 
 - Bug Fix(light-code): Fixed lines not spanning the full width of the grid.
 
-## 4.2.1 - 01/02/2025
+## v4.2.1 - 01/02/2025
 
 - Bug Fix(light-code): Make `dedent` from slotted tags not suck [#]
 
-## 4.2.0 - 11/04/2024
+## v4.2.0 - 11/04/2024
 
 - Styles(light-code): Default line wrapping of `<light-code>` is now `"hard"`
 
-## 4.1.1 - 11/03/2024
+## v4.1.1 - 11/03/2024
 
 - Bug Fix(light-preview): Fixed a bug in Safari with vertical resizing.
 
-## 4.1.0 - 08/03/2024
+## v4.1.0 - 08/03/2024
 
 - Feature(light-preview): Added the `after-actions`, `above-expanded-code`, and `after-expanded-code` slots and parts. [#24]
 - Bug Fix(light-preview): now properly listens to changes to `unescapeBehavior` / `unescape-behavior` [#24]
 - Bug Fix(light-editor): Properly insert new lines. [#25]
 
-## 4.0.0 - 08/01/2024
+## v4.0.0 - 08/01/2024
 
 - BREAKING_CHANGE: All components are now scoped under `exports/components/<component-name>/<component-name>.js`
 
