@@ -551,8 +551,10 @@ export default class LightPen extends BaseElement {
   renderDetails(language) {
     let fullLanguage = language.toUpperCase();
 
-    const languages = this.openLanguages.split(/\s*,\s*/).map((str) => str.trim().toLowerCase())
-    const open = languages.includes(language)
+    const languages = this.openLanguages
+      .split(/\s*,\s*/)
+      .map((str) => str.trim().toLowerCase());
+    const open = languages.includes(language);
 
     return html`
       <light-disclosure
