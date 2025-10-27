@@ -6,6 +6,7 @@ import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-tex
 import { baseStyles } from "../../styles/base-styles.js";
 import { theme } from "../../styles/default-theme.styles.js";
 import { styles } from "./light-editor.styles.js";
+import { codeStyles } from "../../styles/code-styles.js";
 
 import { LightResizeEvent } from "../../events/light-resize-event.js";
 
@@ -60,7 +61,12 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
   /**
    * @override
    */
-  static styles = [baseStyles, styles, theme];
+  static styles = [
+    baseStyles,
+    codeStyles,
+    styles,
+    theme
+  ];
 
   /**
    * @override
@@ -70,6 +76,8 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     wrap: { reflect: true, state: false },
     language: { reflect: true },
     src: {},
+    topViewableLine: { type: Number, state: true },
+    bottomViewableLine: { type: Number, state: true },
     disableLineNumbers: {
       type: Boolean,
       reflect: true,
@@ -134,7 +142,7 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
      * @type {"soft" | "hard"}
      * If `wrap="soft"`, lines will wrap when they reach the edge of their container. If `wrap="hard"`, lines will not wrap instead all the user to scroll horizontally to see more code.
      */
-    this.wrap = "soft";
+    this.wrap = "hard";
 
     /**
      * Whether to strip whitespace before first character, and after the last character.
@@ -164,6 +172,16 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    */
   connectedCallback() {
     super.connectedCallback();
+
+    this.handleAnimations = () => {
+
+      setTimeout(() => {
+        this.syncScroll();
+        this.setCurrentLineHighlight();
+      }, 300)
+    }
+    this.addEventListener("transitionend", this.handleAnimations)
+    this.addEventListener("animationend", this.handleAnimations)
 
     this.value = this.getAttribute("value") || "";
     this.defaultValue = this.getAttribute("value") || "";
@@ -288,6 +306,19 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
             .language=${this.language}
             .code=${this.value}
             wrap=${this.wrap}
+            part="light-code"
+            exportparts=${`
+              gutter:light-code__gutter,
+              line-highlight:light-code__line-highlight,
+              gutter-cell:light-code__gutter-cell,
+              pre:light-code__pre,
+              pre-${this.language}:light-code__pre-${this.language},
+              code:light-code__code,
+              code-${this.language}:light-code__code-${this.language},
+              base:light-code__base
+            `}
+            .lineHighlightStart=${this.topViewableLine}
+            .lineHighlightEnd=${this.bottomViewableLine}
             .highlighter=${this.highlighter}
             .disableLineNumbers=${this.disableLineNumbers}
             .preserveWhitespace=${this.preserveWhitespace}
@@ -413,16 +444,25 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    * @param {ResizeObserverEntry[]} entries
    */
   handleTextAreaResize(entries) {
-    const { target } = entries[0];
-    const { left, right, top, bottom } = entries[0].contentRect;
-    const width = left + right;
-    const height = top + bottom;
+    requestAnimationFrame(() => {
+      const { left, right, top, bottom } = entries[0].contentRect;
+      const width = left + right;
+      const height = top + bottom;
 
-    /**
-     * Fires whenever the editor resizes, usually due to zoom in / out
-     */
-    this.dispatchEvent(new LightResizeEvent("light-resize", { height, width }));
-    this.syncScroll();
+      const textarea = this.textarea
+      for (const entry of entries) {
+        if (entry.target !== textarea) { return }
+
+        this.textareaHeight = entry.borderBoxSize[0].blockSize
+        this.textareaWidth = entry.borderBoxSize[0].inlineSize
+      }
+
+      /**
+      * Fires whenever the editor resizes, usually due to zoom in / out
+      */
+      this.dispatchEvent(new LightResizeEvent("light-resize", { height, width }));
+      this.syncScroll();
+    })
   }
 
   /**
@@ -433,7 +473,39 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     super.updated(changedProperties);
 
     this.syncScroll();
-    setTimeout(() => this.setCurrentLineHighlight());
+    setTimeout(() => {
+      this.setCurrentLineHighlight()
+    });
+  }
+
+  get lineHeight () {
+    if (!this.__textareaComputedStyle) {
+      const textarea = this.textarea
+      if (!textarea) { return 24 }
+      this.__textareaComputedStyle = getComputedStyle(textarea)
+    }
+    return Number(this.__textareaComputedStyle?.lineHeight?.split("px")[0]) || 24
+  }
+
+  getViewableLines() {
+    const textarea = this.shadowRoot?.querySelector("textarea");
+
+    if (!textarea) {
+      return { topLine: 0, bottomLine: 0 };
+    }
+
+    /** @type {number} */
+    let lineHeight = this.lineHeight;
+
+    const visibleLines = Math.ceil((this.textareaHeight || textarea.offsetHeight) / lineHeight) + 3;
+
+    // Because of rounding errors, add 1px to make topLine work when going down via arrow keys.
+    const topLine = Math.max(Math.floor((textarea.scrollTop + 1) / lineHeight), 0);
+    const bottomLine = Math.ceil(topLine + visibleLines);
+    return {
+      topLine,
+      bottomLine,
+    };
   }
 
   /**
@@ -442,32 +514,44 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    * @internal
    */
   syncScroll(syncCaret = false) {
-    // TODO: There's probably a lot of caching we can do here to reduce recomputes.
-    /**
-     * @type {undefined | null | HTMLTextAreaElement}
-     */
-    const textarea = this.textarea;
+          // TODO: There's probably a lot of caching we can do here to reduce recomputes.
+          const textarea = this.shadowRoot?.querySelector("textarea")
 
-    if (textarea == null) return;
+          if (textarea == null) return;
 
-    const lightCode = this.shadowRoot?.querySelector("light-code");
-    const code = lightCode?.shadowRoot?.querySelector("code");
+          const viewableLines = this.getViewableLines()
+          this.topViewableLine = viewableLines.topLine
+          this.bottomViewableLine = viewableLines.bottomLine
 
-    if (syncCaret) {
-      const { top, left } = this.getCaretPosition();
-      // textarea.scrollTop = top
-      if (left < 60) {
-        textarea.scrollLeft = Math.min(left, textarea.scrollLeft);
-      }
-    }
+          requestAnimationFrame(() => {
+            this.__syncScroll = setTimeout(() => {
+              if (this.__syncScroll) {
+                clearTimeout(this.__syncScroll);
+              }
 
-    if (lightCode) {
-      lightCode.scrollTop = textarea.scrollTop;
-    }
+              const lightCode = this.shadowRoot?.querySelector("light-code")
+              if (!lightCode) { return }
+              const pre = lightCode.shadowRoot?.querySelector("[part~='base']");
+              const code = lightCode.shadowRoot?.querySelector("code");
+              if (!pre || !code) { return }
 
-    if (code) {
-      code.scrollLeft = textarea.scrollLeft;
-    }
+              const { top, left } = this.getCaretPosition();
+
+              // const scrollTop = Math.max(textarea.scrollTop, 0)
+              code.style.height = `${textarea.scrollHeight}px`
+
+              const { topLine } = this.getViewableLines()
+              code.style.top = `${Math.ceil(topLine * this.lineHeight)}px`
+
+              if (syncCaret) {
+                if (left < 60) {
+                  lightCode.scrollLeft = Math.min(left, lightCode.scrollLeft);
+                } else {
+                  lightCode.scrollLeft = left;
+                }
+              }
+            }, 10);
+        })
   }
 
   /**
@@ -539,9 +623,12 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
    */
   keydownHandler(evt) {
     this.setCurrentLineHighlight();
+
     // setTimeout is needed for Safari which appears to be "slow" to update selection APIs.
-    setTimeout(() => this.setCurrentLineHighlight());
-    this.syncScroll();
+    setTimeout(() => {
+      this.syncScroll(true);
+      this.setCurrentLineHighlight()
+    });
 
     if (evt.key.startsWith("Arrow") || evt.key === "Backspace") {
       this.syncScroll(true);
@@ -609,6 +696,10 @@ export default class LightEditor extends LitTextareaMixin(BaseElement) {
     if (currentLineNumber != null) {
       this.currentLineNumber = currentLineNumber + 1;
     }
+  }
+
+  lines () {
+    return this.value.split(newLineRegex);
   }
 
   getLinesToSelectionStart() {
